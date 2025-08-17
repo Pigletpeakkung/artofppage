@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "title": "AI-Powered Creative Suite",
+        "description": "Revolutionary creative tools powered by machine learning algorithms, enabling artists and designers to push the boundaries of digital creativity through intelligent assistance and automated workflows.",
+        "image": "https://pegearts.com/assets/projects/ai-creative-suite.jpg",
+        "imageSrcset": "https://pegearts.com/assets/projects/ai-creative-suite-400.jpg 400w, https://pegearts.com/assets/projects/ai-creative-suite-800.jpg 800w",
+        "alt": "Preview of AI-Powered Creative Suite",
+        "categories": ["AI/ML", "Creative Tools", "Automation"],
+        "projectUrl": "https://pegearts.com/projects/ai-creative-suite",
+        "secondaryUrl": "https://github.com/pegearts/ai-creative-suite",
+        "secondaryLabel": "View AI-Powered Creative Suite source code on GitHub",
+        "secondaryIcon": "fab fa-github",
+        "secondaryText": "Source Code"
+    },
+    {
+        "id": 2,
+        "title": "Multilingual Voice AI Platform",
+        "description": "Advanced voice synthesis platform supporting multiple languages and dialects, featuring natural speech patterns and emotional expressiveness for immersive audio experiences across global markets.",
+        "image": "https://pegearts.com/assets/projects/voice-ai-platform.jpg",
+        "imageSrcset": "https://pegearts.com/assets/projects/voice-ai-platform-400.jpg 400w, https://pegearts.com/assets/projects/voice-ai-platform-800.jpg 800w",
+        "alt": "Preview of Multilingual Voice AI Platform",
+        "categories": ["Voice AI", "Multilingual", "Audio Tech"],
+        "projectUrl": "https://pegearts.com/projects/voice-ai-platform",
+        "secondaryUrl": "https://pegearts.com/demos/voice-ai",
+        "secondaryLabel": "View Multilingual Voice AI Platform demo",
+        "secondaryIcon": "fas fa-play-circle",
+        "secondaryText": "Demo"
+    },
+    {
+        "id": 3,
+        "title": "Interactive Digital Experience",
+        "description": "Immersive digital installation combining AI-generated content, responsive design, and real-time user interaction to create unforgettable experiences that bridge physical and digital realms.",
+        "image": "https://pegearts.com/assets/projects/interactive-experience.jpg",
+        "imageSrcset": "https://pegearts.com/assets/projects/interactive-experience-400.jpg 400w, https://pegearts.com/assets/projects/interactive-experience-800.jpg 800w",
+        "alt": "Preview of Interactive Digital Experience",
+        "categories": ["Interactive Design", "Digital Art", "Real-time"],
+        "projectUrl": "https://pegearts.com/projects/interactive-experience",
+        "secondaryUrl": "https://pegearts.com/gallery/interactive-experience",
+        "secondaryLabel": "View Interactive Digital Experience gallery",
+        "secondaryIcon": "fas fa-images",
+        "secondaryText": "Gallery"
+    }
+]
