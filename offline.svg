@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Gradient definition matching your theme -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cloud/Wifi icon combined -->
+  <path stroke="url(#gradient)" d="M5 12.55a11 11 0 0 1 14.08 0"/>
+  <path stroke="url(#gradient)" d="M1.42 9a16 16 0 0 1 21.16 0"/>
+  <path stroke="url(#gradient)" d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+  <path stroke="#A78BFA" d="M22 16.92v3.75a2.08 2.08 0 0 1-2.08 2.08H4.08A2.08 2.08 0 0 1 2 20.67v-3.75"/>
+  
+  <!-- Offline indicator -->
+  <line x1="2" y1="2" x2="22" y2="22" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Text label -->
+  <text x="12" y="20" font-size="3" font-weight="bold" text-anchor="middle" fill="url(#gradient)">OFFLINE</text>
+</svg>
