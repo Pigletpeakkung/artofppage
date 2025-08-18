@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy | Thanatsitt Santisamranwilai</title>
+    <meta name="description" content="Information about how this website uses cookies and similar technologies">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    <link rel="preload" href="/css/main.css" as="style">
+    
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    
+    <style>
+        /* Cookie-specific styling */
+        .cookie-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            color: var(--text-dark);
+        }
+        
+        .cookie-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .cookie-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .cookie-updated {
+            color: var(--text-medium);
+            font-size: 1.1rem;
+        }
+        
+        .cookie-content {
+            line-height: 1.8;
+        }
+        
+        .cookie-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .cookie-section h2 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-light);
+        }
+        
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .cookie-table th, 
+        .cookie-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(var(--primary-light-rgb), 0.2);
+        }
+        
+        .cookie-table th {
+            background: rgba(var(--primary-light-rgb), 0.1);
+        }
+        
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--background-light);
+            padding: 1.5rem;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .cookie-banner-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .cookie-banner-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .cookie-banner-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .cookie-toggle {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .cookie-toggle input {
+            margin-right: 10px;
+        }
+        
+        .cookie-settings {
+            display: none;
+            background: rgba(var(--primary-light-rgb), 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .cookie-container {
+                padding: 2rem 1rem;
+            }
+            
+            .cookie-banner-content {
+                flex-direction: column;
+            }
+            
+            .cookie-banner-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <nav class="navbar navbar-expand-lg header__navbar">
+        <div class="container">
+            <a class="navbar-brand logo" href="/">Thanatsitt</a>
+        </div>
+    </nav>
+
+    <main class="cookie-container">
+        <header class="cookie-header">
+            <h1 class="cookie-title">Cookie Policy</h1>
+            <p class="cookie-updated">Last Updated: <time datetime="2023-11-15">November 15, 2023</time></p>
+        </header>
+        
+        <div class="cookie-content">
+            <section class="cookie-section">
+                <h2>1. What Are Cookies</h2>
+                <p>Cookies are small text files stored on your device when you visit websites. They help the site remember information about your visit, which can make it easier to visit the site again and make the site more useful to you.</p>
+            </section>
+            
+            <section class="cookie-section">
+                <h2>2. How We Use Cookies</h2>
+                <p>This website uses cookies for the following purposes:</p>
+                <ul class="terms-list">
+                    <li><strong>Essential Cookies:</strong> Necessary for the website to function properly</li>
+                    <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
+                    <li><strong>Analytics Cookies:</strong> Help us understand how visitors interact with our site</li>
+                    <li><strong>Marketing Cookies:</strong> Used to track visitors across websites (only if you consent)</li>
+                </ul>
+            </section>
+            
+            <section class="cookie-section">
+                <h2>3. Types of Cookies We Use</h2>
+                <table class="cookie-table">
+                    <thead>
+                        <tr>
+                            <th>Cookie Name</th>
+                            <th>Purpose</th>
+                            <th>Duration</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>cookie_consent</td>
+                            <td>Stores your cookie preferences</td>
+                            <td>1 year</td>
+                            <td>Essential</td>
+                        </tr>
+                        <tr>
+                            <td>theme_preference</td>
+                            <td>Remembers your dark/light mode preference</td>
+                            <td>1 year</td>
+                            <td>Preference</td>
+                        </tr>
+                        <tr>
+                            <td>_ga</td>
+                            <td>Google Analytics - distinguishes users</td>
+                            <td>2 years</td>
+                            <td>Analytics</td>
+                        </tr>
+                        <tr>
+                            <td>_gid</td>
+                            <td>Google Analytics - distinguishes users</td>
+                            <td>24 hours</td>
+                            <td>Analytics</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section class="cookie-section">
+                <h2>4. Managing Cookies</h2>
+                <p>You can control and/or delete cookies as you wish. You can delete all cookies that are already on your computer and set most browsers to prevent them from being placed.</p>
+                
+                <div class="cookie-settings" id="cookieSettings">
+                    <h3>Cookie Preferences</h3>
+                    <div class="cookie-toggle">
+                        <input type="checkbox" id="essentialCookies" checked disabled>
+                        <label for="essentialCookies">Essential Cookies (Required)</label>
+                    </div>
+                    <div class="cookie-toggle">
+                        <input type="checkbox" id="preferenceCookies" checked>
+                        <label for="preferenceCookies">Preference Cookies</label>
+                    </div>
+                    <div class="cookie-toggle">
+                        <input type="checkbox" id="analyticsCookies" checked>
+                        <label for="analyticsCookies">Analytics Cookies</label>
+                    </div>
+                    <div class="cookie-toggle">
+                        <input type="checkbox" id="marketingCookies">
+                        <label for="marketingCookies">Marketing Cookies</label>
+                    </div>
+                    <button class="button button--primary" id="saveCookiePrefs">Save Preferences</button>
+                </div>
+                
+                <button class="button button--secondary" id="openCookieSettings">Manage Cookie Preferences</button>
+                
+                <h3>Browser Controls</h3>
+                <p>Most web browsers allow some control of cookies through browser settings. To learn more about cookies, including how to manage and delete them, visit <a href="https://www.allaboutcookies.org/" target="_blank">allaboutcookies.org</a>.</p>
+            </section>
+            
+            <section class="cookie-section">
+                <h2>5. Changes to This Policy</h2>
+                <p>We may update this Cookie Policy from time to time. We will notify you of any changes by posting the new Cookie Policy on this page and updating the "Last Updated" date.</p>
+            </section>
+            
+            <div class="contact-point">
+                <h3>Contact Us</h3>
+                <p>If you have any questions about this Cookie Policy, please contact us:</p>
+                <address>
+                    Thanatsitt Santisamranwilai<br>
+                    Email: <a href="mailto:Thanattsitt.info@yahoo.co.uk">Thanattsitt.info@yahoo.co.uk</a>
+                </address>
+            </div>
+        </div>
+    </main>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-content">
+            <div class="cookie-banner-text">
+                <p>We use cookies to enhance your experience on our website. By clicking "Accept All", you consent to our use of all cookies. You can manage your preferences in our Cookie Policy.</p>
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="button button--secondary" id="cookieSettingsBtn">Settings</button>
+                <button class="button button--primary" id="acceptAllCookies">Accept All</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; <span id="currentYear"></span> Thanatsitt Santisamranwilai. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cookie management functions
+        const COOKIE_CONSENT = 'cookie_consent';
+        const COOKIE_PREFERENCES = 'cookie_prefs';
+        
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/;SameSite=Lax`;
+        }
+        
+        function checkCookieConsent() {
+            return getCookie(COOKIE_CONSENT) === 'true';
+        }
+        
+        function getCookiePreferences() {
+            const prefs = getCookie(COOKIE_PREFERENCES);
+            return prefs ? JSON.parse(prefs) : {
+                essential: true,
+                preference: true,
+                analytics: true,
+                marketing: false
+            };
+        }
+        
+        function saveCookiePreferences(prefs) {
+            setCookie(COOKIE_PREFERENCES, JSON.stringify(prefs), 365);
+            setCookie(COOKIE_CONSENT, 'true', 365);
+            applyCookiePreferences(prefs);
+        }
+        
+        function applyCookiePreferences(prefs) {
+            // Apply analytics cookies based on preference
+            if (prefs.analytics) {
+                // Initialize Google Analytics if needed
+                console.log('Analytics cookies enabled');
+            } else {
+                // Disable analytics tracking
+                console.log('Analytics cookies disabled');
+            }
+            
+            // Apply marketing cookies based on preference
+            if (prefs.marketing) {
+                console.log('Marketing cookies enabled');
+            } else {
+                console.log('Marketing cookies disabled');
+            }
+        }
+        
+        // DOM elements
+        const cookieBanner = document.getElementById('cookieBanner');
+        const cookieSettings = document.getElementById('cookieSettings');
+        const openCookieSettings = document.getElementById('openCookieSettings');
+        const cookieSettingsBtn = document.getElementById('cookieSettingsBtn');
+        const acceptAllCookies = document.getElementById('acceptAllCookies');
+        const saveCookiePrefs = document.getElementById('saveCookiePrefs');
+        
+        // Check if consent was already given
+        if (!checkCookieConsent()) {
+            cookieBanner.style.display = 'block';
+        } else {
+            const prefs = getCookiePreferences();
+            applyCookiePreferences(prefs);
+        }
+        
+        // Event listeners
+        acceptAllCookies.addEventListener('click', () => {
+            saveCookiePreferences({
+                essential: true,
+                preference: true,
+                analytics: true,
+                marketing: true
+            });
+            cookieBanner.style.display = 'none';
+        });
+        
+        cookieSettingsBtn.addEventListener('click', () => {
+            cookieBanner.style.display = 'none';
+            cookieSettings.style.display = 'block';
+        });
+        
+        openCookieSettings.addEventListener('click', () => {
+            cookieSettings.style.display = 'block';
+            window.scrollTo({
+                top: cookieSettings.offsetTop - 20,
+                behavior: 'smooth'
+            });
+        });
+        
+        saveCookiePrefs.addEventListener('click', () => {
+            const prefs = {
+                essential: true, // Always true as these are required
+                preference: document.getElementById('preferenceCookies').checked,
+                analytics: document.getElementById('analyticsCookies').checked,
+                marketing: document.getElementById('marketingCookies').checked
+            };
+            saveCookiePreferences(prefs);
+            cookieSettings.style.display = 'none';
+        });
+        
+        // Initialize preferences checkboxes
+        function initCookieSettings() {
+            const prefs = getCookiePreferences();
+            document.getElementById('preferenceCookies').checked = prefs.preference;
+            document.getElementById('analyticsCookies').checked = prefs.analytics;
+            document.getElementById('marketingCookies').checked = prefs.marketing;
+        }
+        
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Load non-critical resources
+        function loadFontAwesome() {
+            const fa = document.createElement('link');
+            fa.rel = 'stylesheet';
+            fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+            fa.crossOrigin = 'anonymous';
+            document.head.appendChild(fa);
+        }
+        
+        // Load main CSS if not already loaded
+        if (!document.querySelector('link[href="/css/main.css"]').relList.contains('stylesheet')) {
+            const mainCSS = document.createElement('link');
+            mainCSS.rel = 'stylesheet';
+            mainCSS.href = '/css/main.css';
+            document.head.appendChild(mainCSS);
+        }
+        
+        // Theme detection
+        const savedTheme = localStorage.getItem('theme') || 
+                         (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.body.setAttribute('data-theme', savedTheme);
+        
+        // Initialize when DOM is loaded
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFontAwesome();
+            initCookieSettings();
+        });
+    </script>
+</body>
+          </html>
