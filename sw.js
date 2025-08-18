@@ -6,6 +6,9 @@ const CACHE_NAME = `pegearts-cache-${CACHE_VERSION}`;
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
+  '/404.html',
+  '/css/main.css',
+  '/js/main.js',
   '/assets/projects/ai-creative-suite.jpg',
   '/assets/og-image.jpg',
   '/assets/twitter-card.jpg',
