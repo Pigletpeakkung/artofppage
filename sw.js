@@ -9,6 +9,7 @@ const PRECACHE_ASSETS = [
   '/404.html',
   '/term-of-service.html',
   '/cookie-policy.html',
+  '/portfolio.json',
   '/css/main.css',
   '/js/main.js',
   '/assets/projects/ai-creative-suite.jpg',
