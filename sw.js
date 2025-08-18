@@ -7,6 +7,7 @@ const PRECACHE_ASSETS = [
   '/',
   '/index.html',
   '/404.html',
+  '/term-of-service.html',
   '/css/main.css',
   '/js/main.js',
   '/assets/projects/ai-creative-suite.jpg',
