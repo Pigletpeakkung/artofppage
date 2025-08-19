@@ -12,7 +12,8 @@ const PRECACHE_ASSETS = [
   '/terms-of-service.html', // Fixed typo  
   '/cookie-policy.html',
   '/assets/css/main.css',  // Corrected path
-  '/assets/js/main.js',    // Corrected path
+  '/assets/js/app.js',
+  '/assets/js/main.js',// Corrected path
   '/assets/images/og-image-1200x630.jpg',     // Updated path
   '/assets/images/twitter-card-1200x600.jpg', // Updated path
   '/assets/icons/icon-192x192.png',
