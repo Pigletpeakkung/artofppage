@@ -13,6 +13,7 @@ const PRECACHE_ASSETS = [
   '/portfolio.json',
   '/css/main.css',
   '/assets/css/main.css',
+ '/assets/js/app.js',
   '/js/main.js',
   '/assets/projects/ai-creative-suite.jpg',
   '/assets/og-image.jpg',
