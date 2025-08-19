@@ -45,6 +45,7 @@ const STATIC_CACHE_URLS = [
     // Core CSS (you'll need to create this based on your styles)
     '/assets/css/main.css',
     '/assets/css/stars.css',
+    '/assets/css/animate-moon.css',
     'assets/css/cookieconsent-theme.css',
     
     // Favicon and core images (matching your HTML meta tags)
