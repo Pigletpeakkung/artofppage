@@ -12,6 +12,7 @@ const PRECACHE_ASSETS = [
   '/cookie-policy.html',
   '/portfolio.json',
   '/css/main.css',
+  '/assets/css/main.css',
   '/js/main.js',
   '/assets/projects/ai-creative-suite.jpg',
   '/assets/og-image.jpg',
