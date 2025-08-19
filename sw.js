@@ -38,12 +38,14 @@ const STATIC_CACHE_URLS = [
     
     // Core JavaScript files (matching your HTML script tags)
     '/assets/js/main.js',
+    '/assets/js/app.js',
+    '/assets/js/cookieconsent.js',
     'assets/js/cookieconsent-config.js',
     
     // Core CSS (you'll need to create this based on your styles)
     '/assets/css/main.css',
-      '/assets/css/stars.css',
-   'assets/css/cookieconsent-theme.css',
+    '/assets/css/stars.css',
+    'assets/css/cookieconsent-theme.css',
     
     // Favicon and core images (matching your HTML meta tags)
     '/assets/images/favicon.ico',
