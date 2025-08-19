@@ -1,607 +1,899 @@
-/* ==================================
-   COOKIE CONSENT THEME STYLES
-   Custom styling for vanilla-cookieconsent v3.1.0
-   Integrated with portfolio design system
-   ================================== */
-
-/* === CSS VARIABLES FOR COOKIE CONSENT === */
 :root {
-    /* Cookie Consent Colors */
-    --cc-bg: var(--glass-bg);
-    --cc-text: var(--color-text);
-    --cc-border: var(--glass-border);
-    --cc-shadow: var(--glass-shadow);
+    /* Cookie consent colors */
+    --cc-bg-primary: rgba(248, 250, 252, 0.95);
+    --cc-bg-secondary: rgba(241, 245, 249, 0.98);
+    --cc-text-primary: #334155;
+    --cc-text-secondary: #64748b;
+    --cc-text-muted: #94a3b8;
+    --cc-border: rgba(226, 232, 240, 0.6);
+    --cc-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     
-    /* Button Colors */
-    --cc-btn-primary-bg: var(--color-primary);
+    /* Button colors */
+    --cc-btn-primary-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --cc-btn-primary-text: #ffffff;
-    --cc-btn-primary-hover-bg: var(--color-primary-hover);
+    --cc-btn-primary-hover: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
     
     --cc-btn-secondary-bg: transparent;
-    --cc-btn-secondary-text: var(--color-text-muted);
-    --cc-btn-secondary-border: var(--color-border);
-    --cc-btn-secondary-hover-bg: var(--color-border-light);
+    --cc-btn-secondary-text: #64748b;
+    --cc-btn-secondary-border: rgba(100, 116, 139, 0.3);
+    --cc-btn-secondary-hover: rgba(100, 116, 139, 0.1);
     
-    /* Modal Colors */
-    --cc-modal-bg: var(--color-surface);
-    --cc-modal-overlay: rgba(0, 0, 0, 0.8);
+    --cc-btn-accept-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --cc-btn-accept-hover: linear-gradient(135deg, #059669 0%, #047857 100%);
     
-    /* Toggle Switch Colors */
-    --cc-toggle-bg-off: var(--color-border);
-    --cc-toggle-bg-on: var(--color-primary);
-    --cc-toggle-knob: #ffffff;
-    --cc-toggle-readonly-bg: var(--color-secondary);
+    --cc-btn-decline-bg: transparent;
+    --cc-btn-decline-text: #ef4444;
+    --cc-btn-decline-border: rgba(239, 68, 68, 0.3);
+    --cc-btn-decline-hover: rgba(239, 68, 68, 0.1);
     
-    /* Spacing */
-    --cc-spacing-sm: 0.5rem;
-    --cc-spacing-md: 1rem;
-    --cc-spacing-lg: 1.5rem;
-    --cc-spacing-xl: 2rem;
+    /* Animation properties */
+    --cc-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --cc-slide-distance: 20px;
+    --cc-scale-start: 0.95;
     
-    /* Border Radius */
-    --cc-border-radius: var(--radius-xl);
-    --cc-btn-border-radius: var(--radius-lg);
-    
-    /* Transitions */
-    --cc-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --cc-transition-fast: all 0.15s ease;
+    /* Spacing and sizing */
+    --cc-padding: 1.5rem;
+    --cc-border-radius: 1rem;
+    --cc-font-size-sm: 0.875rem;
+    --cc-font-size-base: 1rem;
+    --cc-font-size-lg: 1.125rem;
 }
 
-/* Dark Theme Variables */
+/* Dark theme variables */
 [data-theme="dark"] {
-    --cc-modal-overlay: rgba(0, 0, 0, 0.9);
-    --cc-toggle-knob: #ffffff;
+    --cc-bg-primary: rgba(30, 41, 59, 0.95);
+    --cc-bg-secondary: rgba(51, 65, 85, 0.98);
+    --cc-text-primary: #f1f5f9;
+    --cc-text-secondary: #cbd5e1;
+    --cc-text-muted: #94a3b8;
+    --cc-border: rgba(71, 85, 105, 0.6);
+    --cc-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    
+    --cc-btn-secondary-text: #cbd5e1;
+    --cc-btn-secondary-border: rgba(203, 213, 225, 0.3);
+    --cc-btn-secondary-hover: rgba(203, 213, 225, 0.1);
 }
 
-/* === COOKIE CONSENT BANNER === */
-.cc {
-    /* Reset any conflicting styles */
-    all: initial;
-    font-family: var(--font-family-primary);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-normal);
-    color: var(--cc-text);
-    
-    /* Position and backdrop */
-    position: fixed;
-    z-index: var(--z-modal);
-    background: var(--cc-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+/* 2. Cookie Consent Container */
+.cc-window {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: var(--cc-font-size-base);
+    line-height: 1.6;
+    background: var(--cc-bg-primary);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--cc-border);
     border-radius: var(--cc-border-radius);
     box-shadow: var(--cc-shadow);
-    
-    /* Animation */
+    color: var(--cc-text-primary);
+    padding: var(--cc-padding);
+    max-width: 420px;
+    position: fixed;
+    z-index: 9999;
     transition: var(--cc-transition);
-    transform: translateY(100%);
+    transform: translateZ(0);
+    will-change: transform, opacity;
+}
+
+/* Position variants */
+.cc-window.cc-bottom {
+    bottom: 2rem;
+    right: 2rem;
+    transform: translateY(100px);
     opacity: 0;
 }
 
-/* Banner Positioning */
-.cc.cc--bottom {
-    bottom: var(--cc-spacing-lg);
-    left: var(--cc-spacing-lg);
-    right: var(--cc-spacing-lg);
-    max-width: 600px;
-    margin: 0 auto;
+.cc-window.cc-top {
+    top: 2rem;
+    right: 2rem;
+    transform: translateY(-100px);
+    opacity: 0;
 }
 
-.cc.cc--top {
-    top: var(--cc-spacing-lg);
-    left: var(--cc-spacing-lg);
-    right: var(--cc-spacing-lg);
-    max-width: 600px;
-    margin: 0 auto;
-    transform: translateY(-100%);
-}
-
-/* Show state */
-.cc.cc--show {
-    transform: translateY(0);
+.cc-window.cc-banner {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: none;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    transform: translateY(100%);
     opacity: 1;
 }
 
-/* === BANNER CONTENT === */
-.cc__inner {
-    padding: var(--cc-spacing-xl);
+.cc-window.cc-floating {
+    bottom: 2rem;
+    left: 2rem;
+    transform: translateX(-100px);
+    opacity: 0;
+}
+
+/* Show state */
+.cc-window.cc-visible {
+    transform: translateY(0) translateX(0);
+    opacity: 1;
+}
+
+/* 3. Content Styling */
+.cc-message {
+    margin: 0 0 1.25rem 0;
+    color: var(--cc-text-primary);
+    font-size: var(--cc-font-size-base);
+    line-height: 1.6;
+}
+
+.cc-message a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--cc-transition);
+    border-bottom: 1px solid transparent;
+}
+
+.cc-message a:hover {
+    color: #5a67d8;
+    border-bottom-color: currentColor;
+}
+
+/* Header styling for modal variant */
+.cc-header {
     display: flex;
-    flex-direction: column;
-    gap: var(--cc-spacing-lg);
-}
-
-.cc__message {
-    margin: 0;
-    color: var(--cc-text);
-    line-height: var(--line-height-relaxed);
-}
-
-.cc__message a {
-    color: var(--color-primary);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
-    transition: var(--cc-transition-fast);
-}
-
-.cc__message a:hover,
-.cc__message a:focus {
-    color: var(--color-primary-hover);
-    text-decoration-thickness: 2px;
-}
-
-/* === BUTTON CONTAINER === */
-.cc__buttons {
-    display: flex;
-    gap: var(--cc-spacing-md);
-    flex-wrap: wrap;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--cc-border);
 }
 
-/* === BUTTON STYLES === */
-.cc__btn {
-    /* Reset */
-    all: initial;
-    font-family: var(--font-family-primary);
-    
-    /* Base styles */
+.cc-title {
+    font-size: var(--cc-font-size-lg);
+    font-weight: 600;
+    color: var(--cc-text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cc-title::before {
+    content: '🍪';
+    font-size: 1.25rem;
+    opacity: 0.8;
+}
+
+.cc-close {
+    background: none;
+    border: none;
+    color: var(--cc-text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.375rem;
+    transition: var(--cc-transition);
+    font-size: 1.25rem;
+    line-height: 1;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cc-close:hover {
+    background: var(--cc-btn-secondary-hover);
+    color: var(--cc-text-primary);
+}
+
+.cc-close:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* 4. Button Styling */
+.cc-compliance {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.cc-btn {
+    font-family: inherit;
+    font-size: var(--cc-font-size-sm);
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--cc-transition);
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--cc-spacing-md) var(--cc-spacing-lg);
-    border-radius: var(--cc-btn-border-radius);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    text-decoration: none;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: var(--cc-transition-fast);
-    min-height: 40px;
-    white-space: nowrap;
+    gap: 0.5rem;
+    min-width: 0;
     position: relative;
     overflow: hidden;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-/* Button hover effect */
-.cc__btn::before {
+.cc-btn:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+.cc-btn:active {
+    transform: translateY(1px);
+}
+
+/* Primary button (Learn More/Settings) */
+.cc-btn.cc-allow {
+    background: var(--cc-btn-primary-bg);
+    color: var(--cc-btn-primary-text);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.cc-btn.cc-allow:hover {
+    background: var(--cc-btn-primary-hover);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-1px);
+}
+
+.cc-btn.cc-allow::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
 }
 
-.cc__btn:hover::before {
-    left: 100%;
+.cc-btn.cc-allow:hover::before {
+    transform: translateX(100%);
 }
 
-/* Primary Button */
-.cc__btn--primary {
-    background: var(--cc-btn-primary-bg);
+/* Accept button */
+.cc-btn.cc-deny {
+    background: var(--cc-btn-accept-bg);
     color: var(--cc-btn-primary-text);
-    box-shadow: 0 4px 14px rgba(167, 139, 250, 0.3);
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2), 0 2px 4px -1px rgba(16, 185, 129, 0.1);
 }
 
-.cc__btn--primary:hover,
-.cc__btn--primary:focus {
-    background: var(--cc-btn-primary-hover-bg);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(167, 139, 250, 0.4);
+.cc-btn.cc-deny:hover {
+    background: var(--cc-btn-accept-hover);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2), 0 4px 6px -2px rgba(16, 185, 129, 0.1);
+    transform: translateY(-1px);
 }
 
-/* Secondary Button */
-.cc__btn--secondary {
+/* Decline button */
+.cc-btn.cc-dismiss {
+    background: var(--cc-btn-decline-bg);
+    color: var(--cc-btn-decline-text);
+    border-color: var(--cc-btn-decline-border);
+}
+
+.cc-btn.cc-dismiss:hover {
+    background: var(--cc-btn-decline-hover);
+    border-color: #ef4444;
+    color: #dc2626;
+}
+
+/* Secondary button (Learn More/Settings) */
+.cc-btn.cc-link {
     background: var(--cc-btn-secondary-bg);
     color: var(--cc-btn-secondary-text);
     border-color: var(--cc-btn-secondary-border);
 }
 
-.cc__btn--secondary:hover,
-.cc__btn--secondary:focus {
-    background: var(--cc-btn-secondary-hover-bg);
-    color: var(--cc-text);
-    transform: translateY(-1px);
+.cc-btn.cc-link:hover {
+    background: var(--cc-btn-secondary-hover);
+    color: var(--cc-text-primary);
+    border-color: var(--cc-text-secondary);
 }
 
-/* Focus states */
-.cc__btn:focus {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+/* Button icons */
+.cc-btn::after {
+    content: '';
+    margin-left: 0.5rem;
+    opacity: 0.8;
 }
 
-/* === MODAL STYLES === */
-.cc__modal {
-    /* Reset */
-    all: initial;
-    font-family: var(--font-family-primary);
-    
-    /* Position */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: calc(var(--z-modal) + 1);
-    
-    /* Backdrop */
-    background: var(--cc-modal-overlay);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    
-    /* Flexbox centering */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--cc-spacing-lg);
-    
-    /* Animation */
-    opacity: 0;
-    visibility: hidden;
-    transition: var(--cc-transition);
+.cc-btn.cc-allow::after {
+    content: '✓';
 }
 
-.cc__modal.cc--show {
-    opacity: 1;
-    visibility: visible;
+.cc-btn.cc-deny::after {
+    content: '✓';
 }
 
-/* Modal Content */
-.cc__modal-content {
-    background: var(--cc-modal-bg);
-    border-radius: var(--cc-border-radius);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+.cc-btn.cc-dismiss::after {
+    content: '✕';
+}
+
+.cc-btn.cc-link::after {
+    content: '⚙';
+}
+
+/* 5. Modal and Popup Variants */
+.cc-window.cc-type-opt-out {
+    max-width: 500px;
+    background: var(--cc-bg-secondary);
+}
+
+.cc-window.cc-type-info {
+    background: var(--cc-bg-primary);
+    border-left: 4px solid #667eea;
+}
+
+/* Cookie settings modal */
+.cc-window.cc-type-categories {
     max-width: 600px;
-    width: 100%;
-    max-height: 90vh;
+    max-height: 80vh;
     overflow-y: auto;
-    transform: scale(0.9) translateY(20px);
+}
+
+.cc-categories {
+    margin: 1.5rem 0;
+}
+
+.cc-category {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--cc-border);
+    border-radius: 0.75rem;
     transition: var(--cc-transition);
 }
 
-.cc__modal.cc--show .cc__modal-content {
-    transform: scale(1) translateY(0);
+.cc-category:hover {
+    background: rgba(255, 255, 255, 0.05);
 }
 
-/* Modal Header */
-.cc__modal-header {
-    padding: var(--cc-spacing-xl) var(--cc-spacing-xl) 0;
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: var(--cc-spacing-lg);
-}
-
-.cc__modal-title {
-    margin: 0 0 var(--cc-spacing-md) 0;
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--cc-text);
-}
-
-.cc__modal-description {
-    margin: 0 0 var(--cc-spacing-lg) 0;
-    color: var(--color-text-muted);
-    line-height: var(--line-height-relaxed);
-}
-
-/* Modal Body */
-.cc__modal-body {
-    padding: 0 var(--cc-spacing-xl);
-}
-
-/* Modal Footer */
-.cc__modal-footer {
-    padding: var(--cc-spacing-lg) var(--cc-spacing-xl) var(--cc-spacing-xl);
-    border-top: 1px solid var(--color-border);
-    display: flex;
-    gap: var(--cc-spacing-md);
-    justify-content: flex-end;
-    flex-wrap: wrap;
-}
-
-/* Close Button */
-.cc__modal-close {
-    position: absolute;
-    top: var(--cc-spacing-lg);
-    right: var(--cc-spacing-lg);
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text-muted);
-    transition: var(--cc-transition-fast);
-}
-
-.cc__modal-close:hover,
-.cc__modal-close:focus {
-    background: var(--color-border-light);
-    color: var(--cc-text);
-}
-
-.cc__modal-close::before {
-    content: '×';
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* === COOKIE CATEGORIES === */
-.cc__section {
-    margin-bottom: var(--cc-spacing-xl);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-}
-
-.cc__section-header {
-    padding: var(--cc-spacing-lg);
-    background: var(--color-background-alt);
-    border-bottom: 1px solid var(--color-border);
+.cc-category-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
-    transition: var(--cc-transition-fast);
+    margin-bottom: 0.75rem;
 }
 
-.cc__section-header:hover {
-    background: var(--color-border-light);
-}
-
-.cc__section-title {
-    margin: 0;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--cc-text);
-}
-
-.cc__section-description {
-    padding: var(--cc-spacing-lg);
-    color: var(--color-text-muted);
-    line-height: var(--line-height-relaxed);
+.cc-category-title {
+    font-weight: 600;
+    font-size: var(--cc-font-size-base);
+    color: var(--cc-text-primary);
     margin: 0;
 }
 
-/* === TOGGLE SWITCH === */
-.cc__toggle {
+.cc-category-description {
+    font-size: var(--cc-font-size-sm);
+    color: var(--cc-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+/* Toggle switch styling */
+.cc-toggle {
     position: relative;
     display: inline-block;
     width: 48px;
-    height: 24px;
+    height: 28px;
 }
 
-.cc__toggle-input {
+.cc-toggle input {
     opacity: 0;
     width: 0;
     height: 0;
-    position: absolute;
 }
 
-.cc__toggle-slider {
+.cc-toggle-slider {
     position: absolute;
     cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--cc-toggle-bg-off);
-    border-radius: 24px;
-    transition: var(--cc-transition-fast);
+    background-color: #cbd5e1;
+    transition: var(--cc-transition);
+    border-radius: 28px;
 }
 
-.cc__toggle-slider::before {
+.cc-toggle-slider:before {
     position: absolute;
-    content: '';
-    height: 18px;
-    width: 18px;
+    content: "";
+    height: 22px;
+    width: 22px;
     left: 3px;
     bottom: 3px;
-    background: var(--cc-toggle-knob);
+    background-color: white;
+    transition: var(--cc-transition);
     border-radius: 50%;
-    transition: var(--cc-transition-fast);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Checked state */
-.cc__toggle-input:checked + .cc__toggle-slider {
-    background: var(--cc-toggle-bg-on);
+.cc-toggle input:checked + .cc-toggle-slider {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
-.cc__toggle-input:checked + .cc__toggle-slider::before {
-    transform: translateX(24px);
+.cc-toggle input:checked + .cc-toggle-slider:before {
+    transform: translateX(20px);
 }
 
-/* Focus state */
-.cc__toggle-input:focus + .cc__toggle-slider {
-    box-shadow: 0 0 0 2px var(--color-primary);
-}
-
-/* Readonly/disabled state */
-.cc__toggle-input:disabled + .cc__toggle-slider {
-    background: var(--cc-toggle-readonly-bg);
+.cc-toggle input:disabled + .cc-toggle-slider {
+    opacity: 0.5;
     cursor: not-allowed;
-    opacity: 0.6;
+    background-color: #e2e8f0;
 }
 
-.cc__toggle-input:disabled + .cc__toggle-slider::before {
-    background: var(--color-text-light);
+/* Essential cookies (always enabled) */
+.cc-category.cc-essential .cc-toggle-slider {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    cursor: not-allowed;
 }
 
-/* === PRIVACY INDICATOR === */
-.privacy-indicator {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-full);
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-xs);
-    color: var(--color-text-muted);
-    cursor: pointer;
-    transition: var(--cc-transition-fast);
-    z-index: var(--z-fixed);
-    opacity: 0.7;
+.cc-category.cc-essential .cc-toggle-slider::after {
+    content: 'Required';
+    position: absolute;
+    right: -70px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    color: var(--cc-text-muted);
+    white-space: nowrap;
 }
 
-.privacy-indicator:hover {
-    opacity: 1;
-    background: var(--color-primary);
-    color: white;
-    transform: translateY(-2px);
+/* 6. Animation Effects */
+@keyframes ccSlideUp {
+    from {
+        transform: translateY(var(--cc-slide-distance));
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-/* === RESPONSIVE DESIGN === */
+@keyframes ccSlideDown {
+    from {
+        transform: translateY(calc(-1 * var(--cc-slide-distance)));
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes ccSlideLeft {
+    from {
+        transform: translateX(var(--cc-slide-distance));
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes ccSlideRight {
+    from {
+        transform: translateX(calc(-1 * var(--cc-slide-distance)));
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes ccFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(var(--cc-scale-start));
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes ccBounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Apply animations based on position */
+.cc-window.cc-bottom.cc-visible {
+    animation: ccSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.cc-window.cc-top.cc-visible {
+    animation: ccSlideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.cc-window.cc-floating.cc-visible {
+    animation: ccSlideRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.cc-window.cc-banner.cc-visible {
+    animation: ccSlideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.cc-window.cc-type-categories.cc-visible {
+    animation: ccBounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* Stagger animation for category items */
+.cc-category {
+    opacity: 0;
+    animation: ccFadeIn 0.3s ease-out forwards;
+}
+
+.cc-category:nth-child(1) { animation-delay: 0.1s; }
+.cc-category:nth-child(2) { animation-delay: 0.2s; }
+.cc-category:nth-child(3) { animation-delay: 0.3s; }
+.cc-category:nth-child(4) { animation-delay: 0.4s; }
+.cc-category:nth-child(5) { animation-delay: 0.5s; }
+
+/* 7. Mobile Responsiveness */
 @media (max-width: 768px) {
-    .cc.cc--bottom,
-    .cc.cc--top {
-        left: var(--cc-spacing-md);
-        right: var(--cc-spacing-md);
-        bottom: var(--cc-spacing-md);
+    .cc-window {
+        max-width: calc(100% - 2rem);
+        margin: 0 1rem;
+        padding: 1.25rem;
+        --cc-font-size-base: 0.875rem;
+        --cc-font-size-sm: 0.8125rem;
     }
     
-    .cc__inner {
-        padding: var(--cc-spacing-lg);
+    .cc-window.cc-banner {
+        margin: 0;
+        padding: 1rem;
+        border-radius: 0;
     }
     
-    .cc__buttons {
+    .cc-compliance {
         flex-direction: column;
-        align-items: stretch;
+        gap: 0.5rem;
     }
     
-    .cc__btn {
+    .cc-btn {
         width: 100%;
         justify-content: center;
+        padding: 0.875rem 1rem;
     }
     
-    .cc__modal {
-        padding: var(--cc-spacing-md);
+    .cc-categories {
+        margin: 1rem 0;
     }
     
-    .cc__modal-content {
-        max-height: 95vh;
+    .cc-category {
+        margin-bottom: 1rem;
+        padding: 0.875rem;
     }
     
-    .cc__modal-header,
-    .cc__modal-body,
-    .cc__modal-footer {
-        padding-left: var(--cc-spacing-lg);
-        padding-right: var(--cc-spacing-lg);
+    .cc-toggle {
+        width: 42px;
+        height: 24px;
     }
     
-    .cc__modal-footer {
-        flex-direction: column;
+    .cc-toggle-slider:before {
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
     }
     
-    .cc__modal-footer .cc__btn {
-        width: 100%;
-    }
-    
-    .privacy-indicator {
-        bottom: 15px;
-        right: 15px;
-        font-size: 10px;
-        padding: 6px 10px;
+    .cc-toggle input:checked + .cc-toggle-slider:before {
+        transform: translateX(18px);
     }
 }
 
 @media (max-width: 480px) {
-    .cc__section-header {
-        padding: var(--cc-spacing-md);
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--cc-spacing-sm);
+    .cc-window {
+        --cc-padding: 1rem;
+        --cc-font-size-base: 0.8125rem;
+        --cc-font-size-sm: 0.75rem;
     }
     
-    .cc__toggle {
+    .cc-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .cc-close {
         align-self: flex-end;
     }
     
-    .cc__modal-title {
-        font-size: var(--font-size-xl);
+    .cc-category-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 }
 
-/* === PRINT STYLES === */
+/* 8. Accessibility Features */
+.cc-window:focus-within {
+    outline: 2px solid #667eea;
+    outline-offset: 4px;
+}
+
+/* Keyboard navigation styles */
+.cc-btn:focus,
+.cc-toggle input:focus + .cc-toggle-slider {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .cc-window {
+        border: 2px solid;
+        box-shadow: none;
+    }
+    
+    .cc-btn {
+        border: 2px solid;
+    }
+    
+    .cc-toggle-slider {
+        border: 1px solid;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .cc-window,
+    .cc-btn,
+    .cc-toggle-slider,
+    .cc-category {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .cc-window.cc-visible {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+/* 9. Custom Positioning Options */
+.cc-window.cc-top-left {
+    top: 2rem;
+    left: 2rem;
+    right: auto;
+    bottom: auto;
+}
+
+.cc-window.cc-top-right {
+    top: 2rem;
+    right: 2rem;
+    left: auto;
+    bottom: auto;
+}
+
+.cc-window.cc-bottom-left {
+    bottom: 2rem;
+    left: 2rem;
+    right: auto;
+    top: auto;
+}
+
+.cc-window.cc-bottom-right {
+    bottom: 2rem;
+    right: 2rem;
+    left: auto;
+    top: auto;
+}
+
+.cc-window.cc-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    right: auto;
+    bottom: auto;
+}
+
+/* 10. GDPR Compliance Styling */
+.cc-compliance-info {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 0.5rem;
+    font-size: var(--cc-font-size-sm);
+    color: var(--cc-text-secondary);
+}
+
+.cc-compliance-info strong {
+    color: var(--cc-text-primary);
+}
+
+/* Cookie details table */
+.cc-cookie-table {
+    width: 100%;
+    margin: 1rem 0;
+    border-collapse: collapse;
+    font-size: var(--cc-font-size-sm);
+}
+
+.cc-cookie-table th,
+.cc-cookie-table td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--cc-border);
+}
+
+.cc-cookie-table th {
+    font-weight: 600;
+    color: var(--cc-text-primary);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.cc-cookie-table td {
+    color: var(--cc-text-secondary);
+}
+
+/* 11. Performance Optimizations */
+.cc-window {
+    contain: layout style paint;
+    transform: translateZ(0);
+    will-change: transform, opacity;
+}
+
+.cc-btn {
+    contain: layout paint;
+    will-change: transform, background-color;
+}
+
+.cc-toggle-slider {
+    contain: layout paint;
+    will-change: background-color;
+}
+
+.cc-toggle-slider:before {
+    contain: layout paint;
+    will-change: transform;
+}
+
+/* 12. Print Styles */
 @media print {
-    .cc,
-    .cc__modal,
-    .privacy-indicator {
+    .cc-window {
         display: none !important;
     }
 }
 
-/* === ACCESSIBILITY IMPROVEMENTS === */
-
-/* High contrast mode */
-@media (prefers-contrast: high) {
-    .cc {
-        border: 2px solid;
-    }
-    
-    .cc__btn {
-        border: 2px solid currentColor;
-    }
-    
-    .cc__toggle-slider {
-        border: 1px solid currentColor;
-    }
+/* 13. Utility Classes */
+.cc-invisible {
+    opacity: 0;
+    pointer-events: none;
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    .cc,
-    .cc__modal,
-    .cc__modal-content,
-    .cc__btn,
-    .cc__toggle-slider,
-    .cc__toggle-slider::before {
-        transition: none !important;
-        animation: none !important;
-    }
-    
-    .cc__btn::before {
-        display: none;
-    }
+.cc-visible {
+    opacity: 1;
+    pointer-events: auto;
 }
 
-/* === UTILITY CLASSES === */
-
-/* Force show banner (for testing) */
-.cc--force-show {
-    transform: translateY(0) !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+.cc-no-transition {
+    transition: none !important;
 }
 
-/* Compact layout */
-.cc--compact .cc__inner {
-    padding: var(--cc-spacing-lg);
-    gap: var(--cc-spacing-md);
+/* Custom branding integration */
+.cc-branding {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
 }
 
-.cc--compact .cc__message {
-    font-size: var(--font-size-sm);
+.cc-branding img {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
 }
 
-.cc--compact .cc__btn {
-    padding: var(--cc-spacing-sm) var(--cc-spacing-md);
-    font-size: var(--font-size-xs);
+/* Cookie consent overlay */
+.cc-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-/* Theme-specific adjustments */
-[data-theme="dark"] .cc__section-header {
-    background: var(--color-surface);
+.cc-overlay.cc-visible {
+    opacity: 1;
 }
 
-[data-theme="dark"] .cc__section-header:hover {
-    background: var(--color-border);
+/* Language selector for multi-language support */
+.cc-language-selector {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 0.75rem;
 }
+
+.cc-language-selector select {
+    background: transparent;
+    border: 1px solid var(--cc-border);
+    border-radius: 0.25rem;
+    color: var(--cc-text-secondary);
+    padding: 0.25rem 0.5rem;
+    font-size: inherit;
+}
+
+/* Cookie consent for different screen readers */
+.cc-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Custom scrollbar for cookie settings */
+.cc-window.cc-type-categories::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cc-window.cc-type-categories::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.cc-window.cc-type-categories::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.cc-window.cc-type-categories::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Success/confirmation state */
+.cc-window.cc-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.cc-window.cc-success .cc-message {
+    color: #059669;
+}
+
+/* Error state */
+.cc-window.cc-error {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.cc-window.cc-error .cc-message {
+    color: #dc2626;
+   }
