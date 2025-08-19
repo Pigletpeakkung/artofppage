@@ -169,25 +169,20 @@
     }
     </script>
 </head>
-
-<body data-theme="light" class="loaded">
+<body>
+<body data-theme="light" class="loading" id="main-content">
     <!-- Accessibility Skip Link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Theme Toggle -->
-    <button class="theme-toggle" aria-label="Toggle dark/light theme">
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light theme">
         <i class="fas fa-moon" aria-hidden="true"></i>
         <i class="fas fa-sun d-none" aria-hidden="true"></i>
     </button>
 
-    <!-- Privacy Indicator -->
-    <div class="privacy-indicator" onclick="showCookiePreferences()" title="Manage cookie preferences">
-        Privacy Settings
-    </div>
-
     <!-- Header & Navigation -->
     <header role="banner">
-        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
+                <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
             <div class="container">
                 <a href="#home-section" class="navbar-brand logo" aria-label="Thanatsitt Portfolio Home">
                     Thanatsitt
@@ -222,417 +217,566 @@
             </div>
         </nav>
     </header>
-<body>
-    <!-- Main Content Wrapper -->
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section id="home-section" class="hero-section section">
-            <!-- Moon Container with Enhanced Animation -->
-            <div class="hero-section__moon-container" aria-hidden="true">
-                <div class="moon-glow"></div>
-                <svg class="moon" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <radialGradient id="moonGradient" cx="0.3" cy="0.3">
-                            <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-                            <stop offset="100%" stop-color="#e2e8f0" stop-opacity="1" />
-                        </radialGradient>
-                        <filter id="moonShadow">
-                            <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#A78BFA" flood-opacity="0.3"/>
-                        </filter>
-                    </defs>
-                    <circle cx="150" cy="150" r="140" fill="url(#moonGradient)" filter="url(#moonShadow)" />
-                    <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" />
-                    <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" />
-                    <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" />
-                    <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" />
-                    <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" />
-                </svg>
 
-                <!-- Enhanced Dynamic Stars -->
-                <div class="stars-container">
-                    <!-- Regular twinkling stars -->
-                    <div class="star star--small star--1" data-animate="fade-in"></div>
-                    <div class="star star--medium star--2" data-animate="fade-in"></div>
-                    <div class="star star--small star--3" data-animate="fade-in"></div>
-                    <div class="star star--large star--4" data-animate="fade-in"></div>
-                    
-                    <!-- Sparkle stars -->
-                    <div class="star star--sparkle star--5" data-animate="scale-in"></div>
-                    <div class="star star--sparkle star--6" data-animate="scale-in"></div>
-                    
-                    <!-- Floating stars -->
-                    <div class="star star--medium star--7" data-animate="fade-up"></div>
-                    <div class="star star--small star--8" data-animate="fade-up"></div>
-                </div>
+    <!-- Hero Section -->
+    <section id="home-section" class="hero-section section">
+        <!-- Animated Background Elements -->
+        <div class="hero-section__geometric-shapes" aria-hidden="true">
+            <div class="shape shape--1"></div>
+            <div class="shape shape--2"></div>
+            <div class="shape shape--3"></div>
+        </div>
 
-                <!-- Shooting Stars -->
-                <div class="shooting-stars">
-                    <div class="star star--shooting shooting-star" data-animate="fade-in"></div>
-                    <div class="star star--shooting shooting-star" data-animate="fade-in"></div>
-                    <div class="star star--shooting shooting-star" data-animate="fade-in"></div>
-                </div>
+        <!-- Moon Container -->
+        <div class="hero-section__moon-container" aria-hidden="true">
+            <div class="moon-glow"></div>
+            <svg class="moon" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="moonGradient" cx="0.3" cy="0.3">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+                    </radialGradient>
+                    <filter id="moonShadow">
+                        <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#A78BFA" flood-opacity="0.3"/>
+                    </filter>
+                </defs>
+                <circle cx="150" cy="150" r="140" fill="url(#moonGradient)" filter="url(#moonShadow)" />
+                <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" />
+                <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" />
+                <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" />
+                <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" />
+                <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" />
+            </svg>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-section__content container text-center">
+            <h1 class="hero-title">Thanatsitt Santisamranwilai</h1>
+            <p class="subtitle" id="typewriter" aria-live="polite"></p>
+            <p class="hero-description">
+                Crafting the future of digital experiences through AI, creative design, 
+                and cutting-edge technology. Transforming ideas into extraordinary realities.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="hero-section__cta">
+                <a href="#contact-section" class="button button--primary" aria-label="Contact me to start a project">
+                    <i class="fas fa-rocket icon-spacing" aria-hidden="true"></i>
+                    Let's Create Together
+                </a>
+                <a href="#portfolio-section" class="button button--secondary" aria-label="View my portfolio projects">
+                    <i class="fas fa-eye icon-spacing" aria-hidden="true"></i>
+                    View My Work
+                </a>
             </div>
 
-            <!-- Hero Content -->
-            <div class="hero-section__content container text-center">
-                <h1 class="hero-title">Thanatsitt Santisamranwilai</h1>
-                <p class="subtitle" id="typewriter" data-typewriter="AI Creative Designer & Digital Innovator | Transforming ideas into realities" aria-live="polite"></p>
-                <p class="hero-description">
-                    Crafting the future of digital experiences through AI, creative design, 
-                    and cutting-edge technology. Transforming ideas into extraordinary realities.
-                </p>
-                
-                <!-- CTA Buttons -->
-                <div class="hero-section__cta">
-                    <a href="#contact-section" class="button button--primary" aria-label="Contact me to start a project">
-                        <i class="fas fa-rocket icon-spacing" aria-hidden="true"></i>
-                        Let's Create Together
+            <!-- Social Links -->
+            <ul class="hero-section__social-links" role="list" aria-label="Social media links">
+                <li>
+                    <a href="https://linkedin.com/in/thanatsitt-s" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="Connect on LinkedIn">
+                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                     </a>
-                    <a href="#portfolio-section" class="button button--secondary" aria-label="View my portfolio projects">
-                        <i class="fas fa-eye icon-spacing" aria-hidden="true"></i>
-                        View My Work
+                </li>
+                <li>
+                    <a href="https://github.com/Pigletpeakkung" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="View GitHub projects">
+                        <i class="fab fa-github" aria-hidden="true"></i>
                     </a>
+                </li>
+                <li>
+                    <a href="https://www.threads.net/@thanatsitt.s" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="Follow on Threads">
+                        <!-- Custom Threads SVG Icon -->
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068v-.036c0-3.518.85-6.373 2.495-8.424C5.851 1.205 8.604.024 12.186 0h.007c3.582.024 6.334 1.205 8.184 3.509 1.645 2.051 2.495 4.906 2.495 8.424v.036c0 3.518-.85 6.373-2.495 8.424C18.52 22.795 15.768 23.976 12.186 24zM12 2.15c-2.68 0-4.832.854-6.24 2.475-1.323 1.52-2.01 3.679-2.01 6.325 0 2.646.687 4.805 2.01 6.325C7.168 19.096 9.32 19.95 12 19.95s4.832-.854 6.24-2.475c1.323-1.52 2.01-3.679 2.01-6.325 0-2.646-.687-4.805-2.01-6.325C16.832 3.004 14.68 2.15 12 2.15z"/>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.voquent.com/voice-actor/2033447" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="View voice acting profile on Voquent">
+                        <i class="fas fa-microphone" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:Thanattsitt.info@yahoo.co.uk" 
+                       aria-label="Send email">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator" aria-hidden="true">
+                <span>Scroll to explore</span>
+                <div class="scroll-animation">
+                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <!-- Social Links -->
-                <ul class="hero-section__social-links" role="list" aria-label="Social media links">
-                    <li>
-                        <a href="https://linkedin.com/in/thanatsitt-s" 
-                           target="_blank" rel="noopener noreferrer" 
-                           aria-label="Connect on LinkedIn">
-                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/Pigletpeakkung" 
-                           target="_blank" rel="noopener noreferrer" 
-                           aria-label="View GitHub projects">
-                            <i class="fab fa-github" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.threads.net/@thanatsitt.s" 
-                           target="_blank" rel="noopener noreferrer" 
-                           aria-label="Follow on Threads">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" role="img">
-                                <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068v-.036c0-3.518.85-6.373 2.495-8.424C5.851 1.205 8.604.024 12.186 0h.007c3.582.024 6.334 1.205 8.184 3.509 1.645 2.051 2.495 4.906 2.495 8.424v.036c0 3.518-.687 6.373-2.01 6.325C18.52 22.795 15.768 23.976 12.186 24zM12 2.15c-2.68 0-4.832.854-6.24 2.475-1.323 1.52-2.01 3.679-2.01 6.325 0 2.646.687 4.805 2.01 6.325C7.168 19.096 9.32 19.95 12 19.95s4.832-.854 6.24-2.475c1.323-1.52 2.01-3.679 2.01-6.325 0-2.646-.687-4.805-2.01-6.325C16.832 3.004 14.68 2.15 12 2.15z"/>
-                            </svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://www.voquent.com/voice-actor/2033447" 
-                           target="_blank" rel="noopener noreferrer" 
-                           aria-label="View voice acting profile on Voquent">
-                            <i class="fas fa-microphone" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="mailto:Thanattsitt.info@yahoo.co.uk" 
-                           aria-label="Send email">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                </ul>
+    <!-- About Section -->
+    <section id="about-section" class="section about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">
+                Passionate about merging creativity with cutting-edge technology 
+                to create meaningful digital experiences.
+            </p>
 
-                <!-- Scroll Indicator -->
-                <div class="scroll-indicator" aria-hidden="true">
-                    <span>Scroll to explore</span>
-                    <div class="scroll-animation">
-                        <i class="fas fa-chevron-down"></i>
-                        <i class="fas fa-chevron-down"></i>
-                        <i class="fas fa-chevron-down"></i>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="about-image-inner">
+                        <i class="about-image-icon fas fa-brain" aria-hidden="true"></i>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- About Section -->
-        <section id="about-section" class="section about-section">
-            <div class="container">
-                <h2 class="section-title">About Me</h2>
-                <p class="section-subtitle">
-                    Passionate about merging creativity with cutting-edge technology 
-                    to create meaningful digital experiences.
-                </p>
+                <div class="about-text-content">
+                    <h3 class="about-title">Digital Innovation Specialist</h3>
+                    <p class="about-text">
+                        As an AI Creative Designer and Digital Innovator, I specialize in transforming 
+                        complex ideas into intuitive, beautiful digital experiences. My expertise spans 
+                        machine learning, creative technology, and multilingual content creation.
+                    </p>
+                    <p class="about-text">
+                        With a background from London College of Fashion and experience in voice acting 
+                        and digital design, I bring a unique perspective to every project. I'm passionate 
+                        about using AI and creative technology to solve real-world problems and create 
+                        meaningful connections.
+                    </p>
 
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="about-image text-center">
-                            <div class="glass-card d-inline-block">
-                                <i class="fas fa-brain icon-xlarge text-primary" aria-hidden="true"></i>
-                            </div>
+                    <div class="about-highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                            <span>London College of Fashion Graduate</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-globe" aria-hidden="true"></i>
+                            <span>Multilingual Content Creator</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-microphone-alt" aria-hidden="true"></i>
+                            <span>Professional Voice Actor</span>
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
-                        <div class="about-text-content">
-                            <h3 class="text-primary mb-3">Digital Innovation Specialist</h3>
-                            <p class="mb-3">
-                                As an AI Creative Designer and Digital Innovator, I specialize in transforming 
-                                complex ideas into intuitive, beautiful digital experiences. My expertise spans 
-                                machine learning, creative technology, and multilingual content creation.
-                            </p>
-                            <p class="mb-4">
-                                With a background from London College of Fashion and experience in voice acting 
-                                and digital design, I bring a unique perspective to every project. I'm passionate 
-                                about using AI and creative technology to solve real-world problems and create 
-                                meaningful connections.
-                            </p>
+                    <a href="#contact-section" class="button button--primary">
+                        <i class="fas fa-comments icon-spacing" aria-hidden="true"></i>
+                        Let's Connect
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                            <div class="row mb-4">
-                                <div class="col-12 mb-2">
-                                    <i class="fas fa-graduation-cap text-primary me-2" aria-hidden="true"></i>
-                                    <span>London College of Fashion Graduate</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <i class="fas fa-globe text-primary me-2" aria-hidden="true"></i>
-                                    <span>Multilingual Content Creator</span>
-                                </div>
-                                <div class="col-12 mb-2">
-                                    <i class="fas fa-microphone-alt text-primary me-2" aria-hidden="true"></i>
-                                    <span>Professional Voice Actor</span>
-                                </div>
-                            </div>
+    <!-- Skills Section -->
+    <section id="skills-section" class="section skills-section">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <p class="section-subtitle">
+                Combining creativity with technology to deliver exceptional results 
+                across multiple disciplines.
+            </p>
 
-                            <a href="#contact-section" class="button button--primary">
-                                <i class="fas fa-comments icon-spacing" aria-hidden="true"></i>
-                                Let's Connect
+            <div class="skills-grid">
+                <div class="skill-card glass-card" data-skill="ai">
+                    <i class="fas fa-brain" aria-hidden="true"></i>
+                    <h3>Artificial Intelligence</h3>
+                    <p>Machine learning, AI training, and intelligent system design for creative applications and business solutions.</p>
+                    <div class="skill-progress">
+                                              <div class="skill-progress-bar skill-progress-bar--95" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-card" data-skill="design">
+                    <i class="fas fa-palette" aria-hidden="true"></i>
+                    <h3>Creative Design</h3>
+                    <p>UI/UX design, digital branding, and visual storytelling that connects with audiences on an emotional level.</p>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar skill-progress-bar--92" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-card" data-skill="voice">
+                    <i class="fas fa-microphone" aria-hidden="true"></i>
+                    <h3>Voice Acting</h3>
+                    <p>Professional voice production, multilingual narration, and audio content creation for diverse media platforms.</p>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar skill-progress-bar--88" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-card" data-skill="development">
+                    <i class="fas fa-code" aria-hidden="true"></i>
+                    <h3>Creative Development</h3>
+                    <p>Full-stack development, interactive experiences, and innovative web solutions using modern technologies.</p>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar skill-progress-bar--90" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-card" data-skill="innovation">
+                    <i class="fas fa-lightbulb" aria-hidden="true"></i>
+                    <h3>Digital Innovation</h3>
+                    <p>Strategic thinking, emerging technology integration, and innovative solution development for future-ready projects.</p>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar skill-progress-bar--93" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card glass-card" data-skill="content">
+                    <i class="fas fa-language" aria-hidden="true"></i>
+                    <h3>Content Creation</h3>
+                    <p>Multilingual content strategy, digital marketing, and cross-cultural communication for global audiences.</p>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar skill-progress-bar--87" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio-section" class="section portfolio-section">
+        <div class="container">
+            <h2 class="section-title">Featured Work</h2>
+            <p class="section-subtitle">
+                Showcasing innovative projects that blend creativity, technology, 
+                and strategic thinking to deliver exceptional results.
+            </p>
+
+            <!-- Portfolio Filters -->
+            <div class="portfolio-filters" role="tablist" aria-label="Portfolio categories">
+                <button class="portfolio-filter active" data-filter="all" role="tab" aria-selected="true">
+                    All Projects
+                </button>
+                <button class="portfolio-filter" data-filter="ai" role="tab" aria-selected="false">
+                    AI & Machine Learning
+                </button>
+                <button class="portfolio-filter" data-filter="design" role="tab" aria-selected="false">
+                    Creative Design
+                </button>
+                <button class="portfolio-filter" data-filter="voice" role="tab" aria-selected="false">
+                    Voice Production
+                </button>
+                <button class="portfolio-filter" data-filter="web" role="tab" aria-selected="false">
+                    Web Development
+                </button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="portfolio-grid">
+                <article class="portfolio-card glass-card" data-category="ai design">
+                    <div class="portfolio-card-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-robot" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h3>AI-Powered Design Assistant</h3>
+                        <p>An intelligent design system that uses machine learning to generate creative concepts and streamline the design process for digital products.</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Machine Learning</span>
+                            <span class="portfolio-tag">Creative AI</span>
+                            <span class="portfolio-tag">UX Design</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link" aria-label="View project details">
+                                <i class="fas fa-external-link-alt icon-spacing" aria-hidden="true"></i>
+                                View Project
+                            </a>
+                            <a href="#" class="portfolio-link" aria-label="View source code">
+                                <i class="fab fa-github icon-spacing" aria-hidden="true"></i>
+                                Source
                             </a>
                         </div>
                     </div>
-                </div>
+                </article>
+
+                <article class="portfolio-card glass-card" data-category="voice design">
+                    <div class="portfolio-card-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-podcast" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h3>Multilingual Audio Experience</h3>
+                        <p>Interactive audio storytelling platform featuring professional voice acting in multiple languages with AI-enhanced audio processing.</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Voice Acting</span>
+                            <span class="portfolio-tag">Audio Production</span>
+                            <span class="portfolio-tag">Multilingual</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link" aria-label="Listen to demo">
+                                <i class="fas fa-play icon-spacing" aria-hidden="true"></i>
+                                Listen Demo
+                            </a>
+                            <a href="https://www.voquent.com/voice-actor/2033447" 
+                               class="portfolio-link" target="_blank" rel="noopener"
+                               aria-label="View voice profile">
+                                <i class="fas fa-microphone icon-spacing" aria-hidden="true"></i>
+                                Voice Profile
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="portfolio-card glass-card" data-category="web design">
+                    <div class="portfolio-card-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h3>Responsive Creative Platform</h3>
+                        <p>A cutting-edge web application built with modern technologies, featuring seamless user experience and innovative design patterns.</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">React</span>
+                            <span class="portfolio-tag">Node.js</span>
+                            <span class="portfolio-tag">Responsive Design</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link" aria-label="View live site">
+                                <i class="fas fa-globe icon-spacing" aria-hidden="true"></i>
+                                Live Site
+                            </a>
+                            <a href="#" class="portfolio-link" aria-label="View case study">
+                                <i class="fas fa-file-alt icon-spacing" aria-hidden="true"></i>
+                                Case Study
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="portfolio-card glass-card" data-category="ai">
+                    <div class="portfolio-card-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h3>Predictive Analytics Dashboard</h3>
+                        <p>Advanced data visualization platform powered by machine learning algorithms for business intelligence and predictive insights.</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Data Science</span>
+                            <span class="portfolio-tag">Python</span>
+                            <span class="portfolio-tag">Visualization</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link" aria-label="View dashboard">
+                                <i class="fas fa-chart-bar icon-spacing" aria-hidden="true"></i>
+                                View Dashboard
+                            </a>
+                            <a href="#" class="portfolio-link" aria-label="Technical details">
+                                <i class="fas fa-code icon-spacing" aria-hidden="true"></i>
+                                Technical
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="portfolio-card glass-card" data-category="design">
+                    <div class="portfolio-card-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-paint-brush" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h3>Brand Identity System</h3>
+                        <p>Complete visual identity and brand system design for a tech startup, including logo, typography, and digital assets.</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">Branding</span>
+                            <span class="portfolio-tag">Visual Identity</span>
+                            <span class="portfolio-tag">Typography</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link" aria-label="View brand guide">
+                                <i class="fas fa-book icon-spacing" aria-hidden="true"></i>
+                                Brand Guide
+                            </a>
+                            <a href="#" class="portfolio-link" aria-label="View gallery">
+                                <i class="fas fa-images icon-spacing" aria-hidden="true"></i>
+                                Gallery
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="portfolio-card glass-card" data-category="web ai">
+                    <div class="portfolio-card-image">
+                        <div class="portfolio-placeholder">
+                            <i class="fas fa-brain" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-content">
+                        <h3>Smart Content Generator</h3>
+                        <p>AI-powered content creation tool that generates engaging copy and creative assets using advanced natural language processing.</p>
+                        <div class="portfolio-tags">
+                            <span class="portfolio-tag">NLP</span>
+                            <span class="portfolio-tag">Content AI</span>
+                            <span class="portfolio-tag">API Integration</span>
+                        </div>
+                        <div class="portfolio-links">
+                            <a href="#" class="portfolio-link" aria-label="Try the tool">
+                                                                <i class="fas fa-magic icon-spacing" aria-hidden="true"></i>
+                                Try Tool
+                            </a>
+                            <a href="#" class="portfolio-link" aria-label="View documentation">
+                                <i class="fas fa-book-open icon-spacing" aria-hidden="true"></i>
+                                Docs
+                            </a>
+                        </div>
+                    </div>
+                </article>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Skills Section -->
-        <section id="skills-section" class="section skills-section bg-glass">
-            <div class="container">
-                <h2 class="section-title">Skills & Expertise</h2>
-                <p class="section-subtitle">
-                    Combining creativity with technology to deliver exceptional results 
-                    across multiple disciplines.
-                </p>
+    <!-- Contact Section -->
+    <section id="contact-section" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title">Let's Create Something Amazing</h2>
+            <p class="section-subtitle">
+                Ready to bring your ideas to life? Let's collaborate and create 
+                innovative solutions that make a difference.
+            </p>
 
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="glass-card text-center h-100">
-                            <i class="fas fa-brain icon-large text-primary mb-3" aria-hidden="true"></i>
-                            <h3>Artificial Intelligence</h3>
-                            <p>Machine learning, AI training, and intelligent system design for creative applications and business solutions.</p>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>
+                        I'm always excited to work on new projects and collaborate with 
+                        creative minds. Whether you need AI solutions, creative design, 
+                        voice production, or innovative web development, let's discuss 
+                        how we can work together.
+                    </p>
+
+                    <ul class="contact-details">
+                        <li>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <a href="mailto:Thanattsitt.info@yahoo.co.uk">Thanattsitt.info@yahoo.co.uk</a>
+                        </li>
+                        <li>
+                            <i class="fab fa-linkedin" aria-hidden="true"></i>
+                            <a href="https://linkedin.com/in/thanatsitt-s" target="_blank" rel="noopener">
+                                LinkedIn Profile
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fab fa-github" aria-hidden="true"></i>
+                            <a href="https://github.com/Pigletpeakkung" target="_blank" rel="noopener">
+                                GitHub Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <i class="fas fa-microphone" aria-hidden="true"></i>
+                            <a href="https://www.voquent.com/voice-actor/2033447" target="_blank" rel="noopener">
+                                Voice Acting Profile
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="contact-availability">
+                        <h4>Current Availability</h4>
+                        <div class="availability-status">
+                            <span class="status-indicator available" aria-label="Available for projects"></span>
+                            <span>Open to new projects and collaborations</span>
                         </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="glass-card text-center h-100">
-                            <i class="fas fa-palette icon-large text-primary mb-3" aria-hidden="true"></i>
-                            <h3>Creative Design</h3>
-                            <p>UI/UX design, digital branding, and visual storytelling that connects with audiences on an emotional level.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="glass-card text-center h-100">
-                            <i class="fas fa-microphone icon-large text-primary mb-3" aria-hidden="true"></i>
-                            <h3>Voice Acting</h3>
-                            <p>Professional voice production, multilingual narration, and audio content creation for diverse media platforms.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="glass-card text-center h-100">
-                            <i class="fas fa-code icon-large text-primary mb-3" aria-hidden="true"></i>
-                            <h3>Creative Development</h3>
-                            <p>Full-stack development, interactive experiences, and innovative web solutions using modern technologies.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="glass-card text-center h-100">
-                            <i class="fas fa-lightbulb icon-large text-primary mb-3" aria-hidden="true"></i>
-                            <h3>Digital Innovation</h3>
-                            <p>Strategic thinking, emerging technology integration, and innovative solution development for future-ready projects.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="glass-card text-center h-100">
-                            <i class="fas fa-language icon-large text-primary mb-3" aria-hidden="true"></i>
-                            <h3>Content Creation</h3>
-                            <p>Multilingual content strategy, digital marketing, and cross-cultural communication for global audiences.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio-section" class="section portfolio-section">
-            <div class="container">
-                <h2 class="section-title">Featured Work</h2>
-                <p class="section-subtitle">
-                    Showcasing innovative projects that blend creativity, technology, 
-                    and strategic thinking to deliver exceptional results.
-                </p>
-
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6">
-                        <article class="glass-card h-100">
-                            <div class="text-center mb-3">
-                                <i class="fas fa-robot icon-xlarge text-primary" aria-hidden="true"></i>
-                            </div>
-                            <h3>AI-Powered Design Assistant</h3>
-                            <p>An intelligent design system that uses machine learning to generate creative concepts and streamline the design process for digital products.</p>
-                            <div class="mb-3">
-                                <span class="badge bg-primary me-1">Machine Learning</span>
-                                <span class="badge bg-primary me-1">Creative AI</span>
-                                <span class="badge bg-primary me-1">UX Design</span>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="#" class="button button--primary flex-fill text-center">
-                                    <i class="fas fa-external-link-alt icon-spacing" aria-hidden="true"></i>
-                                    View Project
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <article class="glass-card h-100">
-                            <div class="text-center mb-3">
-                                <i class="fas fa-podcast icon-xlarge text-primary" aria-hidden="true"></i>
-                            </div>
-                            <h3>Multilingual Audio Experience</h3>
-                            <p>Interactive audio storytelling platform featuring professional voice acting in multiple languages with AI-enhanced audio processing.</p>
-                            <div class="mb-3">
-                                <span class="badge bg-primary me-1">Voice Acting</span>
-                                <span class="badge bg-primary me-1">Audio Production</span>
-                                <span class="badge bg-primary me-1">Multilingual</span>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="https://www.voquent.com/voice-actor/2033447" 
-                                   class="button button--primary flex-fill text-center" 
-                                   target="_blank" rel="noopener">
-                                    <i class="fas fa-microphone icon-spacing" aria-hidden="true"></i>
-                                    Voice Profile
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <article class="glass-card h-100">
-                            <div class="text-center mb-3">
-                                <i class="fas fa-mobile-alt icon-xlarge text-primary" aria-hidden="true"></i>
-                            </div>
-                            <h3>Responsive Creative Platform</h3>
-                            <p>A cutting-edge web application built with modern technologies, featuring seamless user experience and innovative design patterns.</p>
-                            <div class="mb-3">
-                                <span class="badge bg-primary me-1">React</span>
-                                <span class="badge bg-primary me-1">Node.js</span>
-                                <span class="badge bg-primary me-1">Responsive Design</span>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <a href="#" class="button button--primary flex-fill text-center">
-                                    <i class="fas fa-globe icon-spacing" aria-hidden="true"></i>
-                                    Live Site
-                                </a>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact-section" class="section contact-section bg-glass">
-            <div class="container">
-                <h2 class="section-title">Let's Create Something Amazing</h2>
-                <p class="section-subtitle">
-                    Ready to bring your ideas to life? Let's collaborate and create 
-                    innovative solutions that make a difference.
-                </p>
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="glass-card">
-                            <h3>Get In Touch</h3>
-                            <p>
-                                I'm always excited to work on new projects and collaborate with 
-                                creative minds. Whether you need AI solutions, creative design, 
-                                voice production, or innovative web development, let's discuss 
-                                how we can work together.
-                            </p>
-
-                            <div class="mb-4">
-                                <div class="mb-3">
-                                    <i class="fas fa-envelope text-primary me-2" aria-hidden="true"></i>
-                                    <a href="mailto:Thanattsitt.info@yahoo.co.uk">Thanattsitt.info@yahoo.co.uk</a>
-                                </div>
-                                <div class="mb-3">
-                                    <i class="fab fa-linkedin text-primary me-2" aria-hidden="true"></i>
-                                    <a href="https://linkedin.com/in/thanatsitt-s" target="_blank" rel="noopener">
-                                        LinkedIn Profile
-                                    </a>
-                                </div>
-                                <div class="mb-3">
-                                    <i class="fab fa-github text-primary me-2" aria-hidden="true"></i>
-                                    <a href="https://github.com/Pigletpeakkung" target="_blank" rel="noopener">
-                                        GitHub Portfolio
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <div class="status-available me-2"></div>
-                                <span>Open to new projects and collaborations</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <form id="contactForm" class="glass-card">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Full Name *</label>
-                                <input type="text" id="name" name="name" class="form-control" 
-                                       placeholder="Your full name" required aria-required="true">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email Address *</label>
-                                <input type="email" id="email" name="email" class="form-control" 
-                                       placeholder="your.email@example.com" required aria-required="true">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="project-type" class="form-label">Project Type</label>
-                                <select id="project-type" name="project_type" class="form-control">
-                                    <option value="">Select project type</option>
-                                    <option value="ai-ml">AI & Machine Learning</option>
-                                    <option value="web-development">Web Development</option>
-                                    <option value="creative-design">Creative Design</option>
-                                    <option value="voice-production">Voice Production</option>
-                                    <option value="consulting">Consulting</option>
-                                    <option value="other">Other</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message *</label>
-                                <textarea id="message" name="message" class="form-control" rows="4" 
-                                          placeholder="Tell me about your project..." required aria-required="true"></textarea>
-                            </div>
-
-                            <button type="submit" class="button button--primary w-100">
-                                <i class="fas fa-paper-plane icon-spacing" aria-hidden="true"></i>
-                                Send Message
-                            </button>
-                        </form>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
 
+                <form id="contactForm" class="contact-form glass-card" novalidate>
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" class="form-control" 
+                               placeholder="Your full name" required 
+                               aria-describedby="name-error">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-control" 
+                               placeholder="your.email@example.com" required
+                               aria-describedby="email-error">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company / Organization</label>
+                        <input type="text" id="company" name="company" class="form-control" 
+                               placeholder="Your company or organization">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-type">Project Type</label>
+                        <select id="project-type" name="project_type" class="form-control">
+                            <option value="">Select project type</option>
+                            <option value="ai-ml">AI & Machine Learning</option>
+                            <option value="web-development">Web Development</option>
+                            <option value="creative-design">Creative Design</option>
+                            <option value="voice-production">Voice Production</option>
+                            <option value="consulting">Consulting</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">Budget Range</label>
+                        <select id="budget" name="budget" class="form-control">
+                            <option value="">Select budget range</option>
+                            <option value="under-5k">Under $5,000</option>
+                            <option value="5k-15k">$5,000 - $15,000</option>
+                            <option value="15k-50k">$15,000 - $50,000</option>
+                            <option value="50k-plus">$50,000+</option>
+                            <option value="discuss">Let's discuss</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timeline">Project Timeline</label>
+                        <select id="timeline" name="timeline" class="form-control">
+                            <option value="">Select timeline</option>
+                            <option value="asap">ASAP</option>
+                            <option value="1-month">Within 1 month</option>
+                            <option value="3-months">Within 3 months</option>
+                            <option value="6-months">Within 6 months</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Project Details *</label>
+                        <textarea id="message" name="message" class="form-control" rows="6"
+                                  placeholder="Tell me about your project, goals, and how I can help..."
+                                  required aria-describedby="message-error"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="newsletter" name="newsletter" value="yes">
+                            <span class="checkmark"></span>
+                            Subscribe to occasional updates about new projects and insights
+                        </label>
+                    </div>
+
+                    <button type="submit" class="button button--primary" aria-describedby="submit-status">
+                        <i class="fas fa-paper-plane icon-spacing" aria-hidden="true"></i>
+                        Send Message
+                    </button>
+
+                    <div id="submit-status" class="sr-only" aria-live="polite"></div>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
