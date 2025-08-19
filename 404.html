@@ -3,150 +3,1591 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found | Thanatsitt Santisamranwilai</title>
-    <meta name="description" content="The page you're looking for doesn't exist. Return to the portfolio of Thanatsitt Santisamranwilai, AI Creative Designer & Digital Innovator.">
+    <meta name="description" content="Page not found - PegeArts Creative Portfolio. The page you're looking for doesn't exist, but you can explore our creative work, art projects, and design services.">
+    <meta name="keywords" content="404, page not found, PegeArts, creative portfolio, digital art, design services, creative agency">
+    <meta name="author" content="PegeArts">
+    <meta name="robots" content="noindex, follow">
     
-    <!-- Preload critical resources -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
-    <link rel="preload" href="/assets/css/main.css" as="style">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pegearts.com/404">
+    <meta property="og:title" content="Page Not Found - PegeArts Creative Portfolio">
+    <meta property="og:description" content="Oops! This page doesn't exist. Explore our creative portfolio, art projects, and design services instead.">
+    <meta property="og:image" content="https://pegearts.com/assets/images/og-404.jpg">
+    <meta property="og:site_name" content="PegeArts">
     
-    <!-- CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css">
-    <!-- SVG Favicon (Modern Browsers) -->
-<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pegearts.com/404">
+    <meta property="twitter:title" content="Page Not Found - PegeArts Creative Portfolio">
+    <meta property="twitter:description" content="Oops! This page doesn't exist. Explore our creative portfolio instead.">
+    <meta property="twitter:image" content="https://pegearts.com/assets/images/twitter-404.jpg">
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#FF6B6B">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+    <title>404 - Page Not Found | PegeArts Creative Portfolio</title>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://pegearts.com/404">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "404 - Page Not Found",
+        "description": "The requested page was not found on PegeArts creative portfolio website.",
+        "url": "https://pegearts.com/404",
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://pegearts.com"
+        },
+        "inLanguage": "en-US",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://pegearts.com/?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
 
-<!-- Fallback PNG Favicon -->
-<link rel="icon" href="/assets/icons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" href="/assets/icons/favicon-96x96.png" sizes="96x96">
-<link rel="icon" href="/assets/icons/favicon-16x16.png" sizes="16x16">
-    
     <style>
-        /* Critical 404-specific CSS (inlined for fastest rendering) */
-        .error-container {
+        /* CSS Reset & Base Styles */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Creative Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .shape:nth-child(2) {
+            left: 20%;
+            animation-delay: 5s;
+            animation-duration: 30s;
+        }
+
+        .shape:nth-child(3) {
+            left: 70%;
+            animation-delay: 10s;
+            animation-duration: 20s;
+        }
+
+        .shape:nth-child(4) {
+            left: 80%;
+            animation-delay: 15s;
+            animation-duration: 35s;
+        }
+
+        .shape:nth-child(5) {
+            left: 50%;
+            animation-delay: 8s;
+            animation-duration: 28s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 0.1;
+            }
+            50% {
+                transform: translateY(-10vh) rotate(180deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Skip to Content Link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #FF6B6B;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1000;
+            font-weight: 500;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Header Styles */
+        .header {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 100;
+        }
+
+        .navbar {
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .navbar-content {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            transition: all 0.3s ease;
+        }
+
+        .brand-link:hover {
+            transform: translateY(-2px);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .brand-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--background-light) 0%, rgba(var(--primary-light-rgb), 0.1) 100%);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
         }
-        
-        .error-code {
-            font-size: clamp(5rem, 20vw, 10rem);
+
+        .brand-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .brand-link:hover .brand-icon::before {
+            left: 100%;
+        }
+
+        .brand-svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: left 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 0;
+        }
+
+        .nav-link:hover {
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* 404 Main Content */
+        .error-404 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+            padding: 2rem 0;
+            position: relative;
+        }
+
+        .error-404-container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .error-404-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FECA57);
+            background-size: 300% 100%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Interactive 404 Display */
+        .error-display {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .error-number {
+            font-size: clamp(6rem, 20vw, 15rem);
             font-weight: 800;
-            background: var(--gradient-primary);
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
-            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-        
-        .error-message {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            margin-bottom: 2rem;
-            color: var(--text-dark);
+
+        .error-number:hover {
+            transform: scale(1.05);
         }
-        
-        .error-description {
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            color: var(--text-medium);
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-        
-        .error-illustration {
+
+        .error-particles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 100%;
-            max-width: 400px;
-            margin: 0 auto 3rem;
+            height: 100%;
+            pointer-events: none;
         }
-        
-        .home-button {
-            padding: 15px 35px;
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #FF6B6B;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 3s infinite;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { 
+                opacity: 0; 
+                transform: translate(0, 0) scale(0);
+            }
+            50% { 
+                opacity: 1; 
+                transform: translate(var(--random-x, 50px), var(--random-y, -50px)) scale(1);
+            }
+        }
+
+        /* Creative Error Icon */
+        .error-icon {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+            animation: bounce 2s infinite, rotate 20s linear infinite;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .error-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(0deg) translate(-50%, -50%); }
+            100% { transform: rotate(360deg) translate(-50%, -50%); }
+        }
+
+        /* Typography */
+        .error-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .error-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .error-description {
             font-size: 1.1rem;
+            color: #718096;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        
+
+        /* Interactive Search */
+        .creative-search {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+            border: 3px solid transparent;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1) border-box;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #718096;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .search-input:focus + .search-icon {
+            color: #FF6B6B;
+        }
+
+        /* Action Buttons */
+        .error-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            font-family: inherit;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #45B7D1, #96CEB4);
+            color: white;
+            box-shadow: 0 10px 30px rgba(69, 183, 209, 0.4);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(69, 183, 209, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #FF6B6B;
+            border: 2px solid #FF6B6B;
+        }
+
+        .btn-outline:hover {
+            background: #FF6B6B;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Creative Quick Links */
+        .quick-links {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            border: 2px solid rgba(255, 107, 107, 0.2);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-links::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 70%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(0.8) rotate(0deg); opacity: 0.5; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 0.2; }
+        }
+
+        .quick-links-title {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: #2d3748;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quick-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            text-decoration: none;
+            color: #4a5568;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 107, 107, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .quick-link:hover::before {
+            left: 100%;
+        }
+
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            color: #FF6B6B;
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .quick-link-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .quick-link:hover .quick-link-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .quick-link-content {
+            flex: 1;
+        }
+
+        .quick-link-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .quick-link-desc {
+            font-size: 0.95rem;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        /* Creative Stats */
+        .creative-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.6));
+            border-radius: 20px;
+            border: 2px solid rgba(255, 107, 107, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-item:hover::before {
+            opacity: 1;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #718096;
+            font-weight: 500;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        .error-footer {
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 2px solid rgba(255, 107, 107, 0.2);
+            text-align: center;
+        }
+
+        .footer-text {
+            color: #718096;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #FF6B6B;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: 2px solid transparent;
+        }
+
+        .footer-link:hover {
+            color: white;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .error-container {
-                padding: 1rem;
+            .navbar-nav {
+                display: none;
             }
-            
-            .error-description {
-                margin-bottom: 2rem;
+
+            .error-404-container {
+                padding: 2.5rem 1.5rem;
+                margin: 1rem;
+                border-radius: 20px;
             }
+
+            .error-number {
+                font-size: clamp(4rem, 25vw, 10rem);
+            }
+
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .quick-links-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .creative-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-404-container {
+                padding: 2rem 1rem;
+            }
+
+            .error-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 2.5rem;
+            }
+
+            .creative-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-item {
+                padding: 1.5rem 1rem;
+            }
+
+            .quick-links {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Accessibility & Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Utility Classes */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: white;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        .loading-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body data-theme="light">
-    <div class="error-container">
-        <!-- Animated 404 illustration -->
-        <svg class="error-illustration" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-                <linearGradient id="errorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#A78BFA" />
-                    <stop offset="100%" stop-color="#F9A8D4" />
-                </linearGradient>
-            </defs>
-            <path d="M100,150 Q250,50 400,150 T100,150" fill="none" stroke="url(#errorGradient)" stroke-width="8" stroke-dasharray="1000" stroke-dashoffset="1000">
-                <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="1.5s" fill="freeze" />
-            </path>
-            <circle cx="100" cy="150" r="8" fill="#F9A8D4">
-                <animate attributeName="cx" values="100;400;100" keyTimes="0;0.5;1" dur="3s" repeatCount="indefinite" />
-                <animate attributeName="cy" values="150;50;150" keyTimes="0;0.5;1" dur="3s" repeatCount="indefinite" />
-            </circle>
-        </svg>
-        
-        <h1 class="error-code">404</h1>
-        <h2 class="error-message">Page Not Found</h2>
-        <p class="error-description">
-            Oops! The page you're looking for doesn't exist or has been moved. 
-            You can return to the homepage or contact me if you believe this is an error.
-        </p>
-        
-        <div class="button-group">
-            <a href="/" class="button button--primary home-button">
-                <i class="fas fa-home icon-spacing" aria-hidden="true"></i>
-                Return Home
-            </a>
-            <a href="/contact" class="button button--secondary">
-                <i class="fas fa-envelope icon-spacing" aria-hidden="true"></i>
-                Contact Me
-            </a>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay" aria-hidden="true">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Creating Magic...</div>
         </div>
     </div>
 
-    <!-- Load non-critical resources -->
+    <!-- Creative Animated Background -->
+    <div class="bg-animation" aria-hidden="true">
+        <div class="floating-shapes">
+            <svg class="shape" width="80" height="80" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="35" fill="#FF6B6B" opacity="0.1"/>
+            </svg>
+            <svg class="shape" width="60" height="60" viewBox="0 0 60 60">
+                <rect x="10" y="10" width="40" height="40" fill="#4ECDC4" opacity="0.1" rx="8"/>
+            </svg>
+            <svg class="shape" width="100" height="100" viewBox="0 0 100 100">
+                <polygon points="50,10 90,90 10,90" fill="#45B7D1" opacity="0.1"/>
+            </svg>
+            <svg class="shape" width="70" height="70" viewBox="0 0 70 70">
+                <path d="M35,10 L60,35 L35,60 L10,35 Z" fill="#96CEB4" opacity="0.1"/>
+            </svg>
+            <svg class="shape" width="90" height="90" viewBox="0 0 90 90">
+                <ellipse cx="45" cy="45" rx="35" ry="20" fill="#FECA57" opacity="0.1"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Skip to Content -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <div class="container">
+                <div class="navbar-content">
+                    <!-- Brand -->
+                    <div class="navbar-brand">
+                        <a href="/" class="brand-link" aria-label="PegeArts Creative Portfolio - Home">
+                            <div class="brand-icon">
+                                <svg viewBox="0 0 40 40" class="brand-svg" aria-hidden="true">
+                                    <path d="M8 12 L20 8 L32 12 L32 28 L20 32 L8 28 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 16 L20 20 L28 16" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <path d="M20 20 L20 28" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <span class="brand-text">PegeArts</span>
+                        </a>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <ul class="navbar-nav" role="menubar">
+                        <li class="nav-item" role="none">
+                            <a href="/" class="nav-link" role="menuitem">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="/#about" class="nav-link" role="menuitem">
+                                <i class="fas fa-palette" aria-hidden="true"></i>
+                                <span>About</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="/#gallery" class="nav-link" role="menuitem">
+                                <i class="fas fa-images" aria-hidden="true"></i>
+                                <span>Gallery</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="/#services" class="nav-link" role="menuitem">
+                                <i class="fas fa-paint-brush" aria-hidden="true"></i>
+                                <span>Services</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="/#contact" class="nav-link" role="menuitem">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <span>Contact</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="error-404" role="main">
+        <div class="container">
+            <div class="error-404-container">
+                <!-- Creative Error Icon -->
+                <div class="error-icon" aria-hidden="true" onclick="createParticleExplosion(this)">
+                    <i class="fas fa-palette"></i>
+                </div>
+
+                <!-- Interactive 404 Display -->
+                <div class="error-display">
+                    <div class="error-number" onclick="triggerNumberAnimation(this)" aria-label="Error 404">404</div>
+                    <div class="error-particles" id="particles"></div>
+                </div>
+
+                <!-- Error Content -->
+                <h1 class="error-title">Oops! Your Creative Journey Hit a Snag</h1>
+                <p class="error-subtitle">
+                    The masterpiece you're looking for seems to have wandered off into the creative void.
+                </p>
+                <p class="error-description">
+                    Don't worry though! While this page is playing hide and seek, 
+                    our creative portfolio is full of amazing artworks and design projects waiting to be discovered. 
+                    Let's get you back on track to explore our creative world.
+                </p>
+
+                <!-- Creative Search -->
+                <div class="creative-search">
+                    <div class="search-container">
+                        <input type="search" 
+                               class="search-input" 
+                               id="creative-search"
+                               placeholder="Search for artworks, services, or creative inspiration..."
+                               aria-label="Search creative portfolio content"
+                               autocomplete="off">
+                        <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="error-actions">
+                    <a href="/" class="btn btn-primary" aria-label="Go to creative portfolio homepage">
+                        <i class="fas fa-home" aria-hidden="true"></i>
+                        <span>Go Home</span>
+                    </a>
+                    <a href="/#gallery" class="btn btn-secondary" aria-label="View art gallery">
+                        <i class="fas fa-images" aria-hidden="true"></i>
+                        <span>View Gallery</span>
+                    </a>
+                    <button onclick="window.history.back()" class="btn btn-outline" aria-label="Go back to previous page">
+                        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                        <span>Go Back</span>
+                    </button>
+                </div>
+
+                <!-- Creative Quick Links -->
+                <div class="quick-links">
+                    <h2 class="quick-links-title">
+                        <i class="fas fa-compass" aria-hidden="true"></i>
+                        Creative Destinations
+                    </h2>
+                    <div class="quick-links-grid">
+                        <a href="/#about" class="quick-link" aria-label="Learn about PegeArts">
+                            <div class="quick-link-icon">
+                                <i class="fas fa-palette" aria-hidden="true"></i>
+                            </div>
+                            <div class="quick-link-content">
+                                <div class="quick-link-title">About Us</div>
+                                <div class="quick-link-desc">Discover our creative journey and artistic vision</div>
+                            </div>
+                        </a>
+                        <a href="/#gallery" class="quick-link" aria-label="Browse art gallery">
+                            <div class="quick-link-icon">
+                                <i class="fas fa-images" aria-hidden="true"></i>
+                            </div>
+                            <div class="quick-link-content">
+                                <div class="quick-link-title">Art Gallery</div>
+                                <div class="quick-link-desc">Explore our collection of stunning artworks</div>
+                            </div>
+                        </a>
+                        <a href="/#services" class="quick-link" aria-label="View creative services">
+                            <div class="quick-link-icon">
+                                <i class="fas fa-paint-brush" aria-hidden="true"></i>
+                            </div>
+                            <div class="quick-link-content">
+                                <div class="quick-link-title">Services</div>
+                                <div class="quick-link-desc">Creative design and artistic services</div>
+                            </div>
+                        </a>
+                        <a href="/#commissions" class="quick-link" aria-label="Commission artwork">
+                            <div class="quick-link-icon">
+                                <i class="fas fa-handshake" aria-hidden="true"></i>
+                            </div>
+                            <div class="quick-link-content">
+                                <div class="quick-link-title">Commissions</div>
+                                <div class="quick-link-desc">Custom artwork and design projects</div>
+                            </div>
+                        </a>
+                        <a href="/#contact" class="quick-link" aria-label="Get in touch">
+                            <div class="quick-link-icon">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                            </div>
+                            <div class="quick-link-content">
+                                <div class="quick-link-title">Contact</div>
+                                <div class="quick-link-desc">Let's discuss your creative project</div>
+                            </div>
+                        </a>
+                        <a href="/#blog" class="quick-link" aria-label="Read our creative blog">
+                            <div class="quick-link-icon">
+                                <i class="fas fa-blog" aria-hidden="true"></i>
+                            </div>
+                            <div class="quick-link-content">
+                                <div class="quick-link-title">Blog</div>
+                                <div class="quick-link-desc">Creative insights and tutorials</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Creative Portfolio Stats -->
+                <div class="creative-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="200">0</span>
+                        <span class="stat-label">Artworks Created</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="150">0</span>
+                        <span class="stat-label">Happy Clients</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="8">0</span>
+                        <span class="stat-label">Years Creating</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="15">0</span>
+                        <span class="stat-label">Art Mediums</span>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="error-footer">
+                    <p class="footer-text">
+                        <strong>PegeArts</strong> - Creative Design Studio<br>
+                        Passionate about creating stunning visual experiences through digital art, design, and creative innovation.
+                    </p>
+                    <div class="footer-links">
+                        <a href="mailto:hello@pegearts.com" class="footer-link">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            Email
+                        </a>
+                        <a href="https://instagram.com/pegearts" class="footer-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                            Instagram
+                        </a>
+                        <a href="https://behance.net/pegearts" class="footer-link" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-behance" aria-hidden="true"></i>
+                            Behance
+                        </a>
+                        <a href="/assets/files/pegearts-portfolio.pdf" class="footer-link" target="_blank">
+                            <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                            Portfolio
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Comprehensive JavaScript -->
     <script>
-        // Load Font Awesome asynchronously
-        function loadFontAwesome() {
-            const fa = document.createElement('link');
-            fa.rel = 'stylesheet';
-            fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-            fa.crossOrigin = 'anonymous';
-            document.head.appendChild(fa);
-        }
-        
-        // Load main CSS if not already loaded
-        if (!document.querySelector('link[href="/assets/css/main.css"]').relList.contains('stylesheet')) {
-            const mainCSS = document.createElement('link');
-            mainCSS.rel = 'stylesheet';
-            mainCSS.href = '/assets/css/main.css';
-            document.head.appendChild(mainCSS);
-        }
-        
-        // Load scripts after page is interactive
-        window.addEventListener('DOMContentLoaded', () => {
-            loadFontAwesome();
-            
-            // Theme detection
-            const savedTheme = localStorage.getItem('theme') || 
-                             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.body.setAttribute('data-theme', savedTheme);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remove loading overlay
+            setTimeout(() => {
+                const loadingOverlay = document.getElementById('loading-overlay');
+                if (loadingOverlay) {
+                    loadingOverlay.classList.add('hidden');
+                    setTimeout(() => {
+                        loadingOverlay.remove();
+                    }, 800);
+                }
+            }, 1500);
+
+            // Initialize all functionality
+            initializeCounters();
+            initializeSearch();
+            initializeInteractivity();
+            initializeAccessibility();
+            trackError();
+
+            console.log('🎨 PegeArts 404 Page initialized successfully');
         });
+
+        // Animated Counter for Stats
+        function initializeCounters() {
+            const counters = document.querySelectorAll('.stat-number[data-count]');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.getAttribute('data-count'));
+                        const duration = 2500;
+                        const step = target / (duration / 16);
+                        let current = 0;
+                        
+                        const timer = setInterval(() => {
+                            current += step;
+                            if (current >= target) {
+                                counter.textContent = target;
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current);
+                            }
+                        }, 16);
+                        
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Creative Search Functionality
+        function initializeSearch() {
+            const searchInput = document.getElementById('creative-search');
+            
+            const suggestions = [
+                { title: 'Digital Art Gallery', url: '/#gallery', icon: 'fas fa-images' },
+                { title: 'Abstract Paintings', url: '/#gallery?filter=abstract', icon: 'fas fa-palette' },
+                { title: 'Portrait Photography', url: '/#gallery?filter=portraits', icon: 'fas fa-camera' },
+                { title: 'Logo Design Services', url: '/#services?service=logo', icon: 'fas fa-pen-nib' },
+                { title: 'Brand Identity Design', url: '/#services?service=branding', icon: 'fas fa-trademark' },
+                { title: 'Custom Illustrations', url: '/#services?service=illustration', icon: 'fas fa-draw-polygon' },
+                { title: 'About Our Studio', url: '/#about', icon: 'fas fa-palette' },
+                { title: 'Commission Artwork', url: '/#commissions', icon: 'fas fa-handshake' },
+                { title: 'Creative Process', url: '/#process', icon: 'fas fa-cogs' },
+                { title: 'Contact Us', url: '/#contact', icon: 'fas fa-envelope' }
+            ];
+
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const query = this.value.toLowerCase().trim();
+                    if (query.length > 2) {
+                        // Simulate search with visual feedback
+                        this.style.background = 'linear-gradient(white, white) padding-box, linear-gradient(45deg, #4ECDC4, #45B7D1) border-box';
+                        setTimeout(() => {
+                            this.style.background = '';
+                        }, 300);
+                    }
+                }, 300);
+            });
+
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = this.value.toLowerCase().trim();
+                    const match = suggestions.find(s => 
+                        s.title.toLowerCase().includes(query) || 
+                        query.includes(s.title.toLowerCase().split(' ')[0])
+                    );
+                    
+                    if (match) {
+                        window.location.href = match.url;
+                    } else {
+                        window.location.href = '/#gallery';
+                    }
+                }
+            });
+        }
+
+        // Interactive Elements
+        function initializeInteractivity() {
+            // 404 Number interaction
+            window.triggerNumberAnimation = function(element) {
+                element.style.transform = 'scale(1.1) rotate(5deg)';
+                createParticles();
+                setTimeout(() => {
+                    element.style.transform = '';
+                }, 300);
+            };
+
+            // Error icon interaction
+            window.createParticleExplosion = function(element) {
+                element.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    element.style.transform = '';
+                }, 300);
+                
+                // Create particle explosion effect
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        createFloatingParticle();
+                    }, i * 50);
+                }
+            };
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.target.tagName === 'INPUT') return;
+                
+                switch (e.key.toLowerCase()) {
+                    case 'h':
+                        e.preventDefault();
+                        window.location.href = '/';
+                        break;
+                    case 'g':
+                        e.preventDefault();
+                        window.location.href = '/#gallery';
+                        break;
+                    case 'a':
+                        e.preventDefault();
+                        window.location.href = '/#about';
+                        break;
+                    case 'c':
+                        e.preventDefault();
+                        window.location.href = '/#contact';
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        document.getElementById('creative-search').focus();
+                        break;
+                }
+            });
+        }
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.setProperty('--random-x', (Math.random() - 0.5) * 200 + 'px');
+                particle.style.setProperty('--random-y', (Math.random() - 0.5) * 200 + 'px');
+                particle.style.background = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57'][Math.floor(Math.random() * 5)];
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                
+                particlesContainer.appendChild(particle);
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
+                }, 3000);
+            }
+        }
+
+        function createFloatingParticle() {
+            const particle = document.createElement('div');
+            particle.style.cssText = `
+                position: fixed;
+                width: 8px;
+                height: 8px;
+                background: #FF6B6B;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 1000;
+                left: 50%;
+                top: 50%;
+                animation: floatAway 2s ease-out forwards;
+            `;
+            
+            const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FECA57'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            document.body.appendChild(particle);
+            
+            const keyframes = `
+                @keyframes floatAway {
+                    0% { 
+                        transform: translate(-50%, -50%) scale(1);
+                        opacity: 1;
+                    }
+                    100% { 
+                        transform: translate(${(Math.random() - 0.5) * 400}px, ${(Math.random() - 0.5) * 400}px) scale(0);
+                        opacity: 0;
+                    }
+                }
+            `;
+            
+            if (!document.querySelector('#float-keyframes')) {
+                const style = document.createElement('style');
+                style.id = 'float-keyframes';
+                style.textContent = keyframes;
+                document.head.appendChild(style);
+            }
+            
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }, 2000);
+        }
+
+        // Accessibility Enhancements
+        function initializeAccessibility() {
+            // Announce page load to screen readers
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            announcement.textContent = '404 error page loaded for PegeArts creative portfolio. The requested page was not found. Use the navigation options to explore our creative work.';
+            document.body.appendChild(announcement);
+
+            // High contrast mode detection
+            if (window.matchMedia && window.matchMedia('(prefers-contrast: high)').matches) {
+                document.body.style.filter = 'contrast(150%)';
+            }
+
+            // Focus management
+            const firstFocusable = document.querySelector('a, button, input');
+            if (firstFocusable && !document.querySelector(':focus')) {
+                setTimeout(() => {
+                    firstFocusable.focus();
+                }, 1600);
+            }
+        }
+
+        // Error Tracking
+        function trackError() {
+            const errorData = {
+                page: window.location.pathname,
+                referrer: document.referrer || 'direct',
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString(),
+                viewport: {
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                },
+                brand: 'PegeArts'
+            };
+
+            console.log('🎨 PegeArts 404 Error tracked:', errorData);
+
+            // Send to analytics if available
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'page_not_found', {
+                    page_path: errorData.page,
+                    page_referrer: errorData.referrer,
+                    custom_map: {
+                        brand: 'PegeArts',
+                        page_type: '404_creative'
+                    }
+                });
+            }
+        }
+
+        // Add mouse trail effect
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.95) { // Only sometimes create trail
+                const trail = document.createElement('div');
+                trail.style.cssText = `
+                    position: fixed;
+                    width: 4px;
+                    height: 4px;
+                    background: rgba(255, 107, 107, 0.6);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1;
+                    left: ${e.clientX}px;
+                    top: ${e.clientY}px;
+                    animation: trailFade 1s ease-out forwards;
+                `;
+                
+                document.body.appendChild(trail);
+                
+                setTimeout(() => {
+                    if (trail.parentNode) {
+                        trail.remove();
+                    }
+                }, 1000);
+            }
+        });
+
+        // Add trail fade animation
+        const trailStyle = document.createElement('style');
+        trailStyle.textContent = `
+            @keyframes trailFade {
+                0% { opacity: 0.6; transform: scale(1); }
+                100% { opacity: 0; transform: scale(0); }
+            }
+        `;
+        document.head.appendChild(trailStyle);
+    </script>
+
+    <!-- Structured Data for Error Page -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "404 - Page Not Found",
+        "description": "The requested page was not found. Explore PegeArts creative portfolio, artworks, and design services instead.",
+        "url": "https://pegearts.com/404",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "PegeArts",
+            "description": "Creative Design Studio",
+            "url": "https://pegearts.com",
+            "sameAs": [
+                "https://instagram.com/pegearts",
+                "https://behance.net/pegearts"
+            ]
+        },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://pegearts.com"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "404 Error",
+                    "item": "https://pegearts.com/404"
+                }
+            ]
+        }
+    }
     </script>
 </body>
 </html>
