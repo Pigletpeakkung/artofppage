@@ -8,18 +8,18 @@
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
-    <link rel="preload" href="/css/main.css" as="style">
+    <link rel="preload" href="/assets/css/main.css" as="style">
     
     <!-- CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/assets/css">
     <!-- SVG Favicon (Modern Browsers) -->
 <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
 
 <!-- Fallback PNG Favicon -->
-<link rel="icon" href="/icons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" href="/icons/favicon-96x96.png" sizes="96x96">
-<link rel="icon" href="/icons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" href="/assets/icons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" href="/assets/icons/favicon-96x96.png" sizes="96x96">
+<link rel="icon" href="/assets/icons/favicon-16x16.png" sizes="16x16">
     
     <style>
         /* Critical 404-specific CSS (inlined for fastest rendering) */
@@ -131,10 +131,10 @@
         }
         
         // Load main CSS if not already loaded
-        if (!document.querySelector('link[href="/css/main.css"]').relList.contains('stylesheet')) {
+        if (!document.querySelector('link[href="/assets/css/main.css"]').relList.contains('stylesheet')) {
             const mainCSS = document.createElement('link');
             mainCSS.rel = 'stylesheet';
-            mainCSS.href = '/css/main.css';
+            mainCSS.href = '/assets/css/main.css';
             document.head.appendChild(mainCSS);
         }
         
