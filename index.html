@@ -1,51 +1,370 @@
+
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Thanatsitt Santisamranwilai - Full-Stack Developer Portfolio. Showcasing modern web development projects, skills in React, Node.js, and creative solutions.">
-    <meta name="keywords" content="full-stack developer, web developer, React, Node.js, JavaScript, portfolio, Thanatsitt">
-    <meta name="author" content="Thanatsitt Santisamranwilai">
-    <meta name="robots" content="index, follow">
+    <title>Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator</title>
+    <meta name="description" content="Crafting the future of digital experiences through AI, creative design, and cutting-edge technology. Portfolio of Thanatsitt Santisamranwilai.">
+
+    <!-- Sitemap for search engines -->
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+<!-- Additional meta for better indexing -->
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Thanatsitt Santisamranwilai - Full-Stack Developer">
-    <meta property="og:description" content="Creative full-stack developer specializing in modern web applications and user experiences.">
-    <meta property="og:image" content="https://your-domain.com/assets/images/og-image.jpg">
-    <meta property="og:url" content="https://your-domain.com">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Thanatsitt Santisamranwilai - Full-Stack Developer">
-    <meta name="twitter:description" content="Creative full-stack developer specializing in modern web applications and user experiences.">
-    <meta name="twitter:image" content="https://your-domain.com/assets/images/twitter-card.jpg">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#A78BFA">
-    <meta name="msapplication-TileColor" content="#A78BFA">
-    
-    <!-- Preconnect to external domains for performance -->
+    <!-- Preconnect to CDNs -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://www.googletagmanager.com">
+
+    <!-- CSS (Optimized Loading) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+          crossorigin="anonymous">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    
-    <!-- AOS - Animate On Scroll -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts (Preload for Performance) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!-- Open Graph Meta -->
+    <meta property="og:title" content="Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator">
+    <meta property="og:description" content="Crafting the future of digital experiences through AI and innovative design.">
+    <meta property="og:image" content="https://pegearts.com/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://pegearts.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Thanatsitt Portfolio">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator">
+    <meta name="twitter:description" content="Crafting the future of digital experiences through AI and innovative design.">
+    <meta name="twitter:image" content="https://pegearts.com/assets/images/twitter-card.jpg">
+    <meta name="twitter:creator" content="@thanatsitt_s">
+
+    <!-- Favicons -->
+    <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/assets/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" href="/assets/icons/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" href="/assets/icons/favicon-16x16.png" sizes="16x16">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Theme Colors (Light/Dark Support) -->
+    <meta name="theme-color" content="#A78BFA" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1A202C" media="(prefers-color-scheme: dark)">
+    <meta name="msapplication-TileColor" content="#A78BFA">
+    <meta name="msapplication-TileImage" content="/assets/icons/mstile-144x144.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#A78BFA">
+<!-- Replace AOS with GSAP -->
+<!-- OLD: <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
+
+<!-- GSAP CDN Links -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        color: #2d3748;
+        background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+
+    .hero-content h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    .hero-content p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .hero-btn {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    /* Content Sections */
+    .section {
+        padding: 5rem 0;
+        background: rgba(255, 255, 255, 0.95);
+        margin: 2rem 0;
+        border-radius: 30px;
+        backdrop-filter: blur(20px);
+    }
+
+    .section:nth-child(even) {
+        background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+    }
+
+    .section-title {
+        font-size: 3rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: #2d3748;
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 2px solid rgba(255, 107, 107, 0.1);
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #2d3748;
+    }
+
+    .card p {
+        color: #718096;
+        line-height: 1.6;
+    }
+
+    /* Gallery Section */
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .gallery-item {
+        aspect-ratio: 1;
+        background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+        opacity: 0;
+        transform: scale(0.8) rotate(-5deg);
+    }
+
+    /* Stats Section */
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #FF6B6B;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: #718096;
+        font-weight: 500;
+    }
+
+    /* Text Animation Section */
+    .text-animation {
+        text-align: center;
+        padding: 5rem 0;
+    }
+
+    .animated-text {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2d3748;
+        margin-bottom: 2rem;
+    }
+
+    .typewriter-text {
+        font-size: 1.5rem;
+        color: #FF6B6B;
+        font-weight: 600;
+        min-height: 2rem;
+    }
+
+    /* Parallax Section */
+    .parallax-section {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .parallax-bg {
+        position: absolute;
+        top: -20%;
+        left: -20%;
+        width: 140%;
+        height: 140%;
+        background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease infinite;
+        opacity: 0.3;
+    }
+
+    .parallax-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+    }
+
+    .parallax-content h2 {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    .parallax-content p {
+        font-size: 1.5rem;
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    /* Floating Elements */
+    .floating-element {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: rgba(255, 107, 107, 0.2);
+        border-radius: 50%;
+        opacity: 0;
+    }
+
+    .floating-element:nth-child(2) {
+        background: rgba(78, 205, 196, 0.2);
+        width: 150px;
+        height: 150px;
+    }
+
+    .floating-element:nth-child(3) {
+        background: rgba(69, 183, 209, 0.2);
+        width: 80px;
+        height: 80px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+        }
+        
+        .parallax-content h2 {
+            font-size: 2.5rem;
+        }
+        
+        .animated-text {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
     
     <!-- Critical CSS for loading states -->
     <style>
@@ -311,6 +630,100 @@
         }
     </style>
 
+    <!-- Structured Data (Unified) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://pegearts.com/#website",
+                "url": "https://pegearts.com/",
+                "name": "Thanatsitt Santisamranwilai - Portfolio",
+                "description": "AI Creative Designer & Digital Innovator portfolio showcasing cutting-edge projects in AI, creative design, and digital innovation.",
+                "publisher": {
+                    "@id": "https://pegearts.com/#person"
+                },
+                "inLanguage": "en-US",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://pegearts.com/?s={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Person",
+                "@id": "https://pegearts.com/#person",
+                "name": "Thanatsitt Santisamranwilai",
+                "jobTitle": "AI Creative Designer & Digital Innovator",
+                "description": "Passionate AI Creative Designer specializing in machine learning, creative technology, and digital innovation with expertise in voice acting and multilingual content creation.",
+                "url": "https://pegearts.com",
+                "email": "Thanattsitt.info@yahoo.co.uk",
+                "sameAs": [
+                    "https://linkedin.com/in/thanatsitt-s",
+                    "https://github.com/Pigletpeakkung",
+                    "https://www.threads.net/@thanatsitt.s",
+                    "https://www.voquent.com/voice-actor/2033447"
+                ],
+                "knowsAbout": [
+                    "Artificial Intelligence",
+                    "Machine Learning",
+                    "Creative Design",
+                    "Digital Innovation",
+                    "Voice Acting",
+                    "Multilingual Content Creation",
+                    "UI/UX Design",
+                    "Creative Technology",
+                    "Digital Marketing"
+                ],
+                "alumniOf": {
+                    "@type": "CollegeOrUniversity",
+                    "name": "London College of Fashion"
+                },
+                "hasOccupation": {
+                    "@type": "Occupation",
+                    "name": "AI Creative Designer & Digital Innovator",
+                    "occupationLocation": {
+                        "@type": "Place",
+                        "name": "Global (Remote)"
+                    },
+                    "skills": ["AI Training", "Creative Design", "Voice Production", "Digital Innovation", "Multilingual Translation"]
+                },
+                "image": "https://pegearts.com/assets/images/thanatsitt-profile.jpg"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://pegearts.com/#webpage",
+                "url": "https://pegearts.com/",
+                "name": "Thanatsitt Santisamranwilai - AI Creative Designer Portfolio",
+                "isPartOf": {
+                    "@id": "https://pegearts.com/#website"
+                },
+                "about": {
+                    "@id": "https://pegearts.com/#person"
+                },
+                "description": "Explore the innovative portfolio of Thanatsitt Santisamranwilai, featuring cutting-edge AI projects, creative design work, and digital innovations.",
+                "breadcrumb": {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "Home",
+                            "item": "https://pegearts.com/"
+                        }
+                    ]
+                },
+                "mainEntity": {
+                    "@id": "https://pegearts.com/#person"
+                },
+                "dateModified": "2024-01-15T00:00:00+00:00",
+                "datePublished": "2024-01-01T00:00:00+00:00"
+            }
+        ]
+    }
+    </script>
+    
     <!-- Google Analytics with Consent Mode -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
     <script>
