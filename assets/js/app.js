@@ -3925,3 +3925,36 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 export { PortfolioApp, CONFIG, Utils };
+
+// Add to your app.js or create a separate privacy.js file
+function showPrivacyPolicy() {
+    const modal = document.createElement('div');
+    modal.className = 'privacy-modal';
+    modal.innerHTML = `
+        <div class="privacy-content">
+            <h2>Privacy Policy</h2>
+            <div class="privacy-text">
+                <h3>Cookie Usage</h3>
+                <p>This website uses cookies to:</p>
+                <ul>
+                    <li><strong>Necessary:</strong> Ensure basic functionality and security</li>
+                    <li><strong>Analytics:</strong> Understand visitor behavior with Google Analytics</li>
+                    <li><strong>Preferences:</strong> Remember your settings (theme, language)</li>
+                    <li><strong>Marketing:</strong> Show relevant content and advertisements</li>
+                </ul>
+                
+                <h3>Data Collection</h3>
+                <p>We collect minimal data necessary for website functionality...</p>
+                
+                <h3>Your Rights</h3>
+                <p>You can modify your cookie preferences at any time...</p>
+            </div>
+            <button class="cookie-button cookie-button--primary" onclick="this.closest('.privacy-modal').remove()">
+                Close
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
