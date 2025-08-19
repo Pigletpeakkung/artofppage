@@ -25,6 +25,14 @@ const STATIC_CACHE_URLS = [
     '/cookie-policy.html',
     '/offline.html',
     
+    // New sitemap files
+    '/sitemap.xml',
+    '/sitemap.html',
+    '/robots.txt',
+    
+    // Microsoft configuration
+    '/browserconfig.xml',
+    
     // Assets (update paths to match your structure)
     '/assets/css/main.css',
     '/assets/js/app.js',
@@ -32,6 +40,14 @@ const STATIC_CACHE_URLS = [
     '/assets/images/logo.png',
     '/assets/images/hero-bg.jpg',
     '/assets/images/about-image.jpg',
+    
+    // Microsoft tile images (if you create them)
+    '/assets/images/icons/mstile-70x70.png',
+    '/assets/images/icons/mstile-150x150.png',
+    '/assets/images/icons/mstile-310x150.png',
+    '/assets/images/icons/mstile-310x310.png',
+    
+    // PWA manifest
     '/manifest.json',
     
     // External CDN resources
@@ -42,6 +58,7 @@ const STATIC_CACHE_URLS = [
     'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
     'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap'
 ];
+
 
 // Dynamic cache patterns
 const CACHE_PATTERNS = [
