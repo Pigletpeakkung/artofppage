@@ -6,9 +6,6 @@
     <title>Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator</title>
     <meta name="description" content="Crafting the future of digital experiences through AI, creative design, and cutting-edge technology. Portfolio of Thanatsitt Santisamranwilai.">
 
-    <!-- Sitemap for search engines -->
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-
     <!-- Additional meta for better indexing -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
@@ -43,8 +40,10 @@
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <!-- Google Fonts (Preload for Performance) -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    </noscript>
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -155,7 +154,7 @@
             50% {
                 transform: translateY(-10px) rotate(0deg);
             }
-            75% {
+                        75% {
                 transform: translateY(-20px) rotate(-2deg);
             }
         }
@@ -445,7 +444,7 @@
                 "jobTitle": "AI Creative Designer & Digital Innovator",
                 "description": "Passionate AI Creative Designer specializing in machine learning, creative technology, and digital innovation with expertise in voice acting and multilingual content creation.",
                 "url": "https://pegearts.com",
-                "email": "Thanattsitt.info@yahoo.co.uk",
+                "email": "Thanatsitt.info@yahoo.co.uk",
                 "sameAs": [
                     "https://linkedin.com/in/thanatsitt-s",
                     "https://github.com/Pigletpeakkung",
@@ -512,7 +511,7 @@
     </script>
 </head>
 
-<body data-theme="light" class="loaded" id="main-content">
+<body data-theme="light" class="loaded">
     <!-- Accessibility Skip Link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -524,7 +523,7 @@
 
     <!-- Header & Navigation -->
     <header role="banner">
-        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
+        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar navbar-dark">
             <div class="container">
                 <a href="#home-section" class="navbar-brand logo" aria-label="Thanatsitt Portfolio Home">
                     Thanatsitt
@@ -560,164 +559,165 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home-section" class="hero-section section">
-        <!-- Animated Background Elements -->
-        <div class="hero-section__geometric-shapes" aria-hidden="true">
-            <div class="shape shape--1"></div>
-            <div class="shape shape--2"></div>
-            <div class="shape shape--3"></div>
-        </div>
-
-        <!-- Enhanced Moon Container with Pastel Stars -->
-        <div class="hero-section__moon-container" aria-hidden="true">
-            <!-- Pastel Shining Stars -->
-            <div class="stars-container">
-                <div class="star star--1" style="--delay: 0s; --duration: 3s;"></div>
-                <div class="star star--2" style="--delay: 0.5s; --duration: 2.5s;"></div>
-                <div class="star star--3" style="--delay: 1s; --duration: 4s;"></div>
-                <div class="star star--4" style="--delay: 1.5s; --duration: 3.5s;"></div>
-                <div class="star star--5" style="--delay: 2s; --duration: 2.8s;"></div>
-                <div class="star star--6" style="--delay: 0.8s; --duration: 3.2s;"></div>
-                <div class="star star--7" style="--delay: 2.3s; --duration: 2.7s;"></div>
-                <div class="star star--8" style="--delay: 1.2s; --duration: 3.8s;"></div>
+    <main id="main-content" role="main" tabindex="-1">
+        <!-- Hero Section -->
+        <section id="home-section" class="hero-section section">
+            <!-- Animated Background Elements -->
+            <div class="hero-section__geometric-shapes" aria-hidden="true">
+                <div class="shape shape--1"></div>
+                <div class="shape shape--2"></div>
+                <div class="shape shape--3"></div>
             </div>
 
-            <!-- Enhanced Moon with Glow -->
-            <div class="moon-glow"></div>
-            <svg class="moon" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <radialGradient id="moonGradient" cx="0.3" cy="0.3">
-                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-                        <stop offset="70%" style="stop-color:#f8fafc;stop-opacity:0.9" />
-                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:0.8" />
-                    </radialGradient>
-                    <filter id="moonShadow">
-                        <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#A78BFA" flood-opacity="0.4"/>
-                    </filter>
-                    <filter id="moonGlow">
-                        <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-                        <feMerge> 
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
-                </defs>
-                
-                <!-- Moon Body -->
-                <circle cx="150" cy="150" r="140" 
-                        fill="url(#moonGradient)" 
-                        filter="url(#moonShadow)" 
-                        class="moon-body" />
-                
-                <!-- Moon Craters with Animation -->
-                <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" class="moon-crater crater-1" />
-                <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" class="moon-crater crater-2" />
-                <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" class="moon-crater crater-3" />
-                <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" class="moon-crater crater-4" />
-                <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" class="moon-crater crater-5" />
-                <circle cx="130" cy="200" r="7" fill="#d1d5db" opacity="0.35" class="moon-crater crater-6" />
-            </svg>
-
-            <!-- Moon Phases Animation -->
-            <div class="moon-phase-overlay"></div>
-        </div>
-
-        <!-- Hero Content -->
-        <div class="hero-section__content container text-center">
-            <h1 class="hero-title">Thanatsitt Santisamranwilai</h1>
-                        <p class="subtitle" id="typewriter" aria-live="polite"></p>
-            <p class="hero-description">
-                Crafting the future of digital experiences through AI, creative design, 
-                and cutting-edge technology. Transforming ideas into extraordinary realities.
-            </p>
-            
-            <!-- CTA Buttons -->
-            <div class="hero-section__cta">
-                <a href="#contact-section" class="button button--primary" aria-label="Contact me to start a project">
-                    <i class="fas fa-rocket icon-spacing" aria-hidden="true"></i>
-                    Let's Create Together
-                </a>
-                <a href="#portfolio-section" class="button button--secondary" aria-label="View my portfolio projects">
-                    <i class="fas fa-eye icon-spacing" aria-hidden="true"></i>
-                    View My Work
-                </a>
-            </div>
-
-            <!-- Social Links -->
-            <ul class="hero-section__social-links" role="list" aria-label="Social media links">
-                <li>
-                    <a href="https://linkedin.com/in/thanatsitt-s" 
-                       target="_blank" rel="noopener noreferrer" 
-                       aria-label="Connect on LinkedIn">
-                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/Pigletpeakkung" 
-                       target="_blank" rel="noopener noreferrer" 
-                       aria-label="View GitHub projects">
-                        <i class="fab fa-github" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.threads.net/@thanatsitt.s" 
-                       target="_blank" rel="noopener noreferrer" 
-                       aria-label="Follow on Threads">
-                        <!-- Custom Threads SVG Icon -->
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068v-.036c0-3.518.85-6.373 2.495-8.424C5.851 1.205 8.604.024 12.186 0h.007c3.582.024 6.334 1.205 8.184 3.509 1.645 2.051 2.495 4.906 2.495 8.424v.036c0 3.518-.85 6.373-2.495 8.424C18.52 22.795 15.768 23.976 12.186 24zM12 2.15c-2.68 0-4.832.854-6.24 2.475-1.323 1.52-2.01 3.679-2.01 6.325 0 2.646.687 4.805 2.01 6.325C7.168 19.096 9.32 19.95 12 19.95s4.832-.854 6.24-2.475c1.323-1.52 2.01-3.679 2.01-6.325 0-2.646-.687-4.805-2.01-6.325C16.832 3.004 14.68 2.15 12 2.15z"/>
-                        </svg>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.voquent.com/voice-actor/2033447" 
-                       target="_blank" rel="noopener noreferrer" 
-                       aria-label="View voice acting profile on Voquent">
-                        <i class="fas fa-microphone" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="mailto:Thanattsitt.info@yahoo.co.uk" 
-                       aria-label="Send email">
-                        <i class="fas fa-envelope" aria-hidden="true"></i>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Scroll Indicator -->
-            <div class="scroll-indicator" aria-hidden="true">
-                <span>Scroll to explore</span>
-                <div class="scroll-animation">
-                    <i class="fas fa-chevron-down"></i>
-                    <i class="fas fa-chevron-down"></i>
-                    <i class="fas fa-chevron-down"></i>
+            <!-- Enhanced Moon Container with Pastel Stars -->
+            <div class="hero-section__moon-container" aria-hidden="true">
+                <!-- Pastel Shining Stars -->
+                <div class="stars-container">
+                    <div class="star star--1" style="--delay: 0s; --duration: 3s;"></div>
+                    <div class="star star--2" style="--delay: 0.5s; --duration: 2.5s;"></div>
+                    <div class="star star--3" style="--delay: 1s; --duration: 4s;"></div>
+                    <div class="star star--4" style="--delay: 1.5s; --duration: 3.5s;"></div>
+                    <div class="star star--5" style="--delay: 2s; --duration: 2.8s;"></div>
+                    <div class="star star--6" style="--delay: 0.8s; --duration: 3.2s;"></div>
+                    <div class="star star--7" style="--delay: 2.3s; --duration: 2.7s;"></div>
+                    <div class="star star--8" style="--delay: 1.2s; --duration: 3.8s;"></div>
                 </div>
+
+                <!-- Enhanced Moon with Glow -->
+                <div class="moon-glow"></div>
+                <svg class="moon" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="moonGradient" cx="0.3" cy="0.3">
+                            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                            <stop offset="70%" style="stop-color:#f8fafc;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:0.8" />
+                        </radialGradient>
+                        <filter id="moonShadow">
+                            <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#A78BFA" flood-opacity="0.4"/>
+                        </filter>
+                        <filter id="moonGlow">
+                            <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                            <feMerge> 
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <!-- Moon Body -->
+                    <circle cx="150" cy="150" r="140" 
+                            fill="url(#moonGradient)" 
+                            filter="url(#moonShadow)" 
+                            class="moon-body" />
+                    
+                    <!-- Moon Craters with Animation -->
+                    <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" class="moon-crater crater-1" />
+                    <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" class="moon-crater crater-2" />
+                    <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" class="moon-crater crater-3" />
+                    <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" class="moon-crater crater-4" />
+                    <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" class="moon-crater crater-5" />
+                    <circle cx="130" cy="200" r="7" fill="#d1d5db" opacity="0.35" class="moon-crater crater-6" />
+                </svg>
+
+                <!-- Moon Phases Animation -->
+                <div class="moon-phase-overlay"></div>
             </div>
-        </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about-section" class="section about-section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <p class="section-subtitle">
-                Passionate about merging creativity with cutting-edge technology 
-                to create meaningful digital experiences.
-            </p>
+            <!-- Hero Content -->
+            <div class="hero-section__content container text-center">
+                <h1 class="hero-title">Thanatsitt Santisamranwilai</h1>
+                <p class="subtitle" id="typewriter" aria-live="polite"></p>
+                <p class="hero-description">
+                    Crafting the future of digital experiences through AI, creative design, 
+                    and cutting-edge technology. Transforming ideas into extraordinary realities.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="hero-section__cta">
+                    <a href="#contact-section" class="button button--primary" aria-label="Contact me to start a project">
+                        <i class="fas fa-rocket icon-spacing" aria-hidden="true"></i>
+                        Let's Create Together
+                    </a>
+                    <a href="#portfolio-section" class="button button--secondary" aria-label="View my portfolio projects">
+                        <i class="fas fa-eye icon-spacing" aria-hidden="true"></i>
+                        View My Work
+                    </a>
+                </div>
 
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="about-image-inner">
-                        <i class="about-image-icon fas fa-brain" aria-hidden="true"></i>
+                <!-- Social Links -->
+                <ul class="hero-section__social-links" role="list" aria-label="Social media links">
+                    <li>
+                        <a href="https://linkedin.com/in/thanatsitt-s" 
+                           target="_blank" rel="noopener noreferrer" 
+                           aria-label="Connect on LinkedIn">
+                            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/Pigletpeakkung" 
+                           target="_blank" rel="noopener noreferrer" 
+                           aria-label="View GitHub projects">
+                            <i class="fab fa-github" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.threads.net/@thanatsitt.s" 
+                           target="_blank" rel="noopener noreferrer" 
+                           aria-label="Follow on Threads">
+                            <!-- Custom Threads SVG Icon -->
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068v-.036c0-3.518.85-6.373 2.495-8.424C5.851 1.205 8.604.024 12.186 0h.007c3.582.024 6.334 1.205 8.184 3.509 1.645 2.051 2.495 4.906 2.495 8.424v.036c0 3.518-.85 6.373-2.495 8.424C18.52 22.795 15.768 23.976 12.186 24zM12 2.15c-2.68 0-4.832.854-6.24 2.475-1.323 1.52-2.01 3.679-2.01 6.325 0 2.646.687 4.805 2.01 6.325C7.168 19.096 9.32 19.95 12 19.95s4.832-.854 6.24-2.475c1.323-1.52 2.01-3.679 2.01-6.325 0-2.646-.687-4.805-2.01-6.325C16.832 3.004 14.68 2.15 12 2.15z"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.voquent.com/voice-actor/2033447" 
+                           target="_blank" rel="noopener noreferrer" 
+                           aria-label="View voice acting profile on Voquent">
+                            <i class="fas fa-microphone" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:Thanatsitt.info@yahoo.co.uk" 
+                           aria-label="Send email">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Scroll Indicator -->
+                <div class="scroll-indicator" aria-hidden="true">
+                    <span>Scroll to explore</span>
+                    <div class="scroll-animation">
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-chevron-down"></i>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="about-text-content">
-                    <h3 class="about-title">Digital Innovation Specialist</h3>
-                    <p class="about-text">
-                        As an AI Creative Designer and Digital Innovator, I specialize in transforming 
-                        complex ideas into intuitive, beautiful digital experiences. My expertise spans 
+        <!-- About Section -->
+        <section id="about-section" class="section about-section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">
+                    Passionate about merging creativity with cutting-edge technology 
+                    to create meaningful digital experiences.
+                </p>
+
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="about-image-inner">
+                            <i class="about-image-icon fas fa-brain" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <div class="about-text-content">
+                        <h3 class="about-title">Digital Innovation Specialist</h3>
+                        <p class="about-text">
+                            As an AI Creative Designer and Digital Innovator, I specialize in transforming 
+                                                    complex ideas into intuitive, beautiful digital experiences. My expertise spans 
                         machine learning, creative technology, and multilingual content creation.
                     </p>
                     <p class="about-text">
@@ -895,7 +895,7 @@
                                 Listen Demo
                             </a>
                             <a href="https://www.voquent.com/voice-actor/2033447" 
-                               class="portfolio-link" target="_blank" rel="noopener"
+                               class="portfolio-link" target="_blank" rel="noopener noreferrer"
                                aria-label="View voice profile">
                                 <i class="fas fa-microphone icon-spacing" aria-hidden="true"></i>
                                 Voice Profile
@@ -1037,23 +1037,23 @@
                     <ul class="contact-details">
                         <li>
                             <i class="fas fa-envelope" aria-hidden="true"></i>
-                            <a href="mailto:Thanattsitt.info@yahoo.co.uk">Thanattsitt.info@yahoo.co.uk</a>
+                            <a href="mailto:Thanatsitt.info@yahoo.co.uk">Thanatsitt.info@yahoo.co.uk</a>
                         </li>
                         <li>
                             <i class="fab fa-linkedin" aria-hidden="true"></i>
-                            <a href="https://linkedin.com/in/thanatsitt-s" target="_blank" rel="noopener">
+                            <a href="https://linkedin.com/in/thanatsitt-s" target="_blank" rel="noopener noreferrer">
                                 LinkedIn Profile
                             </a>
                         </li>
                         <li>
                             <i class="fab fa-github" aria-hidden="true"></i>
-                            <a href="https://github.com/Pigletpeakkung" target="_blank" rel="noopener">
+                            <a href="https://github.com/Pigletpeakkung" target="_blank" rel="noopener noreferrer">
                                 GitHub Portfolio
                             </a>
                         </li>
                         <li>
                             <i class="fas fa-microphone" aria-hidden="true"></i>
-                            <a href="https://www.voquent.com/voice-actor/2033447" target="_blank" rel="noopener">
+                            <a href="https://www.voquent.com/voice-actor/2033447" target="_blank" rel="noopener noreferrer">
                                 Voice Acting Profile
                             </a>
                         </li>
@@ -1068,7 +1068,7 @@
                     </div>
                 </div>
 
-                <form id="contactForm" class="contact-form glass-card" novalidate>
+                <form id="contactForm" class="contact-form glass-card" method="post" action="/contact/submit">
                     <div class="form-group">
                         <label for="name">Full Name *</label>
                         <input type="text" id="name" name="name" class="form-control" 
@@ -1146,11 +1146,12 @@
                         Send Message
                     </button>
 
-                    <div id="submit-status" class="sr-only" aria-live="polite"></div>
+                    <div id="submit-status" class="visually-hidden" aria-live="polite"></div>
                 </form>
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -1164,26 +1165,26 @@
                     </p>
                     <div class="footer-social">
                         <a href="https://linkedin.com/in/thanatsitt-s" 
-                           target="_blank" rel="noopener" 
+                           target="_blank" rel="noopener noreferrer" 
                            aria-label="Connect on LinkedIn">
                             <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                         </a>
                         <a href="https://github.com/Pigletpeakkung" 
-                           target="_blank" rel="noopener" 
+                           target="_blank" rel="noopener noreferrer" 
                            aria-label="View GitHub projects">
                             <i class="fab fa-github" aria-hidden="true"></i>
                         </a>
                         <a href="https://www.threads.net/@thanatsitt.s" 
-                           target="_blank" rel="noopener" 
+                           target="_blank" rel="noopener noreferrer" 
                            aria-label="Follow on Threads">
                             <i class="fab fa-threads" aria-hidden="true"></i>
                         </a>
                         <a href="https://www.voquent.com/voice-actor/2033447" 
-                           target="_blank" rel="noopener" 
+                           target="_blank" rel="noopener noreferrer" 
                            aria-label="Voice acting profile">
                             <i class="fas fa-microphone" aria-hidden="true"></i>
                         </a>
-                        <a href="mailto:Thanattsitt.info@yahoo.co.uk" 
+                        <a href="mailto:Thanatsitt.info@yahoo.co.uk" 
                            aria-label="Send email">
                             <i class="fas fa-envelope" aria-hidden="true"></i>
                         </a>
@@ -1216,9 +1217,9 @@
                 <div class="footer-section">
                     <h4>Get Updates</h4>
                     <p>Stay updated with my latest projects and insights.</p>
-                    <form class="newsletter-form" id="newsletterForm">
+                    <form class="newsletter-form" id="newsletterForm" method="post" action="/newsletter/subscribe">
                         <div class="newsletter-input-group">
-                            <input type="email" placeholder="Your email address" 
+                            <input type="email" name="newsletter_email" placeholder="Your email address" 
                                    aria-label="Email address for newsletter"
                                    class="newsletter-input" required>
                             <button type="submit" class="newsletter-button" 
@@ -1226,6 +1227,7 @@
                                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
                             </button>
                         </div>
+                        <div id="newsletter-status" class="visually-hidden" aria-live="polite"></div>
                     </form>
                 </div>
             </div>
@@ -1259,7 +1261,7 @@
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 
     <!-- Main Application Script -->
-<script src="/assets/js/main.js" defer></script>
+    <script src="/assets/js/main.js" defer></script>
     <script src="/assets/js/app.js" defer></script>
 
 </body>
