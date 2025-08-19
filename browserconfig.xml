@@ -1,51 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <browserconfig>
     <msapplication>
-        <!-- Windows 8/10 Tile Configuration -->
+        <!-- Tile configuration for Windows Start Menu -->
         <tile>
             <!-- Small tile (70x70) -->
-            <square70x70logo src="/assets/images/icons/mstile-70x70.png"/>
+            <square70x70logo src="assets/images/icons/mstile-70x70.png"/>
             
             <!-- Medium tile (150x150) -->
-            <square150x150logo src="/assets/images/icons/mstile-150x150.png"/>
+            <square150x150logo src="assets/images/icons/mstile-150x150.png"/>
             
             <!-- Wide tile (310x150) -->
-            <wide310x150logo src="/assets/images/icons/mstile-310x150.png"/>
+            <wide310x150logo src="assets/images/icons/mstile-310x150.png"/>
             
             <!-- Large tile (310x310) -->
-            <square310x310logo src="/assets/images/icons/mstile-310x310.png"/>
+            <square310x310logo src="assets/images/icons/mstile-310x310.png"/>
             
-            <!-- Tile background color -->
-            <TileColor>#A78BFA</TileColor>
+            <!-- Tile background color - using portfolio's primary color -->
+            <TileColor>#667eea</TileColor>
         </tile>
         
-        <!-- Notification configuration -->
-        <notification>
-            <!-- Enable polling for live tiles -->
-            <polling-uri src="/api/notifications/tile1"/>
-            <polling-uri src="/api/notifications/tile2"/>
-            <polling-uri src="/api/notifications/tile3"/>
-            <polling-uri src="/api/notifications/tile4"/>
-            <polling-uri src="/api/notifications/tile5"/>
-            
-            <!-- Polling frequency (30 minutes) -->
-            <frequency>30</frequency>
-            
-            <!-- Cycle through notifications -->
-            <cycle>1</cycle>
-        </notification>
+        <!-- Polling configuration for live tiles -->
+        <polling-uri src="notifications/liveupdate.xml"/>
+        <frequency>30</frequency>
+        <cycle>1</cycle>
         
-        <!-- Badge configuration -->
+        <!-- Application name that appears in Windows -->
+        <applicationName>Thanatsitt Portfolio</applicationName>
+        
+        <!-- Tooltip text for pinned sites -->
+        <tooltip>Visit Thanatsitt's Portfolio - Full-Stack Developer & UI/UX Designer</tooltip>
+        
+        <!-- Start URL when launched from Windows tile -->
+        <startURL>https://thanatsitt.com</startURL>
+        
+        <!-- Window features for pinned site browser -->
+        <window>
+            <width>1024</width>
+            <height>768</height>
+        </window>
+        
+        <!-- Task definitions for right-click context menu -->
+        <task>
+            <n>Home</n>
+            <action-uri>https://thanatsitt.com</action-uri>
+            <icon-uri>assets/images/icons/home-icon.ico</icon-uri>
+            <window-type>tab</window-type>
+        </task>
+        
+        <task>
+            <n>Portfolio</n>
+            <action-uri>https://thanatsitt.com#portfolio</action-uri>
+            <icon-uri>assets/images/icons/portfolio-icon.ico</icon-uri>
+            <window-type>tab</window-type>
+        </task>
+        
+        <task>
+            <n>About</n>
+            <action-uri>https://thanatsitt.com#about</action-uri>
+            <icon-uri>assets/images/icons/about-icon.ico</icon-uri>
+            <window-type>tab</window-type>
+        </task>
+        
+        <task>
+            <n>Contact</n>
+            <action-uri>https://thanatsitt.com#contact</action-uri>
+            <icon-uri>assets/images/icons/contact-icon.ico</icon-uri>
+            <window-type>tab</window-type>
+        </task>
+        
+        <!-- Navigation button colors -->
+        <navbutton-color>#667eea</navbutton-color>
+        
+        <!-- Badge configuration for notifications -->
         <badge>
-            <!-- Badge polling URI -->
-            <polling-uri src="/api/badge"/>
-            <frequency>30</frequency>
+            <polling-uri src="notifications/badge.xml"/>
+            <frequency>720</frequency>
         </badge>
         
-        <!-- Task configuration for Windows 10 -->
-        <task>
-            <name>Portfolio Updates</name>
-            <uri>/api/tasks/updates</uri>
-        </task>
+        <!-- Live tile template configuration -->
+        <notification>
+            <polling-uri src="notifications/tile-update.xml"/>
+            <polling-uri2 src="notifications/tile-update2.xml"/>
+            <polling-uri3 src="notifications/tile-update3.xml"/>
+            <polling-uri4 src="notifications/tile-update4.xml"/>
+            <polling-uri5 src="notifications/tile-update5.xml"/>
+            <frequency>30</frequency>
+            <cycle>1</cycle>
+        </notification>
     </msapplication>
+    
+    <!-- Additional browser configurations -->
+    <browser>
+        <!-- Internet Explorer configurations -->
+        <ie>
+            <!-- Enable modern document mode -->
+            <docmode>edge</docmode>
+            
+            <!-- Compatibility view settings -->
+            <compatview>false</compatview>
+            
+            <!-- Clear type settings for better font rendering -->
+            <cleartype>true</cleartype>
+            
+            <!-- Security settings -->
+            <security>
+                <!-- Allow mixed content for development -->
+                <mixed-content>false</mixed-content>
+                
+                <!-- Enable XSS protection -->
+                <xss-protection>true</xss-protection>
+                
+                <!-- Prevent content type sniffing -->
+                <nosniff>true</nosniff>
+            </security>
+        </ie>
+        
+        <!-- Microsoft Edge Legacy configurations -->
+        <edge>
+            <!-- Enable modern features -->
+            <features>
+                <webgl>true</webgl>
+                <css-grid>true</css-grid>
+                <flexbox>true</flexbox>
+                <es6>true</es6>
+            </features>
+        </edge>
+    </browser>
 </browserconfig>
