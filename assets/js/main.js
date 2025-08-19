@@ -1,1186 +1,1247 @@
-/* ==================================
-   THANATSITT PORTFOLIO - MAIN JAVASCRIPT
-   Modern ES2023+ Features & 2025 Best Practices
-   Performance-optimized, accessible, and maintainable
-   ================================== */
+// =============================================================================
+// GLOBAL VARIABLES AND CONFIGURATION
+// =============================================================================
 
-// === STRICT MODE & MODULE IMPORTS ===
-'use strict';
-
-// === CONSTANTS & CONFIGURATION ===
 const CONFIG = {
     // Animation settings
     ANIMATION_DURATION: 300,
     SCROLL_THRESHOLD: 100,
-    TYPING_SPEED: 100,
-    TYPING_DELAY: 1000,
-    
-    // Performance settings
-    THROTTLE_DELAY: 16, // ~60fps
-    DEBOUNCE_DELAY: 250,
     INTERSECTION_THRESHOLD: 0.1,
     
+    // Star system settings
+    STAR_COUNT: 50,
+    SHOOTING_STAR_INTERVAL: 8000,
+    CONSTELLATION_COUNT: 3,
+    
+    // Performance settings
+    DEBOUNCE_DELAY: 100,
+    THROTTLE_DELAY: 16,
+    
     // Theme settings
-    THEME_STORAGE_KEY: 'portfolio-theme',
+    THEME_STORAGE_KEY: 'thanatsitt-theme',
     DEFAULT_THEME: 'light',
     
-    // Contact form settings
-    FORM_TIMEOUT: 10000,
-    MAX_MESSAGE_LENGTH: 1000,
+    // Form settings
+    FORM_SUBMIT_URL: '#', // Replace with actual endpoint
+    FORM_SUCCESS_MESSAGE: 'Thank you! Your message has been sent successfully.',
+    FORM_ERROR_MESSAGE: 'Sorry, there was an error sending your message. Please try again.',
     
-    // Social links
-    SOCIAL_LINKS: {
-        github: 'https://github.com/thanatsitt',
-        linkedin: 'https://linkedin.com/in/thanatsitt',
-        email: 'Thanattsitt.info@yahoo.co.uk'
-    }
+    // Typing animation settings
+    TYPING_SPEED: 100,
+    ERASING_SPEED: 50,
+    PAUSE_DURATION: 2000
 };
 
-// === UTILITY FUNCTIONS ===
+// Global state
+const STATE = {
+    currentTheme: CONFIG.DEFAULT_THEME,
+    isScrolling: false,
+    activeFilter: 'all',
+    typingInstance: null,
+    intersectionObserver: null,
+    stars: [],
+    constellations: [],
+    isFormSubmitting: false,
+    currentSection: 'home'
+};
+
+// =============================================================================
+// UTILITY FUNCTIONS
+// =============================================================================
 
 /**
  * Debounce function to limit function calls
  */
-const debounce = (func, wait, immediate = false) => {
+function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
-            timeout = null;
-            if (!immediate) func.apply(this, args);
+            clearTimeout(timeout);
+            func(...args);
         };
-        const callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
-        if (callNow) func.apply(this, args);
     };
-};
+}
 
 /**
  * Throttle function to limit function calls
  */
-const throttle = (func, limit) => {
+function throttle(func, limit) {
     let inThrottle;
-    return function executedFunction(...args) {
+    return function(...args) {
         if (!inThrottle) {
             func.apply(this, args);
             inThrottle = true;
             setTimeout(() => inThrottle = false, limit);
         }
     };
-};
+}
 
 /**
- * Check if user prefers reduced motion
+ * Get random number between min and max
  */
-const prefersReducedMotion = () => {
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-};
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 /**
- * Safe localStorage operations
+ * Get random integer between min and max
  */
-const storage = {
-    get: (key) => {
-        try {
-            return localStorage.getItem(key);
-        } catch (error) {
-            console.warn('localStorage get failed:', error);
-            return null;
-        }
-    },
-    set: (key, value) => {
-        try {
-            localStorage.setItem(key, value);
-            return true;
-        } catch (error) {
-            console.warn('localStorage set failed:', error);
-            return false;
-        }
-    },
-    remove: (key) => {
-        try {
-            localStorage.removeItem(key);
-            return true;
-        } catch (error) {
-            console.warn('localStorage remove failed:', error);
-            return false;
-        }
-    }
-};
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 /**
- * Create and dispatch custom events
+ * Get random array element
  */
-const emitEvent = (eventName, detail = {}) => {
-    const event = new CustomEvent(eventName, { detail });
-    document.dispatchEvent(event);
-};
+function randomChoice(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
 
-// === THEME MANAGEMENT ===
+/**
+ * Check if element is in viewport
+ */
+function isInViewport(element, threshold = 0.1) {
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+    
+    return (
+        rect.top >= -threshold * windowHeight &&
+        rect.left >= -threshold * windowWidth &&
+        rect.bottom <= windowHeight + threshold * windowHeight &&
+        rect.right <= windowWidth + threshold * windowWidth
+    );
+}
+
+/**
+ * Smooth scroll to element
+ */
+function smoothScrollTo(element, offset = 80) {
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+    window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+    });
+}
+
+/**
+ * Add CSS class with animation support
+ */
+function addClassWithAnimation(element, className, duration = CONFIG.ANIMATION_DURATION) {
+    element.classList.add(className);
+    return new Promise(resolve => {
+        setTimeout(resolve, duration);
+    });
+}
+
+/**
+ * Remove CSS class with animation support
+ */
+function removeClassWithAnimation(element, className, duration = CONFIG.ANIMATION_DURATION) {
+    element.classList.remove(className);
+    return new Promise(resolve => {
+        setTimeout(resolve, duration);
+    });
+}
+
+// =============================================================================
+// THEME MANAGEMENT
+// =============================================================================
+
 class ThemeManager {
     constructor() {
-        this.currentTheme = this.getStoredTheme() || CONFIG.DEFAULT_THEME;
-        this.systemTheme = this.getSystemTheme();
         this.init();
     }
 
     init() {
-        this.applyTheme(this.currentTheme);
-        this.setupThemeToggle();
-        this.watchSystemTheme();
+        this.loadTheme();
+        this.bindEvents();
+        this.updateThemeToggle();
+    }
+
+    loadTheme() {
+        const savedTheme = localStorage.getItem(CONFIG.THEME_STORAGE_KEY);
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         
-        document.addEventListener('cc:onChange', () => {
-            this.handleConsentChange();
-        });
-    }
-
-    getStoredTheme() {
-        return storage.get(CONFIG.THEME_STORAGE_KEY);
-    }
-
-    getSystemTheme() {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        STATE.currentTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+        this.applyTheme(STATE.currentTheme);
     }
 
     applyTheme(theme) {
-        document.body.setAttribute('data-theme', theme);
-        this.currentTheme = theme;
-        this.updateThemeToggle(theme);
-        emitEvent('themeChanged', { theme });
+        document.documentElement.setAttribute('data-theme', theme);
+        STATE.currentTheme = theme;
+        localStorage.setItem(CONFIG.THEME_STORAGE_KEY, theme);
         
-        if (this.canStoreTheme()) {
-            storage.set(CONFIG.THEME_STORAGE_KEY, theme);
+        // Update meta theme-color
+        const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+        if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', theme === 'dark' ? '#1A202C' : '#F8FAFC');
         }
+
+        // Dispatch custom event
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
     }
 
     toggleTheme() {
-        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        const newTheme = STATE.currentTheme === 'light' ? 'dark' : 'light';
         this.applyTheme(newTheme);
+        this.updateThemeToggle();
+        
+        // Add visual feedback
+        this.addToggleAnimation();
     }
 
-    setupThemeToggle() {
+    updateThemeToggle() {
         const toggleButton = document.querySelector('.theme-toggle');
-        if (!toggleButton) return;
+        if (toggleButton) {
+            const icon = STATE.currentTheme === 'light' ? 'fa-moon' : 'fa-sun';
+            const title = STATE.currentTheme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
+            
+            toggleButton.innerHTML = `<i class="fas ${icon}"></i>`;
+            toggleButton.setAttribute('title', title);
+            toggleButton.setAttribute('aria-label', title);
+        }
+    }
 
-        toggleButton.addEventListener('click', () => this.toggleTheme());
+    addToggleAnimation() {
+        const toggleButton = document.querySelector('.theme-toggle');
+        if (toggleButton) {
+            toggleButton.style.transform = 'scale(0.8) rotate(180deg)';
+            setTimeout(() => {
+                toggleButton.style.transform = 'scale(1) rotate(0deg)';
+            }, 150);
+        }
+    }
 
-        toggleButton.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
+    bindEvents() {
+        // Theme toggle button
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.theme-toggle')) {
+                e.preventDefault();
+                this.toggleTheme();
+            }
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem(CONFIG.THEME_STORAGE_KEY)) {
+                this.applyTheme(e.matches ? 'dark' : 'light');
+                this.updateThemeToggle();
+            }
+        });
+
+        // Keyboard shortcut (Ctrl/Cmd + Shift + T)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'T') {
                 e.preventDefault();
                 this.toggleTheme();
             }
         });
     }
-
-    updateThemeToggle(theme) {
-        const toggleButton = document.querySelector('.theme-toggle');
-        if (!toggleButton) return;
-
-        const icon = toggleButton.querySelector('i');
-        if (icon) {
-            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-        }
-        
-        toggleButton.setAttribute('aria-label', 
-            `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`
-        );
-    }
-
-    watchSystemTheme() {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addEventListener('change', (e) => {
-            this.systemTheme = e.matches ? 'dark' : 'light';
-            
-            if (!this.getStoredTheme()) {
-                this.applyTheme(this.systemTheme);
-            }
-        });
-    }
-
-    canStoreTheme() {
-        if (typeof CookieConsent !== 'undefined') {
-            return CookieConsent.acceptedCategory('functionality');
-        }
-        return true;
-    }
-
-    handleConsentChange() {
-        if (this.canStoreTheme()) {
-            storage.set(CONFIG.THEME_STORAGE_KEY, this.currentTheme);
-        } else {
-            storage.remove(CONFIG.THEME_STORAGE_KEY);
-        }
-    }
 }
 
-// === NAVIGATION MANAGEMENT ===
+// =============================================================================
+// NAVIGATION MANAGEMENT
+// =============================================================================
+
 class NavigationManager {
     constructor() {
-        this.navbar = document.querySelector('.header__navbar');
-        this.navLinks = document.querySelectorAll('.nav-link');
-        this.sections = document.querySelectorAll('.section');
+        this.navbar = null;
+        this.navLinks = [];
+        this.sections = [];
         this.init();
     }
 
     init() {
-        this.setupScrollSpy();
-        this.setupSmoothScrolling();
-        this.setupNavbarBehavior();
-        this.setupMobileMenu();
+        this.navbar = document.querySelector('.header__navbar');
+        this.navLinks = Array.from(document.querySelectorAll('.nav-link'));
+        this.sections = Array.from(document.querySelectorAll('section[id]'));
+        
+        this.bindEvents();
+        this.updateActiveSection();
     }
 
-    setupScrollSpy() {
-        const observerOptions = {
-            threshold: CONFIG.INTERSECTION_THRESHOLD,
-            rootMargin: '-20% 0px -80% 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.updateActiveNavLink(entry.target.id);
-                }
-            });
-        }, observerOptions);
-
-        this.sections.forEach(section => {
-            observer.observe(section);
-        });
-    }
-
-    updateActiveNavLink(sectionId) {
-        this.navLinks.forEach(link => link.classList.remove('active'));
-
-        const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-        if (activeLink) {
-            activeLink.classList.add('active');
-            emitEvent('navigationChanged', { activeSection: sectionId });
-        }
-    }
-
-    setupSmoothScrolling() {
+    bindEvents() {
+        // Smooth scroll for navigation links
         this.navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                
                 const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
+                const targetElement = document.querySelector(targetId);
                 
-                if (targetSection) {
-                    this.scrollToSection(targetSection);
+                if (targetElement) {
+                    smoothScrollTo(targetElement);
+                    this.closeNavbar();
                 }
             });
         });
+
+        // Update active section on scroll
+        window.addEventListener('scroll', throttle(() => {
+            this.updateScrolledState();
+            this.updateActiveSection();
+        }, CONFIG.THROTTLE_DELAY));
+
+        // Close navbar on outside click (mobile)
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar') && this.isNavbarOpen()) {
+                this.closeNavbar();
+            }
+        });
+
+        // Close navbar on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isNavbarOpen()) {
+                this.closeNavbar();
+            }
+        });
     }
 
-    scrollToSection(section) {
-        const headerHeight = this.navbar?.offsetHeight || 0;
-        const targetPosition = section.offsetTop - headerHeight;
+    updateScrolledState() {
+        if (!this.navbar) return;
+
+        const scrolled = window.pageYOffset > CONFIG.SCROLL_THRESHOLD;
+        this.navbar.classList.toggle('navbar-scrolled', scrolled);
+    }
+
+    updateActiveSection() {
+        const scrollPosition = window.pageYOffset + 100;
+        let activeSection = '';
+
+        this.sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                activeSection = sectionId;
+            }
+        });
+
+        // Update active nav link
+        this.navLinks.forEach(link => {
+            const href = link.getAttribute('href').substring(1);
+            link.classList.toggle('active', href === activeSection);
+        });
+
+        // Update current section state
+        STATE.currentSection = activeSection || 'home';
+    }
+
+    isNavbarOpen() {
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        return navbarCollapse && navbarCollapse.classList.contains('show');
+    }
+
+    closeNavbar() {
+        const navbarToggler = document.querySelector('.navbar-toggler');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
         
-        if (prefersReducedMotion()) {
-            window.scrollTo(0, targetPosition);
+        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+            navbarToggler?.click();
+        }
+    }
+}
+
+// =============================================================================
+// TYPING ANIMATION
+// =============================================================================
+
+class TypingAnimation {
+    constructor(element, phrases, options = {}) {
+        this.element = element;
+        this.phrases = phrases;
+        this.options = {
+            typingSpeed: options.typingSpeed || CONFIG.TYPING_SPEED,
+            erasingSpeed: options.erasingSpeed || CONFIG.ERASING_SPEED,
+            pauseDuration: options.pauseDuration || CONFIG.PAUSE_DURATION,
+            loop: options.loop !== false,
+            cursor: options.cursor || '|',
+            showCursor: options.showCursor !== false
+        };
+        
+        this.currentPhraseIndex = 0;
+        this.currentCharIndex = 0;
+        this.isTyping = true;
+        this.isRunning = false;
+        
+        this.init();
+    }
+
+    init() {
+        if (!this.element || this.phrases.length === 0) return;
+        
+        this.element.style.minHeight = this.element.offsetHeight + 'px';
+        this.start();
+    }
+
+    start() {
+        if (this.isRunning) return;
+        this.isRunning = true;
+        this.type();
+    }
+
+    stop() {
+        this.isRunning = false;
+    }
+
+    type() {
+        if (!this.isRunning) return;
+
+        const currentPhrase = this.phrases[this.currentPhraseIndex];
+        
+        if (this.isTyping) {
+            // Typing phase
+            if (this.currentCharIndex < currentPhrase.length) {
+                const textToShow = currentPhrase.substring(0, this.currentCharIndex + 1);
+                this.updateDisplay(textToShow);
+                this.currentCharIndex++;
+                setTimeout(() => this.type(), this.options.typingSpeed);
+            } else {
+                // Finished typing, pause before erasing
+                setTimeout(() => {
+                    this.isTyping = false;
+                    this.type();
+                }, this.options.pauseDuration);
+            }
         } else {
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
+            // Erasing phase
+            if (this.currentCharIndex > 0) {
+                const textToShow = currentPhrase.substring(0, this.currentCharIndex - 1);
+                this.updateDisplay(textToShow);
+                this.currentCharIndex--;
+                setTimeout(() => this.type(), this.options.erasingSpeed);
+            } else {
+                // Finished erasing, move to next phrase
+                this.isTyping = true;
+                this.currentPhraseIndex = (this.currentPhraseIndex + 1) % this.phrases.length;
+                
+                if (this.options.loop || this.currentPhraseIndex !== 0) {
+                    setTimeout(() => this.type(), this.options.typingSpeed);
+                } else {
+                    this.isRunning = false;
+                }
+            }
         }
     }
 
-    setupNavbarBehavior() {
-        if (!this.navbar) return;
-
-        let lastScrollY = window.scrollY;
-        let isNavbarHidden = false;
-
-        const handleScroll = throttle(() => {
-            const currentScrollY = window.scrollY;
-            const scrollingDown = currentScrollY > lastScrollY;
-            const scrolledEnough = currentScrollY > CONFIG.SCROLL_THRESHOLD;
-
-            if (currentScrollY > 50) {
-                this.navbar.classList.add('scrolled');
-            } else {
-                this.navbar.classList.remove('scrolled');
-            }
-
-            if (scrolledEnough && scrollingDown && !isNavbarHidden) {
-                this.navbar.style.transform = 'translateY(-100%)';
-                isNavbarHidden = true;
-            } else if (!scrollingDown && isNavbarHidden) {
-                this.navbar.style.transform = 'translateY(0)';
-                isNavbarHidden = false;
-            }
-
-            lastScrollY = currentScrollY;
-        }, CONFIG.THROTTLE_DELAY);
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
+    updateDisplay(text) {
+        if (!this.element) return;
+        
+        const cursor = this.options.showCursor ? 
+            `<span class="typing-cursor" style="animation: blink 1s infinite;">${this.options.cursor}</span>` : '';
+        
+        this.element.innerHTML = text + cursor;
     }
 
-    setupMobileMenu() {
-        const mobileToggle = document.querySelector('.navbar-toggler');
-        const navCollapse = document.querySelector('.navbar-collapse');
-        
-        if (!mobileToggle || !navCollapse) return;
-
-        mobileToggle.addEventListener('click', () => {
-            const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
-            
-            mobileToggle.setAttribute('aria-expanded', !isExpanded);
-            navCollapse.classList.toggle('show');
-        });
-
-        // Close menu when clicking nav links
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileToggle.setAttribute('aria-expanded', 'false');
-                navCollapse.classList.remove('show');
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.navbar')) {
-                mobileToggle.setAttribute('aria-expanded', 'false');
-                navCollapse.classList.remove('show');
-            }
-        });
+    updatePhrases(newPhrases) {
+        this.phrases = newPhrases;
+        this.currentPhraseIndex = 0;
     }
 }
 
-// === ANIMATION MANAGER ===
-class AnimationManager {
-    constructor() {
-        this.animatedElements = new Set();
+// =============================================================================
+// STAR SYSTEM
+// =============================================================================
+
+class StarSystem {
+    constructor(container) {
+        this.container = container;
+        this.stars = [];
+        this.constellations = [];
+        this.shootingStars = [];
+        
+        this.colors = [
+            'pastel-pink', 'pastel-blue', 'pastel-purple', 'pastel-green',
+            'pastel-yellow', 'pastel-rose', 'pastel-sky', 'pastel-lavender',
+            'pastel-mint', 'pastel-peach', 'pastel-coral', 'pastel-sage'
+        ];
+        
+        this.sizes = ['tiny', 'small', 'medium', 'large', 'xl'];
+        this.animations = ['twinkle', 'move', 'pulse', 'float', 'breathe'];
+        
         this.init();
     }
 
     init() {
-        this.setupScrollAnimations();
-        this.setupTypewriter();
-        this.setupCounters();
-        this.setupStars();
+        if (!this.container) return;
+        
+        this.createStarField();
+        this.createConstellations();
+        this.startShootingStars();
+        this.bindEvents();
     }
 
-    setupScrollAnimations() {
-        if (prefersReducedMotion()) return;
-
-        const animatedElements = document.querySelectorAll('[data-animate]');
+    createStarField() {
+        const fragment = document.createDocumentFragment();
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !this.animatedElements.has(entry.target)) {
-                    this.animateElement(entry.target);
-                    this.animatedElements.add(entry.target);
-                }
-            });
-        }, {
-            threshold: CONFIG.INTERSECTION_THRESHOLD,
-            rootMargin: '0px 0px -50px 0px'
+        for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
+            const star = this.createStar();
+            fragment.appendChild(star);
+            this.stars.push(star);
+        }
+        
+        this.container.appendChild(fragment);
+    }
+
+    createStar(options = {}) {
+        const star = document.createElement('div');
+        const color = options.color || randomChoice(this.colors);
+        const size = options.size || randomChoice(this.sizes);
+        const animation = options.animation || randomChoice(this.animations);
+        const duration = options.duration || random(2, 8);
+        const delay = options.delay || random(0, 5);
+        
+        star.className = `star star--${size} star--${color} star--animate-${animation}`;
+        star.style.cssText = `
+            top: ${options.top || random(0, 100)}%;
+            left: ${options.left || random(0, 100)}%;
+            --duration: ${duration}s;
+            --delay: ${delay}s;
+            --sparkle-duration: ${random(3, 7)}s;
+            --sparkle-delay: ${random(0, 3)}s;
+        `;
+        
+        // Add interactive behavior for some stars
+        if (Math.random() < 0.2) {
+            star.classList.add('star--interactive');
+            this.addStarInteractivity(star);
+        }
+        
+        return star;
+    }
+
+    addStarInteractivity(star) {
+        star.addEventListener('click', () => {
+            star.classList.add('clicked');
+            setTimeout(() => star.classList.remove('clicked'), 600);
+            
+            // Create ripple effect
+            this.createRippleEffect(star);
         });
-
-        animatedElements.forEach(element => observer.observe(element));
-    }
-
-    animateElement(element) {
-        const animationType = element.dataset.animate;
-        const delay = parseInt(element.dataset.delay) || 0;
-
-        setTimeout(() => {
-            element.classList.add('animate-in');
-            
-            switch (animationType) {
-                case 'fade-up':
-                    element.style.transform = 'translateY(0)';
-                    element.style.opacity = '1';
-                    break;
-                case 'fade-in':
-                    element.style.opacity = '1';
-                    break;
-                case 'scale-in':
-                    element.style.transform = 'scale(1)';
-                    element.style.opacity = '1';
-                    break;
-            }
-        }, delay);
-    }
-
-    setupTypewriter() {
-        const typewriterElement = document.querySelector('.subtitle[data-typewriter]');
-        if (!typewriterElement) return;
-
-        const phrases = typewriterElement.dataset.typewriter.split('|');
-        let currentPhraseIndex = 0;
-        let currentCharIndex = 0;
-        let isDeleting = false;
-
-        const typewrite = () => {
-            const currentPhrase = phrases[currentPhraseIndex];
-            
-            if (!isDeleting) {
-                typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
-                currentCharIndex++;
-                
-                if (currentCharIndex === currentPhrase.length) {
-                    isDeleting = true;
-                    setTimeout(typewrite, CONFIG.TYPING_DELAY);
-                    return;
-                }
-            } else {
-                typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
-                currentCharIndex--;
-                
-                if (currentCharIndex === 0) {
-                    isDeleting = false;
-                    currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-                }
-            }
-            
-            const speed = isDeleting ? CONFIG.TYPING_SPEED / 2 : CONFIG.TYPING_SPEED;
-            setTimeout(typewrite, speed);
-        };
-
-        setTimeout(typewrite, 1000);
-    }
-
-    setupCounters() {
-        const counters = document.querySelectorAll('[data-counter]');
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.animateCounter(entry.target);
-                    observer.unobserve(entry.target);
-                }
+        star.addEventListener('mouseenter', () => {
+            star.style.zIndex = '10';
+        });
+        
+        star.addEventListener('mouseleave', () => {
+            star.style.zIndex = '';
+        });
+    }
+
+    createRippleEffect(star) {
+        const ripple = document.createElement('div');
+        ripple.className = 'star-ripple';
+        ripple.style.cssText = `
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, currentColor, transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: starRipple 1s ease-out forwards;
+            pointer-events: none;
+            z-index: 5;
+        `;
+        
+        star.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 1000);
+    }
+
+    createConstellations() {
+        for (let i = 0; i < CONFIG.CONSTELLATION_COUNT; i++) {
+            this.createConstellation();
+        }
+    }
+
+    createConstellation() {
+        const constellation = document.createElement('div');
+        constellation.className = 'constellation';
+        
+        const starCount = randomInt(3, 6);
+        const constellationStars = [];
+        const centerX = random(10, 90);
+        const centerY = random(10, 90);
+        const radius = random(5, 15);
+        
+        // Create constellation stars
+        for (let i = 0; i < starCount; i++) {
+            const angle = (i / starCount) * Math.PI * 2;
+            const x = centerX + Math.cos(angle) * radius;
+            const y = centerY + Math.sin(angle) * radius;
+            
+            const star = this.createStar({
+                top: y,
+                left: x,
+                size: randomChoice(['medium', 'large']),
+                animation: 'pulse',
+                duration: random(3, 6)
             });
-        }, { threshold: 0.5 });
-
-        counters.forEach(counter => observer.observe(counter));
+            
+            star.classList.add('star--constellation');
+            constellation.appendChild(star);
+            constellationStars.push({ element: star, x, y });
+        }
+        
+        // Create connecting lines
+        for (let i = 0; i < constellationStars.length; i++) {
+            const currentStar = constellationStars[i];
+            const nextStar = constellationStars[(i + 1) % constellationStars.length];
+            
+            const line = this.createConstellationLine(currentStar, nextStar);
+            constellation.appendChild(line);
+        }
+        
+        this.container.appendChild(constellation);
+        this.constellations.push(constellation);
     }
 
-    animateCounter(counter) {
-        const target = parseInt(counter.dataset.counter);
-        const duration = parseInt(counter.dataset.duration) || 2000;
-        const startTime = performance.now();
+    createConstellationLine(star1, star2) {
+        const line = document.createElement('div');
+        line.className = 'constellation-line';
         
-        const updateCounter = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-            const currentValue = Math.floor(target * easeOut);
-            
-            counter.textContent = currentValue.toLocaleString();
-            
-            if (progress < 1) {
-                requestAnimationFrame(updateCounter);
-            }
-        };
+        const dx = star2.x - star1.x;
+        const dy = star2.y - star1.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx) * (180 / Math.PI);
         
-        requestAnimationFrame(updateCounter);
+        line.style.cssText = `
+            top: ${star1.y}%;
+            left: ${star1.x}%;
+            width: ${distance}%;
+            transform: rotate(${angle}deg);
+            color: ${randomChoice(this.colors.map(c => `var(--star-${c})`))};
+            animation-delay: ${random(0, 4)}s;
+        `;
+        
+        return line;
     }
 
-    setupStars() {
-        const starsContainer = document.querySelector('.stars-container');
-        if (!starsContainer || prefersReducedMotion()) return;
-
-        this.createShootingStars();
+    startShootingStars() {
+        this.createShootingStar();
         
-        setTimeout(() => {
-            starsContainer.classList.add('breathing');
-        }, 2000);
-    }
-
-    createShootingStars() {
-        const shootingStarsContainer = document.querySelector('.shooting-stars');
-        if (!shootingStarsContainer) return;
-
         setInterval(() => {
-            if (Math.random() > 0.7) {
+            if (Math.random() < 0.3) {
                 this.createShootingStar();
             }
-        }, 5000);
+        }, CONFIG.SHOOTING_STAR_INTERVAL);
     }
 
     createShootingStar() {
-        const shootingStarsContainer = document.querySelector('.shooting-stars');
-        if (!shootingStarsContainer) return;
-
-        const star = document.createElement('div');
-        star.className = 'star star--shooting';
+        const shootingStar = document.createElement('div');
+        const color = randomChoice(this.colors);
+        const variant = randomInt(1, 3);
         
-        star.style.top = Math.random() * 50 + '%';
-        star.style.left = '-50px';
+        shootingStar.className = `shooting-star shooting-star--${variant}`;
+        shootingStar.style.cssText = `
+            top: ${random(10, 70)}%;
+            left: -100px;
+            color: var(--star-${color});
+            animation-duration: ${random(2, 5)}s;
+            animation-delay: ${random(0, 2)}s;
+        `;
         
-        shootingStarsContainer.appendChild(star);
+        this.container.appendChild(shootingStar);
+        this.shootingStars.push(shootingStar);
         
+        // Remove after animation
         setTimeout(() => {
-            star.remove();
-        }, 8000);
+            shootingStar.remove();
+            const index = this.shootingStars.indexOf(shootingStar);
+            if (index > -1) {
+                this.shootingStars.splice(index, 1);
+            }
+        }, 6000);
+    }
+
+    bindEvents() {
+        // Pause animations when not in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const stars = entry.target.querySelectorAll('.star, .shooting-star');
+                stars.forEach(star => {
+                    star.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+                });
+            });
+        });
+        
+        observer.observe(this.container);
+        
+        // Add/remove stars based on screen size
+        window.addEventListener('resize', debounce(() => {
+            this.adjustStarDensity();
+        }, 500));
+    }
+
+    adjustStarDensity() {
+        const screenWidth = window.innerWidth;
+        let targetCount = CONFIG.STAR_COUNT;
+        
+        if (screenWidth < 768) {
+            targetCount = Math.floor(CONFIG.STAR_COUNT * 0.6);
+        } else if (screenWidth < 1024) {
+            targetCount = Math.floor(CONFIG.STAR_COUNT * 0.8);
+        }
+        
+        const currentCount = this.stars.length;
+        
+        if (currentCount > targetCount) {
+            // Remove excess stars
+            const starsToRemove = this.stars.splice(targetCount);
+            starsToRemove.forEach(star => star.remove());
+        } else if (currentCount < targetCount) {
+            // Add more stars
+            const fragment = document.createDocumentFragment();
+            for (let i = currentCount; i < targetCount; i++) {
+                const star = this.createStar();
+                fragment.appendChild(star);
+                this.stars.push(star);
+            }
+            this.container.appendChild(fragment);
+        }
+    }
+
+    destroy() {
+        this.stars.forEach(star => star.remove());
+        this.constellations.forEach(constellation => constellation.remove());
+        this.shootingStars.forEach(star => star.remove());
+        
+        this.stars = [];
+        this.constellations = [];
+        this.shootingStars = [];
     }
 }
 
-// === CONTACT FORM MANAGER ===
-class ContactFormManager {
+// =============================================================================
+// PORTFOLIO FILTER
+// =============================================================================
+
+class PortfolioFilter {
     constructor() {
-        this.form = document.querySelector('#contact-form');
-        this.submitButton = null;
-        this.originalButtonText = '';
+        this.filters = [];
+        this.items = [];
+        this.activeFilter = 'all';
         this.init();
     }
 
     init() {
-        if (!this.form) return;
-
-        this.submitButton = this.form.querySelector('[type="submit"]');
-        this.originalButtonText = this.submitButton?.textContent || 'Send Message';
+        this.filters = Array.from(document.querySelectorAll('.portfolio-filter'));
+        this.items = Array.from(document.querySelectorAll('.portfolio-card'));
         
-        this.setupFormValidation();
-        this.setupFormSubmission();
-        this.setupCharacterCounter();
+        if (this.filters.length === 0 || this.items.length === 0) return;
+        
+        this.bindEvents();
+        this.setActiveFilter('all');
     }
 
-    setupFormValidation() {
-        const inputs = this.form.querySelectorAll('input, textarea, select');
-        
-        inputs.forEach(input => {
-            input.addEventListener('blur', () => {
-                this.validateField(input);
-            });
-            
-            input.addEventListener('input', () => {
-                this.clearFieldValidation(input);
+    bindEvents() {
+        this.filters.forEach(filter => {
+            filter.addEventListener('click', (e) => {
+                e.preventDefault();
+                const filterValue = filter.getAttribute('data-filter') || 'all';
+                this.setActiveFilter(filterValue);
             });
         });
+    }
+
+    setActiveFilter(filterValue) {
+        this.activeFilter = filterValue;
+        STATE.activeFilter = filterValue;
+        
+        // Update active filter button
+        this.filters.forEach(filter => {
+            const isActive = (filter.getAttribute('data-filter') || 'all') === filterValue;
+            filter.classList.toggle('active', isActive);
+        });
+        
+        // Filter items with animation
+        this.filterItems(filterValue);
+    }
+
+    async filterItems(filterValue) {
+        // Hide all items first
+        const hidePromises = this.items.map(item => {
+            return new Promise(resolve => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.8) translateY(20px)';
+                setTimeout(resolve, 150);
+            });
+        });
+        
+        await Promise.all(hidePromises);
+        
+        // Show/hide items based on filter
+        const showPromises = this.items.map(item => {
+            const categories = item.getAttribute('data-category')?.split(',') || [];
+            const shouldShow = filterValue === 'all' || categories.includes(filterValue);
+            
+            if (shouldShow) {
+                item.style.display = 'block';
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'scale(1) translateY(0)';
+                        resolve();
+                    }, 100);
+                });
+            } else {
+                item.style.display = 'none';
+                return Promise.resolve();
+            }
+        });
+        
+        await Promise.all(showPromises);
+        
+        // Trigger layout recalculation
+        this.reorderGrid();
+    }
+
+    reorderGrid() {
+        const container = document.querySelector('.portfolio-grid');
+        if (!container) return;
+        
+        // Force reflow
+        container.style.display = 'none';
+        container.offsetHeight; // Trigger reflow
+        container.style.display = 'grid';
+    }
+}
+
+// =============================================================================
+// FORM HANDLER
+// =============================================================================
+
+class FormHandler {
+    constructor() {
+        this.form = null;
+        this.submitButton = null;
+        this.messageContainer = null;
+        this.init();
+    }
+
+    init() {
+        this.form = document.querySelector('.contact-form');
+        if (!this.form) return;
+        
+        this.submitButton = this.form.querySelector('button[type="submit"]');
+        this.messageContainer = this.form.querySelector('.form-message') || this.createMessageContainer();
+        
+        this.bindEvents();
+        this.setupValidation();
+    }
+
+    createMessageContainer() {
+        const container = document.createElement('div');
+        container.className = 'form-message';
+        container.style.marginTop = '1rem';
+        this.form.appendChild(container);
+        return container;
+    }
+
+    bindEvents() {
+        this.form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleSubmit();
+        });
+        
+        // Real-time validation
+        const inputs = this.form.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => this.validateField(input));
+            input.addEventListener('input', () => this.clearFieldError(input));
+        });
+    }
+
+    setupValidation() {
+        // Add required field indicators
+        const requiredFields = this.form.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+            const label = this.form.querySelector(`label[for="${field.id}"]`);
+            if (label && !label.querySelector('.required-indicator')) {
+                const indicator = document.createElement('span');
+                indicator.className = 'required-indicator';
+                indicator.textContent = ' *';
+                indicator.style.color = 'var(--error)';
+                label.appendChild(indicator);
+            }
+        });
+    }
+
+    async handleSubmit() {
+        if (STATE.isFormSubmitting) return;
+        
+        // Validate all fields
+        const isValid = this.validateForm();
+        if (!isValid) {
+            this.showMessage('Please correct the errors below.', 'error');
+            return;
+        }
+        
+        STATE.isFormSubmitting = true;
+        this.setSubmitState(true);
+        
+        try {
+            const formData = this.getFormData();
+            const response = await this.submitForm(formData);
+            
+            if (response.success) {
+                this.showMessage(CONFIG.FORM_SUCCESS_MESSAGE, 'success');
+                this.form.reset();
+                this.clearAllErrors();
+            } else {
+                this.showMessage(response.message || CONFIG.FORM_ERROR_MESSAGE, 'error');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            this.showMessage(CONFIG.FORM_ERROR_MESSAGE, 'error');
+        } finally {
+            STATE.isFormSubmitting = false;
+            this.setSubmitState(false);
+        }
+    }
+
+    validateForm() {
+        const inputs = this.form.querySelectorAll('input, textarea, select');
+        let isValid = true;
+        
+        inputs.forEach(input => {
+            if (!this.validateField(input)) {
+                isValid = false;
+            }
+        });
+        
+        return isValid;
     }
 
     validateField(field) {
         const value = field.value.trim();
-        let isValid = true;
-        let errorMessage = '';
-
-        this.clearFieldValidation(field);
-
-        if (field.hasAttribute('required') && !value) {
-            isValid = false;
-            errorMessage = 'This field is required';
-        } else if (field.type === 'email' && value) {
+        const type = field.type;
+        const required = field.hasAttribute('required');
+        
+        // Clear previous errors
+        this.clearFieldError(field);
+        
+        // Required field validation
+        if (required && !value) {
+            this.showFieldError(field, 'This field is required.');
+            return false;
+        }
+        
+        // Skip further validation if field is empty and not required
+        if (!value && !required) return true;
+        
+        // Email validation
+        if (type === 'email') {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'Please enter a valid email address';
+                this.showFieldError(field, 'Please enter a valid email address.');
+                return false;
             }
-        } else if (field.name === 'message' && value.length > CONFIG.MAX_MESSAGE_LENGTH) {
-            isValid = false;
-            errorMessage = `Message must be less than ${CONFIG.MAX_MESSAGE_LENGTH} characters`;
         }
-
-        if (!isValid) {
-            this.showFieldError(field, errorMessage);
+        
+        // Phone validation
+        if (field.name === 'phone' && value) {
+            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+            if (!phoneRegex.test(value)) {
+                this.showFieldError(field, 'Please enter a valid phone number.');
+                return false;
+            }
         }
-
-        return isValid;
+        
+        // Message length validation
+        if (field.name === 'message' && value.length < 10) {
+            this.showFieldError(field, 'Message must be at least 10 characters long.');
+            return false;
+        }
+        
+        return true;
     }
 
     showFieldError(field, message) {
-        field.classList.add('invalid');
-        field.setAttribute('aria-invalid', 'true');
+        field.classList.add('error');
         
         let errorElement = field.parentNode.querySelector('.field-error');
         if (!errorElement) {
             errorElement = document.createElement('div');
             errorElement.className = 'field-error';
-            errorElement.setAttribute('role', 'alert');
+            errorElement.style.cssText = `
+                color: var(--error);
+                font-size: 0.875rem;
+                margin-top: 0.25rem;
+                font-weight: 500;
+            `;
             field.parentNode.appendChild(errorElement);
         }
         
         errorElement.textContent = message;
-        field.setAttribute('aria-describedby', errorElement.id || 'error-' + field.name);
     }
 
-    clearFieldValidation(field) {
-        field.classList.remove('invalid');
-        field.removeAttribute('aria-invalid');
-        
+    clearFieldError(field) {
+        field.classList.remove('error');
         const errorElement = field.parentNode.querySelector('.field-error');
         if (errorElement) {
             errorElement.remove();
         }
     }
 
-    setupFormSubmission() {
-        this.form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await this.handleFormSubmission();
-        });
+    clearAllErrors() {
+        const errorFields = this.form.querySelectorAll('.error');
+        errorFields.forEach(field => this.clearFieldError(field));
     }
 
-    async handleFormSubmission() {
-        const fields = this.form.querySelectorAll('input, textarea, select');
-        let isFormValid = true;
-
-        fields.forEach(field => {
-            if (!this.validateField(field)) {
-                isFormValid = false;
-            }
-        });
-
-        if (!isFormValid) {
-            this.showFormMessage('Please correct the errors above', 'error');
-            return;
-        }
-
-        this.setFormLoading(true);
-
-        try {
-            await this.submitForm();
-            
-            this.showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
-            this.form.reset();
-            this.trackFormSubmission('success');
-            
-        } catch (error) {
-            console.error('Form submission error:', error);
-            this.showFormMessage('Failed to send message. Please try again later.', 'error');
-            this.trackFormSubmission('error');
-        } finally {
-            this.setFormLoading(false);
-        }
-    }
-
-    async submitForm() {
+    getFormData() {
         const formData = new FormData(this.form);
-        const data = Object.fromEntries(formData.entries());
+        const data = {};
+        
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+        
+        return data;
+    }
 
-        data.timestamp = new Date().toISOString();
-        data.userAgent = navigator.userAgent;
-
-        // Simulate API call (replace with actual endpoint)
-        return new Promise((resolve, reject) => {
+    async submitForm(data) {
+        // Simulate API call - replace with actual endpoint
+        return new Promise((resolve) => {
             setTimeout(() => {
-                if (Math.random() > 0.1) {
-                    resolve(data);
-                } else {
-                    reject(new Error('Submission failed'));
-                }
+                // Simulate success/failure
+                const success = Math.random() > 0.1; // 90% success rate for demo
+                resolve({
+                    success,
+                    message: success ? CONFIG.FORM_SUCCESS_MESSAGE : CONFIG.FORM_ERROR_MESSAGE
+                });
             }, 2000);
         });
+        
+        // Actual implementation would be:
+        /*
+        const response = await fetch(CONFIG.FORM_SUBMIT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        return await response.json();
+        */
     }
 
-    setFormLoading(isLoading) {
+    setSubmitState(isSubmitting) {
         if (!this.submitButton) return;
-
-        if (isLoading) {
+        
+        if (isSubmitting) {
             this.submitButton.disabled = true;
-            this.submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+            this.submitButton.innerHTML = `
+                <i class="fas fa-spinner fa-spin icon-spacing"></i>
+                Sending...
+            `;
         } else {
             this.submitButton.disabled = false;
-            this.submitButton.textContent = this.originalButtonText;
+            this.submitButton.innerHTML = `
+                <i class="fas fa-paper-plane icon-spacing"></i>
+                Send Message
+            `;
         }
     }
 
-    showFormMessage(message, type) {
-        const existingMessage = this.form.querySelector('.form-message');
-        if (existingMessage) {
-            existingMessage.remove();
-        }
-
-        const messageElement = document.createElement('div');
-        messageElement.className = `form-message form-message--${type}`;
-        messageElement.setAttribute('role', 'alert');
-        messageElement.innerHTML = `
-            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
-            ${message}
-        `;
-
-        this.form.insertBefore(messageElement, this.form.firstChild);
-
+    showMessage(message, type) {
+        if (!this.messageContainer) return;
+        
+        this.messageContainer.className = `form-message text-${type === 'success' ? 'success' : 'danger'}`;
+        this.messageContainer.textContent = message;
+        this.messageContainer.style.display = 'block';
+        
+        // Auto-hide after 5 seconds
         setTimeout(() => {
-            messageElement.remove();
+            this.messageContainer.style.display = 'none';
         }, 5000);
     }
-
-    setupCharacterCounter() {
-        const messageField = this.form.querySelector('textarea[name="message"]');
-        if (!messageField) return;
-
-        const counterElement = document.createElement('div');
-        counterElement.className = 'character-counter';
-        messageField.parentNode.appendChild(counterElement);
-
-        const updateCounter = () => {
-            const currentLength = messageField.value.length;
-            const maxLength = CONFIG.MAX_MESSAGE_LENGTH;
-            const remaining = maxLength - currentLength;
-            
-            counterElement.textContent = `${currentLength}/${maxLength}`;
-            counterElement.classList.toggle('warning', remaining < 50);
-            counterElement.classList.toggle('error', remaining < 0);
-        };
-
-        messageField.addEventListener('input', updateCounter);
-        updateCounter();
-    }
-
-    trackFormSubmission(status) {
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'form_submission', {
-                event_category: 'engagement',
-                event_label: status,
-                value: status === 'success' ? 1 : 0
-            });
-        }
-
-        emitEvent('formSubmitted', { status });
-    }
 }
 
-// === PERFORMANCE MONITOR ===
-class PerformanceMonitor {
+// =============================================================================
+// INTERSECTION OBSERVER FOR ANIMATIONS
+// =============================================================================
+
+class ScrollAnimations {
     constructor() {
-        this.metrics = {};
+        this.observer = null;
         this.init();
     }
 
     init() {
-        this.measurePageLoad();
-        this.measureLCP();
-        this.measureFID();
-        this.measureCLS();
-        this.setupResourceMonitoring();
+        this.observer = new IntersectionObserver(
+            (entries) => this.handleIntersection(entries),
+            {
+                threshold: CONFIG.INTERSECTION_THRESHOLD,
+                rootMargin: '0px 0px -50px 0px'
+            }
+        );
+        
+        this.observeElements();
     }
 
-    measurePageLoad() {
-        if ('performance' in window) {
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const navigation = performance.getEntriesByType('navigation')[0];
-                    if (navigation) {
-                        this.metrics.loadTime = navigation.loadEventEnd - navigation.loadEventStart;
-                        this.metrics.domContentLoaded = navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart;
-                        this.metrics.firstByte = navigation.responseStart - navigation.requestStart;
-                        
-                        console.log('Page Load Metrics:', this.metrics);
-                        this.reportMetrics('page_load', this.metrics);
-                    }
-                }, 0);
-            });
-        }
+    observeElements() {
+        // Elements to animate on scroll
+        const elements = document.querySelectorAll(`
+            .skill-card,
+            .portfolio-card,
+            .about-content,
+            .contact-content,
+            .section-title,
+            .section-subtitle,
+            .hero-section__content > *
+        `);
+        
+        elements.forEach(element => {
+            element.classList.add('fade-in');
+            this.observer.observe(element);
+        });
     }
 
-    measureLCP() {
-        if ('PerformanceObserver' in window) {
-            const observer = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                const lastEntry = entries[entries.length - 1];
-                this.metrics.lcp = lastEntry.startTime;
+    handleIntersection(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
                 
-                console.log('LCP:', this.metrics.lcp);
-                this.reportMetrics('lcp', { value: this.metrics.lcp });
-            });
-            
-            observer.observe({ entryTypes: ['largest-contentful-paint'] });
-        }
-    }
-
-    measureFID() {
-        if ('PerformanceObserver' in window) {
-            const observer = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                entries.forEach(entry => {
-                    if (entry.name === 'first-input') {
-                        this.metrics.fid = entry.processingStart - entry.startTime;
-                        
-                        console.log('FID:', this.metrics.fid);
-                        this.reportMetrics('fid', { value: this.metrics.fid });
-                    }
-                });
-            });
-            
-            observer.observe({ entryTypes: ['first-input'] });
-        }
-    }
-
-    measureCLS() {
-        if ('PerformanceObserver' in window) {
-            let clsValue = 0;
-            
-            const observer = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                entries.forEach(entry => {
-                    if (!entry.hadRecentInput) {
-                        clsValue += entry.value;
-                    }
-                });
-                
-                this.metrics.cls = clsValue;
-                console.log('CLS:', this.metrics.cls);
-                this.reportMetrics('cls', { value: this.metrics.cls });
-            });
-            
-            observer.observe({ entryTypes: ['layout-shift'] });
-        }
-    }
-
-    setupResourceMonitoring() {
-        if ('PerformanceObserver' in window) {
-            const observer = new PerformanceObserver((list) => {
-                const entries = list.getEntries();
-                entries.forEach(entry => {
-                    if (entry.duration > 1000) {
-                        console.warn('Slow resource:', entry.name, entry.duration + 'ms');
-                    }
-                });
-            });
-            
-            observer.observe({ entryTypes: ['resource'] });
-        }
-    }
-
-    reportMetrics(metricName, data) {
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'performance_metric', {
-                event_category: 'performance',
-                event_label: metricName,
-                value: Math.round(data.value || data.loadTime || 0)
-            });
-        }
-
-        emitEvent('performanceMetric', { metric: metricName, data });
-    }
-}
-
-// === ACCESSIBILITY MANAGER ===
-class AccessibilityManager {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        this.setupKeyboardNavigation();
-        this.setupFocusManagement();
-        this.setupAriaLiveRegions();
-        this.setupReducedMotion();
-    }
-
-    setupKeyboardNavigation() {
-        // Skip to main content
-        const skipLink = document.createElement('a');
-        skipLink.href = '#main';
-        skipLink.className = 'skip-link';
-        skipLink.textContent = 'Skip to main content';
-        document.body.insertBefore(skipLink, document.body.firstChild);
-
-        // Escape key handling
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                // Close any open modals or menus
-                const openModal = document.querySelector('.modal.show');
-                const openMenu = document.querySelector('.navbar-collapse.show');
-                
-                if (openModal) {
-                    openModal.classList.remove('show');
+                // Trigger skill progress bars
+                if (entry.target.classList.contains('skill-card')) {
+                    this.animateSkillProgress(entry.target);
                 }
                 
-                if (openMenu) {
-                    openMenu.classList.remove('show');
-                    const toggle = document.querySelector('.navbar-toggler');
-                    if (toggle) {
-                        toggle.setAttribute('aria-expanded', 'false');
-                    }
+                // Stagger animation for multiple elements
+                if (entry.target.parentElement?.classList.contains('skills-grid') ||
+                    entry.target.parentElement?.classList.contains('portfolio-grid')) {
+                    this.staggerAnimation(entry.target);
                 }
             }
         });
     }
 
-    setupFocusManagement() {
-        // Focus visible indicators
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-
-        document.addEventListener('mousedown', () => {
-            document.body.classList.remove('keyboard-navigation');
-        });
-
-        // Focus trap for modals
-        document.addEventListener('focusin', (e) => {
-            const modal = e.target.closest('.modal');
-            if (modal && modal.classList.contains('show')) {
-                const focusableElements = modal.querySelectorAll(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                );
-                
-                const firstElement = focusableElements[0];
-                const lastElement = focusableElements[focusableElements.length - 1];
-                
-                if (e.target === modal && firstElement) {
-                    firstElement.focus();
-                }
-            }
-        });
-    }
-
-    setupAriaLiveRegions() {
-        // Create live region for announcements
-        const liveRegion = document.createElement('div');
-        liveRegion.setAttribute('aria-live', 'polite');
-        liveRegion.setAttribute('aria-atomic', 'true');
-        liveRegion.className = 'sr-only';
-        liveRegion.id = 'live-region';
-        document.body.appendChild(liveRegion);
-
-        // Listen for custom events to announce
-        document.addEventListener('themeChanged', (e) => {
-            this.announce(`Theme changed to ${e.detail.theme} mode`);
-        });
-
-        document.addEventListener('navigationChanged', (e) => {
-            this.announce(`Navigated to ${e.detail.activeSection} section`);
-        });
-    }
-
-    announce(message) {
-        const liveRegion = document.getElementById('live-region');
-        if (liveRegion) {
-            liveRegion.textContent = message;
+    animateSkillProgress(skillCard) {
+        const progressBar = skillCard.querySelector('.skill-progress-bar');
+        if (progressBar && !progressBar.classList.contains('animated')) {
+            progressBar.classList.add('animated');
             
-            // Clear after announcement
+            // Add a slight delay for visual effect
             setTimeout(() => {
-                liveRegion.textContent = '';
-            }, 1000);
+                progressBar.style.transform = 'scaleX(1)';
+            }, 300);
         }
     }
 
-    setupReducedMotion() {
-        if (prefersReducedMotion()) {
-            document.body.classList.add('reduced-motion');
-            
-            // Disable autoplay animations
-            const autoplayElements = document.querySelectorAll('[autoplay]');
-            autoplayElements.forEach(element => {
-                element.removeAttribute('autoplay');
-            });
-        }
+    staggerAnimation(element) {
+        const siblings = Array.from(element.parentElement.children);
+        const index = siblings.indexOf(element);
+        
+        element.style.animationDelay = `${index * 0.1}s`;
     }
 }
 
-// === ERROR HANDLER ===
-class ErrorHandler {
+// =============================================================================
+// PERFORMANCE OPTIMIZATIONS
+// =============================================================================
+
+class PerformanceOptimizer {
     constructor() {
         this.init();
     }
 
     init() {
-        window.addEventListener('error', (e) => {
-            this.handleError(e.error, 'JavaScript Error', e.filename, e.lineno);
-        });
-
-        window.addEventListener('unhandledrejection', (e) => {
-            this.handleError(e.reason, 'Unhandled Promise Rejection');
-        });
+        this.optimizeImages();
+        this.preloadCriticalResources();
+        this.setupIntersectionObservers();
+        this.enablePassiveListeners();
     }
 
-    handleError(error, type, filename = '', line = 0) {
-        console.error(`${type}:`, error);
-
-        // Log to analytics if available
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'exception', {
-                description: `${type}: ${error.message || error}`,
-                fatal: false
+    optimizeImages() {
+        // Lazy load images
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
             });
-        }
-
-        // Show user-friendly error message for critical errors
-        if (type === 'JavaScript Error' && error.message.includes('fetch')) {
-            this.showUserError('Network error. Please check your connection and try again.');
-        }
-    }
-
-    showUserError(message) {
-        const errorContainer = document.createElement('div');
-        errorContainer.className = 'error-toast';
-        errorContainer.innerHTML = `
-            <div class="error-toast__content">
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                ${message}
-                <button class="error-toast__close" aria-label="Close error message">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        `;
-
-        document.body.appendChild(errorContainer);
-
-        // Auto-remove after 5 seconds
-        setTimeout(() => {
-            errorContainer.remove();
-        }, 5000);
-
-        // Manual close
-        errorContainer.querySelector('.error-toast__close').addEventListener('click', () => {
-            errorContainer.remove();
         });
-    }
-}
-
-// === SERVICE WORKER REGISTRATION ===
-class ServiceWorkerManager {
-    constructor() {
-        this.init();
+        
+        images.forEach(img => imageObserver.observe(img));
     }
 
-    async init() {
-        if ('serviceWorker' in navigator && 'caches' in window) {
-            try {
-                const registration = await navigator.serviceWorker.register('/sw.js');
-                console.log('Service Worker registered:', registration);
-
-                // Listen for updates
-                registration.addEventListener('updatefound', () => {
-                    const newWorker = registration.installing;
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            this.showUpdateNotification();
-                        }
-                    });
-                });
-            } catch (error) {
-                console.log('Service Worker registration failed:', error);
+    preloadCriticalResources() {
+        // Preload critical CSS and fonts
+        const criticalResources = [
+            { href: 'assets/css/main.css', as: 'style' },
+            { href: 'assets/css/star.css', as: 'style' },
+            { href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap', as: 'style' }
+        ];
+        
+        criticalResources.forEach(resource => {
+            const link = document.createElement('link');
+            link.rel = 'preload';
+            link.href = resource.href;
+            link.as = resource.as;
+            if (resource.as === 'style') {
+                link.onload = () => {
+                    link.rel = 'stylesheet';
+                };
             }
-        }
+            document.head.appendChild(link);
+        });
     }
 
-    showUpdateNotification() {
-        const notification = document.createElement('div');
-        notification.className = 'update-notification';
-        notification.innerHTML = `
-            <div class="update-notification__content">
-                <i class="fas fa-sync-alt me-2"></i>
-                A new version is available!
-                <button class="btn btn-sm btn-primary ms-2" onclick="window.location.reload()">
-                    Update Now
-                </button>
-                <button class="update-notification__close" aria-label="Close notification">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        `;
+    setupIntersectionObservers() {
+        // Pause animations when not visible
+        const animatedElements = document.querySelectorAll('.star, .shooting-star, [class*="animate"]');
+        
+        const animationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const element = entry.target;
+                if (element.style.animationPlayState !== undefined) {
+                    element.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+                }
+            });
+        });
+        
+        animatedElements.forEach(element => animationObserver.observe(element));
+    }
 
-        document.body.appendChild(notification);
-
-        notification.querySelector('.update-notification__close').addEventListener('click', () => {
-            notification.remove();
+    enablePassiveListeners() {
+        // Use passive listeners for scroll events
+        const passiveEvents = ['scroll', 'touchstart', 'touchmove', 'wheel'];
+        
+        passiveEvents.forEach(eventType => {
+            document.addEventListener(eventType, () => {}, { passive: true });
         });
     }
 }
 
-// === MAIN APPLICATION ===
+// =============================================================================
+// MAIN APPLICATION CLASS
+// =============================================================================
+
 class PortfolioApp {
     constructor() {
-        this.managers = {};
+        this.themeManager = null;
+        this.navigationManager = null;
+        this.typingAnimation = null;
+        this.starSystem = null;
+        this.portfolioFilter = null;
+        this.formHandler = null;
+        this.scrollAnimations = null;
+        this.performanceOptimizer = null;
+        
         this.init();
     }
 
     async init() {
-        try {
-            // Initialize core managers
-            this.managers.theme = new ThemeManager();
-            this.managers.navigation = new NavigationManager();
-            this.managers.animation = new AnimationManager();
-            this.managers.contactForm = new ContactFormManager();
-            this.managers.performance = new PerformanceMonitor();
-            this.managers.accessibility = new AccessibilityManager();
-            this.managers.errorHandler = new ErrorHandler();
-            this.managers.serviceWorker = new ServiceWorkerManager();
-
-            // Setup global event listeners
-            this.setupGlobalEvents();
-
-            // Mark app as initialized
-            document.body.classList.add('app-initialized');
-            emitEvent('appInitialized');
-
-            console.log('Portfolio app initialized successfully');
-
-        } catch (error) {
-            console.error('Failed to initialize portfolio app:', error);
-            this.managers.errorHandler?.handleError(error, 'Initialization Error');
-        }
-    }
-
-    setupGlobalEvents() {
-        // Page visibility changes
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                emitEvent('pageHidden');
-            } else {
-                emitEvent('pageVisible');
-            }
-        });
-
-        // Online/offline status
-        window.addEventListener('online', () => {
-            emitEvent('connectionRestored');
-            console.log('Connection restored');
-        });
-
-        window.addEventListener('offline', () => {
-            emitEvent('connectionLost');
-            console.log('Connection lost');
-        });
-
-        // Resize handling
-        const handleResize = debounce(() => {
-            emitEvent('windowResized', {
-                width: window.innerWidth,
-                height: window.innerHeight
-            });
-        }, CONFIG.DEBOUNCE_DELAY);
-
-        window.addEventListener('resize', handleResize);
-    }
-
-    // Public API methods
-    getManager(name) {
-        return this.managers[name];
-    }
-
-    destroy() {
-        // Cleanup if needed
-        Object.values(this.managers).forEach(manager => {
-            if (manager.destroy) {
-                manager.destroy();
-            }
-        });
-    }
-}
-
-// === INITIALIZATION ===
-let portfolioApp;
-
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        portfolioApp = new PortfolioApp();
-    });
-} else {
-    portfolioApp = new PortfolioApp();
-}
-
-// Export for global access
-window.PortfolioApp = PortfolioApp;
-window.portfolioApp = portfolioApp;
-
-// === UTILITY EXPORTS ===
-window.portfolioUtils = {
-    debounce,
-    throttle,
-    storage,
-    emitEvent,
-    prefersReducedMotion
-};
+  
