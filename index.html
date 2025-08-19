@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator</title>
     <meta name="description" content="Crafting the future of digital experiences through AI, creative design, and cutting-edge technology. Portfolio of Thanatsitt Santisamranwilai.">
+
+    <!-- Sitemap for search engines -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+    <!-- Additional meta for better indexing -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Microsoft Tiles with inline icons -->
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#A78BFA">
+    <meta name="msapplication-TileImage" content="/assets/images/icons/mstile-150x150.png">
+
+    <!-- Tasks with inline SVG icons -->
+    <meta name="msapplication-task" content="name=Portfolio;action-uri=/portfolio;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgNEg3TDkgMkgxNUwxNyA0SDIxQzIyLjEgNCAyMyA0LjkgMjMgNlYxOEMyMyAxOS4xIDIyLjEgMjAgMjEgMjBIM0MxLjkgMjAgMSAxOS4xIDEgMThWNkMxIDQuOSAxLjkgNCAzIDRaTTUgOFYxOEgxOVY4SDVaIiBmaWxsPSIjQTc4QkZBIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iMTMiIHI9IjMiIGZpbGw9IiNBNzhCRkEiLz4KPC9zdmc+">
+
+    <meta name="msapplication-task" content="name=Contact;action-uri=/contact;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDRINEMyLjkgNCAyIDQuOSAyIDZWMThDMiAxOS4xIDIuOSAyMCA0IDIwSDIwQzIxLjEgMjAgMjIgMTkuMSAyMiAxOFY2QzIyIDQuOSAyMS4xIDQgMjAgNFpNMjAgNkwyMCA4TDEyIDEzTDQgOFY2TDEyIDExTDIwIDZaIiBmaWxsPSIjQTc4QkZBIi8+Cjwvc3ZnPg==">
+
+    <meta name="msapplication-task" content="name=Resume;action-uri=/resume;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0IDJIMEM1LjEgMiA0IDMuMSA0IDRWMjBDNCAyMS4xIDUuMSAyMiA2IDIySDE4QzE5LjEgMjIgMjAgMjEuMSAyMCAyMFY4TDE0IDJaTTE4IDIwSDZWNEgxM1Y5SDE4VjIwWiIgZmlsbD0iI0E3OEJGQSIvPgo8cGF0aCBkPSJNOCAxMkgxNlYxNEg4VjEyWk04IDE2SDE2VjE4SDhWMTZaTTggOEgxMFYxMEg4VjhaIiBmaWxsPSIjQTc4QkZBIi8+Cjwvc3ZnPg==">
     
     <!-- Preconnect to CDNs -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -59,7 +77,6 @@
     <meta name="theme-color" content="#1A202C" media="(prefers-color-scheme: dark)">
     <meta name="msapplication-TileColor" content="#A78BFA">
     <meta name="msapplication-TileImage" content="/assets/icons/mstile-144x144.png">
-    <meta name="msapplication-config" content="/browserconfig.xml">
     <link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#A78BFA">
 
     <!-- Critical CSS (Inline for First Paint) -->
@@ -114,6 +131,289 @@
         }
         .loaded {
             opacity: 1;
+        }
+
+        /* Enhanced Moon & Stars Animation */
+        .hero-section__moon-container {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 200px;
+            height: 200px;
+            z-index: 1;
+            animation: moonFloat 8s ease-in-out infinite;
+        }
+
+        /* Moon Float Animation */
+        @keyframes moonFloat {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(2deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-20px) rotate(-2deg);
+            }
+        }
+
+        /* Enhanced Moon Glow */
+        .moon-glow {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.3) 0%, rgba(167, 139, 250, 0.1) 50%, transparent 100%);
+            border-radius: 50%;
+            animation: moonGlowPulse 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes moonGlowPulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Moon SVG Styling */
+        .moon {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.3));
+        }
+
+        .moon-body {
+            animation: moonBodyGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes moonBodyGlow {
+            0%, 100% {
+                filter: brightness(1) saturate(1);
+            }
+            50% {
+                filter: brightness(1.1) saturate(1.2);
+            }
+        }
+
+        /* Moon Craters Animation */
+        .moon-crater {
+            animation: craterTwinkle 4s ease-in-out infinite;
+        }
+
+        .crater-1 { animation-delay: 0s; }
+        .crater-2 { animation-delay: 0.5s; }
+        .crater-3 { animation-delay: 1s; }
+        .crater-4 { animation-delay: 1.5s; }
+        .crater-5 { animation-delay: 2s; }
+        .crater-6 { animation-delay: 2.5s; }
+
+        @keyframes craterTwinkle {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* Moon Phase Overlay */
+        .moon-phase-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+            border-radius: 50%;
+            animation: moonPhase 12s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes moonPhase {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Pastel Shining Stars */
+        .stars-container {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            right: -50px;
+            bottom: -50px;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: starShine var(--duration) ease-in-out infinite;
+            animation-delay: var(--delay);
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        /* Pastel Star Colors */
+        .star--1 {
+            top: 20%;
+            left: 15%;
+            color: #FFB3E6; /* Pastel Pink */
+            animation-name: starShine, starMove;
+        }
+
+        .star--2 {
+            top: 35%;
+            right: 20%;
+            color: #B3E5FF; /* Pastel Blue */
+            animation-name: starShine, starMove;
+        }
+
+        .star--3 {
+            top: 60%;
+            left: 25%;
+            color: #E6B3FF; /* Pastel Purple */
+            animation-name: starShine, starMove;
+        }
+
+        .star--4 {
+            top: 15%;
+            right: 35%;
+            color: #B3FFE6; /* Pastel Green */
+            animation-name: starShine, starMove;
+        }
+
+        .star--5 {
+            top: 75%;
+            right: 15%;
+            color: #FFE6B3; /* Pastel Yellow */
+            animation-name: starShine, starMove;
+        }
+
+        .star--6 {
+            top: 45%;
+            left: 10%;
+            color: #FFB3D9; /* Pastel Rose */
+            animation-name: starShine, starMove;
+        }
+
+        .star--7 {
+            top: 25%;
+            left: 40%;
+            color: #B3D9FF; /* Pastel Sky Blue */
+            animation-name: starShine, starMove;
+        }
+
+        .star--8 {
+            top: 65%;
+            right: 40%;
+            color: #D9B3FF; /* Pastel Lavender */
+            animation-name: starShine, starMove;
+        }
+
+        /* Star Shine Animation */
+        @keyframes starShine {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+                box-shadow: 0 0 4px currentColor;
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+                box-shadow: 0 0 12px currentColor, 0 0 20px currentColor;
+            }
+        }
+
+        /* Star Movement Animation */
+        @keyframes starMove {
+            0%, 100% {
+                transform: translate(0, 0) scale(0.8);
+            }
+            25% {
+                transform: translate(2px, -3px) scale(1);
+            }
+            50% {
+                transform: translate(-1px, -2px) scale(1.2);
+            }
+            75% {
+                transform: translate(3px, 1px) scale(1);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section__moon-container {
+                width: 150px;
+                height: 150px;
+                top: 15%;
+                right: 10%;
+            }
+            
+            .star {
+                width: 3px;
+                height: 3px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section__moon-container {
+                width: 120px;
+                height: 120px;
+                top: 20%;
+                right: 5%;
+            }
+            
+            .star {
+                width: 2px;
+                height: 2px;
+            }
+        }
+
+        /* Dark Theme Adjustments */
+        [data-theme="dark"] .moon-glow {
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.4) 0%, rgba(167, 139, 250, 0.2) 50%, transparent 100%);
+        }
+
+        [data-theme="dark"] .star {
+            box-shadow: 0 0 8px currentColor, 0 0 12px currentColor;
+        }
+
+        [data-theme="dark"] .moon {
+            filter: drop-shadow(0 0 25px rgba(167, 139, 250, 0.4));
+        }
+
+        /* Performance Optimization */
+        .hero-section__moon-container * {
+            will-change: transform, opacity;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        /* Accessibility - Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-section__moon-container,
+            .moon-glow,
+            .star,
+            .moon-crater,
+            .moon-phase-overlay {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
         }
     </style>
 
@@ -224,7 +524,7 @@
 
     <!-- Header & Navigation -->
     <header role="banner">
-                <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
+        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
             <div class="container">
                 <a href="#home-section" class="navbar-brand logo" aria-label="Thanatsitt Portfolio Home">
                     Thanatsitt
@@ -269,32 +569,64 @@
             <div class="shape shape--3"></div>
         </div>
 
-        <!-- Moon Container -->
+        <!-- Enhanced Moon Container with Pastel Stars -->
         <div class="hero-section__moon-container" aria-hidden="true">
+            <!-- Pastel Shining Stars -->
+            <div class="stars-container">
+                <div class="star star--1" style="--delay: 0s; --duration: 3s;"></div>
+                <div class="star star--2" style="--delay: 0.5s; --duration: 2.5s;"></div>
+                <div class="star star--3" style="--delay: 1s; --duration: 4s;"></div>
+                <div class="star star--4" style="--delay: 1.5s; --duration: 3.5s;"></div>
+                <div class="star star--5" style="--delay: 2s; --duration: 2.8s;"></div>
+                <div class="star star--6" style="--delay: 0.8s; --duration: 3.2s;"></div>
+                <div class="star star--7" style="--delay: 2.3s; --duration: 2.7s;"></div>
+                <div class="star star--8" style="--delay: 1.2s; --duration: 3.8s;"></div>
+            </div>
+
+            <!-- Enhanced Moon with Glow -->
             <div class="moon-glow"></div>
             <svg class="moon" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <radialGradient id="moonGradient" cx="0.3" cy="0.3">
                         <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+                        <stop offset="70%" style="stop-color:#f8fafc;stop-opacity:0.9" />
+                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:0.8" />
                     </radialGradient>
                     <filter id="moonShadow">
-                        <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#A78BFA" flood-opacity="0.3"/>
+                        <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#A78BFA" flood-opacity="0.4"/>
+                    </filter>
+                    <filter id="moonGlow">
+                        <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                        <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
                     </filter>
                 </defs>
-                <circle cx="150" cy="150" r="140" fill="url(#moonGradient)" filter="url(#moonShadow)" />
-                <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" />
-                <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" />
-                <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" />
-                <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" />
-                <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" />
+                
+                <!-- Moon Body -->
+                <circle cx="150" cy="150" r="140" 
+                        fill="url(#moonGradient)" 
+                        filter="url(#moonShadow)" 
+                        class="moon-body" />
+                
+                <!-- Moon Craters with Animation -->
+                <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" class="moon-crater crater-1" />
+                <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" class="moon-crater crater-2" />
+                <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" class="moon-crater crater-3" />
+                <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" class="moon-crater crater-4" />
+                <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" class="moon-crater crater-5" />
+                <circle cx="130" cy="200" r="7" fill="#d1d5db" opacity="0.35" class="moon-crater crater-6" />
             </svg>
+
+            <!-- Moon Phases Animation -->
+            <div class="moon-phase-overlay"></div>
         </div>
 
         <!-- Hero Content -->
         <div class="hero-section__content container text-center">
             <h1 class="hero-title">Thanatsitt Santisamranwilai</h1>
-            <p class="subtitle" id="typewriter" aria-live="polite"></p>
+                        <p class="subtitle" id="typewriter" aria-live="polite"></p>
             <p class="hero-description">
                 Crafting the future of digital experiences through AI, creative design, 
                 and cutting-edge technology. Transforming ideas into extraordinary realities.
@@ -434,7 +766,7 @@
                     <h3>Artificial Intelligence</h3>
                     <p>Machine learning, AI training, and intelligent system design for creative applications and business solutions.</p>
                     <div class="skill-progress">
-                                              <div class="skill-progress-bar skill-progress-bar--95" style="width: 0%"></div>
+                        <div class="skill-progress-bar skill-progress-bar--95" style="width: 0%"></div>
                     </div>
                 </div>
 
@@ -669,7 +1001,7 @@
                         </div>
                         <div class="portfolio-links">
                             <a href="#" class="portfolio-link" aria-label="Try the tool">
-                                                                <i class="fas fa-magic icon-spacing" aria-hidden="true"></i>
+                                <i class="fas fa-magic icon-spacing" aria-hidden="true"></i>
                                 Try Tool
                             </a>
                             <a href="#" class="portfolio-link" aria-label="View documentation">
@@ -770,7 +1102,7 @@
                         </select>
                     </div>
 
-                        <div class="form-group">
+                    <div class="form-group">
                         <label for="budget">Budget Range</label>
                         <select id="budget" name="budget" class="form-control">
                             <option value="">Select budget range</option>
@@ -875,8 +1207,9 @@
                         <li><a href="#about-section">About</a></li>
                         <li><a href="#portfolio-section">Portfolio</a></li>
                         <li><a href="#contact-section">Contact</a></li>
-                        <li><a href="/privacy">Privacy Policy</a></li>
-                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/sitemap.html">Sitemap</a></li>
+                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html">Terms of Service</a></li>
                     </ul>
                 </div>
 
@@ -915,7 +1248,6 @@
             crossorigin="anonymous" defer></script>
 
     <!-- GSAP Animation Library -->
-     <!-- GSAP Animation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
             integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
@@ -927,8 +1259,8 @@
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 
     <!-- Main Application Script -->
-    <script src="/assets/js/main.js" defer></script>
+<script src="/assets/js/main.js" defer></script>
     <script src="/assets/js/app.js" defer></script>
 
 </body>
-    </html>
+</html>
