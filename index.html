@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator</title>
     <meta name="description" content="Crafting the future of digital experiences through AI, creative design, and cutting-edge technology. Portfolio of Thanatsitt Santisamranwilai.">
+
+    <!-- Sitemap for search engines -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+    <!-- Additional meta for better indexing -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Microsoft Tiles with inline icons -->
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#A78BFA">
+    <meta name="msapplication-TileImage" content="/assets/images/icons/mstile-150x150.png">
+
+    <!-- Tasks with inline SVG icons -->
+    <meta name="msapplication-task" content="name=Portfolio;action-uri=/portfolio;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgNEg3TDkgMkgxNUwxNyA0SDIxQzIyLjEgNCAyMyA0LjkgMjMgNlYxOEMyMyAxOS4xIDIyLjEgMjAgMjEgMjBIM0MxLjkgMjAgMSAxOS4xIDEgMThWNkMxIDQuOSAxLjkgNCAzIDRaTTUgOFYxOEgxOVY4SDVaIiBmaWxsPSIjQTc4QkZBIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iMTMiIHI9IjMiIGZpbGw9IiNBNzhCRkEiLz4KPC9zdmc+">
+
+    <meta name="msapplication-task" content="name=Contact;action-uri=/contact;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDRINEMyLjkgNCAyIDQuOSAyIDZWMThDMiAxOS4xIDIuOSAyMCA0IDIwSDIwQzIxLjEgMjAgMjIgMTkuMSAyMiAxOFY2QzIyIDQuOSAyMS4xIDQgMjAgNFpNMjAgNkwyMCA4TDEyIDEzTDQgOFY2TDEyIDExTDIwIDZaIiBmaWxsPSIjQTc4QkZBIi8+Cjwvc3ZnPg==">
+
+    <meta name="msapplication-task" content="name=Resume;action-uri=/resume;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0IDJIMEM1LjEgMiA0IDMuMSA0IDRWMjBDNCAyMS4xIDUuMSAyMiA2IDIySDE4QzE5LjEgMjIgMjAgMjEuMSAyMCAyMFY4TDE0IDJaTTE4IDIwSDZWNEgxM1Y5SDE4VjIwWiIgZmlsbD0iI0E3OEJGQSIvPgo8cGF0aCBkPSJNOCAxMkgxNlYxNEg4VjEyWk04IDE2SDE2VjE4SDhWMTZaTTggOEgxMFYxMEg4VjhaIiBmaWxsPSIjQTc4QkZBIi8+Cjwvc3ZnPg==">
     
     <!-- Preconnect to CDNs -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -58,72 +77,11 @@
     <meta name="theme-color" content="#1A202C" media="(prefers-color-scheme: dark)">
     <meta name="msapplication-TileColor" content="#A78BFA">
     <meta name="msapplication-TileImage" content="/assets/icons/mstile-144x144.png">
-    <meta name="msapplication-config" content="/browserconfig.xml">
     <link rel="mask-icon" href="/assets/icons/safari-pinned-tab.svg" color="#A78BFA">
 
     <!-- Critical CSS (Inline for First Paint) -->
     <style>
         :root {
-            --primary-light: #A78BFA;
-            --primary-accent: #F9A8D4;
-            --background-light: #F8FAFC;
-            --text-dark: #2D3748;
-        }
-        [data-theme="dark"] {
-            --background-light: #1A202C;
-            --text-dark: #F8FAFC;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--background-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 6px;
-            background: var(--primary-light);
-            color: #fff;
-            padding: 8px 16px;
-            text-decoration: none;
-            border-radius: 4px;
-            z-index: 9999;
-            transition: top 0.3s;
-            font-weight: 600;
-        }
-        .skip-link:focus {
-            top: 6px;
-        }
-        *:focus {
-            outline: 3px solid rgba(167, 139, 250, 0.8);
-            outline-offset: 3px;
-        }
-        .loading {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        .loaded {
-            opacity: 1;
-        }
-
-        /* ==========================================================================
-   Thanatsitt Portfolio - Main Stylesheet
-   Modern CSS with Variables, Components, and Animations
-   ========================================================================== */
-
-/* ==========================================================================
-   CSS VARIABLES (CUSTOM PROPERTIES)
-   ========================================================================== */
-:root {
     /* Primary Colors */
     --primary-light: #A78BFA;
     --primary-accent: #F9A8D4;
@@ -1295,6 +1253,653 @@ select.form-control {
     scrollbar-color: var(--primary-light) var(--background-light);
 }
 
+/* ==========================================================================
+   END OF STYLESHEET
+   ========================================================================== */</file_content>
+
+Now update your HTML to remove all inline styles and use the CSS classes:
+
+<file_path>index.html</file_path>
+<file_content><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator</title>
+    <meta name="description" content="Crafting the future of digital experiences through AI, creative design, and cutting-edge technology. Portfolio of Thanatsitt Santisamranwilai.">
+
+    <!-- Preconnect to CDNs -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- CSS (Optimized Loading) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" 
+          crossorigin="anonymous">
+    
+    <link rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Google Fonts (Preload for Performance) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
+    <!-- Meta Tags -->
+    <meta property="og:title" content="Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator">
+    <meta property="og:description" content="Crafting the future of digital experiences through AI and innovative design.">
+    <meta property="og:image" content="https://pegearts.com/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://pegearts.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Thanatsitt Portfolio">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator">
+    <meta name="twitter:description" content="Crafting the future of digital experiences through AI and innovative design.">
+    <meta name="twitter:image" content="https://pegearts.com/assets/images/twitter-card.jpg">
+    <meta name="twitter:creator" content="@thanatsitt_s">
+
+    <!-- Favicons -->
+    <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/assets/icons/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Theme Colors -->
+    <meta name="theme-color" content="#A78BFA" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1A202C" media="(prefers-color-scheme: dark)">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Thanatsitt Santisamranwilai",
+        "jobTitle": "AI Creative Designer & Digital Innovator",
+        "url": "https://pegearts.com",
+        "email": "Thanattsitt.info@yahoo.co.uk",
+        "sameAs": [
+            "https://linkedin.com/in/thanatsitt-s",
+            "https://github.com/Pigletpeakkung",
+            "https://www.threads.net/@thanatsitt.s",
+            "https://www.voquent.com/voice-actor/2033447"
+        ]
+    }
+    </script>
+</head>
+
+<body data-theme="light" class="loading">
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Theme Toggle -->
+    <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+        <i class="fas fa-sun d-none" aria-hidden="true"></i>
+    </button>
+
+    <!-- Header & Navigation -->
+    <header role="banner">
+        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
+            <div class="container">
+                <a href="#home-section" class="navbar-brand logo" aria-label="Thanatsitt Portfolio Home">
+                    Thanatsitt
+                </a>
+
+                <button class="navbar-toggler" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" 
+                        aria-label="Toggle navigation menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div id="navbarNav" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ms-auto" role="list">
+                        <li class="nav-item">
+                            <a href="#home-section" class="nav-link active" aria-current="page">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#about-section" class="nav-link">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#skills-section" class="nav-link">Skills</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#portfolio-section" class="nav-link">Portfolio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#contact-section" class="nav-link">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home-section" class="hero-section section" role="main">
+        <div id="main-content"></div>
+        
+        <!-- Moon Container with Enhanced Animation -->
+        <div class="hero-section__moon-container" aria-hidden="true">
+            <div class="moon-glow"></div>
+            <svg class="moon" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="moonGradient" cx="0.3" cy="0.3">
+                        <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+                    </radialGradient>
+                    <filter id="moonShadow">
+                        <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#A78BFA" flood-opacity="0.3"/>
+                    </filter>
+                </defs>
+                <circle cx="150" cy="150" r="140" fill="url(#moonGradient)" filter="url(#moonShadow)" />
+                <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" />
+                <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" />
+                <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" />
+                <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" />
+                <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" />
+            </svg>
+
+            <!-- Enhanced Pastel Stars -->
+            <div class="stars-container">
+                <div class="star star--1"></div>
+                <div class="star star--2"></div>
+                <div class="star star--3"></div>
+                <div class="star star--4"></div>
+                <div class="star star--5"></div>
+                <div class="star star--6"></div>
+                <div class="star star--7"></div>
+                <div class="star star--8"></div>
+            </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-section__content container text-center">
+            <h1 class="hero-title">Thanatsitt Santisamranwilai</h1>
+            <p class="subtitle" id="typewriter" aria-live="polite">AI Creative Designer & Digital Innovator</p>
+            <p class="hero-description">
+                Crafting the future of digital experiences through AI, creative design, 
+                and cutting-edge technology. Transforming ideas into extraordinary realities.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="hero-section__cta">
+                <a href="#contact-section" class="button button--primary" aria-label="Contact me to start a project">
+                    <i class="fas fa-rocket icon-spacing" aria-hidden="true"></i>
+                    Let's Create Together
+                </a>
+                <a href="#portfolio-section" class="button button--secondary" aria-label="View my portfolio projects">
+                    <i class="fas fa-eye icon-spacing" aria-hidden="true"></i>
+                    View My Work
+                </a>
+            </div>
+
+            <!-- Social Links -->
+            <ul class="hero-section__social-links" role="list" aria-label="Social media links">
+                <li>
+                    <a href="https://linkedin.com/in/thanatsitt-s" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="Connect on LinkedIn">
+                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/Pigletpeakkung" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="View GitHub projects">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.threads.net/@thanatsitt.s" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="Follow on Threads">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068v-.036c0-3.518.85-6.373 2.495-8.424C5.851 1.205 8.604.024 12.186 0h.007c3.582.024 6.334 1.205 8.184 3.509 1.645 2.051 2.495 4.906 2.495 8.424v.036c0 3.518-.85 6.373-2.495 8.424C18.52 22.795 15.768 23.976 12.186 24zM12 2.15c-2.68 0-4.832.854-6.24 2.475-1.323 1.52-2.01 3.679-2.01 6.325 0 2.646.687 4.805 2.01 6.325C7.168 19.096 9.32 19.95 12 19.95s4.832-.854 6.24-2.475c1.323-1.52 2.01-3.679 2.01-6.325 0-2.646-.687-4.805-2.01-6.325C16.832 3.004 14.68 2.15 12 2.15z"/>
+                        </svg>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.voquent.com/voice-actor/2033447" 
+                       target="_blank" rel="noopener noreferrer" 
+                       aria-label="View voice acting profile on Voquent">
+                        <i class="fas fa-microphone" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="mailto:Thanattsitt.info@yahoo.co.uk" 
+                       aria-label="Send email">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-indicator" aria-hidden="true">
+                <span>Scroll to explore</span>
+                <div class="scroll-animation">
+                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about-section" class="section about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">
+                Passionate about merging creativity with cutting-edge technology 
+                to create meaningful digital experiences.
+            </p>
+
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="about-image text-center">
+                        <div class="glass-card d-inline-block">
+                            <i class="fas fa-brain icon-xlarge text-primary" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="about-text-content">
+                        <h3 class="text-primary mb-3">Digital Innovation Specialist</h3>
+                        <p class="mb-3">
+                            As an AI Creative Designer and Digital Innovator, I specialize in transforming 
+                            complex ideas into intuitive, beautiful digital experiences. My expertise spans 
+                            machine learning, creative technology, and multilingual content creation.
+                        </p>
+                        <p class="mb-4">
+                            With a background from London College of Fashion and experience in voice acting 
+                            and digital design, I bring a unique perspective to every project. I'm passionate 
+                            about using AI and creative technology to solve real-world problems and create 
+                            meaningful connections.
+                        </p>
+
+                        <div class="row mb-4">
+                            <div class="col-12 mb-2">
+                                <i class="fas fa-graduation-cap text-primary me-2" aria-hidden="true"></i>
+                                <span>London College of Fashion Graduate</span>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <i class="fas fa-globe text-primary me-2" aria-hidden="true"></i>
+                                <span>Multilingual Content Creator</span>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <i class="fas fa-microphone-alt text-primary me-2" aria-hidden="true"></i>
+                                <span>Professional Voice Actor</span>
+                            </div>
+                        </div>
+
+                        <a href="#contact-section" class="button button--primary">
+                            <i class="fas fa-comments icon-spacing" aria-hidden="true"></i>
+                            Let's Connect
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills-section" class="section skills-section bg-glass-light">
+        <div class="container">
+            <h2 class="section-title">Skills & Expertise</h2>
+            <p class="section-subtitle">
+                Combining creativity with technology to deliver exceptional results 
+                across multiple disciplines.
+            </p>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card text-center h-100">
+                        <i class="fas fa-brain icon-large text-primary mb-3" aria-hidden="true"></i>
+                        <h3>Artificial Intelligence</h3>
+                        <p>Machine learning, AI training, and intelligent system design for creative applications and business solutions.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card text-center h-100">
+                        <i class="fas fa-palette icon-large text-primary mb-3" aria-hidden="true"></i>
+                        <h3>Creative Design</h3>
+                        <p>UI/UX design, digital branding, and visual storytelling that connects with audiences on an emotional level.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card text-center h-100">
+                        <i class="fas fa-microphone icon-large text-primary mb-3" aria-hidden="true"></i>
+                        <h3>Voice Acting</h3>
+                        <p>Professional voice production, multilingual narration, and audio content creation for diverse media platforms.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card text-center h-100">
+                        <i class="fas fa-code icon-large text-primary mb-3" aria-hidden="true"></i>
+                        <h3>Creative Development</h3>
+                        <p>Full-stack development, interactive experiences, and innovative web solutions using modern technologies.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card text-center h-100">
+                        <i class="fas fa-lightbulb icon-large text-primary mb-3" aria-hidden="true"></i>
+                        <h3>Digital Innovation</h3>
+                        <p>Strategic thinking, emerging technology integration, and innovative solution development for future-ready projects.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card text-center h-100">
+                        <i class="fas fa-language icon-large text-primary mb-3" aria-hidden="true"></i>
+                        <h3>Content Creation</h3>
+                        <p>Multilingual content strategy, digital marketing, and cross-cultural communication for global audiences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio-section" class="section portfolio-section">
+        <div class="container">
+            <h2 class="section-title">Featured Work</h2>
+            <p class="section-subtitle">
+                Showcasing innovative projects that blend creativity, technology, 
+                and strategic thinking to deliver exceptional results.
+            </p>
+
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <article class="glass-card h-100">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-robot icon-xlarge text-primary" aria-hidden="true"></i>
+                        </div>
+                        <h3>AI-Powered Design Assistant</h3>
+                        <p>An intelligent design system that uses machine learning to generate creative concepts and streamline the design process for digital products.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary me-1">Machine Learning</span>
+                            <span class="badge bg-primary me-1">Creative AI</span>
+                            <span class="badge bg-primary me-1">UX Design</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="button button--primary flex-fill text-center">
+                                <i class="fas fa-external-link-alt icon-spacing" aria-hidden="true"></i>
+                                View Project
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <article class="glass-card h-100">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-podcast icon-xlarge text-primary" aria-hidden="true"></i>
+                        </div>
+                        <h3>Multilingual Audio Experience</h3>
+                        <p>Interactive audio storytelling platform featuring professional voice acting in multiple languages with AI-enhanced audio processing.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary me-1">Voice Acting</span>
+                            <span class="badge bg-primary me-1">Audio Production</span>
+                            <span class="badge bg-primary me-1">Multilingual</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="https://www.voquent.com/voice-actor/2033447" 
+                               class="button button--primary flex-fill text-center" 
+                               target="_blank" rel="noopener">
+                                <i class="fas fa-microphone icon-spacing" aria-hidden="true"></i>
+                                Voice Profile
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <article class="glass-card h-100">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-mobile-alt icon-xlarge text-primary" aria-hidden="true"></i>
+                        </div>
+                        <h3>Responsive Creative Platform</h3>
+                        <p>A cutting-edge web application built with modern technologies, featuring seamless user experience and innovative design patterns.</p>
+                        <div class="mb-3">
+                            <span class="badge bg-primary me-1">React</span>
+                            <span class="badge bg-primary me-1">Node.js</span>
+                            <span class="badge bg-primary me-1">Responsive Design</span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="#" class="button button--primary flex-fill text-center">
+                                <i class="fas fa-globe icon-spacing" aria-hidden="true"></i>
+                                Live Site
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact-section" class="section contact-section bg-glass-light">
+        <div class="container">
+            <h2 class="section-title">Let's Create Something Amazing</h2>
+            <p class="section-subtitle">
+                Ready to bring your ideas to life? Let's collaborate and create 
+                innovative solutions that make a difference.
+            </p>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="glass-card">
+                        <h3>Get In Touch</h3>
+                        <p>
+                            I'm always excited to work on new projects and collaborate with 
+                            creative minds. Whether you need AI solutions, creative design, 
+                            voice production, or innovative web development, let's discuss 
+                            how we can work together.
+                        </p>
+
+                        <div class="mb-4">
+                            <div class="mb-3">
+                                <i class="fas fa-envelope text-primary me-2" aria-hidden="true"></i>
+                                <a href="mailto:Thanattsitt.info@yahoo.co.uk">Thanattsitt.info@yahoo.co.uk</a>
+                            </div>
+                            <div class="mb-3">
+                                <i class="fab fa-linkedin text-primary me-2" aria-hidden="true"></i>
+                                <a href="https://linkedin.com/in/thanatsitt-s" target="_blank" rel="noopener">
+                                    LinkedIn Profile
+                                </a>
+                            </div>
+                            <div class="mb-3">
+                                <i class="fab fa-github text-primary me-2" aria-hidden="true"></i>
+                                <a href="https://github.com/Pigletpeakkung" target="_blank" rel="noopener">
+                                    GitHub Portfolio
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <div class="status-available me-2"></div>
+                            <span>Open to new projects and collaborations</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <form class="glass-card" id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name *</label>
+                            <input type="text" id="name" name="name" class="form-control" 
+                                   placeholder="Your full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-control" 
+                                   placeholder="your.email@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project-type" class="form-label">Project Type</label>
+                            <select id="project-type" name="project_type" class="form-control">
+                                <option value="">Select project type</option>
+                                <option value="ai-ml">AI & Machine Learning</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="creative-design">Creative Design</option>
+                                <option value="voice-production">Voice Production</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea id="message" name="message" class="form-control" rows="4" 
+                                      placeholder="Tell me about your project..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="button button--primary w-100">
+                            <i class="fas fa-paper-plane icon-spacing" aria-hidden="true"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        body.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            
+            if (theme === 'dark') {
+                moonIcon.classList.add('d-none');
+                sunIcon.classList.remove('d-none');
+            } else {
+                moonIcon.classList.remove('d-none');
+                sunIcon.classList.add('d-none');
+            }
+        }
+
+        // Typewriter Effect
+        const typewriterElement = document.getElementById('typewriter');
+        const text = 'AI Creative Designer & Digital Innovator';
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                typewriterElement.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Loading Animation
+        window.addEventListener('load', () => {
+            body.classList.remove('loading');
+            body.classList.add('loaded');
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact Form Handler
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            if (!data.name || !data.email || !data.message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            console.log('Form submitted:', data);
+            alert('Thank you for your message! I will get back to you soon.');
+            this.reset();
+        });
+
+        // Performance: Pause animations when page is not visible
+        document.addEventListener('visibilitychange', () => {
+            const moonContainer = document.querySelector('.hero-section__moon-container');
+            const stars = document.querySelectorAll('.star');
+            
+            if (document.hidden) {
+                moonContainer.style.animationPlayState = 'paused';
+                stars.forEach(star => star.style.animationPlayState = 'paused');
+            } else {
+                moonContainer.style.animationPlayState = 'running';
+                stars.forEach(star => star.style.animationPlayState = 'running');
+            }
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.header__navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = body.getAttribute('data-theme') === 'dark' 
+                    ? 'rgba(26, 32, 44, 0.98)' 
+                    : 'rgba(248, 250, 252, 0.98)';
+            } else {
+                navbar.style.background = body.getAttribute('data-theme') === 'dark' 
+                    ? 'rgba(26, 32, 44, 0.95)' 
+                    : 'rgba(248, 250, 252, 0.95)';
+            }
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
+            crossorigin="anonymous"></script>
+</body>
+</html
+
+
     </style>
 
     <!-- Structured Data (Unified) -->
@@ -1392,7 +1997,7 @@ select.form-control {
     </script>
 </head>
 
-<body data-theme="light" class="loading" id="main-content">
+<body data-theme="light" class="loaded" id="main-content">
     <!-- Accessibility Skip Link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -1404,7 +2009,7 @@ select.form-control {
 
     <!-- Header & Navigation -->
     <header role="banner">
-                <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
+        <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top header__navbar">
             <div class="container">
                 <a href="#home-section" class="navbar-brand logo" aria-label="Thanatsitt Portfolio Home">
                     Thanatsitt
@@ -1449,32 +2054,64 @@ select.form-control {
             <div class="shape shape--3"></div>
         </div>
 
-        <!-- Moon Container -->
+        <!-- Enhanced Moon Container with Pastel Stars -->
         <div class="hero-section__moon-container" aria-hidden="true">
+            <!-- Pastel Shining Stars -->
+            <div class="stars-container">
+                <div class="star star--1" style="--delay: 0s; --duration: 3s;"></div>
+                <div class="star star--2" style="--delay: 0.5s; --duration: 2.5s;"></div>
+                <div class="star star--3" style="--delay: 1s; --duration: 4s;"></div>
+                <div class="star star--4" style="--delay: 1.5s; --duration: 3.5s;"></div>
+                <div class="star star--5" style="--delay: 2s; --duration: 2.8s;"></div>
+                <div class="star star--6" style="--delay: 0.8s; --duration: 3.2s;"></div>
+                <div class="star star--7" style="--delay: 2.3s; --duration: 2.7s;"></div>
+                <div class="star star--8" style="--delay: 1.2s; --duration: 3.8s;"></div>
+            </div>
+
+            <!-- Enhanced Moon with Glow -->
             <div class="moon-glow"></div>
             <svg class="moon" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <radialGradient id="moonGradient" cx="0.3" cy="0.3">
                         <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+                        <stop offset="70%" style="stop-color:#f8fafc;stop-opacity:0.9" />
+                        <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:0.8" />
                     </radialGradient>
                     <filter id="moonShadow">
-                        <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#A78BFA" flood-opacity="0.3"/>
+                        <feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#A78BFA" flood-opacity="0.4"/>
+                    </filter>
+                    <filter id="moonGlow">
+                        <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                        <feMerge> 
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
                     </filter>
                 </defs>
-                <circle cx="150" cy="150" r="140" fill="url(#moonGradient)" filter="url(#moonShadow)" />
-                <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" />
-                <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" />
-                <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" />
-                <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" />
-                <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" />
+                
+                <!-- Moon Body -->
+                <circle cx="150" cy="150" r="140" 
+                        fill="url(#moonGradient)" 
+                        filter="url(#moonShadow)" 
+                        class="moon-body" />
+                
+                <!-- Moon Craters with Animation -->
+                <circle cx="120" cy="100" r="12" fill="#d1d5db" opacity="0.6" class="moon-crater crater-1" />
+                <circle cx="180" cy="120" r="8" fill="#d1d5db" opacity="0.4" class="moon-crater crater-2" />
+                <circle cx="160" cy="180" r="15" fill="#d1d5db" opacity="0.5" class="moon-crater crater-3" />
+                <circle cx="110" cy="160" r="6" fill="#d1d5db" opacity="0.3" class="moon-crater crater-4" />
+                <circle cx="200" cy="180" r="10" fill="#d1d5db" opacity="0.4" class="moon-crater crater-5" />
+                <circle cx="130" cy="200" r="7" fill="#d1d5db" opacity="0.35" class="moon-crater crater-6" />
             </svg>
+
+            <!-- Moon Phases Animation -->
+            <div class="moon-phase-overlay"></div>
         </div>
 
         <!-- Hero Content -->
         <div class="hero-section__content container text-center">
             <h1 class="hero-title">Thanatsitt Santisamranwilai</h1>
-            <p class="subtitle" id="typewriter" aria-live="polite"></p>
+                        <p class="subtitle" id="typewriter" aria-live="polite"></p>
             <p class="hero-description">
                 Crafting the future of digital experiences through AI, creative design, 
                 and cutting-edge technology. Transforming ideas into extraordinary realities.
@@ -1614,7 +2251,7 @@ select.form-control {
                     <h3>Artificial Intelligence</h3>
                     <p>Machine learning, AI training, and intelligent system design for creative applications and business solutions.</p>
                     <div class="skill-progress">
-                                              <div class="skill-progress-bar skill-progress-bar--95" style="width: 0%"></div>
+                        <div class="skill-progress-bar skill-progress-bar--95" style="width: 0%"></div>
                     </div>
                 </div>
 
@@ -1849,7 +2486,7 @@ select.form-control {
                         </div>
                         <div class="portfolio-links">
                             <a href="#" class="portfolio-link" aria-label="Try the tool">
-                                                                <i class="fas fa-magic icon-spacing" aria-hidden="true"></i>
+                                <i class="fas fa-magic icon-spacing" aria-hidden="true"></i>
                                 Try Tool
                             </a>
                             <a href="#" class="portfolio-link" aria-label="View documentation">
@@ -2055,8 +2692,9 @@ select.form-control {
                         <li><a href="#about-section">About</a></li>
                         <li><a href="#portfolio-section">Portfolio</a></li>
                         <li><a href="#contact-section">Contact</a></li>
-                        <li><a href="/privacy">Privacy Policy</a></li>
-                        <li><a href="/terms">Terms of Service</a></li>
+                        <li><a href="/sitemap.html">Sitemap</a></li>
+                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html">Terms of Service</a></li>
                     </ul>
                 </div>
 
@@ -2079,7 +2717,7 @@ select.form-control {
 
             <div class="footer-bottom">
                 <p>
-                    &copy; 2025 Thanatsitt Santisamranwilai. All rights reserved. 
+                    &copy; 2024 Thanatsitt Santisamranwilai. All rights reserved. 
                     Made with <i class="fas fa-heart" style="color: #F9A8D4;" aria-hidden="true"></i> 
                     and cutting-edge technology.
                 </p>
@@ -2095,7 +2733,6 @@ select.form-control {
             crossorigin="anonymous" defer></script>
 
     <!-- GSAP Animation Library -->
-     <!-- GSAP Animation Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
             integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
@@ -2109,5 +2746,6 @@ select.form-control {
     <!-- Main Application Script -->
     <script src="/assets/js/app.js" defer></script>
     <script src="/assets/js/main.js" defer></script>
+
 </body>
 </html>
