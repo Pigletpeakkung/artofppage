@@ -99,6 +99,11 @@ const EXTERNAL_CACHE_URLS = [
     // AOS (matching your HTML)
     'https://unpkg.com/aos@2.3.1/dist/aos.css',
     'https://unpkg.com/aos@2.3.1/dist/aos.js'
+    
+     <!-- Optional polyfills -->
+  'https://cdn.jsdelivr.net/npm/intersection-observer@0.12.0/intersection-observer.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'
+
 ];
 
 // Dynamic cache patterns
