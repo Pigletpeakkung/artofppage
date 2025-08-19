@@ -687,6 +687,7 @@ class PortfolioFilter {
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0)';
                     }, 50);
+                },
                 }, index * 100);
             } else {
                 card.style.opacity = '0';
@@ -1041,6 +1042,7 @@ class ContactFormController {
         this.newsletterForm.appendChild(messageDiv);
         setTimeout(() => messageDiv.remove(), 3000);
     }
+}
 
 /*
 ========================================
@@ -1382,7 +1384,7 @@ class AccessibilityEnhancer {
             });
         }, { threshold: 0.5 });
 
-               Utils.querySelectorAll('section[id]').forEach(section => {
+                Utils.querySelectorAll('section[id]').forEach(section => {
             observer.observe(section);
         });
     }
@@ -2102,4 +2104,3 @@ if (typeof define === 'function' && define.amd) {
 
 // Initialization complete
 console.log('📦 Portfolio application script loaded and ready!');
-
