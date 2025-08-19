@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitemap | Thanatsitt's Portfolio</title>
+    <meta name="description" content="Complete sitemap of Thanatsitt Santisamranwilai's Portfolio website">
+    <link rel="canonical" href="https://yourportfolio.com/sitemap">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .sitemap-page {
+            padding: 8rem 0 4rem;
+            min-height: 100vh;
+            background: var(--background-light);
+        }
+        
+        .sitemap-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .sitemap-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .sitemap-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .sitemap-subtitle {
+            color: var(--text-medium);
+            font-size: 1.2rem;
+        }
+        
+        .sitemap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .sitemap-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .sitemap-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sitemap-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .sitemap-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .sitemap-links a:hover {
+            background: var(--background-light);
+            color: var(--primary-light);
+            transform: translateX(5px);
+        }
+        
+        .link-icon {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+        
+        .last-updated {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--background-light);
+            border-radius: 12px;
+            color: var(--text-medium);
+        }
+        
+        @media (max-width: 768px) {
+            .sitemap-title { font-size: 2.5rem; }
+            .sitemap-grid { grid-template-columns: 1fr; }
+            .sitemap-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <main class="sitemap-page">
+        <div class="sitemap-container">
+            <header class="sitemap-header">
+                <h1 class="sitemap-title">Site Map</h1>
+                <p class="sitemap-subtitle">
+                    Complete navigation guide to all pages on my portfolio
+                </p>
+            </header>
+            
+            <div class="sitemap-grid">
+                <!-- Main Pages -->
+                <div class="sitemap-section">
+                    <h2 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        Main Pages
+                    </h2>
+                    <ul class="sitemap-links">
+                        <li><a href="/"><i class="fas fa-chevron-right link-icon"></i>Home</a></li>
+                        <li><a href="/about"><i class="fas fa-chevron-right link-icon"></i>About Me</a></li>
+                        <li><a href="/portfolio"><i class="fas fa-chevron-right link-icon"></i>Portfolio</a></li>
+                        <li><a href="/skills"><i class="fas fa-chevron-right link-icon"></i>Skills</a></li>
+                        <li><a href="/contact"><i class="fas fa-chevron-right link-icon"></i>Contact</a></li>
+                        <li><a href="/resume"><i class="fas fa-chevron-right link-icon"></i>Resume</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Portfolio Projects -->
+                <div class="sitemap-section">
+                    <h2 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        Portfolio Projects
+                    </h2>
+                    <ul class="sitemap-links">
+                        <li><a href="/portfolio/project-1"><i class="fas fa-chevron-right link-icon"></i>E-commerce Platform</a></li>
+                        <li><a href="/portfolio/project-2"><i class="fas fa-chevron-right link-icon"></i>Mobile App Design</a></li>
+                        <li><a href="/portfolio/project-3"><i class="fas fa-chevron-right link-icon"></i>Web Application</a></li>
+                        <li><a href="/portfolio/project-4"><i class="fas fa-chevron-right link-icon"></i>UI/UX Case Study</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Services -->
+                <div class="sitemap-section">
+                    <h2 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        Services
+                    </h2>
+                    <ul class="sitemap-links">
+                        <li><a href="/services"><i class="fas fa-chevron-right link-icon"></i>All Services</a></li>
+                        <li><a href="/services/web-development"><i class="fas fa-chevron-right link-icon"></i>Web Development</a></li>
+                        <li><a href="/services/ui-ux-design"><i class="fas fa-chevron-right link-icon"></i>UI/UX Design</a></li>
+                        <li><a href="/services/mobile-development"><i class="fas fa-chevron-right link-icon"></i>Mobile Development</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Blog/Articles -->
+                <div class="sitemap-section">
+                    <h2 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-blog"></i>
+                        </div>
+                        Blog & Articles
+                    </h2>
+                    <ul class="sitemap-links">
+                        <li><a href="/blog"><i class="fas fa-chevron-right link-icon"></i>All Articles</a></li>
+                        <li><a href="/blog/web-design-trends"><i class="fas fa-chevron-right link-icon"></i>Web Design Trends 2024</a></li>
+                        <li><a href="/blog/mobile-first-design"><i class="fas fa-chevron-right link-icon"></i>Mobile-First Design</a></li>
+                        <li><a href="/blog/javascript-tips"><i class="fas fa-chevron-right link-icon"></i>JavaScript Tips & Tricks</a></li>
+                    </ul>
+                </div>
+                
+                              <!-- Resources -->
+                <div class="sitemap-section">
+                    <h2 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        Resources
+                    </h2>
+                    <ul class="sitemap-links">
+                        <li><a href="/downloads/resume.pdf"><i class="fas fa-chevron-right link-icon"></i>Download Resume (PDF)</a></li>
+                        <li><a href="/downloads/portfolio.pdf"><i class="fas fa-chevron-right link-icon"></i>Portfolio Brochure</a></li>
+                        <li><a href="/testimonials"><i class="fas fa-chevron-right link-icon"></i>Client Testimonials</a></li>
+                        <li><a href="/awards"><i class="fas fa-chevron-right link-icon"></i>Awards & Recognition</a></li>
+                        <li><a href="/certifications"><i class="fas fa-chevron-right link-icon"></i>Certifications</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support & Legal -->
+                <div class="sitemap-section">
+                    <h2 class="section-title">
+                        <div class="section-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        Support & Legal
+                    </h2>
+                    <ul class="sitemap-links">
+                        <li><a href="/faq"><i class="fas fa-chevron-right link-icon"></i>Frequently Asked Questions</a></li>
+                        <li><a href="/privacy-policy"><i class="fas fa-chevron-right link-icon"></i>Privacy Policy</a></li>
+                        <li><a href="/terms-of-service"><i class="fas fa-chevron-right link-icon"></i>Terms of Service</a></li>
+                        <li><a href="/cookie-policy"><i class="fas fa-chevron-right link-icon"></i>Cookie Policy</a></li>
+                        <li><a href="/404"><i class="fas fa-chevron-right link-icon"></i>404 Page</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="last-updated">
+                <i class="fas fa-clock"></i>
+                <strong>Last Updated:</strong> December 19, 2024
+                <br>
+                <small>This sitemap is automatically updated when new content is added</small>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', () => {
+            // Count total links
+            const totalLinks = document.querySelectorAll('.sitemap-links a').length;
+            console.log(`📊 Total pages in sitemap: ${totalLinks}`);
+            
+            // Add hover effects
+            const sections = document.querySelectorAll('.sitemap-section');
+            sections.forEach(section => {
+                section.addEventListener('mouseenter', () => {
+                    section.style.transform = 'translateY(-5px)';
+                });
+                
+                section.addEventListener('mouseleave', () => {
+                    section.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Track clicks (optional analytics)
+            document.querySelectorAll('.sitemap-links a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const url = e.target.getAttribute('href');
+                    console.log(`🔗 Sitemap navigation: ${url}`);
+                    
+                    // Send to analytics if available
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'sitemap_navigation', {
+                            'page_location': url,
+                            'source': 'sitemap'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
