@@ -1,996 +1,1186 @@
-/*!
- * Portfolio Main Entry Point
- * Author: Thanatsitt Santisamranwilai
- * Version: 2.0.0
- */
+/* ==================================
+   THANATSITT PORTFOLIO - MAIN JAVASCRIPT
+   Modern ES2023+ Features & 2025 Best Practices
+   Performance-optimized, accessible, and maintainable
+   ================================== */
 
+// === STRICT MODE & MODULE IMPORTS ===
 'use strict';
 
-/*
-========================================
-MAIN APPLICATION ENTRY POINT
-========================================
-*/
-
-// Import the main application (if using modules)
-// import { PortfolioApp } from './app.js';
-
-// Application configuration
-const MAIN_CONFIG = {
-    // Environment detection
-    isDevelopment: window.location.hostname === 'localhost' || 
-                  window.location.hostname === '127.0.0.1' ||
-                  window.location.search.includes('debug=true'),
+// === CONSTANTS & CONFIGURATION ===
+const CONFIG = {
+    // Animation settings
+    ANIMATION_DURATION: 300,
+    SCROLL_THRESHOLD: 100,
+    TYPING_SPEED: 100,
+    TYPING_DELAY: 1000,
     
-    // Feature flags
-    features: {
-        enableAnalytics: true,
-        enableServiceWorker: true,
-        enableOfflineMode: false,
-        enablePWA: false
-    },
+    // Performance settings
+    THROTTLE_DELAY: 16, // ~60fps
+    DEBOUNCE_DELAY: 250,
+    INTERSECTION_THRESHOLD: 0.1,
     
-    // Loading preferences
-    loading: {
-        showSplashScreen: true,
-        minLoadingTime: 1000, // Minimum time to show loading
-        enablePreloader: true
+    // Theme settings
+    THEME_STORAGE_KEY: 'portfolio-theme',
+    DEFAULT_THEME: 'light',
+    
+    // Contact form settings
+    FORM_TIMEOUT: 10000,
+    MAX_MESSAGE_LENGTH: 1000,
+    
+    // Social links
+    SOCIAL_LINKS: {
+        github: 'https://github.com/thanatsitt',
+        linkedin: 'https://linkedin.com/in/thanatsitt',
+        email: 'Thanattsitt.info@yahoo.co.uk'
     }
 };
 
-/*
-========================================
-PRE-INITIALIZATION SETUP
-========================================
-*/
+// === UTILITY FUNCTIONS ===
 
-// Set up critical path CSS and early optimizations
-function setupCriticalPath() {
-    // Add critical CSS loading class
-    document.documentElement.classList.add('loading');
-    
-    // Prevent FOUC (Flash of Unstyled Content)
-    document.documentElement.style.visibility = 'hidden';
-    
-    // Enable critical path font loading
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(() => {
-            document.documentElement.classList.add('fonts-loaded');
-        });
-    }
-}
+/**
+ * Debounce function to limit function calls
+ */
+const debounce = (func, wait, immediate = false) => {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            timeout = null;
+            if (!immediate) func.apply(this, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(this, args);
+    };
+};
 
-// Early theme detection (before app loads)
-function setupEarlyTheme() {
-    const savedTheme = localStorage.getItem('portfolio-theme');
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const theme = savedTheme || systemTheme;
-    
-    document.documentElement.setAttribute('data-theme', theme);
-    document.body.setAttribute('data-theme', theme);
-}
-
-// Setup loading screen
-function setupLoadingScreen() {
-    if (!MAIN_CONFIG.loading.showSplashScreen) return;
-    
-    const loadingHTML = `
-        <div id="app-loading" class="app-loading">
-            <div class="loading-content">
-                <div class="loading-logo">
-                    <div class="logo-animation">
-                        <svg viewBox="0 0 100 100" class="loading-spinner">
-                            <circle cx="50" cy="50" r="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="31.416" stroke-dashoffset="31.416">
-                                <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
-                                <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <h1 class="loading-title">Thanatsitt</h1>
-                    <p class="loading-subtitle">Loading Portfolio...</p>
-                </div>
-                <div class="loading-progress">
-                    <div class="progress-bar" id="loadingProgress"></div>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    document.body.insertAdjacentHTML('afterbegin', loadingHTML);
-}
-
-// Progress tracking
-let loadingProgress = 0;
-const loadingSteps = [
-    'Initializing application...',
-    'Loading core modules...',
-    'Setting up animations...',
-    'Preparing user interface...',
-    'Finalizing setup...'
-];
-
-function updateLoadingProgress(step, progress) {
-    const progressBar = document.getElementById('loadingProgress');
-    const subtitle = document.querySelector('.loading-subtitle');
-    
-    if (progressBar) {
-        progressBar.style.width = `${progress}%`;
-    }
-    
-    if (subtitle && loadingSteps[step]) {
-        subtitle.textContent = loadingSteps[step];
-    }
-}
-
-/*
-========================================
-APPLICATION INITIALIZATION
-========================================
-*/
-
-async function initializePortfolioApp() {
-    const startTime = Date.now();
-    
-    try {
-        // Step 1: Initialize app core (20%)
-        updateLoadingProgress(0, 20);
-        await new Promise(resolve => setTimeout(resolve, 200));
-        
-        // Step 2: Load modules (40%)
-        updateLoadingProgress(1, 40);
-        
-        // The PortfolioApp is already initialized from app.js
-        // We just need to wait for it to be ready
-        await waitForAppReady();
-        
-        // Step 3: Setup animations (60%)
-        updateLoadingProgress(2, 60);
-        await new Promise(resolve => setTimeout(resolve, 200));
-        
-        // Step 4: Prepare UI (80%)
-        updateLoadingProgress(3, 80);
-        await new Promise(resolve => setTimeout(resolve, 200));
-        
-        // Step 5: Finalize (100%)
-        updateLoadingProgress(4, 100);
-        
-        // Ensure minimum loading time for better UX
-        const elapsedTime = Date.now() - startTime;
-        const remainingTime = Math.max(0, MAIN_CONFIG.loading.minLoadingTime - elapsedTime);
-        
-        if (remainingTime > 0) {
-            await new Promise(resolve => setTimeout(resolve, remainingTime));
+/**
+ * Throttle function to limit function calls
+ */
+const throttle = (func, limit) => {
+    let inThrottle;
+    return function executedFunction(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
         }
-        
-        // Initialize additional features
-        await initializeAdditionalFeatures();
-        
-        // Complete initialization
-        completeInitialization();
-        
-    } catch (error) {
-        handleInitializationError(error);
-    }
-}
+    };
+};
 
-function waitForAppReady() {
-    return new Promise((resolve) => {
-        if (window.portfolioApp && window.portfolioApp.isInitialized) {
-            resolve();
-            return;
+/**
+ * Check if user prefers reduced motion
+ */
+const prefersReducedMotion = () => {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
+
+/**
+ * Safe localStorage operations
+ */
+const storage = {
+    get: (key) => {
+        try {
+            return localStorage.getItem(key);
+        } catch (error) {
+            console.warn('localStorage get failed:', error);
+            return null;
         }
-        
-        document.addEventListener('portfolioAppReady', resolve, { once: true });
-        
-        // Fallback timeout
-        setTimeout(resolve, 5000);
-    });
-}
-
-async function initializeAdditionalFeatures() {
-    const promises = [];
-    
-    // Initialize analytics
-    if (MAIN_CONFIG.features.enableAnalytics && !MAIN_CONFIG.isDevelopment) {
-        promises.push(initializeAnalytics());
-    }
-    
-    // Initialize service worker
-    if (MAIN_CONFIG.features.enableServiceWorker && 'serviceWorker' in navigator) {
-        promises.push(initializeServiceWorker());
-    }
-    
-    // Initialize PWA features
-    if (MAIN_CONFIG.features.enablePWA) {
-        promises.push(initializePWA());
-    }
-    
-    await Promise.allSettled(promises);
-}
-
-async function initializeAnalytics() {
-    // Add your analytics initialization here
-    // Example: Google Analytics, Adobe Analytics, etc.
-    console.log('📊 Analytics initialized');
-}
-
-async function initializeServiceWorker() {
-    try {
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        console.log('🔧 Service Worker registered:', registration);
-    } catch (error) {
-        console.warn('Service Worker registration failed:', error);
-    }
-}
-
-async function initializePWA() {
-    // PWA features like install prompt, offline capabilities
-    console.log('📱 PWA features initialized');
-}
-
-function completeInitialization() {
-    // Remove loading screen
-    const loadingScreen = document.getElementById('app-loading');
-    if (loadingScreen) {
-        loadingScreen.classList.add('fade-out');
-        setTimeout(() => {
-            loadingScreen.remove();
-        }, 500);
-    }
-    
-    // Show main content
-    document.documentElement.style.visibility = '';
-    document.documentElement.classList.remove('loading');
-    document.documentElement.classList.add('loaded');
-    
-    // Dispatch app ready event
-    document.dispatchEvent(new CustomEvent('mainAppReady', {
-        detail: {
-            loadTime: Date.now() - window.performance.timing.navigationStart,
-            config: MAIN_CONFIG
-        }
-    }));
-    
-    console.log('🎉 Portfolio application fully loaded and ready!');
-}
-
-function handleInitializationError(error) {
-    console.error('❌ Application initialization failed:', error);
-    
-    // Remove loading screen
-    const loadingScreen = document.getElementById('app-loading');
-    if (loadingScreen) {
-        loadingScreen.innerHTML = `
-            <div class="loading-content error">
-                <div class="error-icon">⚠️</div>
-                <h2>Loading Error</h2>
-                <p>Something went wrong while loading the application.</p>
-                <button onclick="window.location.reload()" class="retry-button">
-                    Retry
-                </button>
-            </div>
-        `;
-    }
-    
-    // Show basic content even if JS fails
-    document.documentElement.style.visibility = '';
-}
-
-/*
-========================================
-STARTUP SEQUENCE
-========================================
-*/
-
-// Run pre-initialization setup immediately
-setupCriticalPath();
-setupEarlyTheme();
-
-// Wait for DOM to be ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        setupLoadingScreen();
-        initializePortfolioApp();
-    });
-} else {
-    setupLoadingScreen();
-    initializePortfolioApp();
-}
-
-// Export for debugging
-if (MAIN_CONFIG.isDevelopment) {
-    window.mainConfig = MAIN_CONFIG;
-    window.updateLoadingProgress = updateLoadingProgress;
-}
-// Add to main.js after the MAIN_CONFIG object
-
-const COOKIE_CONFIG = {
-    enabled: !MAIN_CONFIG.isDevelopment, // Disable in development
-    position: 'bottom', // 'top', 'bottom', 'top-left', 'top-right', 'bottom-left', 'bottom-right'
-    theme: 'auto', // 'auto', 'light', 'dark'
-    categories: {
-        necessary: true, // Always required
-        analytics: false,
-        marketing: false,
-        preferences: false
     },
-    services: {
-        googleAnalytics: 'analytics',
-        facebookPixel: 'marketing',
-        themePreference: 'preferences'
+    set: (key, value) => {
+        try {
+            localStorage.setItem(key, value);
+            return true;
+        } catch (error) {
+            console.warn('localStorage set failed:', error);
+            return false;
+        }
+    },
+    remove: (key) => {
+        try {
+            localStorage.removeItem(key);
+            return true;
+        } catch (error) {
+            console.warn('localStorage remove failed:', error);
+            return false;
+        }
     }
 };
 
-/*
-========================================
-COOKIE CONSENT CONTROLLER
-========================================
-*/
+/**
+ * Create and dispatch custom events
+ */
+const emitEvent = (eventName, detail = {}) => {
+    const event = new CustomEvent(eventName, { detail });
+    document.dispatchEvent(event);
+};
 
-class CookieConsentController {
+// === THEME MANAGEMENT ===
+class ThemeManager {
     constructor() {
-        this.consentGiven = false;
-        this.preferences = { ...COOKIE_CONFIG.categories };
-        this.consentKey = 'portfolio-cookie-consent';
-        this.preferencesKey = 'portfolio-cookie-preferences';
-        
+        this.currentTheme = this.getStoredTheme() || CONFIG.DEFAULT_THEME;
+        this.systemTheme = this.getSystemTheme();
         this.init();
     }
 
     init() {
-        if (!COOKIE_CONFIG.enabled) return;
+        this.applyTheme(this.currentTheme);
+        this.setupThemeToggle();
+        this.watchSystemTheme();
         
-        // Check if consent already given
-        this.loadSavedPreferences();
+        document.addEventListener('cc:onChange', () => {
+            this.handleConsentChange();
+        });
+    }
+
+    getStoredTheme() {
+        return storage.get(CONFIG.THEME_STORAGE_KEY);
+    }
+
+    getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    applyTheme(theme) {
+        document.body.setAttribute('data-theme', theme);
+        this.currentTheme = theme;
+        this.updateThemeToggle(theme);
+        emitEvent('themeChanged', { theme });
         
-        if (!this.consentGiven) {
-            this.showConsentBanner();
+        if (this.canStoreTheme()) {
+            storage.set(CONFIG.THEME_STORAGE_KEY, theme);
+        }
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.applyTheme(newTheme);
+    }
+
+    setupThemeToggle() {
+        const toggleButton = document.querySelector('.theme-toggle');
+        if (!toggleButton) return;
+
+        toggleButton.addEventListener('click', () => this.toggleTheme());
+
+        toggleButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.toggleTheme();
+            }
+        });
+    }
+
+    updateThemeToggle(theme) {
+        const toggleButton = document.querySelector('.theme-toggle');
+        if (!toggleButton) return;
+
+        const icon = toggleButton.querySelector('i');
+        if (icon) {
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        
+        toggleButton.setAttribute('aria-label', 
+            `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`
+        );
+    }
+
+    watchSystemTheme() {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+            this.systemTheme = e.matches ? 'dark' : 'light';
+            
+            if (!this.getStoredTheme()) {
+                this.applyTheme(this.systemTheme);
+            }
+        });
+    }
+
+    canStoreTheme() {
+        if (typeof CookieConsent !== 'undefined') {
+            return CookieConsent.acceptedCategory('functionality');
+        }
+        return true;
+    }
+
+    handleConsentChange() {
+        if (this.canStoreTheme()) {
+            storage.set(CONFIG.THEME_STORAGE_KEY, this.currentTheme);
         } else {
-            this.applyConsentPreferences();
+            storage.remove(CONFIG.THEME_STORAGE_KEY);
         }
-        
-        this.bindEvents();
+    }
+}
+
+// === NAVIGATION MANAGEMENT ===
+class NavigationManager {
+    constructor() {
+        this.navbar = document.querySelector('.header__navbar');
+        this.navLinks = document.querySelectorAll('.nav-link');
+        this.sections = document.querySelectorAll('.section');
+        this.init();
     }
 
-    loadSavedPreferences() {
-        try {
-            const consent = localStorage.getItem(this.consentKey);
-            const preferences = localStorage.getItem(this.preferencesKey);
-            
-            if (consent === 'true') {
-                this.consentGiven = true;
-                
-                if (preferences) {
-                    this.preferences = { ...this.preferences, ...JSON.parse(preferences) };
+    init() {
+        this.setupScrollSpy();
+        this.setupSmoothScrolling();
+        this.setupNavbarBehavior();
+        this.setupMobileMenu();
+    }
+
+    setupScrollSpy() {
+        const observerOptions = {
+            threshold: CONFIG.INTERSECTION_THRESHOLD,
+            rootMargin: '-20% 0px -80% 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.updateActiveNavLink(entry.target.id);
                 }
-            }
-        } catch (e) {
-            console.warn('Could not load cookie preferences:', e);
+            });
+        }, observerOptions);
+
+        this.sections.forEach(section => {
+            observer.observe(section);
+        });
+    }
+
+    updateActiveNavLink(sectionId) {
+        this.navLinks.forEach(link => link.classList.remove('active'));
+
+        const activeLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+            emitEvent('navigationChanged', { activeSection: sectionId });
         }
     }
 
-    showConsentBanner() {
-        const banner = this.createConsentBanner();
-        document.body.appendChild(banner);
+    setupSmoothScrolling() {
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    this.scrollToSection(targetSection);
+                }
+            });
+        });
+    }
+
+    scrollToSection(section) {
+        const headerHeight = this.navbar?.offsetHeight || 0;
+        const targetPosition = section.offsetTop - headerHeight;
         
-        // Animate in
-        requestAnimationFrame(() => {
-            banner.classList.add('show');
+        if (prefersReducedMotion()) {
+            window.scrollTo(0, targetPosition);
+        } else {
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    setupNavbarBehavior() {
+        if (!this.navbar) return;
+
+        let lastScrollY = window.scrollY;
+        let isNavbarHidden = false;
+
+        const handleScroll = throttle(() => {
+            const currentScrollY = window.scrollY;
+            const scrollingDown = currentScrollY > lastScrollY;
+            const scrolledEnough = currentScrollY > CONFIG.SCROLL_THRESHOLD;
+
+            if (currentScrollY > 50) {
+                this.navbar.classList.add('scrolled');
+            } else {
+                this.navbar.classList.remove('scrolled');
+            }
+
+            if (scrolledEnough && scrollingDown && !isNavbarHidden) {
+                this.navbar.style.transform = 'translateY(-100%)';
+                isNavbarHidden = true;
+            } else if (!scrollingDown && isNavbarHidden) {
+                this.navbar.style.transform = 'translateY(0)';
+                isNavbarHidden = false;
+            }
+
+            lastScrollY = currentScrollY;
+        }, CONFIG.THROTTLE_DELAY);
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+
+    setupMobileMenu() {
+        const mobileToggle = document.querySelector('.navbar-toggler');
+        const navCollapse = document.querySelector('.navbar-collapse');
+        
+        if (!mobileToggle || !navCollapse) return;
+
+        mobileToggle.addEventListener('click', () => {
+            const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+            
+            mobileToggle.setAttribute('aria-expanded', !isExpanded);
+            navCollapse.classList.toggle('show');
         });
 
-        // Focus management for accessibility
-        setTimeout(() => {
-            const acceptButton = banner.querySelector('.cookie-accept');
-            if (acceptButton) acceptButton.focus();
-        }, 300);
-    }
+        // Close menu when clicking nav links
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                navCollapse.classList.remove('show');
+            });
+        });
 
-    createConsentBanner() {
-        const banner = document.createElement('div');
-        banner.className = 'cookie-consent-banner';
-        banner.setAttribute('role', 'dialog');
-        banner.setAttribute('aria-modal', 'false');
-        banner.setAttribute('aria-labelledby', 'cookie-title');
-        banner.setAttribute('aria-describedby', 'cookie-description');
-
-        banner.innerHTML = `
-            <div class="cookie-consent-content">
-                <div class="cookie-text">
-                    <h3 id="cookie-title" class="cookie-title">
-                        <i class="fas fa-cookie-bite"></i>
-                        Cookie Preferences
-                    </h3>
-                    <p id="cookie-description" class="cookie-description">
-                        This website uses cookies to enhance your browsing experience, analyze site traffic, and personalize content. 
-                        You can choose which types of cookies to allow.
-                    </p>
-                </div>
-                
-                <div class="cookie-actions">
-                    <button type="button" class="cookie-button cookie-customize" aria-describedby="cookie-description">
-                        <i class="fas fa-cog"></i>
-                        Customize
-                    </button>
-                    <button type="button" class="cookie-button cookie-reject">
-                        <i class="fas fa-times"></i>
-                        Reject All
-                    </button>
-                    <button type="button" class="cookie-button cookie-accept cookie-button--primary">
-                        <i class="fas fa-check"></i>
-                        Accept All
-                    </button>
-                </div>
-            </div>
-        `;
-
-        this.addConsentStyles(banner);
-        return banner;
-    }
-
-    addConsentStyles(banner) {
-        const position = COOKIE_CONFIG.position;
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        
-        banner.style.cssText = `
-            position: fixed;
-            ${position.includes('top') ? 'top: 0;' : 'bottom: 0;'}
-            ${position.includes('left') ? 'left: 0;' : position.includes('right') ? 'right: 0;' : 'left: 0; right: 0;'}
-            background: ${isDark ? 'rgba(26, 32, 44, 0.95)' : 'rgba(255, 255, 255, 0.95)'};
-            backdrop-filter: blur(10px);
-            border: 1px solid ${isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'};
-            ${position.includes('top') ? 'border-bottom' : 'border-top'}: 3px solid var(--primary-accent);
-            padding: 1.5rem;
-            z-index: 10000;
-            max-width: ${position.includes('left') || position.includes('right') ? '400px' : 'none'};
-            box-shadow: 0 ${position.includes('top') ? '4px' : '-4px'} 20px rgba(0, 0, 0, 0.15);
-            transform: translateY(${position.includes('top') ? '-100%' : '100%'});
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        `;
-
-        // Add show class styles
-        const style = document.createElement('style');
-        style.textContent = `
-            .cookie-consent-banner.show {
-                transform: translateY(0) !important;
-                opacity: 1 !important;
-            }
-            
-            .cookie-consent-content {
-                display: flex;
-                align-items: center;
-                gap: 1.5rem;
-                flex-wrap: wrap;
-            }
-            
-            .cookie-text {
-                flex: 1;
-                min-width: 300px;
-            }
-            
-            .cookie-title {
-                margin: 0 0 0.5rem 0;
-                font-size: 1.1rem;
-                font-weight: 600;
-                color: var(--text-primary);
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-            
-            .cookie-description {
-                margin: 0;
-                font-size: 0.9rem;
-                color: var(--text-secondary);
-                line-height: 1.5;
-            }
-            
-            .cookie-actions {
-                display: flex;
-                gap: 0.75rem;
-                flex-wrap: wrap;
-            }
-            
-            .cookie-button {
-                padding: 0.6rem 1.2rem;
-                border: 1px solid var(--border-color);
-                border-radius: 0.5rem;
-                background: var(--background-secondary);
-                color: var(--text-primary);
-                font-size: 0.875rem;
-                font-weight: 500;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                text-decoration: none;
-                white-space: nowrap;
-            }
-            
-            .cookie-button:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
-            
-            .cookie-button:focus {
-                outline: 2px solid var(--primary-accent);
-                outline-offset: 2px;
-            }
-            
-            .cookie-button--primary {
-                background: var(--primary-accent);
-                color: white;
-                border-color: var(--primary-accent);
-            }
-            
-            .cookie-button--primary:hover {
-                background: var(--primary-light);
-                border-color: var(--primary-light);
-            }
-            
-            .cookie-reject {
-                color: #ef4444;
-                border-color: #ef4444;
-            }
-            
-            .cookie-reject:hover {
-                background: #ef4444;
-                color: white;
-            }
-            
-            .cookie-customize:hover {
-                background: var(--primary-accent);
-                color: white;
-                border-color: var(--primary-accent);
-            }
-            
-            @media (max-width: 768px) {
-                .cookie-consent-content {
-                    flex-direction: column;
-                    text-align: center;
-                }
-                
-                .cookie-actions {
-                    justify-content: center;
-                    width: 100%;
-                }
-                
-                .cookie-button {
-                    flex: 1;
-                    min-width: 120px;
-                }
-            }
-            
-            /* Preference modal styles */
-            .cookie-preferences-modal {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.8);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 10001;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.3s ease;
-            }
-            
-            .cookie-preferences-modal.show {
-                opacity: 1;
-                visibility: visible;
-            }
-            
-            .cookie-preferences-content {
-                background: var(--background-card);
-                border-radius: 1rem;
-                padding: 2rem;
-                max-width: 500px;
-                width: 90%;
-                max-height: 80vh;
-                overflow-y: auto;
-                transform: scale(0.9);
-                transition: transform 0.3s ease;
-            }
-            
-            .cookie-preferences-modal.show .cookie-preferences-content {
-                transform: scale(1);
-            }
-            
-            .cookie-category {
-                margin-bottom: 1.5rem;
-                padding: 1rem;
-                border: 1px solid var(--border-color);
-                border-radius: 0.5rem;
-            }
-            
-            .cookie-category-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 0.5rem;
-            }
-            
-            .cookie-toggle {
-                position: relative;
-                width: 50px;
-                height: 24px;
-                background: var(--background-secondary);
-                border-radius: 12px;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-            
-            .cookie-toggle.active {
-                background: var(--primary-accent);
-            }
-            
-            .cookie-toggle::after {
-                content: '';
-                position: absolute;
-                top: 2px;
-                left: 2px;
-                width: 20px;
-                height: 20px;
-                background: white;
-                border-radius: 50%;
-                transition: transform 0.3s ease;
-            }
-            
-            .cookie-toggle.active::after {
-                transform: translateX(26px);
-            }
-        `;
-        
-        if (!document.getElementById('cookie-consent-styles')) {
-            style.id = 'cookie-consent-styles';
-            document.head.appendChild(style);
-        }
-    }
-
-    bindEvents() {
+        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.cookie-accept')) {
-                this.acceptAll();
-            } else if (e.target.closest('.cookie-reject')) {
-                this.rejectAll();
-            } else if (e.target.closest('.cookie-customize')) {
-                this.showPreferencesModal();
+            if (!e.target.closest('.navbar')) {
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                navCollapse.classList.remove('show');
+            }
+        });
+    }
+}
+
+// === ANIMATION MANAGER ===
+class AnimationManager {
+    constructor() {
+        this.animatedElements = new Set();
+        this.init();
+    }
+
+    init() {
+        this.setupScrollAnimations();
+        this.setupTypewriter();
+        this.setupCounters();
+        this.setupStars();
+    }
+
+    setupScrollAnimations() {
+        if (prefersReducedMotion()) return;
+
+        const animatedElements = document.querySelectorAll('[data-animate]');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !this.animatedElements.has(entry.target)) {
+                    this.animateElement(entry.target);
+                    this.animatedElements.add(entry.target);
+                }
+            });
+        }, {
+            threshold: CONFIG.INTERSECTION_THRESHOLD,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        animatedElements.forEach(element => observer.observe(element));
+    }
+
+    animateElement(element) {
+        const animationType = element.dataset.animate;
+        const delay = parseInt(element.dataset.delay) || 0;
+
+        setTimeout(() => {
+            element.classList.add('animate-in');
+            
+            switch (animationType) {
+                case 'fade-up':
+                    element.style.transform = 'translateY(0)';
+                    element.style.opacity = '1';
+                    break;
+                case 'fade-in':
+                    element.style.opacity = '1';
+                    break;
+                case 'scale-in':
+                    element.style.transform = 'scale(1)';
+                    element.style.opacity = '1';
+                    break;
+            }
+        }, delay);
+    }
+
+    setupTypewriter() {
+        const typewriterElement = document.querySelector('.subtitle[data-typewriter]');
+        if (!typewriterElement) return;
+
+        const phrases = typewriterElement.dataset.typewriter.split('|');
+        let currentPhraseIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+
+        const typewrite = () => {
+            const currentPhrase = phrases[currentPhraseIndex];
+            
+            if (!isDeleting) {
+                typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
+                currentCharIndex++;
+                
+                if (currentCharIndex === currentPhrase.length) {
+                    isDeleting = true;
+                    setTimeout(typewrite, CONFIG.TYPING_DELAY);
+                    return;
+                }
+            } else {
+                typewriterElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
+                currentCharIndex--;
+                
+                if (currentCharIndex === 0) {
+                    isDeleting = false;
+                    currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                }
+            }
+            
+            const speed = isDeleting ? CONFIG.TYPING_SPEED / 2 : CONFIG.TYPING_SPEED;
+            setTimeout(typewrite, speed);
+        };
+
+        setTimeout(typewrite, 1000);
+    }
+
+    setupCounters() {
+        const counters = document.querySelectorAll('[data-counter]');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => observer.observe(counter));
+    }
+
+    animateCounter(counter) {
+        const target = parseInt(counter.dataset.counter);
+        const duration = parseInt(counter.dataset.duration) || 2000;
+        const startTime = performance.now();
+        
+        const updateCounter = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentValue = Math.floor(target * easeOut);
+            
+            counter.textContent = currentValue.toLocaleString();
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            }
+        };
+        
+        requestAnimationFrame(updateCounter);
+    }
+
+    setupStars() {
+        const starsContainer = document.querySelector('.stars-container');
+        if (!starsContainer || prefersReducedMotion()) return;
+
+        this.createShootingStars();
+        
+        setTimeout(() => {
+            starsContainer.classList.add('breathing');
+        }, 2000);
+    }
+
+    createShootingStars() {
+        const shootingStarsContainer = document.querySelector('.shooting-stars');
+        if (!shootingStarsContainer) return;
+
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                this.createShootingStar();
+            }
+        }, 5000);
+    }
+
+    createShootingStar() {
+        const shootingStarsContainer = document.querySelector('.shooting-stars');
+        if (!shootingStarsContainer) return;
+
+        const star = document.createElement('div');
+        star.className = 'star star--shooting';
+        
+        star.style.top = Math.random() * 50 + '%';
+        star.style.left = '-50px';
+        
+        shootingStarsContainer.appendChild(star);
+        
+        setTimeout(() => {
+            star.remove();
+        }, 8000);
+    }
+}
+
+// === CONTACT FORM MANAGER ===
+class ContactFormManager {
+    constructor() {
+        this.form = document.querySelector('#contact-form');
+        this.submitButton = null;
+        this.originalButtonText = '';
+        this.init();
+    }
+
+    init() {
+        if (!this.form) return;
+
+        this.submitButton = this.form.querySelector('[type="submit"]');
+        this.originalButtonText = this.submitButton?.textContent || 'Send Message';
+        
+        this.setupFormValidation();
+        this.setupFormSubmission();
+        this.setupCharacterCounter();
+    }
+
+    setupFormValidation() {
+        const inputs = this.form.querySelectorAll('input, textarea, select');
+        
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                this.validateField(input);
+            });
+            
+            input.addEventListener('input', () => {
+                this.clearFieldValidation(input);
+            });
+        });
+    }
+
+    validateField(field) {
+        const value = field.value.trim();
+        let isValid = true;
+        let errorMessage = '';
+
+        this.clearFieldValidation(field);
+
+        if (field.hasAttribute('required') && !value) {
+            isValid = false;
+            errorMessage = 'This field is required';
+        } else if (field.type === 'email' && value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'Please enter a valid email address';
+            }
+        } else if (field.name === 'message' && value.length > CONFIG.MAX_MESSAGE_LENGTH) {
+            isValid = false;
+            errorMessage = `Message must be less than ${CONFIG.MAX_MESSAGE_LENGTH} characters`;
+        }
+
+        if (!isValid) {
+            this.showFieldError(field, errorMessage);
+        }
+
+        return isValid;
+    }
+
+    showFieldError(field, message) {
+        field.classList.add('invalid');
+        field.setAttribute('aria-invalid', 'true');
+        
+        let errorElement = field.parentNode.querySelector('.field-error');
+        if (!errorElement) {
+            errorElement = document.createElement('div');
+            errorElement.className = 'field-error';
+            errorElement.setAttribute('role', 'alert');
+            field.parentNode.appendChild(errorElement);
+        }
+        
+        errorElement.textContent = message;
+        field.setAttribute('aria-describedby', errorElement.id || 'error-' + field.name);
+    }
+
+    clearFieldValidation(field) {
+        field.classList.remove('invalid');
+        field.removeAttribute('aria-invalid');
+        
+        const errorElement = field.parentNode.querySelector('.field-error');
+        if (errorElement) {
+            errorElement.remove();
+        }
+    }
+
+    setupFormSubmission() {
+        this.form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await this.handleFormSubmission();
+        });
+    }
+
+    async handleFormSubmission() {
+        const fields = this.form.querySelectorAll('input, textarea, select');
+        let isFormValid = true;
+
+        fields.forEach(field => {
+            if (!this.validateField(field)) {
+                isFormValid = false;
             }
         });
 
-        // Listen for theme changes to update banner appearance
-        document.addEventListener('themeChanged', () => {
-            this.updateBannerTheme();
-        });
+        if (!isFormValid) {
+            this.showFormMessage('Please correct the errors above', 'error');
+            return;
+        }
 
-        // Keyboard support
+        this.setFormLoading(true);
+
+        try {
+            await this.submitForm();
+            
+            this.showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+            this.form.reset();
+            this.trackFormSubmission('success');
+            
+        } catch (error) {
+            console.error('Form submission error:', error);
+            this.showFormMessage('Failed to send message. Please try again later.', 'error');
+            this.trackFormSubmission('error');
+        } finally {
+            this.setFormLoading(false);
+        }
+    }
+
+    async submitForm() {
+        const formData = new FormData(this.form);
+        const data = Object.fromEntries(formData.entries());
+
+        data.timestamp = new Date().toISOString();
+        data.userAgent = navigator.userAgent;
+
+        // Simulate API call (replace with actual endpoint)
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (Math.random() > 0.1) {
+                    resolve(data);
+                } else {
+                    reject(new Error('Submission failed'));
+                }
+            }, 2000);
+        });
+    }
+
+    setFormLoading(isLoading) {
+        if (!this.submitButton) return;
+
+        if (isLoading) {
+            this.submitButton.disabled = true;
+            this.submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+        } else {
+            this.submitButton.disabled = false;
+            this.submitButton.textContent = this.originalButtonText;
+        }
+    }
+
+    showFormMessage(message, type) {
+        const existingMessage = this.form.querySelector('.form-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
+        const messageElement = document.createElement('div');
+        messageElement.className = `form-message form-message--${type}`;
+        messageElement.setAttribute('role', 'alert');
+        messageElement.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+            ${message}
+        `;
+
+        this.form.insertBefore(messageElement, this.form.firstChild);
+
+        setTimeout(() => {
+            messageElement.remove();
+        }, 5000);
+    }
+
+    setupCharacterCounter() {
+        const messageField = this.form.querySelector('textarea[name="message"]');
+        if (!messageField) return;
+
+        const counterElement = document.createElement('div');
+        counterElement.className = 'character-counter';
+        messageField.parentNode.appendChild(counterElement);
+
+        const updateCounter = () => {
+            const currentLength = messageField.value.length;
+            const maxLength = CONFIG.MAX_MESSAGE_LENGTH;
+            const remaining = maxLength - currentLength;
+            
+            counterElement.textContent = `${currentLength}/${maxLength}`;
+            counterElement.classList.toggle('warning', remaining < 50);
+            counterElement.classList.toggle('error', remaining < 0);
+        };
+
+        messageField.addEventListener('input', updateCounter);
+        updateCounter();
+    }
+
+    trackFormSubmission(status) {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'form_submission', {
+                event_category: 'engagement',
+                event_label: status,
+                value: status === 'success' ? 1 : 0
+            });
+        }
+
+        emitEvent('formSubmitted', { status });
+    }
+}
+
+// === PERFORMANCE MONITOR ===
+class PerformanceMonitor {
+    constructor() {
+        this.metrics = {};
+        this.init();
+    }
+
+    init() {
+        this.measurePageLoad();
+        this.measureLCP();
+        this.measureFID();
+        this.measureCLS();
+        this.setupResourceMonitoring();
+    }
+
+    measurePageLoad() {
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const navigation = performance.getEntriesByType('navigation')[0];
+                    if (navigation) {
+                        this.metrics.loadTime = navigation.loadEventEnd - navigation.loadEventStart;
+                        this.metrics.domContentLoaded = navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart;
+                        this.metrics.firstByte = navigation.responseStart - navigation.requestStart;
+                        
+                        console.log('Page Load Metrics:', this.metrics);
+                        this.reportMetrics('page_load', this.metrics);
+                    }
+                }, 0);
+            });
+        }
+    }
+
+    measureLCP() {
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                this.metrics.lcp = lastEntry.startTime;
+                
+                console.log('LCP:', this.metrics.lcp);
+                this.reportMetrics('lcp', { value: this.metrics.lcp });
+            });
+            
+            observer.observe({ entryTypes: ['largest-contentful-paint'] });
+        }
+    }
+
+    measureFID() {
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                entries.forEach(entry => {
+                    if (entry.name === 'first-input') {
+                        this.metrics.fid = entry.processingStart - entry.startTime;
+                        
+                        console.log('FID:', this.metrics.fid);
+                        this.reportMetrics('fid', { value: this.metrics.fid });
+                    }
+                });
+            });
+            
+            observer.observe({ entryTypes: ['first-input'] });
+        }
+    }
+
+    measureCLS() {
+        if ('PerformanceObserver' in window) {
+            let clsValue = 0;
+            
+            const observer = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                entries.forEach(entry => {
+                    if (!entry.hadRecentInput) {
+                        clsValue += entry.value;
+                    }
+                });
+                
+                this.metrics.cls = clsValue;
+                console.log('CLS:', this.metrics.cls);
+                this.reportMetrics('cls', { value: this.metrics.cls });
+            });
+            
+            observer.observe({ entryTypes: ['layout-shift'] });
+        }
+    }
+
+    setupResourceMonitoring() {
+        if ('PerformanceObserver' in window) {
+            const observer = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                entries.forEach(entry => {
+                    if (entry.duration > 1000) {
+                        console.warn('Slow resource:', entry.name, entry.duration + 'ms');
+                    }
+                });
+            });
+            
+            observer.observe({ entryTypes: ['resource'] });
+        }
+    }
+
+    reportMetrics(metricName, data) {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'performance_metric', {
+                event_category: 'performance',
+                event_label: metricName,
+                value: Math.round(data.value || data.loadTime || 0)
+            });
+        }
+
+        emitEvent('performanceMetric', { metric: metricName, data });
+    }
+}
+
+// === ACCESSIBILITY MANAGER ===
+class AccessibilityManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupKeyboardNavigation();
+        this.setupFocusManagement();
+        this.setupAriaLiveRegions();
+        this.setupReducedMotion();
+    }
+
+    setupKeyboardNavigation() {
+        // Skip to main content
+        const skipLink = document.createElement('a');
+        skipLink.href = '#main';
+        skipLink.className = 'skip-link';
+        skipLink.textContent = 'Skip to main content';
+        document.body.insertBefore(skipLink, document.body.firstChild);
+
+        // Escape key handling
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                this.closePreferencesModal();
-            }
-        });
-    }
-
-    acceptAll() {
-        this.preferences = {
-            necessary: true,
-            analytics: true,
-            marketing: true,
-            preferences: true
-        };
-        
-        this.saveConsent();
-        this.applyConsentPreferences();
-        this.removeBanner();
-        this.announceToScreenReader('All cookies accepted');
-    }
-
-    rejectAll() {
-        this.preferences = {
-            necessary: true,
-            analytics: false,
-            marketing: false,
-            preferences: false
-        };
-        
-        this.saveConsent();
-        this.applyConsentPreferences();
-        this.removeBanner();
-        this.announceToScreenReader('Non-essential cookies rejected');
-    }
-
-    saveConsent() {
-        try {
-            localStorage.setItem(this.consentKey, 'true');
-            localStorage.setItem(this.preferencesKey, JSON.stringify(this.preferences));
-            this.consentGiven = true;
-        } catch (e) {
-            console.warn('Could not save cookie preferences:', e);
-        }
-    }
-
-    applyConsentPreferences() {
-        // Apply analytics
-        if (this.preferences.analytics) {
-            this.enableAnalytics();
-        } else {
-            this.disableAnalytics();
-        }
-
-        // Apply marketing cookies
-        if (this.preferences.marketing) {
-            this.enableMarketing();
-        } else {
-            this.disableMarketing();
-        }
-
-        // Apply preference cookies (always allowed for essential functionality)
-        if (this.preferences.preferences) {
-            this.enablePreferences();
-        }
-
-        // Dispatch event for other parts of the app
-        document.dispatchEvent(new CustomEvent('cookieConsentUpdated', {
-            detail: { preferences: this.preferences }
-        }));
-    }
-
-    enableAnalytics() {
-        // Initialize Google Analytics or other analytics
-        if (window.gtag) {
-            gtag('consent', 'update', {
-                'analytics_storage': 'granted'
-            });
-        }
-        console.log('📊 Analytics cookies enabled');
-    }
-
-    disableAnalytics() {
-        if (window.gtag) {
-            gtag('consent', 'update', {
-                'analytics_storage': 'denied'
-            });
-        }
-        console.log('📊 Analytics cookies disabled');
-    }
-
-    enableMarketing() {
-        // Initialize marketing pixels
-        console.log('🎯 Marketing cookies enabled');
-    }
-
-    disableMarketing() {
-        console.log('🎯 Marketing cookies disabled');
-    }
-
-    enablePreferences() {
-        console.log('⚙️ Preference cookies enabled');
-    }
-
-    showPreferencesModal() {
-        const modal = this.createPreferencesModal();
-        document.body.appendChild(modal);
-        
-        requestAnimationFrame(() => {
-            modal.classList.add('show');
-        });
-
-        // Focus management
-        const firstToggle = modal.querySelector('.cookie-toggle');
-        if (firstToggle) firstToggle.focus();
-    }
-
-    createPreferencesModal() {
-        const modal = document.createElement('div');
-        modal.className = 'cookie-preferences-modal';
-        modal.setAttribute('role', 'dialog');
-        modal.setAttribute('aria-modal', 'true');
-        modal.setAttribute('aria-labelledby', 'preferences-title');
-
-        modal.innerHTML = `
-            <div class="cookie-preferences-content">
-                <h2 id="preferences-title">Cookie Preferences</h2>
-                <p>Choose which cookies you want to allow. You can change these settings at any time.</p>
+                // Close any open modals or menus
+                const openModal = document.querySelector('.modal.show');
+                const openMenu = document.querySelector('.navbar-collapse.show');
                 
-                <div class="cookie-category">
-                    <div class="cookie-category-header">
-                        <div>
-                            <h3>Necessary Cookies</h3>
-                            <p>Required for basic website functionality</p>
-                        </div>
-                        <div class="cookie-toggle active" data-category="necessary" aria-label="Necessary cookies (always enabled)">
-                            <span style="display: none;">Always Required</span>
-                        </div>
-                    </div>
-                </div>
+                if (openModal) {
+                    openModal.classList.remove('show');
+                }
                 
-                <div class="cookie-category">
-                    <div class="cookie-category-header">
-                        <div>
-                            <h3>Analytics Cookies</h3>
-                            <p>Help us understand how visitors interact with our website</p>
-                        </div>
-                        <div class="cookie-toggle ${this.preferences.analytics ? 'active' : ''}" 
-                             data-category="analytics" 
-                             tabindex="0" 
-                             role="switch" 
-                             aria-checked="${this.preferences.analytics}"
-                             aria-label="Toggle analytics cookies">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="cookie-category">
-                    <div class="cookie-category-header">
-                        <div>
-                            <h3>Marketing Cookies</h3>
-                            <p>Used to track visitors and display relevant advertisements</p>
-                        </div>
-                        <div class="cookie-toggle ${this.preferences.marketing ? 'active' : ''}" 
-                             data-category="marketing"
-                             tabindex="0" 
-                             role="switch" 
-                             aria-checked="${this.preferences.marketing}"
-                             aria-label="Toggle marketing cookies">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="cookie-category">
-                    <div class="cookie-category-header">
-                        <div>
-                            <h3>Preference Cookies</h3>
-                            <p>Remember your settings and preferences</p>
-                        </div>
-                        <div class="cookie-toggle ${this.preferences.preferences ? 'active' : ''}" 
-                             data-category="preferences"
-                             tabindex="0" 
-                             role="switch" 
-                             aria-checked="${this.preferences.preferences}"
-                             aria-label="Toggle preference cookies">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="cookie-actions" style="margin-top: 2rem; justify-content: flex-end;">
-                    <button type="button" class="cookie-button cookie-cancel">Cancel</button>
-                    <button type="button" class="cookie-button cookie-save cookie-button--primary">Save Preferences</button>
-                </div>
-            </div>
-        `;
-
-        this.bindModalEvents(modal);
-        return modal;
-    }
-
-    bindModalEvents(modal) {
-        // Toggle switches
-        modal.addEventListener('click', (e) => {
-            const toggle = e.target.closest('.cookie-toggle');
-            if (toggle && toggle.dataset.category !== 'necessary') {
-                const category = toggle.dataset.category;
-                const isActive = toggle.classList.contains('active');
-                
-                toggle.classList.toggle('active');
-                toggle.setAttribute('aria-checked', !isActive);
-            }
-            
-            if (e.target.closest('.cookie-save')) {
-                this.savePreferencesFromModal(modal);
-            } else if (e.target.closest('.cookie-cancel')) {
-                this.closePreferencesModal();
-            }
-        });
-
-        // Keyboard support for toggles
-        modal.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                const toggle = e.target.closest('.cookie-toggle');
-                if (toggle && toggle.dataset.category !== 'necessary') {
-                    e.preventDefault();
-                    toggle.click();
+                if (openMenu) {
+                    openMenu.classList.remove('show');
+                    const toggle = document.querySelector('.navbar-toggler');
+                    if (toggle) {
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
                 }
             }
         });
+    }
 
-        // Close on backdrop click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                this.closePreferencesModal();
+    setupFocusManagement() {
+        // Focus visible indicators
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+
+        // Focus trap for modals
+        document.addEventListener('focusin', (e) => {
+            const modal = e.target.closest('.modal');
+            if (modal && modal.classList.contains('show')) {
+                const focusableElements = modal.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                if (e.target === modal && firstElement) {
+                    firstElement.focus();
+                }
             }
         });
     }
 
-    savePreferencesFromModal(modal) {
-        const toggles = modal.querySelectorAll('.cookie-toggle');
-        
-        toggles.forEach(toggle => {
-            const category = toggle.dataset.category;
-            const isActive = toggle.classList.contains('active');
-            this.preferences[category] = isActive;
+    setupAriaLiveRegions() {
+        // Create live region for announcements
+        const liveRegion = document.createElement('div');
+        liveRegion.setAttribute('aria-live', 'polite');
+        liveRegion.setAttribute('aria-atomic', 'true');
+        liveRegion.className = 'sr-only';
+        liveRegion.id = 'live-region';
+        document.body.appendChild(liveRegion);
+
+        // Listen for custom events to announce
+        document.addEventListener('themeChanged', (e) => {
+            this.announce(`Theme changed to ${e.detail.theme} mode`);
         });
 
-        this.saveConsent();
-        this.applyConsentPreferences();
-        this.closePreferencesModal();
-        this.removeBanner();
-        this.announceToScreenReader('Cookie preferences saved');
+        document.addEventListener('navigationChanged', (e) => {
+            this.announce(`Navigated to ${e.detail.activeSection} section`);
+        });
     }
 
-    closePreferencesModal() {
-        const modal = document.querySelector('.cookie-preferences-modal');
-        if (modal) {
-            modal.classList.remove('show');
-            setTimeout(() => modal.remove(), 300);
-        }
-    }
-
-    removeBanner() {
-        const banner = document.querySelector('.cookie-consent-banner');
-        if (banner) {
-            banner.classList.remove('show');
-            setTimeout(() => banner.remove(), 300);
-        }
-    }
-
-    updateBannerTheme() {
-        const banner = document.querySelector('.cookie-consent-banner');
-        if (banner) {
-            // Re-apply styles with new theme
-            this.addConsentStyles(banner);
-        }
-    }
-
-    announceToScreenReader(message) {
-        const liveRegion = document.querySelector('#live-region');
+    announce(message) {
+        const liveRegion = document.getElementById('live-region');
         if (liveRegion) {
             liveRegion.textContent = message;
-            setTimeout(() => liveRegion.textContent = '', 1000);
+            
+            // Clear after announcement
+            setTimeout(() => {
+                liveRegion.textContent = '';
+            }, 1000);
         }
     }
 
-    // Public API
-    updatePreferences(newPreferences) {
-        this.preferences = { ...this.preferences, ...newPreferences };
-        this.saveConsent();
-        this.applyConsentPreferences();
-    }
-
-    getPreferences() {
-        return { ...this.preferences };
-    }
-
-    resetConsent() {
-        localStorage.removeItem(this.consentKey);
-        localStorage.removeItem(this.preferencesKey);
-        this.consentGiven = false;
-        this.preferences = { ...COOKIE_CONFIG.categories };
-        this.showConsentBanner();
-    }
-
-    showPreferences() {
-        this.showPreferencesModal();
+    setupReducedMotion() {
+        if (prefersReducedMotion()) {
+            document.body.classList.add('reduced-motion');
+            
+            // Disable autoplay animations
+            const autoplayElements = document.querySelectorAll('[autoplay]');
+            autoplayElements.forEach(element => {
+                element.removeAttribute('autoplay');
+            });
+        }
     }
 }
 
-// Add to the initializeAdditionalFeatures function in main.js
-async function initializeAdditionalFeatures() {
-    const promises = [];
-    
-    // Initialize cookie consent FIRST
-    if (COOKIE_CONFIG.enabled) {
-        const cookieConsent = new CookieConsentController();
-        window.cookieConsent = cookieConsent; // Make available globally
+// === ERROR HANDLER ===
+class ErrorHandler {
+    constructor() {
+        this.init();
     }
-    
-    // Initialize analytics (after cookie consent)
-    if (MAIN_CONFIG.features.enableAnalytics && !MAIN_CONFIG.isDevelopment) {
-        promises.push(initializeAnalytics());
+
+    init() {
+        window.addEventListener('error', (e) => {
+            this.handleError(e.error, 'JavaScript Error', e.filename, e.lineno);
+        });
+
+        window.addEventListener('unhandledrejection', (e) => {
+            this.handleError(e.reason, 'Unhandled Promise Rejection');
+        });
     }
-    
-    // ... rest of existing code
+
+    handleError(error, type, filename = '', line = 0) {
+        console.error(`${type}:`, error);
+
+        // Log to analytics if available
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'exception', {
+                description: `${type}: ${error.message || error}`,
+                fatal: false
+            });
+        }
+
+        // Show user-friendly error message for critical errors
+        if (type === 'JavaScript Error' && error.message.includes('fetch')) {
+            this.showUserError('Network error. Please check your connection and try again.');
+        }
+    }
+
+    showUserError(message) {
+        const errorContainer = document.createElement('div');
+        errorContainer.className = 'error-toast';
+        errorContainer.innerHTML = `
+            <div class="error-toast__content">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                ${message}
+                <button class="error-toast__close" aria-label="Close error message">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(errorContainer);
+
+        // Auto-remove after 5 seconds
+        setTimeout(() => {
+            errorContainer.remove();
+        }, 5000);
+
+        // Manual close
+        errorContainer.querySelector('.error-toast__close').addEventListener('click', () => {
+            errorContainer.remove();
+        });
+    }
 }
+
+// === SERVICE WORKER REGISTRATION ===
+class ServiceWorkerManager {
+    constructor() {
+        this.init();
+    }
+
+    async init() {
+        if ('serviceWorker' in navigator && 'caches' in window) {
+            try {
+                const registration = await navigator.serviceWorker.register('/sw.js');
+                console.log('Service Worker registered:', registration);
+
+                // Listen for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            this.showUpdateNotification();
+                        }
+                    });
+                });
+            } catch (error) {
+                console.log('Service Worker registration failed:', error);
+            }
+        }
+    }
+
+    showUpdateNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'update-notification';
+        notification.innerHTML = `
+            <div class="update-notification__content">
+                <i class="fas fa-sync-alt me-2"></i>
+                A new version is available!
+                <button class="btn btn-sm btn-primary ms-2" onclick="window.location.reload()">
+                    Update Now
+                </button>
+                <button class="update-notification__close" aria-label="Close notification">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(notification);
+
+        notification.querySelector('.update-notification__close').addEventListener('click', () => {
+            notification.remove();
+        });
+    }
+}
+
+// === MAIN APPLICATION ===
+class PortfolioApp {
+    constructor() {
+        this.managers = {};
+        this.init();
+    }
+
+    async init() {
+        try {
+            // Initialize core managers
+            this.managers.theme = new ThemeManager();
+            this.managers.navigation = new NavigationManager();
+            this.managers.animation = new AnimationManager();
+            this.managers.contactForm = new ContactFormManager();
+            this.managers.performance = new PerformanceMonitor();
+            this.managers.accessibility = new AccessibilityManager();
+            this.managers.errorHandler = new ErrorHandler();
+            this.managers.serviceWorker = new ServiceWorkerManager();
+
+            // Setup global event listeners
+            this.setupGlobalEvents();
+
+            // Mark app as initialized
+            document.body.classList.add('app-initialized');
+            emitEvent('appInitialized');
+
+            console.log('Portfolio app initialized successfully');
+
+        } catch (error) {
+            console.error('Failed to initialize portfolio app:', error);
+            this.managers.errorHandler?.handleError(error, 'Initialization Error');
+        }
+    }
+
+    setupGlobalEvents() {
+        // Page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                emitEvent('pageHidden');
+            } else {
+                emitEvent('pageVisible');
+            }
+        });
+
+        // Online/offline status
+        window.addEventListener('online', () => {
+            emitEvent('connectionRestored');
+            console.log('Connection restored');
+        });
+
+        window.addEventListener('offline', () => {
+            emitEvent('connectionLost');
+            console.log('Connection lost');
+        });
+
+        // Resize handling
+        const handleResize = debounce(() => {
+            emitEvent('windowResized', {
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        }, CONFIG.DEBOUNCE_DELAY);
+
+        window.addEventListener('resize', handleResize);
+    }
+
+    // Public API methods
+    getManager(name) {
+        return this.managers[name];
+    }
+
+    destroy() {
+        // Cleanup if needed
+        Object.values(this.managers).forEach(manager => {
+            if (manager.destroy) {
+                manager.destroy();
+            }
+        });
+    }
+}
+
+// === INITIALIZATION ===
+let portfolioApp;
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        portfolioApp = new PortfolioApp();
+    });
+} else {
+    portfolioApp = new PortfolioApp();
+}
+
+// Export for global access
+window.PortfolioApp = PortfolioApp;
+window.portfolioApp = portfolioApp;
+
+// === UTILITY EXPORTS ===
+window.portfolioUtils = {
+    debounce,
+    throttle,
+    storage,
+    emitEvent,
+    prefersReducedMotion
+};
