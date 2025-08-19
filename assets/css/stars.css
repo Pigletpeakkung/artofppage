@@ -1,674 +1,739 @@
-/* ==================================
-   DYNAMIC STAR ANIMATIONS
-   Enhanced star system with performance-optimized animations
-   Following 2025 best practices for smooth, GPU-accelerated effects
-   ================================== */
-
-/* === CSS VARIABLES FOR STAR SYSTEM === */
-:root {
-    /* Star Colors */
-    --star-color-primary: rgba(255, 255, 255, 0.9);
-    --star-color-secondary: rgba(255, 255, 255, 0.7);
-    --star-color-tertiary: rgba(255, 255, 255, 0.5);
-    --star-glow: rgba(255, 255, 255, 0.6);
-    
-    /* Star Sizes */
-    --star-size-small: 2px;
-    --star-size-medium: 3px;
-    --star-size-large: 4px;
-    --star-size-sparkle: 8px;
-    
-    /* Animation Durations */
-    --animation-twinkle: 3s;
-    --animation-pulse: 4s;
-    --animation-float: 5s;
-    --animation-sparkle: 6s;
-    --animation-shooting: 8s;
-    
-    /* Performance Variables */
-    --animation-timing: ease-in-out;
-    --transform-origin: center;
-}
-
-/* Dark Theme Star Colors */
-[data-theme="light"] {
-    --star-color-primary: rgba(167, 139, 250, 0.8);
-    --star-color-secondary: rgba(167, 139, 250, 0.6);
-    --star-color-tertiary: rgba(167, 139, 250, 0.4);
-    --star-glow: rgba(167, 139, 250, 0.5);
-}
-
-/* === BASE STAR CONTAINER === */
+/* 1. Base Star Styles */
 .stars-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     pointer-events: none;
+    overflow: hidden;
     z-index: 1;
-    /* Performance optimization */
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
 }
 
-/* === INDIVIDUAL STAR BASE === */
 .star {
     position: absolute;
     border-radius: 50%;
-    background: var(--star-color-primary);
-    box-shadow: 0 0 6px var(--star-glow);
-    animation-iteration-count: infinite;
-    animation-timing-function: var(--animation-timing);
+    background: #ffffff;
     animation-fill-mode: both;
-    
-    /* GPU Acceleration */
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
     will-change: transform, opacity;
-    transform: translateZ(0);
     backface-visibility: hidden;
-    
-    /* Improve rendering performance */
-    contain: layout style paint;
+    transform-style: preserve-3d;
 }
 
-/* === STAR SIZE VARIANTS === */
+/* Base star glow effect */
+.star::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, currentColor 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0.3;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* Star sparkle effect */
+.star::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 50%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    border-radius: 50%;
+    animation: sparkle var(--sparkle-duration, 4s) ease-in-out infinite;
+    animation-delay: var(--sparkle-delay, 0s);
+}
+
+/* 2. Star Color Variants (Pastel Theme) */
+:root {
+    --star-pastel-pink: #FFB3E6;
+    --star-pastel-blue: #B3E5FF;
+    --star-pastel-purple: #E6B3FF;
+    --star-pastel-green: #B3FFE6;
+    --star-pastel-yellow: #FFE6B3;
+    --star-pastel-rose: #FFB3D9;
+    --star-pastel-sky: #B3D9FF;
+    --star-pastel-lavender: #D9B3FF;
+    --star-pastel-mint: #B3FFCC;
+    --star-pastel-peach: #FFCCB3;
+    --star-pastel-coral: #FFB3B3;
+    --star-pastel-sage: #CCFFB3;
+}
+
+.star--pastel-pink {
+    color: var(--star-pastel-pink);
+    background: var(--star-pastel-pink);
+    box-shadow: 0 0 10px var(--star-pastel-pink), 0 0 20px var(--star-pastel-pink);
+}
+
+.star--pastel-blue {
+    color: var(--star-pastel-blue);
+    background: var(--star-pastel-blue);
+    box-shadow: 0 0 10px var(--star-pastel-blue), 0 0 20px var(--star-pastel-blue);
+}
+
+.star--pastel-purple {
+    color: var(--star-pastel-purple);
+    background: var(--star-pastel-purple);
+    box-shadow: 0 0 10px var(--star-pastel-purple), 0 0 20px var(--star-pastel-purple);
+}
+
+.star--pastel-green {
+    color: var(--star-pastel-green);
+    background: var(--star-pastel-green);
+    box-shadow: 0 0 10px var(--star-pastel-green), 0 0 20px var(--star-pastel-green);
+}
+
+.star--pastel-yellow {
+    color: var(--star-pastel-yellow);
+    background: var(--star-pastel-yellow);
+    box-shadow: 0 0 10px var(--star-pastel-yellow), 0 0 20px var(--star-pastel-yellow);
+}
+
+.star--pastel-rose {
+    color: var(--star-pastel-rose);
+    background: var(--star-pastel-rose);
+    box-shadow: 0 0 10px var(--star-pastel-rose), 0 0 20px var(--star-pastel-rose);
+}
+
+.star--pastel-sky {
+    color: var(--star-pastel-sky);
+    background: var(--star-pastel-sky);
+    box-shadow: 0 0 10px var(--star-pastel-sky), 0 0 20px var(--star-pastel-sky);
+}
+
+.star--pastel-lavender {
+    color: var(--star-pastel-lavender);
+    background: var(--star-pastel-lavender);
+    box-shadow: 0 0 10px var(--star-pastel-lavender), 0 0 20px var(--star-pastel-lavender);
+}
+
+.star--pastel-mint {
+    color: var(--star-pastel-mint);
+    background: var(--star-pastel-mint);
+    box-shadow: 0 0 10px var(--star-pastel-mint), 0 0 20px var(--star-pastel-mint);
+}
+
+.star--pastel-peach {
+    color: var(--star-pastel-peach);
+    background: var(--star-pastel-peach);
+    box-shadow: 0 0 10px var(--star-pastel-peach), 0 0 20px var(--star-pastel-peach);
+}
+
+.star--pastel-coral {
+    color: var(--star-pastel-coral);
+    background: var(--star-pastel-coral);
+    box-shadow: 0 0 10px var(--star-pastel-coral), 0 0 20px var(--star-pastel-coral);
+}
+
+.star--pastel-sage {
+    color: var(--star-pastel-sage);
+    background: var(--star-pastel-sage);
+    box-shadow: 0 0 10px var(--star-pastel-sage), 0 0 20px var(--star-pastel-sage);
+}
+
+/* 3. Star Size Variants */
+.star--tiny {
+    width: 2px;
+    height: 2px;
+}
+
 .star--small {
-    width: var(--star-size-small);
-    height: var(--star-size-small);
+    width: 3px;
+    height: 3px;
 }
 
 .star--medium {
-    width: var(--star-size-medium);
-    height: var(--star-size-medium);
+    width: 4px;
+    height: 4px;
 }
 
 .star--large {
-    width: var(--star-size-large);
-    height: var(--star-size-large);
-    box-shadow: 0 0 8px var(--star-glow);
+    width: 6px;
+    height: 6px;
 }
 
-/* === OPTIMIZED KEYFRAME ANIMATIONS === */
+.star--xl {
+    width: 8px;
+    height: 8px;
+}
 
-/* Twinkling Animation - Optimized for GPU */
-@keyframes twinkle {
+/* 4. Animation Keyframes */
+
+/* Basic star twinkle */
+@keyframes starTwinkle {
     0%, 100% {
         opacity: 0.3;
-        transform: scale(0.8) translateZ(0);
+        transform: scale(0.8);
+    }
+    25% {
+        opacity: 0.7;
+        transform: scale(1.1);
     }
     50% {
         opacity: 1;
-        transform: scale(1.2) translateZ(0);
+        transform: scale(1.3);
+    }
+    75% {
+        opacity: 0.8;
+        transform: scale(1.1);
     }
 }
 
-/* Pulsing Animation - Enhanced Glow Effect */
-@keyframes pulse {
+/* Enhanced twinkle with movement */
+@keyframes starTwinkleMove {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(0, 0) scale(0.8) rotate(0deg);
+    }
+    25% {
+        opacity: 0.8;
+        transform: translate(2px, -3px) scale(1.1) rotate(90deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-1px, -2px) scale(1.3) rotate(180deg);
+    }
+    75% {
+        opacity: 0.7;
+        transform: translate(3px, 1px) scale(1.1) rotate(270deg);
+    }
+}
+
+/* Pulsing star */
+@keyframes starPulse {
     0%, 100% {
         opacity: 0.4;
-        transform: scale(1) translateZ(0);
-        box-shadow: 0 0 6px var(--star-glow);
+        transform: scale(1);
+        box-shadow: 0 0 5px currentColor;
     }
     50% {
         opacity: 1;
-        transform: scale(1.5) translateZ(0);
-        box-shadow: 0 0 20px var(--star-glow), 0 0 30px var(--star-glow);
+        transform: scale(1.5);
+        box-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
     }
 }
 
-/* Floating Animation - Smooth Movement */
-@keyframes float {
+/* Floating star */
+@keyframes starFloat {
     0%, 100% {
-        transform: translateY(0px) rotate(0deg) translateZ(0);
+        transform: translateY(0px) rotate(0deg);
     }
-    33% {
-        transform: translateY(-10px) rotate(120deg) translateZ(0);
+    25% {
+        transform: translateY(-10px) rotate(90deg);
     }
-    66% {
-        transform: translateY(5px) rotate(240deg) translateZ(0);
+    50% {
+        transform: translateY(-5px) rotate(180deg);
+    }
+    75% {
+        transform: translateY(-15px) rotate(270deg);
     }
 }
 
-/* Sparkle Animation - Cross-shaped Star */
+/* Sparkle effect */
 @keyframes sparkle {
     0%, 100% {
         opacity: 0;
-        transform: scale(0) rotate(0deg) translateZ(0);
+        transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
     }
     50% {
         opacity: 1;
-        transform: scale(1) rotate(180deg) translateZ(0);
+        transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
     }
 }
 
-/* Shooting Star Animation - Optimized Path */
-@keyframes shooting {
+/* Star breathing effect */
+@keyframes starBreathe {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+        filter: brightness(1.3);
+    }
+}
+
+/* Complex orbital motion */
+@keyframes starOrbit {
     0% {
-        opacity: 0;
-        transform: translate(-100px, -100px) rotate(45deg) translateZ(0);
-    }
-    10% {
-        opacity: 1;
-    }
-    90% {
-        opacity: 1;
+        transform: rotate(0deg) translateX(20px) rotate(0deg);
     }
     100% {
-        opacity: 0;
-        transform: translate(calc(100vw + 100px), calc(100vh + 100px)) rotate(45deg) translateZ(0);
+        transform: rotate(360deg) translateX(20px) rotate(-360deg);
     }
 }
 
-/* Constellation Line Animation */
-@keyframes constellation-pulse {
-    0%, 100% { 
-        opacity: 0; 
-    }
-    50% { 
-        opacity: 1; 
-    }
-}
-
-/* === SPARKLE STAR SPECIAL DESIGN === */
-.star--sparkle {
-    background: transparent;
-    width: var(--star-size-sparkle);
-    height: var(--star-size-sparkle);
-    position: relative;
-}
-
-.star--sparkle::before,
-.star--sparkle::after {
-    content: '';
-    position: absolute;
-    background: var(--star-color-primary);
-    border-radius: 1px;
-    box-shadow: 0 0 8px var(--star-glow);
-}
-
-.star--sparkle::before {
-    width: 2px;
-    height: var(--star-size-sparkle);
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-}
-
-.star--sparkle::after {
-    width: var(--star-size-sparkle);
-    height: 2px;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-/* === SHOOTING STAR DESIGN === */
-.star--shooting {
-    width: 2px;
-    height: 20px;
-    border-radius: 50% 50% 50% 50% / 10% 10% 90% 90%;
-    background: linear-gradient(
-        to bottom,
-        var(--star-color-primary) 0%,
-        var(--star-color-secondary) 20%,
-        var(--star-color-tertiary) 50%,
-        transparent 100%
-    );
-    box-shadow: 0 0 10px var(--star-glow);
-}
-
-/* === STAR POSITION AND ANIMATION ASSIGNMENTS === */
-
-/* Twinkling Stars */
-.star--1 {
-    top: 20%;
-    left: 10%;
-    animation: twinkle var(--animation-twinkle) infinite;
-    animation-delay: 0s;
-}
-
-.star--2 {
-    top: 35%;
-    left: 80%;
-    animation: pulse var(--animation-pulse) infinite;
-    animation-delay: 1s;
-}
-
-.star--3 {
-    top: 15%;
-    left: 60%;
-    animation: float var(--animation-float) infinite;
-    animation-delay: 2s;
-}
-
-.star--4 {
-    top: 70%;
-    left: 25%;
-    animation: twinkle 2.5s infinite;
-    animation-delay: 0.5s;
-}
-
-.star--5 {
-    top: 45%;
-    left: 15%;
-    animation: sparkle var(--animation-sparkle) infinite;
-    animation-delay: 3s;
-}
-
-.star--6 {
-    top: 25%;
-    left: 85%;
-    animation: pulse 3.5s infinite;
-    animation-delay: 1.5s;
-}
-
-.star--7 {
-    top: 60%;
-    left: 70%;
-    animation: float 4.5s infinite;
-    animation-delay: 2.5s;
-}
-
-.star--8 {
-    top: 80%;
-    left: 50%;
-    animation: twinkle 4s infinite;
-    animation-delay: 3.5s;
-}
-
-/* Additional Stars for Denser Effect */
-.star--9 {
-    top: 30%;
-    left: 45%;
-    animation: twinkle 3.5s infinite;
-    animation-delay: 4s;
-}
-
-.star--10 {
-    top: 55%;
-    left: 90%;
-    animation: pulse 5s infinite;
-    animation-delay: 2.8s;
-}
-
-.star--11 {
-    top: 10%;
-    left: 35%;
-    animation: float 4.2s infinite;
-    animation-delay: 1.2s;
-}
-
-.star--12 {
-    top: 85%;
-    left: 75%;
-    animation: sparkle 7s infinite;
-    animation-delay: 5s;
-}
-
-/* === SHOOTING STARS CONTAINER === */
-.shooting-stars {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 2;
-    /* Performance optimization */
-    will-change: transform;
-    transform: translateZ(0);
-}
-
-.shooting-star {
-    position: absolute;
-    animation: shooting var(--animation-shooting) linear infinite;
-}
-
-.shooting-star:nth-child(1) {
-    top: 10%;
-    left: -50px;
-    animation-delay: 0s;
-}
-
-.shooting-star:nth-child(2) {
-    top: 30%;
-    left: -50px;
-    animation-delay: 4s;
-}
-
-.shooting-star:nth-child(3) {
-    top: 60%;
-    left: -50px;
-    animation-delay: 8s;
-}
-
-.shooting-star:nth-child(4) {
-    top: 80%;
-    left: -50px;
-    animation-delay: 12s;
-}
-
-/* === CONSTELLATION PATTERN (OPTIONAL) === */
+/* 5. Constellation System */
 .constellation {
     position: absolute;
-    width: 100%;
-    height: 100%;
     pointer-events: none;
-    z-index: 0;
 }
 
 .constellation-line {
     position: absolute;
     height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        var(--star-color-tertiary) 50%,
-        transparent 100%
-    );
-    animation: constellation-pulse 8s ease-in-out infinite;
-    will-change: opacity;
+    background: linear-gradient(90deg, transparent, currentColor, transparent);
+    opacity: 0.2;
+    animation: constellationPulse 8s ease-in-out infinite;
+    transform-origin: left center;
 }
 
-/* === ENHANCED STARS FOR HERO SECTION === */
-.hero-section .stars-container {
-    z-index: 0;
+@keyframes constellationPulse {
+    0%, 100% {
+        opacity: 0.1;
+        transform: scaleX(0.8);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scaleX(1.2);
+    }
 }
 
-.hero-section .star {
-    background: radial-gradient(
-        circle,
-        var(--star-color-primary) 0%,
-        var(--star-color-secondary) 40%,
-        transparent 70%
-    );
+/* Constellation star - brighter stars in constellation */
+.star--constellation {
+    z-index: 2;
+    animation: starPulse 4s ease-in-out infinite;
 }
 
-.hero-section .star--large {
-    box-shadow: 
-        0 0 6px var(--star-glow),
-        0 0 12px var(--star-glow),
-        0 0 18px var(--star-glow);
+.star--constellation::before {
+    opacity: 0.6;
+    width: 300%;
+    height: 300%;
 }
 
-/* === INTERACTIVE HOVER EFFECTS === */
-.stars-container:hover .star {
+/* 6. Interactive Star Effects */
+.star--interactive {
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+
+.star--interactive:hover {
+    transform: scale(2);
+    z-index: 10;
     animation-play-state: paused;
 }
 
-.stars-container:hover .star--1,
-.stars-container:hover .star--4,
-.stars-container:hover .star--9 {
-    animation-play-state: running;
-    animation-duration: 1s;
+.star--interactive:hover::before {
+    opacity: 1;
+    width: 400%;
+    height: 400%;
 }
 
-/* === PERFORMANCE OPTIMIZATIONS === */
+/* Click ripple effect */
+.star--interactive::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, currentColor 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+}
 
-/* Critical Performance Rules */
-.stars-container,
-.shooting-stars,
-.star,
+.star--interactive.clicked::after {
+    animation: starRipple 0.6s ease-out;
+}
+
+@keyframes starRipple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.8;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+}
+
+/* 7. Shooting Stars */
 .shooting-star {
-    /* GPU acceleration */
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: linear-gradient(45deg, #ffffff, currentColor);
+    border-radius: 50%;
+    animation: shootingStar 3s linear infinite;
+    opacity: 0;
+}
+
+.shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, currentColor, transparent);
+    transform: translate(-50%, -50%) rotate(-45deg);
+    opacity: 0.8;
+}
+
+.shooting-star::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+    transform: translate(-50%, -50%) rotate(-45deg);
+    opacity: 0.6;
+}
+
+@keyframes shootingStar {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) translateY(100px) scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translateX(-50px) translateY(50px) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateX(100vw) translateY(-100vh) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(120vw) translateY(-120vh) scale(0);
+    }
+}
+
+/* Shooting star variants */
+.shooting-star--1 {
+    top: 20%;
+    left: -100px;
+    color: var(--star-pastel-pink);
+    animation-delay: 0s;
+    animation-duration: 4s;
+}
+
+.shooting-star--2 {
+    top: 40%;
+    left: -100px;
+    color: var(--star-pastel-blue);
+    animation-delay: 8s;
+    animation-duration: 3.5s;
+}
+
+.shooting-star--3 {
+    top: 60%;
+    left: -100px;
+    color: var(--star-pastel-purple);
+    animation-delay: 15s;
+    animation-duration: 5s;
+}
+
+/* 8. Star Field Background */
+.star-field {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, var(--star-pastel-pink), transparent),
+        radial-gradient(1px 1px at 40px 70px, var(--star-pastel-blue), transparent),
+        radial-gradient(1px 1px at 90px 40px, var(--star-pastel-purple), transparent),
+        radial-gradient(1px 1px at 130px 80px, var(--star-pastel-green), transparent),
+        radial-gradient(1px 1px at 160px 30px, var(--star-pastel-yellow), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    opacity: 0.3;
+    animation: starFieldMove 100s linear infinite;
+}
+
+@keyframes starFieldMove {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+/* 9. Performance Optimizations */
+.star-container-optimized {
+    contain: layout style paint;
+    transform: translateZ(0);
     will-change: transform;
+}
+
+.star-optimized {
+    contain: layout paint;
+    transform: translate3d(0, 0, 0);
+    will-change: transform, opacity;
+}
+
+/* GPU acceleration hints */
+.star--gpu-accelerated {
     transform: translateZ(0);
     backface-visibility: hidden;
-    
-    /* Optimize for mobile */
-    -webkit-transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
 }
 
-/* Optimize for retina displays */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .star {
-        transform: translateZ(0) scale(0.5);
-        transform-origin: 0 0;
-    }
-    
-    .star--small {
-        width: calc(var(--star-size-small) * 2);
-        height: calc(var(--star-size-small) * 2);
-    }
-    
-    .star--medium {
-        width: calc(var(--star-size-medium) * 2);
-        height: calc(var(--star-size-medium) * 2);
-    }
-    
-    .star--large {
-        width: calc(var(--star-size-large) * 2);
-        height: calc(var(--star-size-large) * 2);
-    }
-}
-
-/* === RESPONSIVE ADJUSTMENTS === */
-@media (max-width: 1200px) {
-    .star--shooting {
-        width: 1.5px;
-        height: 15px;
-    }
-}
-
-@media (max-width: 768px) {
-    :root {
-        --star-size-small: 1.5px;
-        --star-size-medium: 2px;
-        --star-size-large: 3px;
-        --star-size-sparkle: 6px;
-    }
-    
-    .star--shooting {
-        width: 1px;
-        height: 12px;
-    }
-    
-    /* Reduce number of stars on mobile for performance */
-    .star--9,
-    .star--10,
-    .star--11,
-    .star--12 {
-        display: none;
-    }
-    
-    .shooting-star:nth-child(4) {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Further reduce effects on small screens */
-    .star--sparkle {
-        display: none;
-    }
-    
-    .constellation {
-        display: none;
-    }
-    
-    /* Simplify animations for better performance */
-    .star {
-        animation-duration: calc(var(--animation-twinkle) * 1.5);
-    }
-}
-
-/* === ACCESSIBILITY SUPPORT === */
-
-/* Respect user preferences for reduced motion */
+/* 10. Accessibility & Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
     .star,
-    .shooting-star {
-        animation-duration: 20s !important;
+    .shooting-star,
+    .constellation-line,
+    .star-field {
+        animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
     
-    .star--sparkle {
+    .star::after,
+    .star::before {
         animation: none !important;
-        opacity: 0.5;
     }
     
-    .shooting-star {
-        display: none !important;
-    }
-    
-    .constellation-line {
-        animation: none !important;
-        opacity: 0.3;
+    .star--interactive:hover {
+        transform: none;
     }
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-    :root {
-        --star-color-primary: #ffffff;
-        --star-color-secondary: #ffffff;
-        --star-color-tertiary: #ffffff;
-        --star-glow: #ffffff;
+    .star {
+        background: #ffffff;
+        border: 1px solid #000000;
     }
     
-    [data-theme="light"] {
-        --star-color-primary: #000000;
-        --star-color-secondary: #000000;
-        --star-color-tertiary: #000000;
-        --star-glow: #000000;
+    [data-theme="dark"] .star {
+        background: #000000;
+        border: 1px solid #ffffff;
     }
 }
 
-/* === UTILITY CLASSES === */
-
-/* Pause all animations */
-.stars-paused .star,
-.stars-paused .shooting-star {
-    animation-play-state: paused;
+/* 11. Theme Integration */
+[data-theme="dark"] .star {
+    box-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
 }
 
-/* Hide stars completely */
-.stars-hidden {
-    display: none;
-}
-
-/* Faster animations for loading states */
-.stars-fast .star {
-    animation-duration: 1s;
-}
-
-.stars-fast .shooting-star {
-    animation-duration: 3s;
-}
-
-/* Slower, more subtle animations */
-.stars-subtle .star {
-    animation-duration: calc(var(--animation-twinkle) * 2);
+[data-theme="dark"] .star::before {
     opacity: 0.5;
 }
 
-.stars-subtle .shooting-star {
-    animation-duration: calc(var(--animation-shooting) * 2);
+[data-theme="dark"] .constellation-line {
     opacity: 0.3;
 }
 
-/* === PRINT STYLES === */
+[data-theme="dark"] .star-field {
+    opacity: 0.5;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .star {
+    box-shadow: 0 0 6px currentColor, 0 0 12px currentColor;
+}
+
+[data-theme="light"] .star::before {
+    opacity: 0.3;
+}
+
+/* 12. Responsive Design */
+@media (max-width: 768px) {
+    .star {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .star--large {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .star--xl {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .shooting-star::before {
+        width: 60px;
+    }
+    
+    .shooting-star::after {
+        width: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .star {
+        width: 2px;
+        height: 2px;
+    }
+    
+    .star--medium {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .star--large {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .star--xl {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .shooting-star::before {
+        width: 40px;
+    }
+    
+    .shooting-star::after {
+        width: 20px;
+    }
+    
+    .star-field {
+        background-size: 150px 75px;
+    }
+}
+
+/* Tablet landscape optimizations */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .star-field {
+        background-size: 250px 125px;
+    }
+    
+    .shooting-star::before {
+        width: 120px;
+    }
+}
+
+/* Large screen enhancements */
+@media (min-width: 1200px) {
+    .star--xl {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .shooting-star::before {
+        width: 150px;
+    }
+    
+    .shooting-star::after {
+        width: 75px;
+    }
+}
+
+/* Ultra-wide screen adjustments */
+@media (min-width: 1600px) {
+    .star-field {
+        background-size: 300px 150px;
+    }
+}
+
+/* Print styles - hide all animations */
 @media print {
-    .stars-container,
-    .shooting-stars {
+    .star,
+    .shooting-star,
+    .constellation-line,
+    .star-field {
         display: none !important;
     }
 }
 
-/* === DARK MODE SPECIFIC ENHANCEMENTS === */
-[data-theme="dark"] .star {
-    box-shadow: 
-        0 0 4px var(--star-glow),
-        0 0 8px var(--star-glow);
+/* Custom animation classes for JavaScript control */
+.star--animate-twinkle {
+    animation: starTwinkle var(--duration, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
 }
 
-[data-theme="dark"] .star--large {
-    box-shadow: 
-        0 0 6px var(--star-glow),
-        0 0 12px var(--star-glow),
-        0 0 20px var(--star-glow);
+.star--animate-move {
+    animation: starTwinkleMove var(--duration, 4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
 }
 
-[data-theme="dark"] .star--sparkle::before,
-[data-theme="dark"] .star--sparkle::after {
-    box-shadow: 
-        0 0 6px var(--star-glow),
-        0 0 12px var(--star-glow);
+.star--animate-pulse {
+    animation: starPulse var(--duration, 2s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
 }
 
-/* === ADVANCED ANIMATION CONTROLS === */
-
-/* Stagger animation delays for organic feel */
-.stars-container .star:nth-child(odd) {
-    animation-delay: calc(var(--animation-delay, 0s) + 0.5s);
+.star--animate-float {
+    animation: starFloat var(--duration, 6s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
 }
 
-.stars-container .star:nth-child(even) {
-    animation-delay: calc(var(--animation-delay, 0s) + 1s);
+.star--animate-breathe {
+    animation: starBreathe var(--duration, 5s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
 }
 
-/* Breathing effect for the entire star field */
-@keyframes starfield-breathe {
-    0%, 100% {
-        opacity: 0.8;
-        transform: scale(1) translateZ(0);
+.star--animate-orbit {
+    animation: starOrbit var(--duration, 10s) linear infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+/* Utility classes for dynamic star generation */
+.star-generator {
+    --star-count: 50;
+    --star-colors: var(--star-pastel-pink), var(--star-pastel-blue), var(--star-pastel-purple);
+    --star-sizes: 2px, 3px, 4px, 6px;
+    --animation-durations: 2s, 3s, 4s, 5s;
+    --animation-delays: 0s, 0.5s, 1s, 1.5s, 2s;
+}
+
+/* CSS-only star distribution */
+.stars-auto-distribute {
+    background-image: 
+        radial-gradient(2px 2px at 10% 20%, var(--star-pastel-pink), transparent),
+        radial-gradient(3px 3px at 80% 30%, var(--star-pastel-blue), transparent),
+        radial-gradient(2px 2px at 60% 70%, var(--star-pastel-purple), transparent),
+        radial-gradient(4px 4px at 30% 80%, var(--star-pastel-green), transparent),
+        radial-gradient(2px 2px at 90% 60%, var(--star-pastel-yellow), transparent),
+        radial-gradient(3px 3px at 20% 40%, var(--star-pastel-rose), transparent),
+        radial-gradient(2px 2px at 70% 10%, var(--star-pastel-sky), transparent),
+        radial-gradient(4px 4px at 40% 50%, var(--star-pastel-lavender), transparent);
+    background-size: 100% 100%;
+    animation: starFieldMove 200s linear infinite;
+}
+
+/* 3D star effect for modern browsers */
+@supports (transform-style: preserve-3d) {
+    .stars-3d-container {
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
-    50% {
-        opacity: 1;
-        transform: scale(1.02) translateZ(0);
+    
+    .star--3d {
+        transform-style: preserve-3d;
+        animation: star3DFloat 8s ease-in-out infinite;
     }
-}
-
-.stars-container.breathing {
-    animation: starfield-breathe 15s ease-in-out infinite;
-}
-
-/* === SEASONAL VARIATIONS (OPTIONAL) === */
-
-/* Winter theme - cooler colors */
-.stars-winter {
-    --star-color-primary: rgba(173, 216, 230, 0.9);
-    --star-color-secondary: rgba(173, 216, 230, 0.7);
-    --star-color-tertiary: rgba(173, 216, 230, 0.5);
-    --star-glow: rgba(173, 216, 230, 0.6);
-}
-
-/* Summer theme - warmer colors */
-.stars-summer {
-    --star-color-primary: rgba(255, 223, 186, 0.9);
-    --star-color-secondary: rgba(255, 223, 186, 0.7);
-    --star-color-tertiary: rgba(255, 223, 186, 0.5);
-    --star-glow: rgba(255, 223, 186, 0.6);
-}
-
-/* === LOADING STATE OPTIMIZATION === */
-
-/* Minimal stars for initial load */
-.stars-loading .star {
-    animation: none;
-    opacity: 0.3;
-}
-
-.stars-loading .shooting-star {
-    display: none;
-}
-
-/* Fade in stars after page load */
-@keyframes stars-fade-in {
-    from {
-        opacity: 0;
-        transform: scale(0.8) translateZ(0);
+    
+    @keyframes star3DFloat {
+        0%, 100% {
+            transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+        }
+        25% {
+            transform: translate3d(10px, -10px, 50px) rotateX(90deg) rotateY(90deg);
+        }
+        50% {
+            transform: translate3d(-5px, -15px, -30px) rotateX(180deg) rotateY(180deg);
+        }
+        75% {
+            transform: translate3d(-10px, 5px, 20px) rotateX(270deg) rotateY(270deg);
+        }
     }
-    to {
-        opacity: 1;
-        transform: scale(1) translateZ(0);
-    }
-}
-
-.stars-loaded .star {
-    animation: stars-fade-in 0.5s ease-out forwards;
-}
+}</click>
