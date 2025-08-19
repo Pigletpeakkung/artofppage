@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+    <msapplication>
+        <!-- Windows 8/10 Tile Configuration -->
+        <tile>
+            <!-- Small tile (70x70) -->
+            <square70x70logo src="/assets/images/icons/mstile-70x70.png"/>
+            
+            <!-- Medium tile (150x150) -->
+            <square150x150logo src="/assets/images/icons/mstile-150x150.png"/>
+            
+            <!-- Wide tile (310x150) -->
+            <wide310x150logo src="/assets/images/icons/mstile-310x150.png"/>
+            
+            <!-- Large tile (310x310) -->
+            <square310x310logo src="/assets/images/icons/mstile-310x310.png"/>
+            
+            <!-- Tile background color -->
+            <TileColor>#A78BFA</TileColor>
+        </tile>
+        
+        <!-- Notification configuration -->
+        <notification>
+            <!-- Enable polling for live tiles -->
+            <polling-uri src="/api/notifications/tile1"/>
+            <polling-uri src="/api/notifications/tile2"/>
+            <polling-uri src="/api/notifications/tile3"/>
+            <polling-uri src="/api/notifications/tile4"/>
+            <polling-uri src="/api/notifications/tile5"/>
+            
+            <!-- Polling frequency (30 minutes) -->
+            <frequency>30</frequency>
+            
+            <!-- Cycle through notifications -->
+            <cycle>1</cycle>
+        </notification>
+        
+        <!-- Badge configuration -->
+        <badge>
+            <!-- Badge polling URI -->
+            <polling-uri src="/api/badge"/>
+            <frequency>30</frequency>
+        </badge>
+        
+        <!-- Task configuration for Windows 10 -->
+        <task>
+            <name>Portfolio Updates</name>
+            <uri>/api/tasks/updates</uri>
+        </task>
+    </msapplication>
+</browserconfig>
