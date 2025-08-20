@@ -35,7 +35,7 @@ const STATIC_CACHE_URLS = [
     '/manifest.json',
     
     // Microsoft configuration
-    '/browserconfig.xml',
+    '/config/browserconfig.xml',
     
     // Core JavaScript files (matching your HTML script tags)
     '/assets/js/main.js',
