@@ -1,0 +1,53 @@
+{
+  "name": "thanatsitt-portfolio",
+  "version": "2.1.0",
+  "description": "Full Stack Developer Portfolio - Thanatsitt Santisamranwilai",
+  "author": "Thanatsitt Santisamranwilai",
+  "license": "MIT",
+  "homepage": "https://pegearts.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/portfolio.git"
+  },
+  "scripts": {
+    "start": "live-server --port=3000 --open=/",
+    "dev": "live-server --port=3000 --watch=assets",
+    "build": "npm run minify-css && npm run minify-js",
+    "minify-css": "cleancss -o assets/css/styles.min.css assets/css/*.css",
+    "minify-js": "terser assets/js/main.js assets/js/app.js -o assets/js/bundle.min.js",
+    "lint": "eslint assets/js/*.js",
+    "format": "prettier --write \"**/*.{html,css,js,json}\"",
+    "deploy": "gh-pages -d .",
+    "validate-html": "html-validate *.html",
+    "optimize-images": "imagemin assets/images/**/* --out-dir=assets/images/optimized",
+    "test": "npm run lint && npm run validate-html",
+    "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "terser": "^5.16.0",
+    "clean-css-cli": "^5.6.0",
+    "gh-pages": "^4.0.0",
+    "prettier": "^3.0.0",
+    "eslint": "^8.50.0",
+    "html-validate": "^7.15.0",
+    "imagemin": "^8.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "lighthouse": "^10.4.0"
+  },
+  "keywords": [
+    "portfolio",
+    "full-stack-developer",
+    "web-development",
+    "javascript",
+    "react",
+    "nodejs",
+    "pwa"
+  ],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
