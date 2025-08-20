@@ -2096,38 +2096,7 @@
         };
         webp.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
 
-        // AVIF support detection
-        const avif = new Image();
-        avif.onload = avif.onerror = function () {
-            features.avif = (avif.height === 2);
-            document.documentElement.setAttribute('data-avif', features.avif);
-        };
-        avif.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQ0MAAAAABNjb2xybmNseAACAAIAAYAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEAwgMg8f8D///8WfhwB8+ErK42A=';
-
-        // Apply feature classes
-        if (!features.fetch || !features.promise || !features.intersectionObserver) {
-            document.documentElement.classList.add('legacy-browser');
-        }
-
-        // Dark mode and accessibility preferences
-        if (window.matchMedia) {
-            // Dark mode preference
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
-            
-            // Reduced motion preference
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.documentElement.setAttribute('data-motion', 'reduced');
-            }
-            
-            // High contrast preference
-            if (window.matchMedia('(prefers-contrast: high)').matches) {
-                document.documentElement.setAttribute('data-contrast', 'high');
-            }
-        }
-
-        
+    
     </script>
 
     <!-- Structured Data for Rich Snippets -->
