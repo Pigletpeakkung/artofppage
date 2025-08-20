@@ -2,14 +2,15 @@
  * Portfolio Service Worker
  * PWA & Offline Functionality
  * Author: Thanatsitt Santisamranwilai
- * Version: 2.0.0
+ * Version: 2.1.0
  */
 
 'use strict';
 
 // Service Worker Configuration
-const CACHE_NAME = 'portfolio-v2.0.0';
+const CACHE_NAME = 'portfolio-v2.1.0';
 const OFFLINE_PAGE = '/offline.html';
+const FALLBACK_PAGE = '/404.html';
 const UPDATE_CHECK_INTERVAL = 1000 * 60 * 60 * 24; // 24 hours
 
 // Define what to cache - Updated to match your actual HTML structure
@@ -20,12 +21,12 @@ const STATIC_CACHE_URLS = [
     
     // Legal & info pages (matching your HTML footer links)
     '/404.html',
-'/faq.html',
+    '/faq.html',
     '/terms-of-service.html',
     '/privacy-policy.html',
     '/cookie-policy.html',
     '/offline.html',
-   '/fallback.html',
+    '/fallback.html',
     
     // SEO files
     '/sitemap.xml',
@@ -40,13 +41,13 @@ const STATIC_CACHE_URLS = [
     '/assets/js/main.js',
     '/assets/js/app.js',
     '/assets/js/cookieconsent.js',
-    'assets/js/cookieconsent-config.js',
+    '/assets/js/cookieconsent-config.js',
     
     // Core CSS (you'll need to create this based on your styles)
     '/assets/css/main.css',
     '/assets/css/stars.css',
     '/assets/css/animate-moon.css',
-    'assets/css/cookieconsent-theme.css',
+    '/assets/css/cookieconsent-theme.css',
     
     // Favicon and core images (matching your HTML meta tags)
     '/assets/images/favicon.ico',
@@ -98,12 +99,11 @@ const EXTERNAL_CACHE_URLS = [
     
     // AOS (matching your HTML)
     'https://unpkg.com/aos@2.3.1/dist/aos.css',
-    'https://unpkg.com/aos@2.3.1/dist/aos.js'
+    'https://unpkg.com/aos@2.3.1/dist/aos.js',
     
-     <!-- Optional polyfills -->
-  'https://cdn.jsdelivr.net/npm/intersection-observer@0.12.0/intersection-observer.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'
-
+    // Optional polyfills
+    'https://cdn.jsdelivr.net/npm/intersection-observer@0.12.0/intersection-observer.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'
 ];
 
 // Dynamic cache patterns
@@ -112,6 +112,7 @@ const CACHE_PATTERNS = [
     /^https:\/\/fonts\.gstatic\.com\//,
     /^https:\/\/cdnjs\.cloudflare\.com\//,
     /^https:\/\/unpkg\.com\//,
+    /^https:\/\/cdn\.jsdelivr\.net\//,
     /\.(png|jpg|jpeg|svg|gif|webp|ico|avif)$/i,
     /\.(woff|woff2|ttf|otf|eot)$/i,
     /\.(js|css)$/i
@@ -133,13 +134,19 @@ const EXCLUDE_PATTERNS = [
     /gtag/,
     /\.map$/,
     /sw\.js$/,
+    /service-worker\.js$/,
     /admin/,
     /wp-admin/,
     /\.php$/,
     /sockjs-node/, // Development server
     /__webpack_hmr/, // Hot module replacement
     /hot-update/, // Webpack HMR
-    /chrome-extension:/
+    /chrome-extension:/,
+    /moz-extension:/,
+    /safari-extension:/,
+    /^https:\/\/.*\.googleusercontent\.com\//,
+    /^https:\/\/accounts\.google\.com\//,
+    /^https:\/\/apis\.google\.com\//
 ];
 
 /*
@@ -155,61 +162,70 @@ self.addEventListener('install', (event) => {
             try {
                 const cache = await caches.open(CACHE_NAME);
                 
-                // Combine static and external URLs
-                const allUrls = [...STATIC_CACHE_URLS, ...EXTERNAL_CACHE_URLS];
-                
-                // Filter out URLs that might not exist
-                const urlsToCache = allUrls.filter(url => {
-                    return !EXCLUDE_PATTERNS.some(pattern => pattern.test(url));
-                });
-                
-                console.log('📦 Caching portfolio assets...');
-                
-                // Cache critical assets first
+                // Cache critical assets first (essential for offline functionality)
                 const criticalUrls = [
                     '/',
-                    '/assets/js/main.js',
-                    '/assets/js/app.js',
-                    '/assets/css/styles.css',
-                    '/assets/images/profile-hero.jpg'
-                ].filter(url => urlsToCache.includes(url));
+                    '/404.html',
+                    '/offline.html'
+                ].filter(url => STATIC_CACHE_URLS.includes(url));
                 
-                // Cache critical assets with higher priority
                 console.log('🚀 Caching critical assets first...');
                 for (const url of criticalUrls) {
                     try {
                         const response = await fetch(url, { 
                             cache: 'reload',
-                            mode: 'cors'
+                            mode: 'same-origin'
                         });
                         if (response.ok) {
                             await cache.put(url, response);
                             console.log('✅ Critical asset cached:', url);
+                        } else {
+                            console.warn('❌ Failed to cache critical asset:', url, response.status);
                         }
                     } catch (error) {
-                        console.warn('❌ Failed to cache critical asset:', url, error.message);
+                        console.warn('❌ Failed to fetch critical asset:', url, error.message);
                     }
                 }
                 
-                // Cache remaining assets in background
-                const remainingUrls = urlsToCache.filter(url => !criticalUrls.includes(url));
-                const cachePromises = remainingUrls.map(async (url) => {
+                // Cache remaining static assets in background
+                const remainingStaticUrls = STATIC_CACHE_URLS.filter(url => !criticalUrls.includes(url));
+                const staticCachePromises = remainingStaticUrls.map(async (url) => {
                     try {
                         const response = await fetch(url, { 
-                            mode: url.startsWith('http') ? 'cors' : 'same-origin'
+                            mode: 'same-origin',
+                            cache: 'default'
                         });
                         if (response.ok) {
                             await cache.put(url, response);
-                            console.log('✅ Cached:', url);
+                            console.log('✅ Static asset cached:', url);
                         } else {
-                            console.warn('❌ Failed to cache (bad response):', url, response.status);
+                            console.warn('❌ Failed to cache static asset:', url, response.status);
                         }
                     } catch (error) {
-                        console.warn('❌ Failed to cache (fetch error):', url, error.message);
+                        console.warn('❌ Failed to fetch static asset:', url, error.message);
                     }
                 });
                 
-                await Promise.allSettled(cachePromises);
+                // Cache external resources
+                const externalCachePromises = EXTERNAL_CACHE_URLS.map(async (url) => {
+                    try {
+                        const response = await fetch(url, { 
+                            mode: 'cors',
+                            cache: 'default'
+                        });
+                        if (response.ok) {
+                            await cache.put(url, response);
+                            console.log('✅ External asset cached:', url);
+                        } else {
+                            console.warn('❌ Failed to cache external asset:', url, response.status);
+                        }
+                    } catch (error) {
+                        console.warn('❌ Failed to fetch external asset:', url, error.message);
+                    }
+                });
+                
+                // Wait for all caching operations to complete (but don't fail if some fail)
+                await Promise.allSettled([...staticCachePromises, ...externalCachePromises]);
                 console.log('📦 Portfolio assets caching completed');
                 
                 // Skip waiting to activate immediately
@@ -246,9 +262,6 @@ self.addEventListener('activate', (event) => {
                 
                 await Promise.all(deletePromises);
                 
-                // Preload critical pages
-                await preloadCriticalPages();
-                
                 // Take control of all clients
                 await clients.claim();
                 
@@ -284,8 +297,10 @@ self.addEventListener('fetch', (event) => {
         return;
     }
     
-    // Skip Chrome extension requests
-    if (event.request.url.startsWith('chrome-extension://')) {
+    // Skip extension requests
+    if (event.request.url.startsWith('chrome-extension://') ||
+        event.request.url.startsWith('moz-extension://') ||
+        event.request.url.startsWith('safari-extension://')) {
         return;
     }
     
@@ -298,9 +313,13 @@ FETCH HANDLING STRATEGIES
 ========================================
 */
 async function handleFetch(request) {
-    const url = new URL(request.url);
-    
     try {
+        // Security check
+        if (!isRequestSafe(request)) {
+            console.warn('🚨 Blocked unsafe request:', request.url);
+            return new Response('Request blocked for security reasons', { status: 403 });
+        }
+        
         // Strategy 1: Network First (for HTML pages and API calls)
         if (request.headers.get('accept')?.includes('text/html') || 
             DYNAMIC_CACHE_PATTERNS.some(pattern => pattern.test(request.url))) {
@@ -324,9 +343,16 @@ async function handleFetch(request) {
 // Network First Strategy (for HTML pages)
 async function networkFirstStrategy(request) {
     try {
-        const networkResponse = await fetch(request, {
-            timeout: 5000 // 5 second timeout
+        // Create a timeout promise
+        const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Network timeout')), 5000);
         });
+        
+        // Race between fetch and timeout
+        const networkResponse = await Promise.race([
+            fetch(request),
+            timeoutPromise
+        ]);
         
         if (networkResponse.ok) {
             const cache = await caches.open(CACHE_NAME);
@@ -367,12 +393,12 @@ async function cacheFirstStrategy(request) {
         trackCacheHit();
         // Background update for long-term cached items
         backgroundUpdate(request);
-        return cachedResponse;
+        return addSecurityHeaders(cachedResponse);
     }
     
     try {
         const networkResponse = await fetch(request, {
-            mode: request.url.startsWith('http') ? 'cors' : 'same-origin'
+            mode: request.url.startsWith('http') && !request.url.startsWith(self.location.origin) ? 'cors' : 'same-origin'
         });
         
         if (networkResponse.ok) {
@@ -383,7 +409,7 @@ async function cacheFirstStrategy(request) {
         }
         
         trackCacheMiss();
-        return networkResponse;
+        return addSecurityHeaders(networkResponse);
     } catch (error) {
         trackCacheMiss();
         throw error;
@@ -396,7 +422,7 @@ async function staleWhileRevalidateStrategy(request) {
     
     // Start the network request regardless of cache hit
     const networkPromise = fetch(request, {
-        mode: request.url.startsWith('http') ? 'cors' : 'same-origin'
+        mode: request.url.startsWith('http') && !request.url.startsWith(self.location.origin) ? 'cors' : 'same-origin'
     }).then(async (networkResponse) => {
         if (networkResponse.ok) {
             const cache = await caches.open(CACHE_NAME);
@@ -413,17 +439,18 @@ async function staleWhileRevalidateStrategy(request) {
     // Return cached version immediately, or wait for network
     if (cachedResponse) {
         trackCacheHit();
-        return cachedResponse;
+        return addSecurityHeaders(cachedResponse);
     } else {
         trackCacheMiss();
-        return networkPromise;
+        const response = await networkPromise;
+        return response ? addSecurityHeaders(response) : response;
     }
 }
 
 // Handle navigation errors (404, etc.)
 async function handleNavigationError(request) {
     // Try 404 page first
-    const custom404 = await caches.match('/404.html');
+    const custom404 = await caches.match(FALLBACK_PAGE);
     if (custom404) {
         return new Response(custom404.body, {
             status: 404,
@@ -447,30 +474,40 @@ async function handleNavigationError(request) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Page Not Found - Thanatsitt Portfolio</title>
         <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
             body {
-                font-family: 'Inter', sans-serif;
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 min-height: 100vh;
-                margin: 0;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 color: white;
                 text-align: center;
+                padding: 1rem;
             }
             .container {
                 max-width: 500px;
                 padding: 2rem;
+                background: rgba(255,255,255,0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 16px;
+                border: 1px solid rgba(255,255,255,0.2);
             }
             h1 {
-                font-size: 3rem;
+                font-size: 4rem;
                 margin-bottom: 1rem;
                 opacity: 0.9;
+                background: linear-gradient(45deg, #fff, #f0f0f0);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
             p {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
                 margin-bottom: 2rem;
                 opacity: 0.8;
+                line-height: 1.6;
             }
             .btn {
                 display: inline-block;
@@ -481,18 +518,25 @@ async function handleNavigationError(request) {
                 border-radius: 8px;
                 transition: all 0.3s ease;
                 border: 1px solid rgba(255,255,255,0.3);
+                font-weight: 500;
             }
             .btn:hover {
                 background: rgba(255,255,255,0.3);
                 transform: translateY(-2px);
+            }
+            .status {
+                font-size: 0.9rem;
+                opacity: 0.6;
+                margin-top: 1rem;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <h1>404</h1>
-            <p>Oops! The page you're looking for doesn't exist.</p>
+            <p>The page you're looking for seems to have vanished into the digital void. But don't worry – let's get you back to exploring amazing projects!</p>
             <a href="/" class="btn">← Back to Portfolio</a>
+            <div class="status">You're currently offline. Some features may be limited.</div>
         </div>
     </body>
     </html>
@@ -501,7 +545,10 @@ async function handleNavigationError(request) {
     return new Response(fallbackHTML, {
         status: 404,
         statusText: 'Not Found',
-        headers: { 'Content-Type': 'text/html' }
+        headers: { 
+            'Content-Type': 'text/html',
+            'Cache-Control': 'no-cache'
+        }
     });
 }
 
@@ -513,7 +560,7 @@ async function handleFetchError(request, error) {
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
         trackCacheHit();
-        return cachedResponse;
+        return addSecurityHeaders(cachedResponse);
     }
     
     // For navigation requests, show appropriate error page
@@ -525,7 +572,10 @@ async function handleFetchError(request, error) {
     return new Response('Content not available offline', {
         status: 503,
         statusText: 'Service Unavailable',
-        headers: { 'Content-Type': 'text/plain' }
+        headers: { 
+            'Content-Type': 'text/plain',
+            'Cache-Control': 'no-cache'
+        }
     });
 }
 
@@ -551,40 +601,13 @@ function isStaticAsset(request) {
            url.includes('/documents/');
 }
 
-// Preload critical pages on first visit
-async function preloadCriticalPages() {
-    const criticalPages = [
-        '/',
-        '/404.html',
-        '/offline.html'
-    ];
-    
-    const cache = await caches.open(CACHE_NAME);
-    
-    for (const page of criticalPages) {
-        try {
-            if (!(await cache.match(page))) {
-                const response = await fetch(page);
-                if (response.ok) {
-                    await cache.put(page, response);
-                    console.log('📦 Preloaded:', page);
-                } else {
-                    console.warn('⚠️ Could not preload (bad response):', page);
-                }
-            }
-        } catch (error) {
-            console.warn('⚠️ Preload failed for:', page, error.message);
-        }
-    }
-}
-
 // Background update for cached resources
 function backgroundUpdate(request) {
     // Don't block the main response
     setTimeout(async () => {
         try {
             const networkResponse = await fetch(request, {
-                mode: request.url.startsWith('http') ? 'cors' : 'same-origin'
+                mode: request.url.startsWith('http') && !request.url.startsWith(self.location.origin) ? 'cors' : 'same-origin'
             });
             if (networkResponse.ok) {
                 const cache = await caches.open(CACHE_NAME);
@@ -600,18 +623,22 @@ function backgroundUpdate(request) {
 
 // Notify all clients
 async function notifyClients(message) {
-    const clientList = await clients.matchAll({
-        includeUncontrolled: true,
-        type: 'window'
-    });
-    
-    clientList.forEach(client => {
-        try {
-            client.postMessage(message);
-        } catch (error) {
-            console.log('Failed to notify client:', error);
-        }
-    });
+    try {
+        const clientList = await clients.matchAll({
+            includeUncontrolled: true,
+            type: 'window'
+        });
+        
+        clientList.forEach(client => {
+            try {
+                client.postMessage(message);
+            } catch (error) {
+                console.log('Failed to notify client:', error);
+            }
+        });
+    } catch (error) {
+        console.log('Failed to get client list:', error);
+    }
 }
 
 /*
@@ -651,14 +678,6 @@ self.addEventListener('message', (event) => {
             });
             break;
             
-        case 'CHECK_UPDATE':
-            checkForUpdates().then((hasUpdate) => {
-                event.ports[0]?.postMessage({ hasUpdate });
-            }).catch((error) => {
-                event.ports[0]?.postMessage({ hasUpdate: false, error: error.message });
-            });
-            break;
-            
         case 'GET_CACHE_STATS':
             getCacheStats().then((stats) => {
                 event.ports[0]?.postMessage({ stats });
@@ -687,7 +706,7 @@ async function cacheSpecificUrls(urls) {
     for (const url of validUrls) {
         try {
             const response = await fetch(url, {
-                mode: url.startsWith('http') ? 'cors' : 'same-origin'
+                mode: url.startsWith('http') && !url.startsWith(self.location.origin) ? 'cors' : 'same-origin'
             });
             if (response.ok) {
                 await cache.put(url, response);
@@ -704,9 +723,15 @@ async function getCacheStats() {
     try {
         const cache = await caches.open(CACHE_NAME);
         const keys = await cache.keys();
-        const estimate = 'storage' in navigator && 'estimate' in navigator.storage 
-            ? await navigator.storage.estimate() 
-            : null;
+        
+        let estimate = null;
+        if ('storage' in navigator && 'estimate' in navigator.storage) {
+            try {
+                estimate = await navigator.storage.estimate();
+            } catch (error) {
+                console.log('Storage estimate not available:', error);
+            }
+        }
         
         return {
             totalEntries: keys.length,
@@ -776,7 +801,7 @@ self.addEventListener('push', (event) => {
     let options = {
         body: 'Check out the latest updates to my portfolio!',
         icon: '/assets/images/icons/icon-192.png',
-        badge: '/assets/images/icons/badge-72.png',
+        badge: '/assets/images/icons/icon-192.png',
         vibrate: [100, 50, 100],
         data: {
             dateOfArrival: Date.now(),
@@ -786,13 +811,11 @@ self.addEventListener('push', (event) => {
         actions: [
             {
                 action: 'explore',
-                title: 'View Portfolio',
-                icon: '/assets/images/icons/action-view.png'
+                title: 'View Portfolio'
             },
             {
                 action: 'close',
-                title: 'Close',
-                icon: '/assets/images/icons/action-close.png'
+                title: 'Close'
             }
         ],
         tag: 'portfolio-update',
@@ -833,85 +856,13 @@ self.addEventListener('notificationclick', (event) => {
         event.waitUntil(
             clients.openWindow(urlToOpen)
         );
-    } else if (event.action === 'close') {
-        console.log('Notification closed by user');
-    } else {
+    } else if (event.action !== 'close') {
         // Default action (clicking notification body)
         event.waitUntil(
             clients.openWindow(urlToOpen)
         );
     }
 });
-
-/*
-========================================
-CACHE MANAGEMENT & CLEANUP
-========================================
-*/
-async function performCacheCleanup() {
-    try {
-        console.log('🧹 Performing portfolio cache cleanup...');
-        
-        // Get cache usage if supported
-        if ('storage' in navigator && 'estimate' in navigator.storage) {
-            const estimate = await navigator.storage.estimate();
-            const usagePercentage = (estimate.usage / estimate.quota) * 100;
-            
-            console.log(`📊 Storage usage: ${usagePercentage.toFixed(2)}%`);
-            
-            // If using more than 80% of quota, clean up
-            if (usagePercentage > 80) {
-                await cleanupOldCaches();
-                await removeOldCacheEntries();
-            }
-        }
-        
-    } catch (error) {
-        console.error('Cache cleanup failed:', error);
-    }
-}
-
-async function cleanupOldCaches() {
-    const cacheNames = await caches.keys();
-    const oldCaches = cacheNames.filter(name => 
-        name.startsWith('portfolio-') && name !== CACHE_NAME
-    );
-    
-    if (oldCaches.length > 0) {
-        const deletePromises = oldCaches.map(name => {
-            console.log('🗑️ Deleting old cache:', name);
-            return caches.delete(name);
-        });
-        
-        await Promise.all(deletePromises);
-    }
-}
-
-async function removeOldCacheEntries() {
-    const cache = await caches.open(CACHE_NAME);
-    const requests = await cache.keys();
-    
-    // Remove entries older than 30 days
-    const cutoffTime = Date.now() - (30 * 24 * 60 * 60 * 1000);
-    
-    for (const request of requests) {
-        try {
-            const response = await cache.match(request);
-            if (response) {
-                const dateHeader = response.headers.get('date');
-                if (dateHeader) {
-                    const responseDate = new Date(dateHeader).getTime();
-                    if (responseDate < cutoffTime) {
-                        console.log('🗑️ Removing old cache entry:', request.url);
-                        await cache.delete(request);
-                    }
-                }
-            }
-        } catch (error) {
-            console.warn('Failed to process cache entry:', request.url, error);
-        }
-    }
-}
 
 /*
 ========================================
@@ -1019,7 +970,9 @@ function getVersionInfo() {
             'cache-cleanup',
             'dynamic-caching',
             'performance-tracking',
-            'pwa-ready'
+            'pwa-ready',
+            'security-headers',
+            'timeout-handling'
         ],
         staticUrls: STATIC_CACHE_URLS.length,
         externalUrls: EXTERNAL_CACHE_URLS.length,
@@ -1028,190 +981,66 @@ function getVersionInfo() {
     };
 }
 
-// Handle version updates
-async function handleVersionUpdate(newVersion) {
-    try {
-        console.log(`🔄 Updating Portfolio SW from ${CACHE_NAME} to ${newVersion}`);
-        
-        // Perform any necessary migration tasks
-        await migrateCacheData(CACHE_NAME, newVersion);
-        
-        // Notify clients about successful update
-        await notifyClients({
-            type: 'SW_UPDATE_COMPLETED',
-            oldVersion: CACHE_NAME,
-            newVersion: newVersion,
-            timestamp: new Date().toISOString()
-        });
-        
-    } catch (error) {
-        console.error('Version update failed:', error);
-        
-        await notifyClients({
-            type: 'SW_UPDATE_FAILED',
-            error: error.message,
-            timestamp: new Date().toISOString()
-        });
-    }
-}
-
-async function migrateCacheData(oldVersion, newVersion) {
-    try {
-        const oldCache = await caches.open(oldVersion);
-        const newCache = await caches.open(newVersion);
-        
-        // Copy important cached data
-        const criticalUrls = [
-            '/', 
-            '/index.html', 
-            '/404.html',
-            '/assets/js/main.js',
-            '/assets/js/app.js',
-            '/assets/css/styles.css',
-            '/assets/images/profile-hero.jpg'
-        ];
-        
-        for (const url of criticalUrls) {
-            try {
-                const response = await oldCache.match(url);
-                if (response) {
-                    await newCache.put(url, response);
-                    console.log('📦 Migrated cache entry:', url);
-                }
-            } catch (error) {
-                console.warn('Failed to migrate:', url, error);
-            }
-        }
-    } catch (error) {
-        console.error('Cache migration failed:', error);
-    }
-}
-
 /*
 ========================================
-NETWORK MONITORING
+SECURITY ENHANCEMENTS
 ========================================
 */
 
-// Monitor network status
-let isOnline = true;
-
-self.addEventListener('online', () => {
-    isOnline = true;
-    console.log('🌐 Portfolio Service Worker detected online');
-    
-    notifyClients({
-        type: 'NETWORK_STATUS_CHANGE',
-        isOnline: true,
-        timestamp: new Date().toISOString()
-    });
-    
-    // Trigger background sync when coming back online
-    if (self.registration.sync) {
-        self.registration.sync.register('portfolio-background-sync');
+// Add security headers to cached responses
+function addSecurityHeaders(response) {
+    // Don't modify responses that already have been processed
+    if (!response || response.headers.get('sw-processed')) {
+        return response;
     }
     
-    // Update critical resources when back online
-    updateCriticalResources();
-});
-
-self.addEventListener('offline', () => {
-    isOnline = false;
-    console.log('📴 Portfolio Service Worker detected offline');
+    const newHeaders = new Headers(response.headers);
     
-    notifyClients({
-        type: 'NETWORK_STATUS_CHANGE',
-        isOnline: false,
-        timestamp: new Date().toISOString()
-    });
-});
-
-async function updateCriticalResources() {
-    try {
-        const cache = await caches.open(CACHE_NAME);
-        const criticalResources = [
-            '/',
-            '/assets/js/main.js',
-            '/assets/js/app.js'
-        ];
-        
-        for (const url of criticalResources) {
-            try {
-                const response = await fetch(url, { cache: 'no-cache' });
-                if (response.ok) {
-                    await cache.put(url, response);
-                    console.log('🔄 Updated critical resource:', url);
-                }
-            } catch (error) {
-                console.log('Failed to update critical resource:', url);
-            }
-        }
-    } catch (error) {
-        console.error('Critical resource update failed:', error);
+    // Add security headers if not present
+    if (!newHeaders.has('X-Content-Type-Options')) {
+        newHeaders.set('X-Content-Type-Options', 'nosniff');
     }
+    
+    if (!newHeaders.has('X-Frame-Options')) {
+        newHeaders.set('X-Frame-Options', 'DENY');
+    }
+    
+    if (!newHeaders.has('X-XSS-Protection')) {
+        newHeaders.set('X-XSS-Protection', '1; mode=block');
+    }
+    
+    if (!newHeaders.has('Referrer-Policy')) {
+        newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    }
+    
+    // Mark as processed
+    newHeaders.set('sw-processed', 'true');
+    
+    return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: newHeaders
+    });
 }
 
-/*
-========================================
-PERIODIC BACKGROUND SYNC
-========================================
-*/
-self.addEventListener('periodicsync', (event) => {
-    if (event.tag === 'portfolio-update-check') {
-        console.log('🔄 Periodic portfolio sync triggered');
-        event.waitUntil(checkForPortfolioUpdates());
-    }
-});
-
-async function checkForPortfolioUpdates() {
-    try {
-        // Check main page for updates
-        const response = await fetch('/', { 
-            cache: 'no-cache',
-            headers: {
-                'Cache-Control': 'no-cache'
-            }
-        });
-        
-        if (response.ok) {
-            const currentCache = await caches.open(CACHE_NAME);
-            const cachedResponse = await currentCache.match('/');
-            
-            if (cachedResponse) {
-                const cachedText = await cachedResponse.text();
-                const newText = await response.text();
-                
-                // Simple content comparison
-                if (cachedText !== newText) {
-                    console.log('📥 Portfolio content update detected');
-                    
-                    // Update the cache
-                    await currentCache.put('/', new Response(newText, {
-                        status: response.status,
-                        statusText: response.statusText,
-                        headers: response.headers
-                    }));
-                    
-                    // Notify clients about update
-                    await notifyClients({
-                        type: 'PORTFOLIO_CONTENT_UPDATED',
-                        timestamp: new Date().toISOString(),
-                        message: 'New portfolio content available!'
-                    });
-                    
-                    return true;
-                }
-            }
-        }
-        return false;
-    } catch (error) {
-        console.log('Portfolio update check failed:', error);
-        return false;
-    }
-}
-
-async function checkForUpdates() {
-    return await checkForPortfolioUpdates();
+// Validate requests for security
+function isRequestSafe(request) {
+    const url = new URL(request.url);
+    
+    // Block suspicious patterns
+    const suspiciousPatterns = [
+        /\.\.\//, // Path traversal
+        /javascript:/i, // JavaScript protocol
+        /vbscript:/i, // VBScript protocol
+        /<script/i, // Script injection attempts
+        /eval\(/i, // Eval attempts
+        /union.*select/i // SQL injection attempts
+    ];
+    
+    return !suspiciousPatterns.some(pattern => 
+        pattern.test(request.url) || 
+        pattern.test(request.referrer || '')
+    );
 }
 
 /*
@@ -1257,27 +1086,6 @@ if (self.location.hostname === 'localhost' ||
         // Manual operations
         forceUpdate: () => self.skipWaiting(),
         preloadUrls: (urls) => cacheSpecificUrls(urls),
-        updateCriticalResources: () => updateCriticalResources(),
-        
-        // Testing
-        simulateOffline: () => {
-            console.log('🧪 Simulating offline mode');
-            isOnline = false;
-            notifyClients({
-                type: 'NETWORK_STATUS_CHANGE',
-                isOnline: false,
-                simulated: true
-            });
-        },
-        simulateOnline: () => {
-            console.log('🧪 Simulating online mode');
-            isOnline = true;
-            notifyClients({
-                type: 'NETWORK_STATUS_CHANGE',
-                isOnline: true,
-                simulated: true
-            });
-        },
         
         // Performance stats
         getCacheStats: () => getCacheStats(),
@@ -1330,224 +1138,9 @@ if (self.location.hostname === 'localhost' ||
 
 /*
 ========================================
-PORTFOLIO-SPECIFIC FEATURES
-========================================
-*/
-
-// Handle portfolio-specific routes
-async function handlePortfolioRoutes(request) {
-    const url = new URL(request.url);
-    const pathname = url.pathname;
-    
-    // Handle portfolio project deep links
-    if (pathname.startsWith('/project/')) {
-        // Redirect to main page with hash for SPA routing
-        const projectId = pathname.split('/')[2];
-        return Response.redirect(`/#portfolio-${projectId}`, 302);
-    }
-    
-    // Handle blog posts if you add a blog
-    if (pathname.startsWith('/blog/')) {
-        const blogPost = pathname.split('/')[2];
-        return Response.redirect(`/#blog-${blogPost}`, 302);
-    }
-    
-    // Handle contact form submissions (if using static form)
-    if (pathname === '/contact' && request.method === 'POST') {
-        // Let the main app handle this
-        return fetch(request);
-    }
-    
-    return null;
-}
-
-// Preload portfolio images based on viewport
-async function preloadPortfolioImages() {
-    const portfolioImages = [
-        '/assets/images/projects/ecommerce-platform.jpg',
-        '/assets/images/projects/task-manager.jpg',
-        '/assets/images/projects/weather-app.jpg'
-    ];
-    
-    const cache = await caches.open(CACHE_NAME);
-    
-    for (const imageUrl of portfolioImages) {
-        try {
-            if (!(await cache.match(imageUrl))) {
-                const response = await fetch(imageUrl);
-                if (response.ok) {
-                    await cache.put(imageUrl, response);
-                    console.log('🖼️ Preloaded portfolio image:', imageUrl);
-                }
-            }
-        } catch (error) {
-            console.log('Failed to preload image:', imageUrl);
-        }
-    }
-}
-
-/*
-========================================
-ANALYTICS & METRICS COLLECTION
-========================================
-*/
-
-// Collect portfolio-specific metrics
-let portfolioMetrics = {
-    pageViews: 0,
-    offlineViews: 0,
-    cacheHitsByType: {
-        html: 0,
-        css: 0,
-        js: 0,
-        images: 0,
-        fonts: 0,
-        other: 0
-    },
-    popularSections: {},
-    loadTimes: [],
-    errors: []
-};
-
-function trackPortfolioMetric(type, data) {
-    switch (type) {
-        case 'page-view':
-            portfolioMetrics.pageViews++;
-            if (!isOnline) portfolioMetrics.offlineViews++;
-            break;
-            
-        case 'cache-hit':
-            const fileType = getFileType(data.url);
-            portfolioMetrics.cacheHitsByType[fileType]++;
-            break;
-            
-        case 'section-view':
-            const section = data.section;
-            portfolioMetrics.popularSections[section] = 
-                (portfolioMetrics.popularSections[section] || 0) + 1;
-            break;
-            
-        case 'load-time':
-            portfolioMetrics.loadTimes.push({
-                url: data.url,
-                duration: data.duration,
-                timestamp: new Date().toISOString()
-            });
-            break;
-            
-        case 'error':
-            portfolioMetrics.errors.push({
-                error: data.error,
-                url: data.url,
-                timestamp: new Date().toISOString()
-            });
-            break;
-    }
-    
-    // Send metrics to clients periodically
-    if (portfolioMetrics.pageViews % 10 === 0) {
-        notifyClients({
-            type: 'PORTFOLIO_METRICS',
-            metrics: { ...portfolioMetrics },
-            timestamp: new Date().toISOString()
-        });
-    }
-}
-
-function getFileType(url) {
-    const extension = url.split('.').pop()?.toLowerCase();
-    
-    if (['html', 'htm'].includes(extension)) return 'html';
-    if (['css'].includes(extension)) return 'css';
-    if (['js', 'mjs'].includes(extension)) return 'js';
-    if (['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'avif'].includes(extension)) return 'images';
-    if (['woff', 'woff2', 'ttf', 'otf', 'eot'].includes(extension)) return 'fonts';
-    
-    return 'other';
-}
-
-/*
-========================================
-SECURITY ENHANCEMENTS
-========================================
-*/
-
-// Add security headers to cached responses
-function addSecurityHeaders(response) {
-    const newHeaders = new Headers(response.headers);
-    
-    // Add security headers if not present
-    if (!newHeaders.has('X-Content-Type-Options')) {
-        newHeaders.set('X-Content-Type-Options', 'nosniff');
-    }
-    
-    if (!newHeaders.has('X-Frame-Options')) {
-        newHeaders.set('X-Frame-Options', 'DENY');
-    }
-    
-    if (!newHeaders.has('X-XSS-Protection')) {
-        newHeaders.set('X-XSS-Protection', '1; mode=block');
-    }
-    
-    if (!newHeaders.has('Referrer-Policy')) {
-        newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-    }
-    
-    return new Response(response.body, {
-        status: response.status,
-        statusText: response.statusText,
-        headers: newHeaders
-    });
-}
-
-// Validate requests for security
-function isRequestSafe(request) {
-    const url = new URL(request.url);
-    
-    // Block suspicious patterns
-    const suspiciousPatterns = [
-        /\.\.\//, // Path traversal
-        /javascript:/i, // JavaScript protocol
-        /data:/i, // Data protocol (in some contexts)
-        /vbscript:/i, // VBScript protocol
-        /<script/i, // Script injection attempts
-        /eval\(/i, // Eval attempts
-        /union.*select/i // SQL injection attempts
-    ];
-    
-    return !suspiciousPatterns.some(pattern => 
-        pattern.test(request.url) || 
-        pattern.test(request.referrer || '')
-    );
-}
-
-/*
-========================================
 INITIALIZATION COMPLETE
 ========================================
 */
-
-// Initialize portfolio-specific features
-(async function initializePortfolioSW() {
-    try {
-        console.log(`🚀 Portfolio Service Worker (${CACHE_NAME}) initializing...`);
-        
-        // Preload portfolio images in background
-        setTimeout(() => {
-            preloadPortfolioImages().catch(error => {
-                console.log('Portfolio image preload failed:', error);
-            });
-        }, 2000);
-        
-        // Initialize performance tracking
-        trackPortfolioMetric('page-view', { url: self.location.href });
-        
-        console.log(`✅ Portfolio Service Worker (${CACHE_NAME}) ready!`);
-        
-    } catch (error) {
-        console.error('Portfolio SW initialization failed:', error);
-    }
-})();
 
 // Log detailed initialization info
 console.log(`🚀 Portfolio Service Worker (${CACHE_NAME}) loaded and ready!`);
@@ -1589,4 +1182,3 @@ Ready to showcase your portfolio offline! 🚀
 
 // Final setup
 console.log('🎯 Portfolio Service Worker setup complete - your portfolio is now PWA-ready!');
-
