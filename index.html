@@ -17,9 +17,7 @@
 
     <!-- Tasks with inline SVG icons -->
     <meta name="msapplication-task" content="name=Portfolio;action-uri=/portfolio;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTMgNEg3TDkgMkgxNUwxNyA0SDIxQzIyLjEgNCAyMyA0LjkgMjMgNlYxOEMyMyAxOS4xIDIyLjEgMjAgMjEgMjBIM0MxLjkgMjAgMSAxOS4xIDEgMThWNkMxIDQuOSAxLjkgNCAzIDRaTTUgOFYxOEgxOVY4SDVaIiBmaWxsPSIjQTc4QkZBIi8+CjxjaXJjbGUgY3g9IjEyIiBjeT0iMTMiIHI9IjMiIGZpbGw9IiNBNzhCRkEiLz4KPC9zdmc+">
-
     <meta name="msapplication-task" content="name=Contact;action-uri=/contact;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDRINEMyLjkgNCAyIDQuOSAyIDZWMThDMiAxOS4xIDIuOSAyMCA0IDIwSDIwQzIxLjEgMjAgMjIgMTkuMSAyMiAxOFY2QzIyIDQuOSAyMS4xIDQgMjAgNFpNMjAgNkwyMCA4TDEyIDEzTDQgOFY2TDEyIDExTDIwIDZaIiBmaWxsPSIjQTc4QkZBIi8+Cjwvc3ZnPg==">
-
     <meta name="msapplication-task" content="name=Resume;action-uri=/resume;icon-uri=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0IDJIMEM1LjEgMiA0IDMuMSA0IDRWMjBDNCAyMS4xIDUuMSAyMiA2IDIySDE4QzE5LjEgMjIgMjAgMjEuMSAyMCAyMFY4TDE0IDJaTTE4IDIwSDZWNEgxM1Y5SDE4VjIwWiIgZmlsbD0iI0E3OEJGQSIvPgo8cGF0aCBkPSJNOCAxMkgxNlYxNEg4VjEyWk04IDE2SDE2VjE4SDhWMTZaTTggOEgxMFYxMEg4VjhaIiBmaWxsPSIjQTc4QkZBIi8+Cjwvc3ZnPg==">
     
     <!-- Preconnect to CDNs -->
@@ -47,7 +45,7 @@
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
-<link rel="stylesheet" href="/assets/css/stars.css">
+    <link rel="stylesheet" href="/assets/css/stars.css">
     
     <!-- Open Graph Meta -->
     <meta property="og:title" content="Thanatsitt Santisamranwilai - AI Creative Designer & Digital Innovator">
@@ -84,18 +82,24 @@
         :root {
             --primary-light: #A78BFA;
             --primary-accent: #F9A8D4;
+            --primary-rgb: 167, 139, 250;
             --background-light: #F8FAFC;
             --text-dark: #2D3748;
+            --text-color: var(--text-dark);
         }
+        
         [data-theme="dark"] {
             --background-light: #1A202C;
             --text-dark: #F8FAFC;
+            --text-color: var(--text-dark);
         }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--background-light);
@@ -105,6 +109,7 @@
             -moz-osx-font-smoothing: grayscale;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+        
         .skip-link {
             position: absolute;
             top: -40px;
@@ -121,16 +126,86 @@
         .skip-link:focus {
             top: 6px;
         }
+        
         *:focus {
             outline: 3px solid rgba(167, 139, 250, 0.8);
             outline-offset: 3px;
         }
+        
         .loading {
             opacity: 0;
             transition: opacity 0.5s ease;
         }
+        
         .loaded {
             opacity: 1;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.25rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(var(--primary-rgb), 0.1);
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-toggle i {
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle .d-none {
+            display: none !important;
+        }
+
+        /* Theme-specific icons */
+        [data-theme="light"] .fa-sun {
+            display: none;
+        }
+
+        [data-theme="dark"] .fa-moon {
+            display: none;
+        }
+
+        [data-theme="dark"] .fa-sun {
+            display: inline-block;
         }
 
         /* Enhanced Moon & Stars Animation */
@@ -155,7 +230,7 @@
             50% {
                 transform: translateY(-10px) rotate(0deg);
             }
-                        75% {
+            75% {
                 transform: translateY(-20px) rotate(-2deg);
             }
         }
@@ -368,6 +443,14 @@
                 width: 3px;
                 height: 3px;
             }
+
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -415,84 +498,13 @@
                 animation-iteration-count: 1 !important;
             }
         }
-        /* Theme Toggle Button */
-.theme-toggle {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.25rem;
-    padding: 0.5rem;
-    border-radius: 50%;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    margin-right: 1rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.theme-toggle:hover {
-    background: rgba(var(--primary-rgb), 0.1);
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.2);
-}
-
-.theme-toggle:active {
-    transform: scale(0.95);
-}
-
-.theme-toggle i {
-    transition: all 0.3s ease;
-}
-
-/* Theme-specific icons */
-[data-theme="light"] .theme-toggle i::before {
-    content: "\f186"; /* fa-moon */
-}
-
-[data-theme="dark"] .theme-toggle i::before {
-    content: "\f185"; /* fa-sun */
-}
-
-/* Mobile adjustments */
-@media (max-width: 991.98px) {
-    .theme-toggle {
-        order: -1;
-        margin-right: 0;
-        margin-left: auto;
-    }
-}
-
-/* Animation effects */
-.theme-toggle::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(var(--primary-rgb), 0.3), transparent);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
-    z-index: -1;
-}
-
-.theme-toggle:hover::after {
-    width: 100%;
-    height: 100%;
-}
-
     </style>
 
     <!-- Structured Data (Unified) -->
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
+        "@context": "https
+        ://schema.org",
         "@graph": [
             {
                 "@type": "WebSite",
@@ -655,19 +667,6 @@
                     <div class="star star--7" style="--delay: 2.3s; --duration: 2.7s;"></div>
                     <div class="star star--8" style="--delay: 1.2s; --duration: 3.8s;"></div>
                 </div>
-<!-- Basic twinkling stars -->
-<div class="star star--medium star--pastel-pink star--animate-twinkle" 
-     style="--duration: 3s; --delay: 0s; top: 20%; left: 15%;"></div>
-
-<!-- Interactive constellation star -->
-<div class="star star--large star--pastel-blue star--constellation star--interactive" 
-     style="top: 35%; right: 20%;"></div>
-
-<!-- Shooting star -->
-<div class="shooting-star shooting-star--1"></div>
-
-<!-- Auto-generated star field -->
-<div class="stars-auto-distribute"></div>
 
                 <!-- Enhanced Moon with Glow -->
                 <div class="moon-glow"></div>
@@ -803,440 +802,439 @@
                         <h3 class="about-title">Digital Innovation Specialist</h3>
                         <p class="about-text">
                             As an AI Creative Designer and Digital Innovator, I specialize in transforming 
-                                                    complex ideas into intuitive, beautiful digital experiences. My expertise spans 
-                        machine learning, creative technology, and multilingual content creation.
-                    </p>
-                    <p class="about-text">
-                        With a background from London College of Fashion and experience in voice acting 
-                        and digital design, I bring a unique perspective to every project. I'm passionate 
-                        about using AI and creative technology to solve real-world problems and create 
-                        meaningful connections.
-                    </p>
+                            complex ideas into intuitive, beautiful digital experiences. My expertise spans 
+                            machine learning, creative technology, and multilingual content creation.
+                        </p>
+                        <p class="about-text">
+                            With a background from London College of Fashion and experience in voice acting 
+                            and digital design, I bring a unique perspective to every project. I'm passionate 
+                            about using AI and creative technology to solve real-world problems and create 
+                            meaningful connections.
+                        </p>
 
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                            <span>London College of Fashion Graduate</span>
+                        <div class="about-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                                <span>London College of Fashion Graduate</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-globe" aria-hidden="true"></i>
+                                <span>Multilingual Content Creator</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-microphone-alt" aria-hidden="true"></i>
+                                <span>Professional Voice Actor</span>
+                            </div>
                         </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-globe" aria-hidden="true"></i>
-                            <span>Multilingual Content Creator</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-microphone-alt" aria-hidden="true"></i>
-                            <span>Professional Voice Actor</span>
-                        </div>
-                    </div>
 
-                    <a href="#contact-section" class="button button--primary">
-                        <i class="fas fa-comments icon-spacing" aria-hidden="true"></i>
-                        Let's Connect
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills-section" class="section skills-section">
-        <div class="container">
-            <h2 class="section-title">Skills & Expertise</h2>
-            <p class="section-subtitle">
-                Combining creativity with technology to deliver exceptional results 
-                across multiple disciplines.
-            </p>
-
-            <div class="skills-grid">
-                <div class="skill-card glass-card" data-skill="ai">
-                    <i class="fas fa-brain" aria-hidden="true"></i>
-                    <h3>Artificial Intelligence</h3>
-                    <p>Machine learning, AI training, and intelligent system design for creative applications and business solutions.</p>
-                    <div class="skill-progress">
-                        <div class="skill-progress-bar skill-progress-bar--95" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <div class="skill-card glass-card" data-skill="design">
-                    <i class="fas fa-palette" aria-hidden="true"></i>
-                    <h3>Creative Design</h3>
-                    <p>UI/UX design, digital branding, and visual storytelling that connects with audiences on an emotional level.</p>
-                    <div class="skill-progress">
-                        <div class="skill-progress-bar skill-progress-bar--92" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <div class="skill-card glass-card" data-skill="voice">
-                    <i class="fas fa-microphone" aria-hidden="true"></i>
-                    <h3>Voice Acting</h3>
-                    <p>Professional voice production, multilingual narration, and audio content creation for diverse media platforms.</p>
-                    <div class="skill-progress">
-                        <div class="skill-progress-bar skill-progress-bar--88" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <div class="skill-card glass-card" data-skill="development">
-                    <i class="fas fa-code" aria-hidden="true"></i>
-                    <h3>Creative Development</h3>
-                    <p>Full-stack development, interactive experiences, and innovative web solutions using modern technologies.</p>
-                    <div class="skill-progress">
-                        <div class="skill-progress-bar skill-progress-bar--90" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <div class="skill-card glass-card" data-skill="innovation">
-                    <i class="fas fa-lightbulb" aria-hidden="true"></i>
-                    <h3>Digital Innovation</h3>
-                    <p>Strategic thinking, emerging technology integration, and innovative solution development for future-ready projects.</p>
-                    <div class="skill-progress">
-                        <div class="skill-progress-bar skill-progress-bar--93" style="width: 0%"></div>
-                    </div>
-                </div>
-
-                <div class="skill-card glass-card" data-skill="content">
-                    <i class="fas fa-language" aria-hidden="true"></i>
-                    <h3>Content Creation</h3>
-                    <p>Multilingual content strategy, digital marketing, and cross-cultural communication for global audiences.</p>
-                    <div class="skill-progress">
-                        <div class="skill-progress-bar skill-progress-bar--87" style="width: 0%"></div>
+                        <a href="#contact-section" class="button button--primary">
+                            <i class="fas fa-comments icon-spacing" aria-hidden="true"></i>
+                            Let's Connect
+                        </a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio-section" class="section portfolio-section">
-        <div class="container">
-            <h2 class="section-title">Featured Work</h2>
-            <p class="section-subtitle">
-                Showcasing innovative projects that blend creativity, technology, 
-                and strategic thinking to deliver exceptional results.
-            </p>
+        <!-- Skills Section -->
+        <section id="skills-section" class="section skills-section">
+            <div class="container">
+                <h2 class="section-title">Skills & Expertise</h2>
+                <p class="section-subtitle">
+                    Combining creativity with technology to deliver exceptional results 
+                    across multiple disciplines.
+                </p>
 
-            <!-- Portfolio Filters -->
-            <div class="portfolio-filters" role="tablist" aria-label="Portfolio categories">
-                <button class="portfolio-filter active" data-filter="all" role="tab" aria-selected="true">
-                    All Projects
-                </button>
-                <button class="portfolio-filter" data-filter="ai" role="tab" aria-selected="false">
-                    AI & Machine Learning
-                </button>
-                <button class="portfolio-filter" data-filter="design" role="tab" aria-selected="false">
-                    Creative Design
-                </button>
-                <button class="portfolio-filter" data-filter="voice" role="tab" aria-selected="false">
-                    Voice Production
-                </button>
-                <button class="portfolio-filter" data-filter="web" role="tab" aria-selected="false">
-                    Web Development
-                </button>
-            </div>
-
-            <!-- Portfolio Grid -->
-            <div class="portfolio-grid">
-                <article class="portfolio-card glass-card" data-category="ai design">
-                    <div class="portfolio-card-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-robot" aria-hidden="true"></i>
+                <div class="skills-grid">
+                    <div class="skill-card glass-card" data-skill="ai">
+                        <i class="fas fa-brain" aria-hidden="true"></i>
+                        <h3>Artificial Intelligence</h3>
+                        <p>Machine learning, AI training, and intelligent system design for creative applications and business solutions.</p>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar skill-progress-bar--95" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="portfolio-card-content">
-                        <h3>AI-Powered Design Assistant</h3>
-                        <p>An intelligent design system that uses machine learning to generate creative concepts and streamline the design process for digital products.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">Machine Learning</span>
-                            <span class="portfolio-tag">Creative AI</span>
-                            <span class="portfolio-tag">UX Design</span>
-                        </div>
-                        <div class="portfolio-links">
-                            <a href="#" class="portfolio-link" aria-label="View project details">
-                                <i class="fas fa-external-link-alt icon-spacing" aria-hidden="true"></i>
-                                View Project
-                            </a>
-                            <a href="#" class="portfolio-link" aria-label="View source code">
-                                <i class="fab fa-github icon-spacing" aria-hidden="true"></i>
-                                Source
-                            </a>
-                        </div>
-                    </div>
-                </article>
 
-                <article class="portfolio-card glass-card" data-category="voice design">
-                    <div class="portfolio-card-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-podcast" aria-hidden="true"></i>
+                    <div class="skill-card glass-card" data-skill="design">
+                        <i class="fas fa-palette" aria-hidden="true"></i>
+                        <h3>Creative Design</h3>
+                        <p>UI/UX design, digital branding, and visual storytelling that connects with audiences on an emotional level.</p>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar skill-progress-bar--92" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="portfolio-card-content">
-                        <h3>Multilingual Audio Experience</h3>
-                        <p>Interactive audio storytelling platform featuring professional voice acting in multiple languages with AI-enhanced audio processing.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">Voice Acting</span>
-                            <span class="portfolio-tag">Audio Production</span>
-                            <span class="portfolio-tag">Multilingual</span>
-                        </div>
-                        <div class="portfolio-links">
-                            <a href="#" class="portfolio-link" aria-label="Listen to demo">
-                                <i class="fas fa-play icon-spacing" aria-hidden="true"></i>
-                                Listen Demo
-                            </a>
-                            <a href="https://www.voquent.com/voice-actor/2033447" 
-                               class="portfolio-link" target="_blank" rel="noopener noreferrer"
-                               aria-label="View voice profile">
-                                <i class="fas fa-microphone icon-spacing" aria-hidden="true"></i>
-                                Voice Profile
-                            </a>
-                        </div>
-                    </div>
-                </article>
 
-                <article class="portfolio-card glass-card" data-category="web design">
-                    <div class="portfolio-card-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                    <div class="skill-card glass-card" data-skill="voice">
+                        <i class="fas fa-microphone" aria-hidden="true"></i>
+                        <h3>Voice Acting</h3>
+                        <p>Professional voice production, multilingual narration, and audio content creation for diverse media platforms.</p>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar skill-progress-bar--88" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="portfolio-card-content">
-                        <h3>Responsive Creative Platform</h3>
-                        <p>A cutting-edge web application built with modern technologies, featuring seamless user experience and innovative design patterns.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">React</span>
-                            <span class="portfolio-tag">Node.js</span>
-                            <span class="portfolio-tag">Responsive Design</span>
-                        </div>
-                        <div class="portfolio-links">
-                            <a href="#" class="portfolio-link" aria-label="View live site">
-                                <i class="fas fa-globe icon-spacing" aria-hidden="true"></i>
-                                Live Site
-                            </a>
-                            <a href="#" class="portfolio-link" aria-label="View case study">
-                                <i class="fas fa-file-alt icon-spacing" aria-hidden="true"></i>
-                                Case Study
-                            </a>
-                        </div>
-                    </div>
-                </article>
 
-                <article class="portfolio-card glass-card" data-category="ai">
-                    <div class="portfolio-card-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                    <div class="skill-card glass-card" data-skill="development">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                        <h3>Creative Development</h3>
+                        <p>Full-stack development, interactive experiences, and innovative web solutions using modern technologies.</p>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar skill-progress-bar--90" style="width: 0%"></div>
                         </div>
                     </div>
-                    <div class="portfolio-card-content">
-                        <h3>Predictive Analytics Dashboard</h3>
-                        <p>Advanced data visualization platform powered by machine learning algorithms for business intelligence and predictive insights.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">Data Science</span>
-                            <span class="portfolio-tag">Python</span>
-                            <span class="portfolio-tag">Visualization</span>
-                        </div>
-                        <div class="portfolio-links">
-                            <a href="#" class="portfolio-link" aria-label="View dashboard">
-                                <i class="fas fa-chart-bar icon-spacing" aria-hidden="true"></i>
-                                View Dashboard
-                            </a>
-                            <a href="#" class="portfolio-link" aria-label="Technical details">
-                                <i class="fas fa-code icon-spacing" aria-hidden="true"></i>
-                                Technical
-                            </a>
+
+                    <div class="skill-card glass-card" data-skill="innovation">
+                        <i class="fas fa-lightbulb" aria-hidden="true"></i>
+                        <h3>Digital Innovation</h3>
+                        <p>Strategic thinking, emerging technology integration, and innovative solution development for future-ready projects.</p>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar skill-progress-bar--93" style="width: 0%"></div>
                         </div>
                     </div>
-                </article>
 
-                <article class="portfolio-card glass-card" data-category="design">
-                    <div class="portfolio-card-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-paint-brush" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div class="portfolio-card-content">
-                        <h3>Brand Identity System</h3>
-                        <p>Complete visual identity and brand system design for a tech startup, including logo, typography, and digital assets.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">Branding</span>
-                            <span class="portfolio-tag">Visual Identity</span>
-                            <span class="portfolio-tag">Typography</span>
-                        </div>
-                        <div class="portfolio-links">
-                            <a href="#" class="portfolio-link" aria-label="View brand guide">
-                                <i class="fas fa-book icon-spacing" aria-hidden="true"></i>
-                                Brand Guide
-                            </a>
-                            <a href="#" class="portfolio-link" aria-label="View gallery">
-                                <i class="fas fa-images icon-spacing" aria-hidden="true"></i>
-                                Gallery
-                            </a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="portfolio-card glass-card" data-category="web ai">
-                    <div class="portfolio-card-image">
-                        <div class="portfolio-placeholder">
-                            <i class="fas fa-brain" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div class="portfolio-card-content">
-                        <h3>Smart Content Generator</h3>
-                        <p>AI-powered content creation tool that generates engaging copy and creative assets using advanced natural language processing.</p>
-                        <div class="portfolio-tags">
-                            <span class="portfolio-tag">NLP</span>
-                            <span class="portfolio-tag">Content AI</span>
-                            <span class="portfolio-tag">API Integration</span>
-                        </div>
-                        <div class="portfolio-links">
-                            <a href="#" class="portfolio-link" aria-label="Try the tool">
-                                <i class="fas fa-magic icon-spacing" aria-hidden="true"></i>
-                                Try Tool
-                            </a>
-                            <a href="#" class="portfolio-link" aria-label="View documentation">
-                                <i class="fas fa-book-open icon-spacing" aria-hidden="true"></i>
-                                Docs
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact-section" class="section contact-section">
-        <div class="container">
-            <h2 class="section-title">Let's Create Something Amazing</h2>
-            <p class="section-subtitle">
-                Ready to bring your ideas to life? Let's collaborate and create 
-                innovative solutions that make a difference.
-            </p>
-
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Get In Touch</h3>
-                    <p>
-                        I'm always excited to work on new projects and collaborate with 
-                        creative minds. Whether you need AI solutions, creative design, 
-                        voice production, or innovative web development, let's discuss 
-                        how we can work together.
-                    </p>
-
-                    <ul class="contact-details">
-                        <li>
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                            <a href="mailto:Thanatsitt.info@yahoo.co.uk">Thanatsitt.info@yahoo.co.uk</a>
-                        </li>
-                        <li>
-                            <i class="fab fa-linkedin" aria-hidden="true"></i>
-                            <a href="https://linkedin.com/in/thanatsitt-s" target="_blank" rel="noopener noreferrer">
-                                LinkedIn Profile
-                            </a>
-                        </li>
-                        <li>
-                            <i class="fab fa-github" aria-hidden="true"></i>
-                            <a href="https://github.com/Pigletpeakkung" target="_blank" rel="noopener noreferrer">
-                                GitHub Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <i class="fas fa-microphone" aria-hidden="true"></i>
-                            <a href="https://www.voquent.com/voice-actor/2033447" target="_blank" rel="noopener noreferrer">
-                                Voice Acting Profile
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="contact-availability">
-                        <h4>Current Availability</h4>
-                        <div class="availability-status">
-                            <span class="status-indicator available" aria-label="Available for projects"></span>
-                            <span>Open to new projects and collaborations</span>
+                    <div class="skill-card glass-card" data-skill="content">
+                        <i class="fas fa-language" aria-hidden="true"></i>
+                        <h3>Content Creation</h3>
+                        <p>Multilingual content strategy, digital marketing, and cross-cultural communication for global audiences.</p>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar skill-progress-bar--87" style="width: 0%"></div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <form id="contactForm" class="contact-form glass-card" method="post" action="/contact/submit">
-                    <div class="form-group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" class="form-control" 
-                               placeholder="Your full name" required 
-                               aria-describedby="name-error">
-                    </div>
+        <!-- Portfolio Section -->
+        <section id="portfolio-section" class="section portfolio-section">
+            <div class="container">
+                <h2 class="section-title">Featured Work</h2>
+                <p class="section-subtitle">
+                    Showcasing innovative projects that blend creativity, technology, 
+                    and strategic thinking to deliver exceptional results.
+                </p>
 
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" name="email" class="form-control" 
-                               placeholder="your.email@example.com" required
-                               aria-describedby="email-error">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="company">Company / Organization</label>
-                        <input type="text" id="company" name="company" class="form-control" 
-                               placeholder="Your company or organization">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="project-type">Project Type</label>
-                        <select id="project-type" name="project_type" class="form-control">
-                            <option value="">Select project type</option>
-                            <option value="ai-ml">AI & Machine Learning</option>
-                            <option value="web-development">Web Development</option>
-                            <option value="creative-design">Creative Design</option>
-                            <option value="voice-production">Voice Production</option>
-                            <option value="consulting">Consulting</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="budget">Budget Range</label>
-                        <select id="budget" name="budget" class="form-control">
-                            <option value="">Select budget range</option>
-                            <option value="under-5k">Under $5,000</option>
-                            <option value="5k-15k">$5,000 - $15,000</option>
-                            <option value="15k-50k">$15,000 - $50,000</option>
-                            <option value="50k-plus">$50,000+</option>
-                            <option value="discuss">Let's discuss</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="timeline">Project Timeline</label>
-                        <select id="timeline" name="timeline" class="form-control">
-                            <option value="">Select timeline</option>
-                            <option value="asap">ASAP</option>
-                            <option value="1-month">Within 1 month</option>
-                            <option value="3-months">Within 3 months</option>
-                            <option value="6-months">Within 6 months</option>
-                            <option value="flexible">Flexible</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Project Details *</label>
-                        <textarea id="message" name="message" class="form-control" rows="6"
-                                  placeholder="Tell me about your project, goals, and how I can help..."
-                                  required aria-describedby="message-error"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="newsletter" name="newsletter" value="yes">
-                            <span class="checkmark"></span>
-                            Subscribe to occasional updates about new projects and insights
-                        </label>
-                    </div>
-
-                    <button type="submit" class="button button--primary" aria-describedby="submit-status">
-                        <i class="fas fa-paper-plane icon-spacing" aria-hidden="true"></i>
-                        Send Message
+                <!-- Portfolio Filters -->
+                <div class="portfolio-filters" role="tablist" aria-label="Portfolio categories">
+                    <button class="portfolio-filter active" data-filter="all" role="tab" aria-selected="true">
+                        All Projects
                     </button>
+                    <button class="portfolio-filter" data-filter="ai" role="tab" aria-selected="false">
+                        AI & Machine Learning
+                    </button>
+                    <button class="portfolio-filter" data-filter="design" role="tab" aria-selected="false">
+                        Creative Design
+                    </button>
+                    <button class="portfolio-filter" data-filter="voice" role="tab" aria-selected="false">
+                        Voice Production
+                    </button>
+                    <button class="portfolio-filter" data-filter="web" role="tab" aria-selected="false">
+                        Web Development
+                    </button>
+                </div>
+<!-- Portfolio Grid -->
+                <div class="portfolio-grid">
+                    <article class="portfolio-card glass-card" data-category="ai design">
+                        <div class="portfolio-card-image">
+                            <div class="portfolio-placeholder">
+                                <i class="fas fa-robot" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-card-content">
+                            <h3>AI-Powered Design Assistant</h3>
+                            <p>An intelligent design system that uses machine learning to generate creative concepts and streamline the design process for digital products.</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Machine Learning</span>
+                                <span class="portfolio-tag">Creative AI</span>
+                                <span class="portfolio-tag">UX Design</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link" aria-label="View project details">
+                                    <i class="fas fa-external-link-alt icon-spacing" aria-hidden="true"></i>
+                                    View Project
+                                </a>
+                                <a href="#" class="portfolio-link" aria-label="View source code">
+                                    <i class="fab fa-github icon-spacing" aria-hidden="true"></i>
+                                    Source
+                                </a>
+                            </div>
+                        </div>
+                    </article>
 
-                    <div id="submit-status" class="visually-hidden" aria-live="polite"></div>
-                </form>
+                    <article class="portfolio-card glass-card" data-category="voice design">
+                        <div class="portfolio-card-image">
+                            <div class="portfolio-placeholder">
+                                <i class="fas fa-podcast" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-card-content">
+                            <h3>Multilingual Audio Experience</h3>
+                            <p>Interactive audio storytelling platform featuring professional voice acting in multiple languages with AI-enhanced audio processing.</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Voice Acting</span>
+                                <span class="portfolio-tag">Audio Production</span>
+                                <span class="portfolio-tag">Multilingual</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link" aria-label="Listen to demo">
+                                    <i class="fas fa-play icon-spacing" aria-hidden="true"></i>
+                                    Listen Demo
+                                </a>
+                                <a href="https://www.voquent.com/voice-actor/2033447" 
+                                   class="portfolio-link" target="_blank" rel="noopener noreferrer"
+                                   aria-label="View voice profile">
+                                    <i class="fas fa-microphone icon-spacing" aria-hidden="true"></i>
+                                    Voice Profile
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="portfolio-card glass-card" data-category="web design">
+                        <div class="portfolio-card-image">
+                            <div class="portfolio-placeholder">
+                                <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-card-content">
+                            <h3>Responsive Creative Platform</h3>
+                            <p>A cutting-edge web application built with modern technologies, featuring seamless user experience and innovative design patterns.</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">React</span>
+                                <span class="portfolio-tag">Node.js</span>
+                                <span class="portfolio-tag">Responsive Design</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link" aria-label="View live site">
+                                    <i class="fas fa-globe icon-spacing" aria-hidden="true"></i>
+                                    Live Site
+                                </a>
+                                <a href="#" class="portfolio-link" aria-label="View case study">
+                                    <i class="fas fa-file-alt icon-spacing" aria-hidden="true"></i>
+                                    Case Study
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="portfolio-card glass-card" data-category="ai">
+                        <div class="portfolio-card-image">
+                            <div class="portfolio-placeholder">
+                                <i class="fas fa-chart-line" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-card-content">
+                            <h3>Predictive Analytics Dashboard</h3>
+                            <p>Advanced data visualization platform powered by machine learning algorithms for business intelligence and predictive insights.</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Data Science</span>
+                                <span class="portfolio-tag">Python</span>
+                                <span class="portfolio-tag">Visualization</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link" aria-label="View dashboard">
+                                    <i class="fas fa-chart-bar icon-spacing" aria-hidden="true"></i>
+                                    View Dashboard
+                                </a>
+                                <a href="#" class="portfolio-link" aria-label="Technical details">
+                                    <i class="fas fa-code icon-spacing" aria-hidden="true"></i>
+                                    Technical
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="portfolio-card glass-card" data-category="design">
+                        <div class="portfolio-card-image">
+                            <div class="portfolio-placeholder">
+                                <i class="fas fa-paint-brush" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-card-content">
+                            <h3>Brand Identity System</h3>
+                            <p>Complete visual identity and brand system design for a tech startup, including logo, typography, and digital assets.</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">Branding</span>
+                                <span class="portfolio-tag">Visual Identity</span>
+                                <span class="portfolio-tag">Typography</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link" aria-label="View brand guide">
+                                    <i class="fas fa-book icon-spacing" aria-hidden="true"></i>
+                                    Brand Guide
+                                </a>
+                                <a href="#" class="portfolio-link" aria-label="View gallery">
+                                    <i class="fas fa-images icon-spacing" aria-hidden="true"></i>
+                                    Gallery
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="portfolio-card glass-card" data-category="web ai">
+                        <div class="portfolio-card-image">
+                            <div class="portfolio-placeholder">
+                                <i class="fas fa-brain" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="portfolio-card-content">
+                            <h3>Smart Content Generator</h3>
+                            <p>AI-powered content creation tool that generates engaging copy and creative assets using advanced natural language processing.</p>
+                            <div class="portfolio-tags">
+                                <span class="portfolio-tag">NLP</span>
+                                <span class="portfolio-tag">Content AI</span>
+                                <span class="portfolio-tag">API Integration</span>
+                            </div>
+                            <div class="portfolio-links">
+                                <a href="#" class="portfolio-link" aria-label="Try the tool">
+                                    <i class="fas fa-magic icon-spacing" aria-hidden="true"></i>
+                                    Try Tool
+                                </a>
+                                <a href="#" class="portfolio-link" aria-label="View documentation">
+                                    <i class="fas fa-book-open icon-spacing" aria-hidden="true"></i>
+                                    Docs
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact-section" class="section contact-section">
+            <div class="container">
+                <h2 class="section-title">Let's Create Something Amazing</h2>
+                <p class="section-subtitle">
+                    Ready to bring your ideas to life? Let's collaborate and create 
+                    innovative solutions that make a difference.
+                </p>
+
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Get In Touch</h3>
+                        <p>
+                            I'm always excited to work on new projects and collaborate with 
+                            creative minds. Whether you need AI solutions, creative design, 
+                            voice production, or innovative web development, let's discuss 
+                            how we can work together.
+                        </p>
+
+                        <ul class="contact-details">
+                            <li>
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <a href="mailto:Thanatsitt.info@yahoo.co.uk">Thanatsitt.info@yahoo.co.uk</a>
+                            </li>
+                            <li>
+                                <i class="fab fa-linkedin" aria-hidden="true"></i>
+                                <a href="https://linkedin.com/in/thanatsitt-s" target="_blank" rel="noopener noreferrer">
+                                    LinkedIn Profile
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fab fa-github" aria-hidden="true"></i>
+                                <a href="https://github.com/Pigletpeakkung" target="_blank" rel="noopener noreferrer">
+                                    GitHub Portfolio
+                                </a>
+                            </li>
+                            <li>
+                                <i class="fas fa-microphone" aria-hidden="true"></i>
+                                <a href="https://www.voquent.com/voice-actor/2033447" target="_blank" rel="noopener noreferrer">
+                                    Voice Acting Profile
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="contact-availability">
+                            <h4>Current Availability</h4>
+                            <div class="availability-status">
+                                <span class="status-indicator available" aria-label="Available for projects"></span>
+                                <span>Open to new projects and collaborations</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form id="contactForm" class="contact-form glass-card" method="post" action="/contact/submit">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" class="form-control" 
+                                   placeholder="Your full name" required 
+                                   aria-describedby="name-error">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-control" 
+                                   placeholder="your.email@example.com" required
+                                   aria-describedby="email-error">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Company / Organization</label>
+                            <input type="text" id="company" name="company" class="form-control" 
+                                   placeholder="Your company or organization">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="project-type">Project Type</label>
+                            <select id="project-type" name="project_type" class="form-control">
+                                <option value="">Select project type</option>
+                                <option value="ai-ml">AI & Machine Learning</option>
+                                <option value="web-development">Web Development</option>
+                                <option value="creative-design">Creative Design</option>
+                                <option value="voice-production">Voice Production</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <select id="budget" name="budget" class="form-control">
+                                <option value="">Select budget range</option>
+                                <option value="under-5k">Under $5,000</option>
+                                <option value="5k-15k">$5,000 - $15,000</option>
+                                <option value="15k-50k">$15,000 - $50,000</option>
+                                <option value="50k-plus">$50,000+</option>
+                                <option value="discuss">Let's discuss</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="timeline">Project Timeline</label>
+                            <select id="timeline" name="timeline" class="form-control">
+                                <option value="">Select timeline</option>
+                                <option value="asap">ASAP</option>
+                                <option value="1-month">Within 1 month</option>
+                                <option value="3-months">Within 3 months</option>
+                                <option value="6-months">Within 6 months</option>
+                                <option value="flexible">Flexible</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Project Details *</label>
+                            <textarea id="message" name="message" class="form-control" rows="6"
+                                      placeholder="Tell me about your project, goals, and how I can help..."
+                                      required aria-describedby="message-error"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newsletter" name="newsletter" value="yes">
+                                <span class="checkmark"></span>
+                                Subscribe to occasional updates about new projects and insights
+                            </label>
+                        </div>
+
+                        <button type="submit" class="button button--primary" aria-describedby="submit-status">
+                            <i class="fas fa-paper-plane icon-spacing" aria-hidden="true"></i>
+                            Send Message
+                        </button>
+
+                        <div id="submit-status" class="visually-hidden" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -1342,18 +1340,617 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
             integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw=="
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"
             integrity="sha512-LQQDtPAueBcmGXKdOBcMZvyZPEarhLxe9xTrnQjFjrAlkcO93lqwFVtODdNzMTOzZQCWxyosNHWAqOt+mKrI7w=="
             crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
  
-    <!-- Optional polyfills -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/intersection-observer@0.12.0/intersection-observer.min.js"></script> -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script> -->
-</body>
-    
     <!-- Main Application Script -->
     <script src="/assets/js/main.js" defer></script>
     <script src="/assets/js/cookieconsent-config.js" defer></script>
 
+    <!-- Theme Toggle Script -->
+    <script>
+        // Theme Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            
+            // Get saved theme or default to light
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            body.setAttribute('data-theme', savedTheme);
+            
+            // Update icon visibility based on current theme
+            function updateIcons(theme) {
+                if (theme === 'dark') {
+                    moonIcon.classList.add('d-none');
+                    sunIcon.classList.remove('d-none');
+                } else {
+                    moonIcon.classList.remove('d-none');
+                    sunIcon.classList.add('d-none');
+                }
+            }
+            
+            // Initialize icons
+            updateIcons(savedTheme);
+            
+            // Toggle theme on button click
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateIcons(newTheme);
+                
+                // Update aria-label for accessibility
+                themeToggle.setAttribute('aria-label', 
+                    newTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+                );
+                
+                // Optional: Dispatch custom event for other components
+                window.dispatchEvent(new CustomEvent('themeChanged', { 
+                    detail: { theme: newTheme } 
+                }));
+            });
+            
+            // Handle system theme preference changes
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            mediaQuery.addEventListener('change', function(e) {
+                if (!localStorage.getItem('theme')) {
+                    const systemTheme = e.matches ? 'dark' : 'light';
+                    body.setAttribute('data-theme', systemTheme);
+                    updateIcons(systemTheme);
+                }
+            });
+        });
+
+        // Typewriter Effect for Hero Section
+        document.addEventListener('DOMContentLoaded', function() {
+            const typewriter = document.getElementById('typewriter');
+            if (!typewriter) return;
+            
+            const phrases = [
+                'AI Creative Designer',
+                'Digital Innovation Specialist',
+                'Voice Acting Professional',
+                'Creative Technology Expert',
+                'Multilingual Content Creator'
+            ];
+            
+            let phraseIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            
+            function typeEffect() {
+                const currentPhrase = phrases[phraseIndex];
+                
+                if (isDeleting) {
+                    typewriter.textContent = currentPhrase.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typewriter.textContent = currentPhrase.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+                
+                let speed = isDeleting ? 50 : 100;
+                
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    speed = 2000; // Pause at end
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    speed = 500;
+                }
+                
+                setTimeout(typeEffect, speed);
+            }
+            
+            // Start typewriter effect
+            setTimeout(typeEffect, 1000);
+        });
+
+        // Smooth scrolling for navigation links
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('a[href^="#"]');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        const headerHeight = document.querySelector('.navbar').offsetHeight;
+                        const targetPosition = targetSection.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Update active nav link
+                        document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Close mobile menu if open
+                        const navbarCollapse = document.querySelector('.navbar-collapse');
+                        if (navbarCollapse.classList.contains('show')) {
+                            navbarCollapse.classList.remove('show');
+                        }
+                    }
+                });
+            });
+        });
+
+        // Contact Form Enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const submitStatus = document.getElementById('submit-status');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    const originalText = submitButton.innerHTML;
+                    
+                    // Update button state
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin icon-spacing" aria-hidden="true"></i>Sending...';
+                    
+                    // Simulate form submission (replace with actual endpoint)
+                    setTimeout(() => {
+                        submitStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+                        submitStatus.className = 'alert alert-success';
+                        submitStatus.classList.remove('visually-hidden');
+                        
+                        // Reset form
+                        contactForm.reset();
+                        
+                        // Reset button
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = originalText;
+                        
+                        // Hide status after 5 seconds
+                        setTimeout(() => {
+                            submitStatus.classList.add('visually-hidden');
+                        }, 5000);
+                    }, 2000);
+                });
+            }
+        });
+
+        // Newsletter Form Enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const newsletterForm = document.getElementById('newsletterForm');
+            const newsletterStatus = document.getElementById('newsletter-status');
+            
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const email = this.querySelector('input[type="email"]').value;
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    
+                    // Update button state
+                    submitButton.disabled = true;
+                    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i>';
+                    
+                    // Simulate subscription (replace with actual endpoint)
+                    setTimeout(() => {
+                        newsletterStatus.textContent = 'Successfully subscribed to newsletter!';
+                        newsletterStatus.className = 'text-success mt-2';
+                        newsletterStatus.classList.remove('visually-hidden');
+                        
+                        // Reset form
+                        this.reset();
+                        
+                        // Reset button
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<i class="fas fa-arrow-right" aria-hidden="true"></i>';
+                        
+                        // Hide status after 3 seconds
+                        setTimeout(() => {
+                            newsletterStatus.classList.add('visually-hidden');
+                        }, 3000);
+                    }, 1500);
+                });
+            }
+        });
+
+        // Portfolio Filter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.portfolio-filter');
+            const portfolioCards = document.querySelectorAll('.portfolio-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active filter
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                    
+                    // Filter portfolio items
+                    portfolioCards.forEach(card => {
+                        const categories = card.getAttribute('data-category');
+                        
+                        if (filter === 'all' || categories.includes(filter)) {
+                            card.style.display = 'block';
+                            card.style.opacity = '0';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        });
+
+        // Scroll-based navbar background
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('mainNavbar');
+            
+            function updateNavbar() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }
+            
+            window.addEventListener('scroll', updateNavbar);
+            updateNavbar(); // Initial check
+        });
+
+        // Intersection Observer for animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                        
+                        // Animate skill progress bars
+                        if (entry.target.classList.contains('skill-card')) {
+                            const progressBar = entry.target.querySelector('.skill-progress-bar');
+                            if (progressBar) {
+                                const width = progressBar.className.match(/skill-progress-bar--(\d+)/);
+                                if (width) {
+                                    setTimeout(() => {
+                                        progressBar.style.width = width[1] + '%';
+                                    }, 300);
+                                }
+                            }
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements for animation
+            const animateElements = document.querySelectorAll('.skill-card, .portfolio-card, .about-content');
+            animateElements.forEach(el => observer.observe(el));
+        });
+
+                // Performance optimizations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lazy load images when they come into view
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+            
+            // Preload critical resources
+            const criticalLinks = [
+                '/assets/css/main.css',
+                '/assets/js/main.js'
+            ];
+            
+            criticalLinks.forEach(href => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.href = href;
+                link.as = href.endsWith('.css') ? 'style' : 'script';
+                document.head.appendChild(link);
+            });
+        });
+
+        // Error handling for external resources
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK') {
+                console.warn('Failed to load resource:', e.target.src || e.target.href);
+                // Fallback handling could go here
+            }
+        });
+
+        // Service Worker registration for PWA capabilities
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+ // Analytics and tracking (placeholder)
+        function trackEvent(category, action, label) {
+            // Google Analytics or other tracking service
+            if (typeof gtag !== 'undefined') {
+                gtag('event', action, {
+                    'event_category': category,
+                    'event_label': label
+                });
+            }
+        }
+
+        // Track important user interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track CTA button clicks
+            document.querySelectorAll('.button--primary').forEach(button => {
+                button.addEventListener('click', function() {
+                    trackEvent('Engagement', 'CTA Click', this.textContent.trim());
+                });
+            });
+            
+            // Track portfolio item views
+            document.querySelectorAll('.portfolio-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    trackEvent('Portfolio', 'Project View', this.closest('.portfolio-card').querySelector('h3').textContent);
+                });
+            });
+            
+            // Track social media clicks
+            document.querySelectorAll('.hero-section__social-links a, .footer-social a').forEach(link => {
+                link.addEventListener('click', function() {
+                    const platform = this.href.includes('linkedin') ? 'LinkedIn' : 
+                                   this.href.includes('github') ? 'GitHub' : 
+                                   this.href.includes('threads') ? 'Threads' : 
+                                   this.href.includes('voquent') ? 'Voquent' : 
+                                   this.href.includes('mailto') ? 'Email' : 'Social';
+                    trackEvent('Social', 'Click', platform);
+                });
+            });
+        });
+
+        // Accessibility enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Skip link functionality
+            const skipLink = document.querySelector('.skip-link');
+            if (skipLink) {
+                skipLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.focus();
+                        target.scrollIntoView();
+                    }
+                });
+            }
+            
+            // Enhanced keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                // Escape key closes mobile menu
+                if (e.key === 'Escape') {
+                    const navbarCollapse = document.querySelector('.navbar-collapse.show');
+                    if (navbarCollapse) {
+                        navbarCollapse.classList.remove('show');
+                    }
+                }
+                
+                // Tab key navigation enhancement
+                if (e.key === 'Tab') {
+                    document.body.classList.add('keyboard-navigation');
+                }
+            });
+            
+            // Remove keyboard navigation class on mouse use
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('keyboard-navigation');
+            });
+            
+            // ARIA live region updates
+            const liveRegion = document.createElement('div');
+            liveRegion.setAttribute('aria-live', 'polite');
+            liveRegion.setAttribute('aria-atomic', 'true');
+            liveRegion.className = 'visually-hidden';
+            liveRegion.id = 'live-region';
+            document.body.appendChild(liveRegion);
+            
+            // Update live region for dynamic content changes
+            function updateLiveRegion(message) {
+                const region = document.getElementById('live-region');
+                if (region) {
+                    region.textContent = message;
+                }
+            }
+            
+            // Example usage for form submissions
+            window.updateLiveRegion = updateLiveRegion;
+        });
+
+        // Print styles optimization
+        window.addEventListener('beforeprint', function() {
+            document.body.classList.add('printing');
+        });
+        
+        window.addEventListener('afterprint', function() {
+            document.body.classList.remove('printing');
+        });
+    </script>
+
+    <!-- Cookie Consent (GDPR Compliance) -->
+    <div id="cookieConsent" class="cookie-consent" style="display: none;">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <h4>We use cookies</h4>
+                <p>This website uses cookies to enhance your browsing experience and provide personalized content. By continuing to use this site, you consent to our use of cookies.</p>
+            </div>
+            <div class="cookie-actions">
+                <button id="acceptCookies" class="button button--primary">Accept All</button>
+                <button id="declineCookies" class="button button--secondary">Decline</button>
+                <a href="/privacy-policy.html" class="cookie-link">Privacy Policy</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <h2>Thanatsitt</h2>
+            <p>Loading amazing experiences...</p>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top" style="display: none;">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Final initialization script -->
+    <script>
+        // Initialize all components when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loadingScreen');
+                if (loadingScreen) {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }
+            }, 1000);
+            
+            // Back to top button
+            const backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.style.display = 'flex';
+                    } else {
+                        backToTopBtn.style.display = 'none';
+                    }
+                });
+                
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+            
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookieConsent') && cookieConsent) {
+                setTimeout(() => {
+                    cookieConsent.style.display = 'block';
+                }, 2000);
+            }
+            
+            if (acceptCookies) {
+                acceptCookies.addEventListener('click', function() {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    cookieConsent.style.display = 'none';
+                    // Initialize analytics and tracking
+                    initializeTracking();
+                });
+            }
+            
+            if (declineCookies) {
+                declineCookies.addEventListener('click', function() {
+                    localStorage.setItem('cookieConsent', 'declined');
+                    cookieConsent.style.display = 'none';
+                });
+            }
+            
+            // Initialize tracking if already consented
+            if (localStorage.getItem('cookieConsent') === 'accepted') {
+                initializeTracking();
+            }
+        });
+        
+        function initializeTracking() {
+            // Initialize Google Analytics, Facebook Pixel, etc.
+            console.log('Tracking initialized');
+        }
+        
+        // Performance monitoring
+        window.addEventListener('load', function() {
+            // Log performance metrics
+            const perfData = performance.getEntriesByType('navigation')[0];
+            console.log('Page load time:', perfData.loadEventEnd - perfData.loadEventStart + 'ms');
+            
+            // Report to analytics if available
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'timing_complete', {
+                    'name': 'load',
+                    'value': Math.round(perfData.loadEventEnd - perfData.loadEventStart)
+                });
+            }
+        });
+    </script>
+
+    <!-- Structured Data for Rich Snippets -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Thanatsitt Santisamranwilai Portfolio",
+        "url": "https://pegearts.com",
+        "logo": "https://pegearts.com/assets/images/logo.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "",
+            "contactType": "customer service",
+            "email": "Thanatsitt.info@yahoo.co.uk"
+        },
+        "sameAs": [
+            "https://linkedin.com/in/thanatsitt-s",
+            "https://github.com/Pigletpeakkung",
+            "https://www.threads.net/@thanatsitt.s",
+            "https://www.voquent.com/voice-actor/2033447"
+        ]
+    }
+    </script>
 </body>
 </html>
+               
