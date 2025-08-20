@@ -28,7 +28,7 @@
         <applicationName>Thanatsitt Portfolio</applicationName>
         
         <!-- Tooltip text for pinned sites -->
-        <tooltip>Visit Thanatsitt's Portfolio - Full-Stack Developer & UI/UX Designer</tooltip>
+        <tooltip>Visit Thanatsitt's Portfolio - Full-Stack Developer | UI/UX Designer</tooltip>
         
         <!-- Start URL when launched from Windows tile -->
         <startURL>https://thanatsitt.com</startURL>
