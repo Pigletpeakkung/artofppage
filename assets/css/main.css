@@ -1783,3 +1783,20 @@ select.form-control {
     background: var(--primary-color);
     border: none;
     border-radius: var(--borde
+                       }
+/* Hero section positioning for moon */
+.hero {
+    position: relative; /* Ensure moon positions correctly */
+    overflow: hidden; /* Prevent moon from overflowing */
+}
+
+/* Make sure moon appears above other elements but below text */
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Optional: Add moon glow effect to hero */
+.hero.has-moon {
+    background: radial-gradient(ellipse at 85% 25%, rgba(248, 249, 250, 0.1) 0%, transparent 50%);
+}
