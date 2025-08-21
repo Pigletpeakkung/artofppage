@@ -96,7 +96,7 @@ const EXTERNAL_CACHE_URLS = [
     // GSAP (matching your HTML)
     'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
-    
+    'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js',
     // AOS (matching your HTML)
     'https://unpkg.com/aos@2.3.1/dist/aos.css',
     'https://unpkg.com/aos@2.3.1/dist/aos.js',
