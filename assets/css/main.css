@@ -1590,7 +1590,6 @@ select.form-control {
     align-items: flex-start;
     gap: var(--space-sm);
     cursor: pointer;
-    user-select: none;
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -1782,7 +1781,7 @@ select.form-control {
     padding: var(--space-sm) var(--space-md);
     background: var(--primary-color);
     border: none;
-    border-radius: var(--borde
+    border-radius: var(--borde);
                        }
 /* Hero section positioning for moon */
 .hero {
