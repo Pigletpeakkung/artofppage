@@ -1,105 +1,144 @@
-// ===== ENHANCED SERVICE WORKER FOR THANATSITT PORTFOLIO 2025 =====
+// sw.js - Service Worker for Thanatsitt Portfolio PWA
+// Version: 2.1.0
+// Author: Thanatsitt Santisamranwilai
+// Updated: 2025-08-22
 
-const CACHE_NAME = 'thanatsitt-portfolio-v2.0.0';
-const STATIC_CACHE = 'thanatsitt-static-v2.0.0';
-const DYNAMIC_CACHE = 'thanatsitt-dynamic-v2.0.0';
-const IMAGE_CACHE = 'thanatsitt-images-v2.0.0';
+const CACHE_NAME = 'thanatsitt-portfolio-v2.1.0';
+const CACHE_VERSION = '2.1.0';
+const APP_PREFIX = 'thanatsitt-pwa';
 
-// Assets to cache immediately on install
-const CORE_ASSETS = [
+// Define caching strategies for different resource types
+const CACHE_STRATEGIES = {
+    // Critical resources - cache first, update in background
+    critical: [
+        '/',
+        '/index.html',
+        '/manifest.json',
+        'assets/images/data/profile/1755844218313.jpg',
+        'assets/demo/voice/intro/Thann_Intro.wav'
+    ],
+    
+    // Static assets - cache with versioning
+    static: [
+        // CSS files
+        '/assets/css/styles.css',
+        '/assets/css/styles.min.css',
+        
+        // JavaScript files
+        '/assets/js/main.js',
+        '/assets/js/app.js',
+        '/assets/js/bundle.min.js',
+        
+        // Images
+        '/assets/images/',
+        '/assets/icons/',
+        
+        // Fonts
+        '/assets/fonts/',
+        
+        // Offline page
+        '/offline.html'
+    ],
+    
+    // CDN resources - network first with cache fallback
+    cdn: [
+        'https://cdn.jsdelivr.net/',
+        'https://cdnjs.cloudflare.com/',
+        'https://fonts.googleapis.com/',
+        'https://fonts.gstatic.com/',
+        'https://unpkg.com/'
+    ],
+    
+    // API or dynamic content - network only
+    dynamic: [
+        '/api/',
+        '/auth/',
+        '/analytics/'
+    ]
+};
+
+// Resources to precache on install
+const PRECACHE_RESOURCES = [
     '/',
     '/index.html',
     '/manifest.json',
-    '/assets/css/main.css',
-    '/assets/js/main.js',
-    '/assets/images/data/profile/1755844218313.jpg',
-    '/favicon.ico',
-    '/apple-touch-icon.png'
+    '/offline.html',
+    'assets/images/data/profile/1755844218313.jpg',
+    // Fallback for GitHub URLs
+    'https://github.com/Pigletpeakkung/artofppage/blob/dc1ca7a25990549cd908472ee93d5a3330597cd2/assets/images/data/profile/1755844218313.jpg',
+    'https://github.com/Pigletpeakkung/artofppage/blob/f7b2577e5dc8ae015893169968bc469f6528db5c/assets/demo/voice/intro/Thann_Intro.wav'
 ];
 
-// External resources to cache
-const EXTERNAL_ASSETS = [
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap'
-];
-
-// Assets that should be cached on demand
-const CACHE_ON_DEMAND = [
-    '/assets/images/',
-    '/assets/audio/',
-    '/assets/fonts/',
-    '/assets/demo/'
-];
-
-// Network timeout for fallback
-const NETWORK_TIMEOUT = 3000;
-
-// Install event - Cache core assets
+// Install event - precache critical resources
 self.addEventListener('install', event => {
-    console.log('🚀 Service Worker installing...');
+    console.log('🚀 Service Worker installing...', CACHE_VERSION);
     
     event.waitUntil(
-        Promise.all([
-            // Cache core assets
-            caches.open(STATIC_CACHE).then(cache => {
-                console.log('📦 Caching core assets...');
-                return cache.addAll(CORE_ASSETS);
-            }),
-            
-            // Cache external resources with error handling
-            caches.open(STATIC_CACHE).then(cache => {
-                console.log('🌐 Caching external resources...');
-                return Promise.allSettled(
-                    EXTERNAL_ASSETS.map(url => 
-                        cache.add(url).catch(err => {
-                            console.warn(`Failed to cache ${url}:`, err);
-                            return null;
-                        })
-                    )
-                );
-            })
-        ]).then(() => {
-            console.log('✅ Service Worker installation complete');
-            return self.skipWaiting();
-        }).catch(err => {
-            console.error('❌ Service Worker installation failed:', err);
-        })
+        (async () => {
+            try {
+                const cache = await caches.open(CACHE_NAME);
+                
+                // Precache critical resources
+                await cache.addAll(PRECACHE_RESOURCES.map(url => new Request(url, {
+                    cache: 'reload' // Force fresh download
+                })));
+                
+                console.log('✅ Critical resources cached successfully');
+                
+                // Skip waiting to activate immediately
+                self.skipWaiting();
+                
+            } catch (error) {
+                console.error('❌ Failed to cache resources during install:', error);
+            }
+        })()
     );
 });
 
-// Activate event - Clean up old caches
+// Activate event - clean up old caches
 self.addEventListener('activate', event => {
-    console.log('🔄 Service Worker activating...');
+    console.log('🔄 Service Worker activating...', CACHE_VERSION);
     
     event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    // Delete old versions of caches
-                    if (cacheName !== STATIC_CACHE && 
-                        cacheName !== DYNAMIC_CACHE && 
-                        cacheName !== IMAGE_CACHE &&
-                        (cacheName.startsWith('thanatsitt-') || cacheName.startsWith('workbox-'))) {
-                        console.log(`🗑️ Deleting old cache: ${cacheName}`);
+        (async () => {
+            try {
+                // Take control of all clients immediately
+                await self.clients.claim();
+                
+                // Clean up old caches
+                const cacheNames = await caches.keys();
+                const oldCaches = cacheNames.filter(name => 
+                    name.startsWith(APP_PREFIX) && name !== CACHE_NAME
+                );
+                
+                await Promise.all(
+                    oldCaches.map(cacheName => {
+                        console.log('🗑️ Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
-                    }
-                })
-            );
-        }).then(() => {
-            console.log('✅ Service Worker activation complete');
-            return self.clients.claim();
-        })
+                    })
+                );
+                
+                console.log('✅ Service Worker activated and old caches cleaned');
+                
+                // Notify all clients about the update
+                const clients = await self.clients.matchAll();
+                clients.forEach(client => {
+                    client.postMessage({
+                        type: 'SW_ACTIVATED',
+                        version: CACHE_VERSION
+                    });
+                });
+                
+            } catch (error) {
+                console.error('❌ Error during activation:', error);
+            }
+        })()
     );
 });
 
-// Fetch event - Smart caching strategy
+// Fetch event - implement caching strategies
 self.addEventListener('fetch', event => {
-    const { request } = event;
+    const request = event.request;
     const url = new URL(request.url);
     
     // Skip non-GET requests
@@ -107,400 +146,347 @@ self.addEventListener('fetch', event => {
         return;
     }
     
-    // Skip chrome-extension and other non-http requests
-    if (!request.url.startsWith('http')) {
+    // Skip chrome-extension and other non-http(s) requests
+    if (!url.protocol.startsWith('http')) {
         return;
     }
     
-    // Different strategies for different types of requests
-    if (isNavigationRequest(request)) {
-        // HTML pages - Network first with cache fallback
-        event.respondWith(handleNavigationRequest(request));
-    } else if (isStaticAsset(request)) {
-        // CSS, JS, Fonts - Cache first with network fallback
-        event.respondWith(handleStaticAsset(request));
-    } else if (isImageRequest(request)) {
-        // Images - Cache first with network fallback and optimization
-        event.respondWith(handleImageRequest(request));
-    } else if (isExternalResource(request)) {
-        // External CDN resources - Cache first with network fallback
-        event.respondWith(handleExternalResource(request));
-    } else {
-        // Everything else - Network first with cache fallback
-        event.respondWith(handleGenericRequest(request));
-    }
+    event.respondWith(handleFetch(request));
 });
 
-// Helper Functions
-
-function isNavigationRequest(request) {
-    return request.mode === 'navigate' || 
-           (request.method === 'GET' && request.headers.get('accept').includes('text/html'));
-}
-
-function isStaticAsset(request) {
+// Main fetch handler with different strategies
+async function handleFetch(request) {
     const url = new URL(request.url);
-    return url.pathname.match(/\.(css|js|woff|woff2|ttf|eot)$/i);
-}
-
-function isImageRequest(request) {
-    const url = new URL(request.url);
-    return url.pathname.match(/\.(jpg|jpeg|png|gif|webp|svg|ico)$/i);
-}
-
-function isExternalResource(request) {
-    const url = new URL(request.url);
-    return !url.hostname.includes('pegearts.com') && 
-           !url.hostname.includes('localhost') &&
-           (url.hostname.includes('googleapis.com') || 
-            url.hostname.includes('cdnjs.cloudflare.com') ||
-            url.hostname.includes('cdn.jsdelivr.net') ||
-            url.hostname.includes('unpkg.com'));
-}
-
-// Navigation Request Handler (Network First)
-async function handleNavigationRequest(request) {
+    
     try {
-        // Try network first with timeout
-        const networkResponse = await Promise.race([
-            fetch(request),
-            new Promise((_, reject) => 
-                setTimeout(() => reject(new Error('Network timeout')), NETWORK_TIMEOUT)
-            )
-        ]);
-        
-        // Cache successful responses
-        if (networkResponse.ok) {
-            const cache = await caches.open(DYNAMIC_CACHE);
-            cache.put(request, networkResponse.clone());
+        // Strategy 1: Critical resources - Cache First
+        if (shouldUseCacheFirst(url)) {
+            return await cacheFirst(request);
         }
         
-        return networkResponse;
-    } catch (err) {
-        console.log('🌐 Network failed, trying cache for:', request.url);
-        
-        // Fallback to cache
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
+        // Strategy 2: CDN resources - Stale While Revalidate
+        if (shouldUseStaleWhileRevalidate(url)) {
+            return await staleWhileRevalidate(request);
         }
         
-        // Ultimate fallback - offline page or main page
-        const offlineResponse = await caches.match('/') || 
-                              await caches.match('/index.html');
-        if (offlineResponse) {
-            return offlineResponse;
+        // Strategy 3: Dynamic content - Network First
+        if (shouldUseNetworkFirst(url)) {
+            return await networkFirst(request);
         }
         
-        // Return a basic offline response
-        return new Response(
-            `<!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Offline - Thanatsitt Portfolio</title>
-                <style>
-                    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-                           display: flex; align-items: center; justify-content: center; 
-                           min-height: 100vh; margin: 0; background: #f9fafb; color: #111827; }
-                    .offline-message { text-align: center; max-width: 400px; }
-                    h1 { color: #6366f1; margin-bottom: 1rem; }
-                    p { margin-bottom: 1.5rem; line-height: 1.6; }
-                    button { background: #6366f1; color: white; border: none; padding: 0.75rem 1.5rem; 
-                            border-radius: 0.5rem; cursor: pointer; font-size: 1rem; }
-                    button:hover { background: #4f46e5; }
-                </style>
-            </head>
-            <body>
-                <div class="offline-message">
-                    <h1>You're Offline</h1>
-                    <p>It looks like you're not connected to the internet. Please check your connection and try again.</p>
-                    <button onclick="window.location.reload()">Try Again</button>
-                </div>
-            </body>
-            </html>`,
-            {
-                status: 200,
-                statusText: 'OK',
-                headers: { 'Content-Type': 'text/html' }
+        // Strategy 4: Static assets - Cache First with fallback
+        return await cacheFirstWithFallback(request);
+        
+    } catch (error) {
+        console.error('Fetch failed:', error);
+        return await handleFetchError(request);
+    }
+}
+
+// Cache First strategy - for critical/static resources
+async function cacheFirst(request) {
+    const cache = await caches.open(CACHE_NAME);
+    const cachedResponse = await cache.match(request);
+    
+    if (cachedResponse) {
+        // Update cache in background for next time
+        fetch(request).then(response => {
+            if (response.ok) {
+                cache.put(request, response.clone());
             }
-        );
+        }).catch(() => {}); // Silent fail for background updates
+        
+        return cachedResponse;
     }
+    
+    // Not in cache, fetch from network
+    const response = await fetch(request);
+    if (response.ok) {
+        cache.put(request, response.clone());
+    }
+    return response;
 }
 
-// Static Asset Handler (Cache First)
-async function handleStaticAsset(request) {
+// Network First strategy - for dynamic content
+async function networkFirst(request) {
+    const cache = await caches.open(CACHE_NAME);
+    
     try {
-        // Check cache first
-        const cachedResponse = await caches.match(request);
+        const response = await fetch(request);
+        if (response.ok) {
+            cache.put(request, response.clone());
+        }
+        return response;
+    } catch (error) {
+        // Network failed, try cache
+        const cachedResponse = await cache.match(request);
         if (cachedResponse) {
             return cachedResponse;
         }
-        
-        // Fetch from network
-        const networkResponse = await fetch(request);
-        
-        // Cache successful responses
-        if (networkResponse.ok) {
-            const cache = await caches.open(STATIC_CACHE);
-            cache.put(request, networkResponse.clone());
-        }
-        
-        return networkResponse;
-    } catch (err) {
-        console.error('❌ Failed to fetch static asset:', request.url, err);
-        throw err;
+        throw error;
     }
 }
 
-// Image Request Handler (Cache First with Optimization)
-async function handleImageRequest(request) {
+// Stale While Revalidate strategy - for CDN resources
+async function staleWhileRevalidate(request) {
+    const cache = await caches.open(CACHE_NAME);
+    const cachedResponse = await cache.match(request);
+    
+    // Always fetch in background to update cache
+    const fetchPromise = fetch(request).then(response => {
+        if (response.ok) {
+            cache.put(request, response.clone());
+        }
+        return response;
+    }).catch(() => {}); // Silent fail
+    
+    // Return cached version immediately, or wait for network
+    return cachedResponse || fetchPromise;
+}
+
+// Cache First with fallback strategy
+async function cacheFirstWithFallback(request) {
+    const cache = await caches.open(CACHE_NAME);
+    const cachedResponse = await cache.match(request);
+    
+    if (cachedResponse) {
+        return cachedResponse;
+    }
+    
     try {
-        // Check cache first
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
+        const response = await fetch(request);
+        if (response.ok) {
+            cache.put(request, response.clone());
         }
-        
-        // Fetch from network
-        const networkResponse = await fetch(request);
-        
-        // Cache successful responses
-        if (networkResponse.ok) {
-            const cache = await caches.open(IMAGE_CACHE);
-            
-            // Clone response for caching
-            const responseToCache = networkResponse.clone();
-            
-            // Cache with size limit check
-            const contentLength = responseToCache.headers.get('content-length');
-            const maxSize = 5 * 1024 * 1024; // 5MB limit
-            
-            if (!contentLength || parseInt(contentLength) < maxSize) {
-                cache.put(request, responseToCache);
-            }
+        return response;
+    } catch (error) {
+        // Return offline page for navigation requests
+        if (request.mode === 'navigate') {
+            return await cache.match('/offline.html') || 
+                   new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
         }
-        
-        return networkResponse;
-    } catch (err) {
-        console.error('❌ Failed to fetch image:', request.url, err);
-        
-        // Return placeholder image for failed image requests
-        return new Response(
-            `<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
-                <rect width="100%" height="100%" fill="#f3f4f6"/>
-                <text x="50%" y="50%" text-anchor="middle" fill="#9ca3af" font-family="Arial, sans-serif" font-size="16">
-                    Image unavailable
-                </text>
-            </svg>`,
-            {
-                status: 200,
-                statusText: 'OK',
-                headers: { 'Content-Type': 'image/svg+xml' }
-            }
-        );
+        throw error;
     }
 }
 
-// External Resource Handler (Cache First)
-async function handleExternalResource(request) {
-    try {
-        // Check cache first
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        
-        // Fetch from network with shorter timeout for external resources
-        const networkResponse = await Promise.race([
-            fetch(request),
-            new Promise((_, reject) => 
-                setTimeout(() => reject(new Error('External resource timeout')), 2000)
-            )
-        ]);
-        
-        // Cache successful responses
-        if (networkResponse.ok) {
-            const cache = await caches.open(STATIC_CACHE);
-            cache.put(request, networkResponse.clone());
-        }
-        
-        return networkResponse;
-    } catch (err) {
-        console.warn('⚠️ External resource failed:', request.url);
-        
-        // For CSS/JS external resources, return empty response to prevent page breaking
-        if (request.url.includes('.css')) {
-            return new Response('/* External CSS unavailable */', {
-                status: 200,
-                statusText: 'OK',
-                headers: { 'Content-Type': 'text/css' }
-            });
-        } else if (request.url.includes('.js')) {
-            return new Response('// External JS unavailable', {
-                status: 200,
-                statusText: 'OK',
-                headers: { 'Content-Type': 'application/javascript' }
-            });
-        }
-        
-        throw err;
+// Error handler for failed fetches
+async function handleFetchError(request) {
+    const cache = await caches.open(CACHE_NAME);
+    
+    // Try to find any cached version
+    const cachedResponse = await cache.match(request);
+    if (cachedResponse) {
+        return cachedResponse;
     }
+    
+    // For navigation requests, show offline page
+    if (request.mode === 'navigate') {
+        const offlinePage = await cache.match('/offline.html');
+        if (offlinePage) {
+            return offlinePage;
+        }
+    }
+    
+    // Return a basic offline response
+    return new Response(
+        JSON.stringify({
+            error: 'Offline',
+            message: 'This content is not available offline'
+        }),
+        {
+            status: 503,
+            statusText: 'Service Unavailable',
+            headers: { 'Content-Type': 'application/json' }
+        }
+    );
 }
 
-// Generic Request Handler (Network First)
-async function handleGenericRequest(request) {
-    try {
-        const networkResponse = await fetch(request);
-        
-        // Cache successful GET responses
-        if (networkResponse.ok && request.method === 'GET') {
-            const cache = await caches.open(DYNAMIC_CACHE);
-            cache.put(request, networkResponse.clone());
-        }
-        
-        return networkResponse;
-    } catch (err) {
-        // Fallback to cache
-        const cachedResponse = await caches.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        
-        throw err;
-    }
+// Helper functions to determine caching strategy
+function shouldUseCacheFirst(url) {
+    return CACHE_STRATEGIES.critical.some(pattern => 
+        url.pathname === pattern || url.pathname.startsWith(pattern)
+    ) || CACHE_STRATEGIES.static.some(pattern =>
+        url.pathname.includes(pattern)
+    );
+}
+
+function shouldUseStaleWhileRevalidate(url) {
+    return CACHE_STRATEGIES.cdn.some(pattern => 
+        url.origin.includes(pattern.replace('https://', '').replace('/', ''))
+    );
+}
+
+function shouldUseNetworkFirst(url) {
+    return CACHE_STRATEGIES.dynamic.some(pattern => 
+        url.pathname.startsWith(pattern)
+    );
 }
 
 // Background Sync for offline actions
 self.addEventListener('sync', event => {
+    console.log('🔄 Background sync triggered:', event.tag);
+    
     if (event.tag === 'contact-form') {
-        event.waitUntil(syncContactForm());
+        event.waitUntil(handleContactFormSync());
+    }
+    
+    if (event.tag === 'analytics') {
+        event.waitUntil(handleAnalyticsSync());
     }
 });
 
-async function syncContactForm() {
+// Handle contact form submissions when back online
+async function handleContactFormSync() {
     try {
-        // Handle offline form submissions when back online
-        const forms = await getOfflineFormSubmissions();
-        for (const form of forms) {
-            await submitContactForm(form);
-        }
-        await clearOfflineFormSubmissions();
-    } catch (err) {
-        console.error('❌ Failed to sync contact forms:', err);
+        // Retrieve offline contact form submissions from IndexedDB
+        // This would integrate with your contact form implementation
+        console.log('📧 Syncing offline contact form submissions...');
+        
+        // Implementation would go here based on your form structure
+        
+    } catch (error) {
+        console.error('❌ Failed to sync contact forms:', error);
     }
 }
 
-// Push notification handler
-self.addEventListener('push', event => {
-    if (event.data) {
-        const data = event.data.json();
-        const options = {
-            body: data.body,
-            icon: '/assets/icons/icon-192x192.png',
-            badge: '/assets/icons/icon-72x72.png',
-            tag: 'portfolio-notification',
-            requireInteraction: true,
-            actions: [
-                {
-                    action: 'view',
-                    title: 'View Portfolio'
-                },
-                {
-                    action: 'close',
-                    title: 'Close'
-                }
-            ]
-        };
+// Handle analytics data when back online
+async function handleAnalyticsSync() {
+    try {
+        console.log('📊 Syncing offline analytics data...');
         
-        event.waitUntil(
-            self.registration.showNotification(data.title, options)
-        );
+        // Implementation for analytics sync would go here
+        
+    } catch (error) {
+        console.error('❌ Failed to sync analytics:', error);
     }
+}
+
+// Push notification handling
+self.addEventListener('push', event => {
+    console.log('📱 Push notification received');
+    
+    const options = {
+        body: event.data ? event.data.text() : 'New update available!',
+        icon: '/assets/icons/icon-192.png',
+        badge: '/assets/icons/badge-72.png',
+        tag: 'portfolio-update',
+        data: {
+            url: '/'
+        },
+        actions: [
+            {
+                action: 'view',
+                title: 'View Portfolio',
+                icon: '/assets/icons/view-icon.png'
+            },
+            {
+                action: 'dismiss',
+                title: 'Dismiss',
+                icon: '/assets/icons/dismiss-icon.png'
+            }
+        ]
+    };
+    
+    event.waitUntil(
+        self.registration.showNotification('Thanatsitt Portfolio', options)
+    );
 });
 
-// Notification click handler
+// Handle notification clicks
 self.addEventListener('notificationclick', event => {
+    console.log('🔔 Notification clicked:', event.action);
+    
     event.notification.close();
     
     if (event.action === 'view') {
         event.waitUntil(
-            clients.openWindow('/')
+            clients.openWindow(event.notification.data.url || '/')
         );
     }
 });
 
-// Periodic background sync for updates
-self.addEventListener('periodicsync', event => {
-    if (event.tag === 'portfolio-update') {
-        event.waitUntil(checkForUpdates());
+// Message handling from main thread
+self.addEventListener('message', event => {
+    console.log('💬 Message received in SW:', event.data);
+    
+    if (event.data && event.data.type) {
+        switch (event.data.type) {
+            case 'SKIP_WAITING':
+                self.skipWaiting();
+                break;
+                
+            case 'CACHE_URLS':
+                event.waitUntil(cacheUrls(event.data.urls));
+                break;
+                
+            case 'GET_VERSION':
+                event.ports[0].postMessage({
+                    type: 'VERSION',
+                    version: CACHE_VERSION
+                });
+                break;
+                
+            default:
+                console.log('Unknown message type:', event.data.type);
+        }
     }
 });
 
-async function checkForUpdates() {
+// Cache additional URLs on demand
+async function cacheUrls(urls) {
     try {
-        // Check for portfolio updates
-        const response = await fetch('/api/version');
-        const data = await response.json();
+        const cache = await caches.open(CACHE_NAME);
+        await cache.addAll(urls);
+        console.log('✅ Additional URLs cached:', urls);
+    } catch (error) {
+        console.error('❌ Failed to cache additional URLs:', error);
+    }
+}
+
+// Periodic cleanup of old caches and data
+self.addEventListener('periodicsync', event => {
+    if (event.tag === 'cleanup') {
+        event.waitUntil(performCleanup());
+    }
+});
+
+async function performCleanup() {
+    try {
+        console.log('🧹 Performing periodic cleanup...');
         
-        if (data.version !== CACHE_NAME) {
-            // Notify about updates
-            self.registration.showNotification('Portfolio Updated!', {
-                body: 'New features and content are available.',
-                icon: '/assets/icons/icon-192x192.png',
-                tag: 'update-notification'
-            });
-        }
-    } catch (err) {
-        console.log('Update check failed:', err);
+        // Clean up old caches
+        const cacheNames = await caches.keys();
+        const oldCaches = cacheNames.filter(name => 
+            name.startsWith(APP_PREFIX) && name !== CACHE_NAME
+        );
+        
+        await Promise.all(oldCaches.map(name => caches.delete(name)));
+        
+        console.log('✅ Periodic cleanup completed');
+    } catch (error) {
+        console.error('❌ Cleanup failed:', error);
     }
 }
 
-// Cache management - cleanup old entries
-async function cleanupCaches() {
-    const cacheNames = await caches.keys();
-    
-    for (const cacheName of cacheNames) {
-        if (cacheName.startsWith('thanatsitt-')) {
-            const cache = await caches.open(cacheName);
-            const requests = await cache.keys();
-            
-            // Remove entries older than 30 days
-            const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
-            
-            for (const request of requests) {
-                const response = await cache.match(request);
-                const dateHeader = response.headers.get('date');
-                
-                if (dateHeader && new Date(dateHeader).getTime() < thirtyDaysAgo) {
-                    await cache.delete(request);
-                }
-            }
-        }
-    }
-}
+// Global error handler
+self.addEventListener('error', event => {
+    console.error('🚨 Service Worker error:', event.error);
+});
 
-// Run cleanup periodically
-setInterval(cleanupCaches, 24 * 60 * 60 * 1000); // Daily cleanup
+self.addEventListener('unhandledrejection', event => {
+    console.error('🚨 Unhandled promise rejection in SW:', event.reason);
+});
 
-// Helper functions for IndexedDB operations (for offline form storage)
-async function getOfflineFormSubmissions() {
-    // Implementation would depend on your IndexedDB setup
-    return [];
-}
-
-async function submitContactForm(formData) {
-    // Implementation for submitting cached form data
-    return fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-    });
-}
-
-async function clearOfflineFormSubmissions() {
-    // Clear stored offline submissions after successful sync
-}
-
-console.log('🎯 Service Worker loaded successfully - Thanatsitt Portfolio v2.0.0');
+// Log service worker version on startup
+console.log(`
+🚀 Thanatsitt Portfolio Service Worker v${CACHE_VERSION}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📧 Contact: thanattsitt.info@yahoo.co.uk
+🌐 Website: https://pegearts.com
+📂 Repository: https://github.com/Pigletpeakkung/artofppage
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ Features: Offline Support, Background Sync, Push Notifications
+⚡ Caching: Multi-strategy approach for optimal performance
+🔄 Version: ${CACHE_VERSION}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`);
