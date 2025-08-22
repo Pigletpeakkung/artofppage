@@ -7,7 +7,7 @@
   "homepage": "https://pegearts.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/portfolio.git"
+    "url": "https://github.com/Pigletpeakkung/artofppage.git"
   },
   "scripts": {
   "start": "live-server --port=3000 --open=/",
