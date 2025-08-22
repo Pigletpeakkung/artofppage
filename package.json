@@ -1,135 +1,58 @@
 {
   "name": "thanatsitt-portfolio",
-  "version": "2.0.0",
-  "description": "AI Creative Designer & Digital Innovator Portfolio - Modern HTML5 portfolio showcasing cutting-edge projects in AI, creative design, and digital innovation",
-  "main": "index.html",
+  "version": "2.1.0",
+  "description": "Creative technology, and Multilingual content creation | Thanatsitt",
+  "author": "Thanatsitt Santisamranwilai",
+  "license": "MIT",
+  "homepage": "https://pegearts.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pigletpeakkung/artofppage.git"
+  },
   "scripts": {
-    "dev": "live-server --port=3000 --open=/index.html",
-    "start": "npm run dev",
-    "build": "npm run minify-css && npm run minify-js && npm run optimize-images",
-    "serve": "http-server -p 8080 -c-1",
-    "preview": "npm run build && npm run serve",
-    "minify-css": "cleancss -o assets/css/main.min.css assets/css/main.css",
-    "minify-js": "terser assets/js/main.js -o assets/js/main.min.js --compress --mangle",
-    "optimize-images": "imagemin assets/images/**/*.{jpg,png,svg} --out-dir=assets/images/optimized",
+    "start": "live-server --port=3000 --open=/",
+    "dev": "live-server --port=3000 --watch=assets",
+    "minify-css": "cleancss -o assets/css/styles.min.css assets/css/*.css",
+    "minify-js": "terser assets/js/main.js assets/js/app.js -o assets/js/bundle.min.js",
+    "build": "npm run minify-css && npm run minify-js && mkdir -p public && cp index.html public/ && cp -r assets public/",
     "lint": "eslint assets/js/*.js",
-    "lint:fix": "eslint assets/js/*.js --fix",
-    "format": "prettier --write \"**/*.{html,css,js,json,md}\"",
-    "validate-html": "html-validate index.html",
-    "lighthouse": "lighthouse http://localhost:3000 --output html --output-path ./reports/lighthouse-report.html",
-    "test:performance": "npm run lighthouse",
-    "clean": "rimraf dist reports",
-    "deploy": "npm run build && gh-pages -d .",
-    "pwa-check": "pwa-asset-generator assets/images/logo.png ./assets/icons --manifest ./manifest.json",
-    "compress": "gzip-size assets/css/main.css && gzip-size assets/js/main.js"
+    "format": "prettier --write \"**/*.{html,css,js,json}\"",
+    "deploy": "gh-pages -d .",
+    "validate-html": "html-validate *.html",
+    "optimize-images": "imagemin assets/images/**/* --out-dir=assets/images/optimized",
+    "test": "npm run lint && npm run validate-html",
+    "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "terser": "^5.16.0",
+    "clean-css-cli": "^5.6.0",
+    "gh-pages": "^4.0.0",
+    "prettier": "^3.0.0",
+    "eslint": "^8.50.0",
+    "html-validate": "^7.15.0",
+    "imagemin": "^8.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "lighthouse": "^10.4.0"
   },
   "keywords": [
     "portfolio",
-    "ai-designer",
+    "ai-creative-designer",
     "digital-innovation",
     "machine-learning",
     "voice-acting",
-    "full-stack",
-    "pwa",
-    "html5",
-    "modern-web",
-    "creative-technology",
-    "thanatsitt-santisamranwilai"
+    "full-stack-developer",
+    "web-development",
+    "javascript",
+    "react",
+    "nodejs",
+    "multilingual-content",
+    "pwa"
   ],
-  "author": {
-    "name": "Thanatsitt Santisamranwilai",
-    "email": "thanattsitt.info@yahoo.co.uk",
-    "url": "https://pegearts.com"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Pigletpeakkung/portfolio.git"
-  },
-  "homepage": "https://pegearts.com",
-  "devDependencies": {
-    "@eslint/js": "^9.15.0",
-    "clean-css-cli": "^5.6.3",
-    "eslint": "^9.15.0",
-    "gh-pages": "^6.1.1",
-    "gzip-size-cli": "^5.1.0",
-    "html-validate": "^8.24.1",
-    "http-server": "^14.1.1",
-    "imagemin-cli": "^8.0.0",
-    "lighthouse": "^12.2.1",
-    "live-server": "^1.2.2",
-    "prettier": "^3.3.3",
-    "pwa-asset-generator": "^6.3.2",
-    "rimraf": "^6.0.1",
-    "terser": "^5.36.0"
-  },
-  "dependencies": {
-    "bootstrap": "^5.3.3",
-    "aos": "^2.3.4",
-    "typed.js": "^2.1.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead",
-    "not ie 11"
-  ],
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=8.0.0"
-  },
-  "config": {
-    "port": 3000,
-    "host": "localhost"
-  },
-  "pwa": {
-    "name": "Thanatsitt Portfolio",
-    "short_name": "Thanatsitt",
-    "description": "AI Creative Designer & Digital Innovator Portfolio",
-    "theme_color": "#6366F1",
-    "background_color": "#F9FAFB",
-    "display": "standalone",
-    "orientation": "portrait-primary",
-    "start_url": "/",
-    "scope": "/"
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es2021": true
-    },
-    "extends": [
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2022,
-      "sourceType": "module"
-    },
-    "rules": {
-      "no-unused-vars": "warn",
-      "no-console": "warn",
-      "prefer-const": "error",
-      "no-var": "error"
-    }
-  },
-  "prettier": {
-    "semi": true,
-    "trailingComma": "es5",
-    "singleQuote": true,
-    "printWidth": 80,
-    "tabWidth": 2,
-    "useTabs": false
-  },
-  "lighthouse": {
-    "extends": "lighthouse:default",
-    "settings": {
-      "onlyCategories": [
-        "performance",
-        "accessibility",
-        "best-practices",
-        "seo",
-        "pwa"
-      ]
-    }
-  }
+    "not dead"
+  ]
 }
