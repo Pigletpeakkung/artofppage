@@ -1,7 +1,7 @@
 {
   "name": "thanatsitt-portfolio",
   "version": "2.1.0",
-  "description": "Ceative technology, and Multilingual content creation | Thanattsitt",
+  "description": "Creative technology, and Multilingual content creation | Thanatsitt",
   "author": "Thanatsitt Santisamranwilai",
   "license": "MIT",
   "homepage": "https://pegearts.com",
@@ -10,19 +10,19 @@
     "url": "https://github.com/Pigletpeakkung/artofppage.git"
   },
   "scripts": {
-  "start": "live-server --port=3000 --open=/",
-  "dev": "live-server --port=3000 --watch=assets",
-  "minify-css": "cleancss -o assets/css/styles.min.css assets/css/*.css",
-  "minify-js": "terser assets/js/main.js assets/js/app.js -o assets/js/bundle.min.js",
-  "build": "npm run minify-css && npm run minify-js && mkdir -p public && cp index.html public/ && cp -r assets public/",
-  "lint": "eslint assets/js/*.js",
-  "format": "prettier --write \"**/*.{html,css,js,json}\"",
-  "deploy": "gh-pages -d .",
-  "validate-html": "html-validate *.html",
-  "optimize-images": "imagemin assets/images/**/* --out-dir=assets/images/optimized",
-  "test": "npm run lint && npm run validate-html",
-  "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html"
-},
+    "start": "live-server --port=3000 --open=/",
+    "dev": "live-server --port=3000 --watch=assets",
+    "minify-css": "cleancss -o assets/css/styles.min.css assets/css/*.css",
+    "minify-js": "terser assets/js/main.js assets/js/app.js -o assets/js/bundle.min.js",
+    "build": "npm run minify-css && npm run minify-js && mkdir -p public && cp index.html public/ && cp -r assets public/",
+    "lint": "eslint assets/js/*.js",
+    "format": "prettier --write \"**/*.{html,css,js,json}\"",
+    "deploy": "gh-pages -d .",
+    "validate-html": "html-validate *.html",
+    "optimize-images": "imagemin assets/images/**/* --out-dir=assets/images/optimized",
+    "test": "npm run lint && npm run validate-html",
+    "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html"
+  },
   "devDependencies": {
     "live-server": "^1.2.2",
     "terser": "^5.16.0",
@@ -38,11 +38,16 @@
   },
   "keywords": [
     "portfolio",
+    "ai-creative-designer",
+    "digital-innovation",
+    "machine-learning",
+    "voice-acting",
     "full-stack-developer",
     "web-development",
     "javascript",
     "react",
     "nodejs",
+    "multilingual-content",
     "pwa"
   ],
   "browserslist": [
