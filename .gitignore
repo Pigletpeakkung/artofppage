@@ -1,233 +1,45 @@
-# General
-.DS_Store
-*.log
+# Dependencies
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-*.swp
-.idea/
-.vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
 
-# Dependency directories
-node_modules/
-jspm_packages/
-bower_components/
-.pnp/
-.pnp.js
-
-# Build artifacts
+# Production builds
 dist/
 build/
-out/
-.next/
-.nuxt/
-.cache/
-.temp/
-.serverless/
-.fusebox/
-.dynamodb/
+*.min.js
+*.min.css
 
-# Cache directories
-.cache/
-.turbo/
+# Reports
+reports/
+lighthouse-report.html
 
-# Environment files
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment variables
 .env
 .env.local
-.env.development
-.env.test
-.env.production
-.env*.local
-
-# AI/ML specific
-*.pkl
-*.h5
-*.joblib
-*.onnx
-*.tflite
-*.pt
-*.bin
-*.pb
-*.index
-*.data-00000-of-00001
-*.meta
-checkpoints/
-models/
-datasets/
-*.npy
-*.npz
-*.parquet
-*.feather
-*.orc
-
-# Training data
-*.csv
-*.tsv
-*.jsonl
-*.txt
-
-# Jupyter notebooks
-*.ipynb
-.ipynb_checkpoints/
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-.pytest_cache/
-
-# Node.js
-/coverage/
-/.nyc_output/
-/.node_repl_history
-
-# Serverless
-.serverless/
-
-# Debug
-dump.rdb
-*.pid
-*.seed
-*.pid.lock
-
-# Local development
-.history
-*.local
-.directory
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Editor directories and files
-.idea
-*.sw?
+.vscode/
+.idea/
+*.swp
 *.swo
-*~
-*.sublime-workspace
-*.sublime-project
-
-# System Files
-Thumbs.db
-ehthumbs.db
-[Dd]esktop.ini
-$RECYCLE.BIN/
-
-# Service worker generated files
-sw.js.map
-workbox-*.js
-precache-manifest.*.js
-
-# Build files
-*.js.map
-*.css.map
-*.spec.js
-*.test.js
-
-# macOS
-._*
-
-# Windows
-[Tt]humbs.db
-[Dd]esktop.ini
-
-# Linux
-*~
-
-# Visual Studio Code
-.history/
-
-# Python virtual environment
-venv/
-ENV/
-env/
-
-# Package managers
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-shrinkwrap.yaml
-
-# Build tools
-.eslintcache
-.stylelintcache
-
-# Testing
-/cypress/videos/
-/cypress/screenshots/
-
-# Storybook
-.storybook/
-storybook-static/
-
-# Vite
-.vite/
-*.local
-
-# Next.js
-.next/
-out/
-
-# Nuxt.js
-.nuxt/
-.nuxt-prod/
-
-# Svelte
-.svelte-kit/
-
-# Hugo
-/public/
-/resources/_gen/
-
-# Gatsby
-.cache/
-public
-
-# Angular
-.angular/
-
-# Firebase
-.firebase/
-.firebaserc
-
-# Netlify
-.netlify
-
-# Vercel
-.vercel
-
-# Docker
-docker-compose.override.yml
 
 # Temporary files
 *.tmp
 *.temp
+.cache/
 
-# Local config files
-*.local.yaml
-*.local.yml
-*.local.json
-
-# IDE specific
-.idea_modules/
-*.iml
+# Image optimization output
+assets/images/optimized/
