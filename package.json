@@ -2,39 +2,135 @@
   "name": "thanatsitt-portfolio",
   "version": "2.1.0",
   "description": "Creative technology, and Multilingual content creation | Thanatsitt",
-  "author": "Thanatsitt Santisamranwilai",
+  "author": "Thanatsitt Santisamranwilai <thanattsitt.info@yahoo.co.uk>",
   "license": "MIT",
   "homepage": "https://pegearts.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/Pigletpeakkung/artofppage.git"
   },
+  "bugs": {
+    "url": "https://github.com/Pigletpeakkung/artofppage/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
   "scripts": {
-    "start": "live-server --port=3000 --open=/",
-    "dev": "live-server --port=3000 --watch=assets",
-    "minify-css": "cleancss -o assets/css/styles.min.css assets/css/*.css",
-    "minify-js": "terser assets/js/main.js assets/js/app.js -o assets/js/bundle.min.js",
-    "build": "npm run minify-css && npm run minify-js && mkdir -p public && cp index.html public/ && cp -r assets public/",
-    "lint": "eslint assets/js/*.js",
-    "format": "prettier --write \"**/*.{html,css,js,json}\"",
-    "deploy": "gh-pages -d .",
-    "validate-html": "html-validate *.html",
-    "optimize-images": "imagemin assets/images/**/* --out-dir=assets/images/optimized",
-    "test": "npm run lint && npm run validate-html",
-    "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html"
+    "start": "live-server --port=3000 --open=/ --watch=assets,index.html",
+    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"npm run serve\"",
+    "serve": "live-server --port=3000 --watch=assets --no-browser",
+    
+    "build": "npm run clean && npm run build:css && npm run build:js && npm run build:html && npm run build:assets",
+    "build:css": "npm run minify-css && npm run critical-css",
+    "build:js": "npm run minify-js && npm run bundle-js",
+    "build:html": "html-minifier --collapse-whitespace --remove-comments --minify-css --minify-js -o public/index.html index.html",
+    "build:assets": "npm run optimize-images && npm run copy-assets",
+    
+    "watch:css": "chokidar \"assets/css/**/*.css\" -c \"npm run build:css\"",
+    "watch:js": "chokidar \"assets/js/**/*.js\" -c \"npm run build:js\"",
+    
+    "minify-css": "cleancss --format beautify assets/css/*.css -o public/css/styles.css && cleancss assets/css/*.css -o public/css/styles.min.css",
+    "minify-js": "terser assets/js/main.js assets/js/app.js --config-file terser.config.json -o public/js/bundle.min.js --source-map",
+    "bundle-js": "esbuild assets/js/main.js --bundle --minify --target=es2020 --outfile=public/js/app.bundle.js",
+    
+    "critical-css": "critical --base public --src index.html --css css/styles.css --target css/critical.css --width 1300 --height 900",
+    "purge-css": "purgecss --css public/css/*.css --content public/*.html --output public/css/",
+    
+    "optimize-images": "node scripts/optimize-images.js",
+    "copy-assets": "cpx \"assets/**/*.{ico,json,xml,txt}\" public && cpx \"assets/fonts/**/*\" public/fonts",
+    
+    "clean": "rimraf public && mkdir public",
+    "clean:cache": "rimraf node_modules/.cache",
+    "clean:all": "npm run clean && npm run clean:cache",
+    
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "lint:html": "html-validate *.html",
+    "lint:css": "stylelint \"assets/css/**/*.css\" --fix",
+    "lint:js": "eslint assets/js/**/*.js --fix",
+    
+    "format": "prettier --write \"**/*.{html,css,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{html,css,js,json,md}\"",
+    
+    "test": "npm run lint && npm run validate-html && npm run test:unit",
+    "test:unit": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:accessibility": "pa11y http://localhost:3000",
+    "test:performance": "npm run lighthouse",
+    
+    "validate-html": "html-validate *.html --formatter text",
+    "validate-links": "hyperlink index.html",
+    "validate-schema": "ajv validate -s schema.json -d package.json",
+    
+    "lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./reports/lighthouse-report.html --chrome-flags=\"--headless\"",
+    "lighthouse:ci": "lhci autorun",
+    
+    "security": "npm audit && retire --path assets/js",
+    "security:fix": "npm audit fix",
+    
+    "analyze": "npm run analyze:bundle && npm run analyze:deps",
+    "analyze:bundle": "bundlesize",
+    "analyze:deps": "npm-check-updates -u",
+    
+    "predeploy": "npm run build && npm run test && npm run lighthouse",
+    "deploy": "gh-pages -d public -b gh-pages -m \"Deploy: $(date)\"",
+    "deploy:surge": "surge public --domain thanatsitt-portfolio.surge.sh",
+    "deploy:netlify": "netlify deploy --prod --dir=public",
+    
+    "preversion": "npm test",
+    "version": "npm run build && git add -A",
+    "postversion": "git push && git push --tags && npm run deploy",
+    
+    "contributors": "all-contributors add",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "live-server": "^1.2.2",
-    "terser": "^5.16.0",
-    "clean-css-cli": "^5.6.0",
-    "gh-pages": "^4.0.0",
-    "prettier": "^3.0.0",
-    "eslint": "^8.50.0",
-    "html-validate": "^7.15.0",
+    "terser": "^5.31.0",
+    "clean-css-cli": "^5.6.2",
+    "html-minifier-terser": "^7.2.0",
+    "esbuild": "^0.20.2",
+    "critical": "^6.1.0",
+    "purgecss": "^5.0.0",
+    
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^8.2.2",
+    "cpx2": "^7.0.1",
+    "rimraf": "^5.0.5",
+    
+    "eslint": "^8.57.0",
+    "@eslint/js": "^9.0.0",
+    "stylelint": "^16.2.1",
+    "stylelint-config-standard": "^36.0.0",
+    "html-validate": "^8.18.1",
+    "hyperlink": "^5.0.4",
+    "ajv-cli": "^5.0.0",
+    
+    "prettier": "^3.2.5",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "playwright": "^1.42.1",
+    "pa11y": "^8.0.0",
+    
+    "lighthouse": "^11.7.0",
+    "lighthouse-ci": "@lhci/cli@^0.13.0",
+    "bundlesize": "^0.18.1",
+    "npm-check-updates": "^16.14.15",
+    "retire": "^4.0.3",
+    
     "imagemin": "^8.0.1",
     "imagemin-mozjpeg": "^10.0.0",
     "imagemin-pngquant": "^9.0.2",
-    "lighthouse": "^10.4.0"
+    "imagemin-svgo": "^10.0.1",
+    "imagemin-webp": "^7.0.0",
+    
+    "gh-pages": "^6.1.1",
+    "surge": "^0.23.1",
+    "netlify-cli": "^17.15.4",
+    "all-contributors-cli": "^6.26.1"
   },
   "keywords": [
     "portfolio",
@@ -48,11 +144,39 @@
     "react",
     "nodejs",
     "multilingual-content",
-    "pwa"
+    "pwa",
+    "performance-optimized",
+    "seo-friendly",
+    "accessibility"
   ],
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie <= 11"
+  ],
+  "lint-staged": {
+    "*.{html,css,js}": ["prettier --write", "git add"],
+    "*.js": ["eslint --fix", "git add"],
+    "*.css": ["stylelint --fix", "git add"],
+    "*.html": ["html-validate", "git add"]
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "assets/js/**/*.js",
+      "!assets/js/**/*.min.js"
+    ]
+  },
+  "bundlesize": [
+    {
+      "path": "./public/css/*.min.css",
+      "maxSize": "50kb"
+    },
+    {
+      "path": "./public/js/*.min.js",
+      "maxSize": "100kb"
+    }
   ]
 }
