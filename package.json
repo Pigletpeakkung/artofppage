@@ -22,7 +22,7 @@
     "serve": "live-server --port=3000 --watch=assets --no-browser",
     
     "build": "npm run clean && npm run build:css && npm run build:js && npm run build:html && npm run build:assets",
-    "build:css": "npm run minify-css && npm run critical-css",
+    "build:css": "npm run minify-css",
     "build:js": "npm run minify-js && npm run bundle-js",
     "build:html": "html-minifier --collapse-whitespace --remove-comments --minify-css --minify-js -o public/index.html index.html",
     "build:assets": "npm run optimize-images && npm run copy-assets",
@@ -34,7 +34,6 @@
     "minify-js": "terser assets/js/main.js assets/js/app.js --config-file terser.config.json -o public/js/bundle.min.js --source-map",
     "bundle-js": "esbuild assets/js/main.js --bundle --minify --target=es2020 --outfile=public/js/app.bundle.js",
     
-    "critical-css": "critical --base public --src index.html --css css/styles.css --target css/critical.css --width 1300 --height 900",
     "purge-css": "purgecss --css public/css/*.css --content public/*.html --output public/css/",
     
     "optimize-images": "node scripts/optimize-images.js",
@@ -90,7 +89,6 @@
     "clean-css-cli": "^5.6.2",
     "html-minifier-terser": "^7.2.0",
     "esbuild": "^0.20.2",
-    "critical": "^7.2.1",
     "purgecss": "^5.0.0",
     
     "chokidar-cli": "^3.0.0",
