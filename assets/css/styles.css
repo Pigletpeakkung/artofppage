@@ -1,1001 +1,865 @@
 /**
  * ===============================================
- * THANATSITT PORTFOLIO - ENHANCED JAVASCRIPT v3.0
+ * THANATSITT PORTFOLIO - MODERNIZED CSS v3.0
  * ===============================================
- * Ultra-Modern Portfolio with Advanced Features
+ * Ultra-Modern Portfolio with Advanced CSS Features
  * Author: Thanatsitt Santisamranwilai
  * Version: 3.0.0 (2025 Modern Update)
- * Features: GSAP Animations, Performance Optimization,
- *          Enhanced UX/UI, Modern ES6+ Features
+ * Features: Container Queries, CSS Layers, Nesting, 
+ *          Advanced Animations, Performance Optimizations
  * ===============================================
  */
 
-// === PERFORMANCE MONITORING ===
-class PerformanceMonitor {
-    constructor() {
-        this.metrics = new Map();
-        this.init();
+/* === CSS LAYERS ARCHITECTURE === */
+@layer reset, tokens, base, layout, components, utilities, themes, animations;
+
+/* === RESET LAYER === */
+@layer reset {
+    *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
     }
 
-    init() {
-        this.startTime = performance.now();
-        this.observePerformance();
+    html {
+        color-scheme: light dark;
+        hanging-punctuation: first last;
+        scroll-behavior: smooth;
     }
 
-    observePerformance() {
-        // Performance Observer for monitoring
-        if ('PerformanceObserver' in window) {
-            const observer = new PerformanceObserver((list) => {
-                list.getEntries().forEach((entry) => {
-                    this.metrics.set(entry.name, entry);
-                });
-            });
-            observer.observe({ entryTypes: ['navigation', 'paint', 'largest-contentful-paint'] });
+    @media (prefers-reduced-motion: reduce) {
+        html {
+            scroll-behavior: auto;
+        }
+        
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
         }
     }
 
-    logMetrics() {
-        const loadTime = performance.now() - this.startTime;
-        console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
+    body {
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        font-synthesis: none;
+    }
+
+    img, picture, video, canvas, svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    input, button, textarea, select {
+        font: inherit;
+    }
+
+    p, h1, h2, h3, h4, h5, h6 {
+        overflow-wrap: break-word;
+        text-wrap: pretty;
+    }
+}
+
+/* === DESIGN TOKENS LAYER === */
+@layer tokens {
+    :root {
+        /* === Modern Color System === */
+        --primary-hue: 250;
+        --primary-saturation: 85%;
+        --primary-lightness: 60%;
         
-        if (this.metrics.has('largest-contentful-paint')) {
-            const lcp = this.metrics.get('largest-contentful-paint');
-            console.log(`LCP: ${lcp.startTime.toFixed(2)}ms`);
+        --primary-color: oklch(var(--primary-lightness) var(--primary-saturation) var(--primary-hue));
+        --primary-hover: oklch(from var(--primary-color) calc(l * 1.1) c h);
+        --primary-dark: oklch(from var(--primary-color) calc(l * 0.8) c h);
+        
+        --secondary-color: oklch(0.7 0.15 280);
+        --accent-color: color-mix(in oklch, var(--primary-color) 80%, white);
+        
+        /* === Semantic Colors === */
+        --success-color: oklch(0.7 0.15 140);
+        --warning-color: oklch(0.8 0.15 60);
+        --error-color: oklch(0.65 0.2 20);
+        
+        /* === Light Theme Colors === */
+        --text-primary: oklch(0.15 0.02 250);
+        --text-secondary: oklch(0.4 0.05 250);
+        --text-tertiary: oklch(0.6 0.03 250);
+        --text-inverse: oklch(0.98 0.01 250);
+        
+        --bg-primary: oklch(0.99 0.005 250);
+        --bg-secondary: oklch(0.97 0.01 250);
+        --bg-tertiary: oklch(0.94 0.02 250);
+        --bg-card: color-mix(in srgb, var(--bg-secondary) 90%, transparent);
+        
+        --border-subtle: color-mix(in srgb, var(--text-tertiary) 20%, transparent);
+        --border-default: color-mix(in srgb, var(--text-tertiary) 30%, transparent);
+        --border-strong: color-mix(in srgb, var(--text-secondary) 40%, transparent);
+        
+        /* === Advanced Shadows === */
+        --shadow-color: color-mix(in srgb, var(--primary-color) 15%, black);
+        --shadow-small: 0 1px 3px var(--shadow-color);
+        --shadow-medium: 0 4px 12px var(--shadow-color);
+        --shadow-large: 0 12px 24px var(--shadow-color);
+        --shadow-xlarge: 0 24px 48px var(--shadow-color);
+        
+        /* === Typography Scale === */
+        --font-family-sans: 'Inter', system-ui, sans-serif;
+        --font-family-display: 'Playfair Display', Georgia, serif;
+        --font-family-mono: 'JetBrains Mono', 'SF Mono', monospace;
+        
+        --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+        --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+        --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+        --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+        --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+        --font-size-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+        --font-size-3xl: clamp(2rem, 1.7rem + 1.5vw, 3rem);
+        --font-size-4xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+        
+        /* === Fluid Spacing === */
+        --space-3xs: clamp(0.25rem, 0.2rem + 0.25vw, 0.375rem);
+        --space-2xs: clamp(0.375rem, 0.3rem + 0.375vw, 0.5rem);
+        --space-xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+        --space-sm: clamp(0.75rem, 0.6rem + 0.75vw, 1rem);
+        --space-md: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+        --space-lg: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+        --space-xl: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+        --space-2xl: clamp(3rem, 2rem + 5vw, 5rem);
+        --space-3xl: clamp(4rem, 2.5rem + 7.5vw, 8rem);
+        
+        /* === Modern Properties === */
+        --border-radius-sm: 0.375rem;
+        --border-radius-md: 0.5rem;
+        --border-radius-lg: 0.75rem;
+        --border-radius-xl: 1rem;
+        --border-radius-full: 9999px;
+        
+        --transition-fast: 150ms ease;
+        --transition-normal: 250ms ease;
+        --transition-slow: 400ms ease;
+        --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        
+        /* === Glass Effects === */
+        --glass-bg: color-mix(in srgb, var(--bg-card) 80%, transparent);
+        --glass-border: color-mix(in srgb, white 20%, transparent);
+        --glass-blur: blur(20px) saturate(1.5);
+    }
+}
+
+/* === BASE LAYER === */
+@layer base {
+    html {
+        font-size: 100%;
+    }
+
+    body {
+        font-family: var(--font-family-sans);
+        font-size: var(--font-size-base);
+        color: var(--text-primary);
+        background: var(--bg-primary);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1;
+    }
+
+    /* === Enhanced Typography === */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-family-display);
+        font-weight: 700;
+        line-height: 1.2;
+        text-wrap: balance;
+        
+        &:not(:first-child) {
+            margin-block-start: var(--space-lg);
+        }
+        
+        & + * {
+            margin-block-start: var(--space-sm);
+        }
+    }
+
+    h1 {
+        font-size: var(--font-size-4xl);
+        font-variation-settings: 'wght' 800;
+    }
+
+    h2 {
+        font-size: var(--font-size-3xl);
+        font-variation-settings: 'wght' 700;
+    }
+
+    h3 {
+        font-size: var(--font-size-2xl);
+        font-variation-settings: 'wght' 600;
+    }
+
+    p {
+        max-width: 70ch;
+        
+        &:not(:first-child) {
+            margin-block-start: var(--space-md);
+        }
+    }
+
+    /* === Modern Focus Styles === */
+    :focus-visible {
+        outline: max(2px, 0.15em) solid var(--primary-color);
+        outline-offset: max(2px, 0.15em);
+        border-radius: var(--border-radius-sm);
+    }
+
+    /* === Selection Styles === */
+    ::selection {
+        background: color-mix(in srgb, var(--primary-color) 25%, transparent);
+        color: var(--text-primary);
+    }
+
+    /* === Custom Scrollbar === */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--bg-tertiary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: var(--border-radius-full);
+        
+        &:hover {
+            background: var(--primary-hover);
+        }
+    }
+
+    /* Firefox scrollbar */
+    html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--primary-color) var(--bg-tertiary);
+    }
+}
+
+/* === LAYOUT LAYER === */
+@layer layout {
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin-inline: auto;
+        padding-inline: clamp(1rem, 4vw, 2rem);
+        container-type: inline-size;
+        container-name: main-container;
+    }
+
+    .section {
+        padding-block: clamp(2rem, 8vh, 6rem);
+        position: relative;
+        contain: layout style;
+        
+        &:nth-child(even) {
+            background: var(--bg-secondary);
+        }
+    }
+
+    /* === Modern Grid Layouts === */
+    .grid {
+        display: grid;
+        gap: var(--space-md);
+        
+        &[data-layout="auto-fit"] {
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+        }
+        
+        &[data-layout="auto-fill"] {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+    }
+
+    .flex {
+        display: flex;
+        gap: var(--space-md);
+        
+        &[data-direction="column"] {
+            flex-direction: column;
+        }
+        
+        &[data-wrap="wrap"] {
+            flex-wrap: wrap;
         }
     }
 }
 
-// === CONFIGURATION & STATE MANAGEMENT ===
-const CONFIG = {
-    // Animation settings
-    animations: {
-        duration: {
-            fast: 0.3,
-            normal: 0.6,
-            slow: 1.0
-        },
-        easing: 'power2.out',
-        stagger: 0.1
-    },
-    
-    // Particle system settings
-    particles: {
-        count: 80,
-        size: { min: 1, max: 4 },
-        speed: { min: 0.5, max: 2 },
-        colors: ['#6366f1', '#8b5cf6', '#ec4899', '#06b6d4']
-    },
-    
-    // Moon animation settings
-    moon: {
-        duration: 45,
-        phases: ['new', 'waxing', 'full', 'waning']
-    },
-    
-    // Performance settings
-    performance: {
-        enableParticles: true,
-        enableAnimations: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-        throttleResize: 16
-    }
-};
-
-const STATE = {
-    currentTheme: localStorage.getItem('theme') || 'light',
-    currentSection: 'home',
-    isLoading: true,
-    audioContext: null,
-    animations: new Map(),
-    observers: new Map()
-};
-
-// === UTILITY FUNCTIONS ===
-const Utils = {
-    // Debounce function for performance
-    debounce(func, wait, immediate) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                timeout = null;
-                if (!immediate) func(...args);
-            };
-            const callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func(...args);
-        };
-    },
-
-    // Throttle function for scroll events
-    throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    },
-
-    // Get random number in range
-    random(min, max) {
-        return Math.random() * (max - min) + min;
-    },
-
-    // Format time for audio
-    formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-    },
-
-    // Check if element is in viewport
-    isInViewport(element, threshold = 0.1) {
-        const rect = element.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        return rect.top <= windowHeight * (1 - threshold) && rect.bottom >= windowHeight * threshold;
-    },
-
-    // Preload images
-    preloadImage(src) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = resolve;
-            img.onerror = reject;
-            img.src = src;
-        });
-    }
-};
-
-// === ENHANCED ANIMATION MANAGER ===
-class ModernAnimationManager {
-    constructor() {
-        this.timelines = new Map();
-        this.scrollTriggers = [];
-        this.init();
-    }
-
-    init() {
-        // Register GSAP plugins
-        gsap.registerPlugin(ScrollTrigger);
+/* === COMPONENTS LAYER === */
+@layer components {
+    /* === Skip Link === */
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--primary-color);
+        color: var(--text-inverse);
+        padding: 8px;
+        text-decoration: none;
+        border-radius: var(--border-radius-sm);
+        z-index: 1000;
         
-        // Initialize animations in order
-        this.initLoadingAnimation();
-        this.initHeroAnimations();
-        this.initMoonAnimation();
-        this.initSkillAnimations();
-        this.initScrollAnimations();
-        this.initMicroInteractions();
-    }
-
-    initLoadingAnimation() {
-        const tl = gsap.timeline();
-        
-        tl.to('.loading-spinner .spinner-ring', {
-            rotation: 360,
-            duration: 1.2,
-            ease: 'none',
-            repeat: -1,
-            stagger: -0.4
-        })
-        .to('.loading-content h2', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power2.out'
-        }, '-=1')
-        .to('.loading-content p', {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out'
-        }, '-=0.4');
-
-        this.timelines.set('loading', tl);
-    }
-
-    initHeroAnimations() {
-        const tl = gsap.timeline({ paused: true });
-        
-        tl.from('.hero__title', {
-            duration: 1.2,
-            y: 100,
-            opacity: 0,
-            ease: 'power3.out'
-        })
-        .from('.hero__subtitle', {
-            duration: 0.8,
-            y: 50,
-            opacity: 0,
-            ease: 'power2.out'
-        }, '-=0.8')
-        .from('.hero__description', {
-            duration: 0.8,
-            y: 30,
-            opacity: 0,
-            ease: 'power2.out'
-        }, '-=0.6')
-        .from('.cta-button', {
-            duration: 0.6,
-            scale: 0,
-            opacity: 0,
-            ease: 'back.out(1.7)',
-            stagger: 0.2
-        }, '-=0.4')
-        .from('.profile-container', {
-            duration: 1,
-            scale: 0,
-            opacity: 0,
-            ease: 'elastic.out(1, 0.5)'
-        }, '-=1');
-
-        this.timelines.set('hero', tl);
-    }
-
-    initMoonAnimation() {
-        const moon = document.getElementById('heroMoon');
-        if (!moon) return;
-
-        // Main moon trajectory timeline
-        const moonTimeline = gsap.timeline({ repeat: -1 });
-
-        moonTimeline
-            .fromTo(moon, {
-                x: -150,
-                y: 100,
-                rotation: 0,
-                opacity: 0
-            }, {
-                x: () => window.innerWidth * 0.2,
-                y: -20,
-                rotation: 45,
-                opacity: 1,
-                duration: 15,
-                ease: 'power2.inOut'
-            })
-            .to(moon, {
-                x: () => window.innerWidth * 0.8,
-                y: -40,
-                rotation: 180,
-                duration: 20,
-                ease: 'power1.inOut'
-            })
-            .to(moon, {
-                x: () => window.innerWidth + 150,
-                y: 80,
-                rotation: 270,
-                opacity: 0,
-                duration: 12,
-                ease: 'power2.inOut'
-            })
-            .set(moon, {
-                x: -150,
-                y: 100,
-                rotation: 0,
-                opacity: 0
-            });
-
-        // Floating effect
-        gsap.to(moon, {
-            y: '+=20',
-            duration: 3,
-            ease: 'sine.inOut',
-            repeat: -1,
-            yoyo: true
-        });
-
-        // Interactive features
-        this.addMoonInteractivity(moon);
-        this.timelines.set('moon', moonTimeline);
-    }
-
-    addMoonInteractivity(moon) {
-        moon.addEventListener('click', () => {
-            this.createMoonClickEffect(moon);
-        });
-
-        moon.addEventListener('mouseenter', () => {
-            gsap.to(moon, {
-                scale: 1.1,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-
-        moon.addEventListener('mouseleave', () => {
-            gsap.to(moon, {
-                scale: 1,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-    }
-
-    createMoonClickEffect(moon) {
-        // Moon burst animation
-        gsap.to(moon, {
-            scale: 1.3,
-            duration: 0.1,
-            ease: 'power2.out',
-            yoyo: true,
-            repeat: 1
-        });
-
-        // Create star burst
-        const rect = moon.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        for (let i = 0; i < 12; i++) {
-            this.createBurstStar(centerX, centerY, i);
+        &:focus {
+            top: 6px;
         }
     }
 
-    createBurstStar(centerX, centerY, index) {
-        const star = document.createElement('div');
-        star.className = 'burst-star';
-        star.innerHTML = '✨';
-        star.style.cssText = `
-            position: fixed;
-            left: ${centerX}px;
-            top: ${centerY}px;
-            font-size: 20px;
+    /* === Loading Screen === */
+    .loading-screen {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg in oklch, 
+            oklch(0.1 0.05 250), 
+            oklch(0.15 0.08 280));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        
+        &--hidden {
+            opacity: 0;
             pointer-events: none;
-            z-index: 1000;
-            user-select: none;
-        `;
-        
-        document.body.appendChild(star);
-
-        const angle = (360 / 12) * index;
-        const distance = Utils.random(80, 120);
-        const x = Math.cos(angle * Math.PI / 180) * distance;
-        const y = Math.sin(angle * Math.PI / 180) * distance;
-
-        gsap.to(star, {
-            x: x,
-            y: y,
-            opacity: 0,
-            scale: 0,
-            rotation: 360,
-            duration: 1.5,
-            ease: 'power2.out',
-            onComplete: () => {
-                if (document.body.contains(star)) {
-                    document.body.removeChild(star);
-                }
-            }
-        });
-    }
-
-    initSkillAnimations() {
-        // Skill progress bars
-        const skillBars = document.querySelectorAll('.skill-progress__fill');
-        
-        skillBars.forEach((bar) => {
-            const progress = bar.dataset.progress;
-            
-            ScrollTrigger.create({
-                trigger: bar.closest('.skill-card'),
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(bar, {
-                        width: `${progress}%`,
-                        duration: 1.5,
-                        ease: 'power2.out',
-                        delay: Utils.random(0, 0.5)
-                    });
-                }
-            });
-        });
-
-        // Skill card hover animations
-        document.querySelectorAll('.skill-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                gsap.to(card, {
-                    y: -10,
-                    scale: 1.02,
-                    duration: CONFIG.animations.duration.fast,
-                    ease: CONFIG.animations.easing
-                });
-            });
-
-            card.addEventListener('mouseleave', () => {
-                gsap.to(card, {
-                    y: 0,
-                    scale: 1,
-                    duration: CONFIG.animations.duration.fast,
-                    ease: CONFIG.animations.easing
-                });
-            });
-        });
-    }
-
-    initScrollAnimations() {
-        // Section reveal animations
-        document.querySelectorAll('.section').forEach((section, index) => {
-            ScrollTrigger.create({
-                trigger: section,
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.from(section.querySelectorAll('.section__title, .section__subtitle'), {
-                        y: 50,
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: 'power2.out',
-                        stagger: 0.2
-                    });
-                }
-            });
-        });
-
-        // Navbar scroll effect
-        ScrollTrigger.create({
-            start: 'top -80',
-            end: 'bottom bottom',
-            onUpdate: (self) => {
-                const navbar = document.querySelector('.navbar');
-                if (self.direction === -1) {
-                    navbar.classList.remove('scrolled');
-                } else {
-                    navbar.classList.add('scrolled');
-                }
-            }
-        });
-    }
-
-    initMicroInteractions() {
-        // Button hover effects
-        document.querySelectorAll('.cta-button, .demo-button').forEach(button => {
-            button.addEventListener('mouseenter', () => {
-                gsap.to(button, {
-                    y: -2,
-                    duration: 0.2,
-                    ease: 'power2.out'
-                });
-            });
-
-            button.addEventListener('mouseleave', () => {
-                gsap.to(button, {
-                    y: 0,
-                    duration: 0.2,
-                    ease: 'power2.out'
-                });
-            });
-        });
-
-        // Social star animations
-        document.querySelectorAll('.social-star').forEach(star => {
-            star.addEventListener('mouseenter', () => {
-                gsap.to(star, {
-                    y: -3,
-                    scale: 1.1,
-                    rotation: 15,
-                    duration: 0.3,
-                    ease: 'back.out(1.5)'
-                });
-            });
-
-            star.addEventListener('mouseleave', () => {
-                gsap.to(star, {
-                    y: 0,
-                    scale: 1,
-                    rotation: 0,
-                    duration: 0.3,
-                    ease: 'back.out(1.5)'
-                });
-            });
-        });
-    }
-
-    playTimeline(name) {
-        const timeline = this.timelines.get(name);
-        if (timeline) timeline.play();
-    }
-
-    pauseTimeline(name) {
-        const timeline = this.timelines.get(name);
-        if (timeline) timeline.pause();
-    }
-
-    cleanup() {
-        this.scrollTriggers.forEach(trigger => trigger.kill());
-        this.timelines.clear();
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    }
-}
-
-// === ENHANCED PARTICLE SYSTEM ===
-class EnhancedParticleSystem {
-    constructor(containerId, options = {}) {
-        this.container = document.getElementById(containerId);
-        if (!this.container) return;
-
-        this.options = {
-            ...CONFIG.particles,
-            ...options
-        };
-        
-        this.particles = [];
-        this.animationId = null;
-        this.init();
-    }
-
-    init() {
-        this.createParticles();
-        this.animate();
-        this.handleResize();
-    }
-
-    createParticles() {
-        const { count, colors, size } = this.options;
-        
-        for (let i = 0; i < count; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            const particleSize = Utils.random(size.min, size.max);
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const opacity = Utils.random(0.3, 0.8);
-            
-            particle.style.cssText = `
-                width: ${particleSize}px;
-                height: ${particleSize}px;
-                background: ${color};
-                opacity: ${opacity};
-                left: ${Utils.random(0, 100)}%;
-                top: ${Utils.random(100, 120)}%;
-                animation-duration: ${Utils.random(15, 25)}s;
-                animation-delay: ${Utils.random(0, 10)}s;
-            `;
-            
-            this.container.appendChild(particle);
-            this.particles.push({
-                element: particle,
-                speed: Utils.random(this.options.speed.min, this.options.speed.max),
-                x: parseFloat(particle.style.left),
-                y: parseFloat(particle.style.top)
-            });
+            transition: opacity 0.6s ease;
         }
     }
 
-    animate() {
-        this.particles.forEach((particle, index) => {
-            particle.y -= particle.speed;
-            
-            if (particle.y < -10) {
-                particle.y = 110;
-                particle.x = Utils.random(0, 100);
-            }
-            
-            particle.element.style.left = particle.x + '%';
-            particle.element.style.top = particle.y + '%';
-        });
+    .loading-content {
+        text-align: center;
+        color: var(--text-inverse);
         
-        this.animationId = requestAnimationFrame(() => this.animate());
-    }
-
-    handleResize() {
-        window.addEventListener('resize', Utils.debounce(() => {
-            this.particles.forEach(particle => {
-                if (particle.x > 100) {
-                    particle.x = Utils.random(0, 100);
-                }
-            });
-        }, CONFIG.performance.throttleResize));
-    }
-
-    destroy() {
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
+        h2 {
+            font-size: var(--font-size-2xl);
+            margin-block-start: var(--space-lg);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        this.particles.forEach(particle => {
-            if (this.container.contains(particle.element)) {
-                this.container.removeChild(particle.element);
-            }
-        });
-        this.particles = [];
-    }
-}
-
-// === ENHANCED AUDIO MANAGER ===
-class EnhancedAudioManager {
-    constructor() {
-        this.audioElements = new Map();
-        this.currentlyPlaying = null;
-        this.init();
+        
+        p {
+            margin-block-start: var(--space-sm);
+            opacity: 0.8;
+        }
     }
 
-    init() {
-        this.registerAudioElements();
-        this.setupAudioControls();
-    }
-
-    registerAudioElements() {
-        // Register all audio elements
-        const audioElements = document.querySelectorAll('audio[id]');
-        audioElements.forEach(audio => {
-            this.audioElements.set(audio.id, {
-                element: audio,
-                button: document.querySelector(`[id="${audio.id.replace('Audio', '').replace('Demo', '')}DemoBtn"], [id="play${audio.id.replace('Audio', '').replace('Demo', '')}Demo"]`),
-                progress: null,
-                duration: null
-            });
-        });
-    }
-
-    setupAudioControls() {
-        this.audioElements.forEach((audioData, id) => {
-            const { element, button } = audioData;
+    .loading-spinner {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin-inline: auto;
+        
+        .spinner-ring {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border: 8px solid transparent;
+            border-top: 8px solid var(--primary-color);
+            border-radius: 50%;
+            animation: loading-spin 1.2s linear infinite;
             
-            if (button) {
-                button.addEventListener('click', () => this.toggleAudio(id));
+            &:nth-child(2) {
+                animation-delay: -0.4s;
+                border-top-color: var(--secondary-color);
+            }
+            
+            &:nth-child(3) {
+                animation-delay: -0.8s;
+                border-top-color: var(--accent-color);
+            }
+        }
+    }
+
+    /* === Navigation === */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        border-bottom: 1px solid var(--glass-border);
+        z-index: 1000;
+        transition: all var(--transition-normal);
+        contain: layout style;
+        
+        &.scrolled {
+            background: color-mix(in srgb, var(--bg-card) 95%, transparent);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .navbar-brand {
+            font-family: var(--font-family-display);
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            &:hover {
+                transform: scale(1.05);
+                transition: transform var(--transition-fast);
+            }
+        }
+        
+        .nav-link {
+            position: relative;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-normal);
+            
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+                transform: translateX(-50%);
+                transition: width var(--transition-normal);
+                border-radius: var(--border-radius-full);
+            }
+            
+            &:hover, &.active {
+                color: var(--primary-color);
                 
-                // Update button on audio events
-                element.addEventListener('loadedmetadata', () => {
-                    this.updateDuration(id);
-                });
-                
-                element.addEventListener('timeupdate', () => {
-                    this.updateProgress(id);
-                });
-                
-                element.addEventListener('ended', () => {
-                    this.resetAudio(id);
-                });
-            }
-        });
-    }
-
-    async toggleAudio(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element, button } = audioData;
-        
-        // Stop currently playing audio
-        if (this.currentlyPlaying && this.currentlyPlaying !== audioId) {
-            this.stopAudio(this.currentlyPlaying);
-        }
-
-        try {
-            if (element.paused) {
-                await element.play();
-                this.currentlyPlaying = audioId;
-                button.classList.add('playing');
-                this.updateButtonText(button, 'Pause');
-            } else {
-                element.pause();
-                this.currentlyPlaying = null;
-                button.classList.remove('playing');
-                this.updateButtonText(button, 'Play');
-            }
-        } catch (error) {
-            console.error('Audio playback failed:', error);
-            this.showAudioError(button);
-        }
-    }
-
-    stopAudio(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element, button } = audioData;
-        element.pause();
-        element.currentTime = 0;
-        button.classList.remove('playing');
-        this.updateButtonText(button, 'Play');
-    }
-
-    resetAudio(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element, button } = audioData;
-        element.currentTime = 0;
-        button.classList.remove('playing');
-        this.updateButtonText(button, 'Play');
-        this.currentlyPlaying = null;
-    }
-
-    updateProgress(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element } = audioData;
-        const progressBar = document.querySelector(`#${audioId.replace('Audio', '').replace('Demo', '')}Demo`)
-            ?.parentElement?.querySelector('.demo-progress__fill');
-        const durationSpan = document.querySelector(`#${audioId.replace('Audio', '').replace('Demo', '')}Demo`)
-            ?.parentElement?.querySelector('.demo-duration');
-
-        if (progressBar && element.duration) {
-            const progress = (element.currentTime / element.duration) * 100;
-            progressBar.style.width = `${progress}%`;
-        }
-
-        if (durationSpan && element.duration) {
-            const current = Utils.formatTime(element.currentTime);
-            const total = Utils.formatTime(element.duration);
-            durationSpan.textContent = `${current} / ${total}`;
-        }
-    }
-
-    updateDuration(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element } = audioData;
-        const durationSpan = document.querySelector(`#${audioId.replace('Audio', '').replace('Demo', '')}Demo`)
-            ?.parentElement?.querySelector('.demo-duration');
-
-        if (durationSpan && element.duration) {
-            const total = Utils.formatTime(element.duration);
-            durationSpan.textContent = `0:00 / ${total}`;
-        }
-    }
-
-    updateButtonText(button, text) {
-        const textSpan = button.querySelector('span');
-        if (textSpan) {
-            const originalText = textSpan.textContent;
-            if (text === 'Pause') {
-                textSpan.textContent = textSpan.textContent.replace('Play', 'Pause');
-            } else {
-                textSpan.textContent = originalText.replace('Pause', 'Play');
-            }
-        }
-    }
-
-    showAudioError(button) {
-        const originalText = button.textContent;
-        button.textContent = 'Error Loading';
-        button.disabled = true;
-        
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.disabled = false;
-        }, 3000);
-    }
-}
-
-// === ENHANCED THEME MANAGER ===
-class EnhancedThemeManager {
-    constructor() {
-        this.currentTheme = STATE.currentTheme;
-        this.init();
-    }
-
-    init() {
-        this.applyTheme(this.currentTheme);
-        this.setupThemeToggle();
-        this.setupSystemThemeListener();
-    }
-
-    setupThemeToggle() {
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
-                this.toggleTheme();
-            });
-            
-            // Update icon based on current theme
-            this.updateThemeIcon(themeIcon);
-        }
-    }
-
-    setupSystemThemeListener() {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                this.applyTheme(e.matches ? 'dark' : 'light');
-            }
-        });
-    }
-
-    toggleTheme() {
-        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-        this.applyTheme(newTheme);
-        
-        // Smooth transition animation
-        const themeToggle = document.getElementById('themeToggle');
-        gsap.to(themeToggle, {
-            rotation: 360,
-            duration: 0.6,
-            ease: 'back.out(1.5)'
-        });
-    }
-
-    applyTheme(theme) {
-        this.currentTheme = theme;
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        STATE.currentTheme = theme;
-        
-        // Update theme icon
-        const themeIcon = document.getElementById('themeIcon');
-        this.updateThemeIcon(themeIcon);
-        
-        // Dispatch theme change event
-        window.dispatchEvent(new CustomEvent('themeChanged', { 
-            detail: { theme } 
-        }));
-    }
-
-    updateThemeIcon(icon) {
-        if (!icon) return;
-        
-        if (this.currentTheme === 'dark') {
-            icon.className = 'fas fa-sun';
-            icon.title = 'Switch to light theme';
-        } else {
-            icon.className = 'fas fa-moon';
-            icon.title = 'Switch to dark theme';
-        }
-    }
-}
-
-// === ENHANCED NAVIGATION MANAGER ===
-class EnhancedNavigationManager {
-    constructor() {
-        this.sections = [];
-        this.navLinks = [];
-        this.currentSection = 'home';
-        this.init();
-    }
-
-    init() {
-        this.setupSections();
-        this.setupNavLinks();
-        this.setupScrollSpy();
-        this.setupSmoothScrolling();
-    }
-
-    setupSections() {
-        this.sections = Array.from(document.querySelectorAll('.section[id]'));
-    }
-
-    setupNavLinks() {
-        this.navLinks = Array.from(document.querySelectorAll('.nav-link[href^="#"]'));
-        
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                this.scrollToSection(targetId);
-            });
-        });
-    }
-
-    setupScrollSpy() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.updateActiveSection(entry.target.id);
+                &::before {
+                    width: 100%;
                 }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '-20% 0px -20% 0px'
-        });
-
-        this.sections.forEach(section => {
-            observer.observe(section);
-        });
+            }
+        }
     }
 
-    setupSmoothScrolling() {
-        // Enhanced smooth scrolling with GSAP
-        this.scrollToSection = (targetId) => {
-            const target = document.getElementById(targetId);
-            if (!target) return;
-
-            const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 0;
-            const targetPosition = target.offsetTop - navbarHeight;
-
-            gsap.to(window, {
-                duration: 1,
-                scrollTo: {
-                    y: targetPosition,
-                    autoKill: false
-                },
-                ease: 'power2.inOut'
-            });
-        };
-    }
-
-    updateActiveSection(sectionId) {
-        if (this.currentSection === sectionId) return;
+    /* === Theme Toggle === */
+    .theme-toggle {
+        position: fixed;
+        top: var(--space-lg);
+        right: var(--space-lg);
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: var(--border-radius-full);
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        color: var(--primary-color);
+        cursor: pointer;
+        z-index: 1001;
+        transition: all var(--transition-normal);
         
-        this.currentSection = sectionId;
-        STATE.currentSection = sectionId;
-
-        // Update nav link active states
-        this.navLinks.forEach(link => {
-            const href = link.getAttribute('href').substring(1);
-            if (href === sectionId) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-
-        // Update URL without triggering scroll
-        if (history.pushState) {
-            history.pushState(null, null, `#${sectionId}`);
+        &:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: var(--shadow-medium);
         }
-    }
-}
-
-// === ENHANCED TYPEWRITER EFFECT ===
-class EnhancedTypewriter {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        const typewriterElement = document.getElementById('typewriterText');
-        if (!typewriterElement || !window.Typed) return;
-
-        const options = {
-            strings: [
-                'Thanatsitt^1000',
-                'an AI Innovator^1000',
-                'a Creative Designer^1000',
-                'a Voice Artist^1000',
-                'a Digital Creator^1000'
-            ],
-            typeSpeed: 50,
-            backSpeed: 30,
-            backDelay: 2000,
-            startDelay: 1000,
-            loop: true,
-            showCursor: true,
-            cursorChar: '|',
-            smartBackspace: true,
-            onComplete: () => {
-                // Animation complete callback
-            },
-            preStringTyped: (arrayPos, self) => {
-                // Before each string animation
-            }
-        };
-
-        new Typed('#typewriterText', options);
-    }
-}
-
-// === ENHANCED LOADING MANAGER ===
-class EnhancedLoadingManager {
-    constructor() {
-        this.loadingScreen = document.getElementById('loadingScreen');
-        this.loadStartTime = performance.now();
-        this.minLoadTime = 1500; // Minimum loading time for UX
-        this.init();
-    }
-
-    init() {
-        this.preloadAssets();
-        this.setupLoadingAnimation();
-    }
-
-    async preloadAssets() {
-        const imagesToPreload = [
-            'https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg'
-        ];
-
-        try {
-            await Promise.all(imagesToPreload.map(src => Utils.preloadImage(src)));
-            this.assetsLoaded();
-        } catch (error) {
-            console.warn('Some assets failed to preload:', error);
-            this.assetsLoaded();
+        
+        i {
+            font-size: var(--font-size-lg);
+            transition: transform var(--transition-normal);
         }
     }
 
-    /* === COMPONENTS LAYER CONTINUED === */
+    /* === Hero Section === */
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg in oklch,
+            oklch(0.98 0.01 250) 0%,
+            oklch(0.95 0.02 280) 100%);
+        
+        &__content {
+            container-type: inline-size;
+            container-name: hero-content;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: var(--space-2xl);
+            align-items: center;
+            width: 100%;
+            
+            @container hero-content (max-width: 768px) {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: var(--space-xl);
+            }
+        }
+        
+        &__text {
+            max-width: 600px;
+        }
+        
+        &__title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--space-md);
+            
+            .typewriter {
+                background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                position: relative;
+            }
+        }
+        
+        &__subtitle {
+            font-size: var(--font-size-xl);
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: var(--space-lg);
+        }
+        
+        &__description {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-xl);
+        }
+        
+        &__cta {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            
+            @container hero-content (max-width: 480px) {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        &__image {
+            position: relative;
+        }
+
+        /* === Hero Moon Animation === */
+        &__moon-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        &__moon {
+            position: absolute;
+            width: clamp(80px, 10vw, 120px);
+            height: clamp(80px, 10vw, 120px);
+            top: 15%;
+            left: -150px;
+            filter: drop-shadow(0 0 20px rgba(156, 163, 175, 0.4));
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform var(--transition-normal);
+            
+            &:hover {
+                transform: scale(1.1);
+            }
+            
+            .moon-surface {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 50%, #d1d5db 100%);
+                border-radius: 50%;
+                overflow: hidden;
+                box-shadow: 
+                    inset -20px -20px 40px rgba(0, 0, 0, 0.1),
+                    0 0 40px rgba(156, 163, 175, 0.3);
+            }
+            
+            .moon-glow {
+                position: absolute;
+                inset: -20px;
+                background: radial-gradient(circle, rgba(156, 163, 175, 0.2) 0%, transparent 70%);
+                border-radius: 50%;
+                animation: moonGlow 4s ease-in-out infinite alternate;
+            }
+            
+            .moon-crater {
+                position: absolute;
+                background: rgba(0, 0, 0, 0.1);
+                border-radius: 50%;
+                box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+                
+                &.crater-1 {
+                    width: 20%;
+                    height: 20%;
+                    top: 30%;
+                    left: 35%;
+                }
+                
+                &.crater-2 {
+                    width: 15%;
+                    height: 15%;
+                    top: 60%;
+                    left: 20%;
+                }
+                
+                &.crater-3 {
+                    width: 12%;
+                    height: 12%;
+                    top: 45%;
+                    left: 65%;
+                }
+            }
+        }
+        
+        &__particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+    }
+
+    /* === Profile Section === */
+    .profile-container {
+        position: relative;
+        width: clamp(250px, 20vw, 350px);
+        height: clamp(250px, 20vw, 350px);
+        
+        .profile-orbit {
+            position: absolute;
+            border: 2px solid color-mix(in srgb, var(--primary-color) 30%, transparent);
+            border-radius: 50%;
+            animation: profileOrbit 20s linear infinite;
+            
+            &:nth-child(1) {
+                inset: -20px;
+                animation-duration: 25s;
+            }
+            
+            &:nth-child(2) {
+                inset: -40px;
+                animation-duration: 35s;
+                animation-direction: reverse;
+            }
+            
+            &:nth-child(3) {
+                inset: -60px;
+                animation-duration: 45s;
+            }
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--primary-color);
+            box-shadow: var(--shadow-large);
+            position: relative;
+            z-index: 2;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform var(--transition-slow);
+            }
+            
+            &:hover img {
+                transform: scale(1.05);
+            }
+        }
+        
+        .moon-voice-demo {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-inverse);
+            cursor: pointer;
+            box-shadow: var(--shadow-medium);
+            transition: all var(--transition-bounce);
+            z-index: 3;
+            
+            &:hover {
+                transform: scale(1.1);
+                box-shadow: var(--shadow-large);
+            }
+            
+            &.playing {
+                animation: pulse 1s infinite;
+            }
+            
+            i {
+                font-size: var(--font-size-lg);
+            }
+        }
+    }
+
+    /* === CTA Buttons === */
+    .cta-button {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-md) var(--space-lg);
+        border: none;
+        border-radius: var(--border-radius-full);
+        font-size: var(--font-size-base);
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all var(--transition-normal);
+        position: relative;
+        overflow: hidden;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        &:hover::before {
+            transform: translateX(100%);
+        }
+        
+        &--primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-inverse);
+            box-shadow: var(--shadow-medium);
+            
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-large);
+            }
+        }
+        
+        &--secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            
+            &:hover {
+                background: var(--primary-color);
+                color: var(--text-inverse);
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    /* === Skills Section === */
+    .skills {
+        background: var(--bg-secondary);
+        
+        &__grid {
+            container-type: inline-size;
+            container-name: skills-grid;
+            display: grid;
+            gap: var(--space-lg);
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+        }
+    }
+
+    .skill-card {
+        background: var(--glass-bg);
+        backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--border-radius-xl);
+        padding: var(--space-xl);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        contain: layout style paint;
+        content-visibility: auto;
+        contain-intrinsic-size: 350px;
+        transition: all var(--transition-normal);
+        
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                color-mix(in srgb, var(--primary-color) 5%, transparent),
+                color-mix(in srgb, var(--secondary-color) 5%, transparent));
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+        
+        &:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-xlarge);
+            
+            &::before {
+                opacity: 1;
+            }
+            
+            .skill-card__icon {
+                transform: scale(1.1) rotate(5deg);
+                color: var(--primary-color);
+            }
+            
+            .skill-progress__fill {
+                box-shadow: 0 0 20px color-mix(in srgb, var(--primary-color) 50%, transparent);
+            }
+        }
+        
+        &__icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--space-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: var(--border-radius-full);
+            color: var(--text-inverse);
+            font-size: var(--font-size-2xl);
+            transition: all var(--transition-bounce);
+            position: relative;
+            z-index: 1;
+        }
+        
+        &__title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-md);
+            position: relative;
+            z-index: 1;
+        }
+        
+        &__description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+        
+        &__progress {
+            position: relative;
+            z-index: 1;
+        }
+    }
+/* === COMPONENTS LAYER CONTINUED === */
 .skill-progress {
     &__fill {
         height: 100%;
@@ -1878,7 +1742,8 @@ class EnhancedLoadingManager {
     }
 }
 
-    /* ===============================================
+
+/* ===============================================
  * MISSING CSS COMPONENTS - ADD TO STYLES.CSS
  * =============================================== */
 
