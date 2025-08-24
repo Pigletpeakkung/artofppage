@@ -43,7 +43,6 @@ const CORE_ASSETS = [
         
         // JavaScript files
         '/assets/js/main.js',
-        '/assets/js/app.js',
         '/assets/js/bundle.min.js',
         
         // Images
