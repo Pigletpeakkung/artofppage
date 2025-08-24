@@ -1,403 +1,743 @@
 /**
- * ===============================================
- * THANATSITT PORTFOLIO - ENHANCED JAVASCRIPT v3.0
- * ===============================================
- * Ultra-Modern Portfolio with Advanced Features
+ * Enhanced Portfolio Script with Moon Animation & Advanced Features
  * Author: Thanatsitt Santisamranwilai
- * Version: 3.0.0 (2025 Modern Update)
- * Features: GSAP Animations, Performance Optimization,
- *          Enhanced UX/UI, Modern ES6+ Features
- * ===============================================
+ * Modern JavaScript with GSAP, Particles.js, and interactive elements
  */
 
-// === PERFORMANCE MONITORING ===
-class PerformanceMonitor {
-    constructor() {
-        this.metrics = new Map();
-        this.init();
-    }
+// ===============================================
+// GLOBAL CONFIGURATION & UTILITIES
+// ===============================================
 
-    init() {
-        this.startTime = performance.now();
-        this.observePerformance();
-    }
-
-    observePerformance() {
-        // Performance Observer for monitoring
-        if ('PerformanceObserver' in window) {
-            const observer = new PerformanceObserver((list) => {
-                list.getEntries().forEach((entry) => {
-                    this.metrics.set(entry.name, entry);
-                });
-            });
-            observer.observe({ entryTypes: ['navigation', 'paint', 'largest-contentful-paint'] });
-        }
-    }
-
-    logMetrics() {
-        const loadTime = performance.now() - this.startTime;
-        console.log(`Page loaded in ${loadTime.toFixed(2)}ms`);
-        
-        if (this.metrics.has('largest-contentful-paint')) {
-            const lcp = this.metrics.get('largest-contentful-paint');
-            console.log(`LCP: ${lcp.startTime.toFixed(2)}ms`);
-        }
-    }
-}
-
-// === CONFIGURATION & STATE MANAGEMENT ===
 const CONFIG = {
-    // Animation settings
-    animations: {
-        duration: {
-            fast: 0.3,
-            normal: 0.6,
-            slow: 1.0
-        },
-        easing: 'power2.out',
-        stagger: 0.1
-    },
-    
-    // Particle system settings
-    particles: {
-        count: 80,
-        size: { min: 1, max: 4 },
-        speed: { min: 0.5, max: 2 },
-        colors: ['#6366f1', '#8b5cf6', '#ec4899', '#06b6d4']
-    },
-    
-    // Moon animation settings
-    moon: {
-        duration: 45,
-        phases: ['new', 'waxing', 'full', 'waning']
-    },
-    
-    // Performance settings
-    performance: {
-        enableParticles: true,
-        enableAnimations: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-        throttleResize: 16
-    }
+    ANIMATION_DURATION: 800,
+    MOON_TRAVEL_TIME: 60, // seconds for complete moon cycle
+    PARTICLES_COUNT: 80,
+    TYPEWRITER_SPEED: 100,
+    AUDIO_FADE_DURATION: 500
 };
 
-const STATE = {
-    currentTheme: localStorage.getItem('theme') || 'light',
-    currentSection: 'home',
-    isLoading: true,
-    audioContext: null,
-    animations: new Map(),
-    observers: new Map()
-};
-
-// === UTILITY FUNCTIONS ===
-const Utils = {
-    // Debounce function for performance
-    debounce(func, wait, immediate) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                timeout = null;
-                if (!immediate) func(...args);
-            };
-            const callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func(...args);
+const utils = {
+    debounce(func, delay) {
+        let timeoutId;
+        return (...args) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func.apply(this, args), delay);
         };
     },
 
-    // Throttle function for scroll events
-    throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
+    throttle(func, delay) {
+        let lastCall = 0;
+        return (...args) => {
+            const now = Date.now();
+            if (now - lastCall >= delay) {
+                lastCall = now;
                 func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
             }
         };
     },
 
-    // Get random number in range
-    random(min, max) {
-        return Math.random() * (max - min) + min;
-    },
-
-    // Format time for audio
     formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-    },
-
-    // Check if element is in viewport
-    isInViewport(element, threshold = 0.1) {
-        const rect = element.getBoundingClientRect();
-        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-        return rect.top <= windowHeight * (1 - threshold) && rect.bottom >= windowHeight * threshold;
-    },
-
-    // Preload images
-    preloadImage(src) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = resolve;
-            img.onerror = reject;
-            img.src = src;
-        });
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
     }
 };
 
-// === ENHANCED ANIMATION MANAGER ===
-class ModernAnimationManager {
+// ===============================================
+// ENHANCED ANIMATION MANAGER
+// ===============================================
+
+class AnimationManager {
     constructor() {
-        this.timelines = new Map();
-        this.scrollTriggers = [];
-        this.init();
+        this.moonTimeline = null;
+        this.isInitialized = false;
+        this.audioInstances = new Map();
     }
 
     init() {
-        // Register GSAP plugins
-        gsap.registerPlugin(ScrollTrigger);
+        if (this.isInitialized) return;
         
-        // Initialize animations in order
-        this.initLoadingAnimation();
-        this.initHeroAnimations();
-        this.initMoonAnimation();
-        this.initSkillAnimations();
-        this.initScrollAnimations();
-        this.initMicroInteractions();
+        try {
+            this.initMoonAnimation();
+            this.initTypewriter();
+            this.initHeroAnimations();
+            this.initParticleSystem();
+            this.initScrollAnimations();
+            this.initHoverAnimations();
+            this.initAudioHandlers();
+            this.initProgressBars();
+            this.initIntersectionObserver();
+            
+            this.isInitialized = true;
+            console.log('✨ Animation Manager initialized successfully');
+        } catch (error) {
+            console.error('❌ Animation Manager initialization failed:', error);
+        }
     }
 
-    initLoadingAnimation() {
-        const tl = gsap.timeline();
-        
-        tl.to('.loading-spinner .spinner-ring', {
-            rotation: 360,
-            duration: 1.2,
-            ease: 'none',
-            repeat: -1,
-            stagger: -0.4
-        })
-        .to('.loading-content h2', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power2.out'
-        }, '-=1')
-        .to('.loading-content p', {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: 'power2.out'
-        }, '-=0.4');
-
-        this.timelines.set('loading', tl);
-    }
-
-    initHeroAnimations() {
-        const tl = gsap.timeline({ paused: true });
-        
-        tl.from('.hero__title', {
-            duration: 1.2,
-            y: 100,
-            opacity: 0,
-            ease: 'power3.out'
-        })
-        .from('.hero__subtitle', {
-            duration: 0.8,
-            y: 50,
-            opacity: 0,
-            ease: 'power2.out'
-        }, '-=0.8')
-        .from('.hero__description', {
-            duration: 0.8,
-            y: 30,
-            opacity: 0,
-            ease: 'power2.out'
-        }, '-=0.6')
-        .from('.cta-button', {
-            duration: 0.6,
-            scale: 0,
-            opacity: 0,
-            ease: 'back.out(1.7)',
-            stagger: 0.2
-        }, '-=0.4')
-        .from('.profile-container', {
-            duration: 1,
-            scale: 0,
-            opacity: 0,
-            ease: 'elastic.out(1, 0.5)'
-        }, '-=1');
-
-        this.timelines.set('hero', tl);
-    }
+    // ===============================================
+    // MOON ANIMATION SYSTEM
+    // ===============================================
 
     initMoonAnimation() {
         const moon = document.getElementById('heroMoon');
         if (!moon) return;
 
-        // Main moon trajectory timeline
-        const moonTimeline = gsap.timeline({ repeat: -1 });
+        // Kill existing timeline if it exists
+        if (this.moonTimeline) {
+            this.moonTimeline.kill();
+        }
 
-        moonTimeline
+        // Create responsive moon travel path
+        const screenWidth = window.innerWidth;
+        const startX = -150;
+        const endX = screenWidth + 150;
+        const peakY = window.innerHeight < 768 ? -20 : -50;
+
+        // Main moon movement timeline
+        this.moonTimeline = gsap.timeline({ repeat: -1 });
+
+        this.moonTimeline
+            // Phase 1: Moon rises from left
             .fromTo(moon, {
-                x: -150,
+                x: startX,
                 y: 100,
                 rotation: 0,
-                opacity: 0
-            }, {
-                x: () => window.innerWidth * 0.2,
-                y: -20,
-                rotation: 45,
-                opacity: 1,
-                duration: 15,
-                ease: 'power2.inOut'
-            })
-            .to(moon, {
-                x: () => window.innerWidth * 0.8,
-                y: -40,
-                rotation: 180,
-                duration: 20,
-                ease: 'power1.inOut'
-            })
-            .to(moon, {
-                x: () => window.innerWidth + 150,
-                y: 80,
-                rotation: 270,
                 opacity: 0,
-                duration: 12,
-                ease: 'power2.inOut'
+                scale: window.innerWidth < 768 ? 0.7 : 1
+            }, {
+                x: screenWidth * 0.25,
+                y: peakY,
+                rotation: 60,
+                opacity: 1,
+                duration: CONFIG.MOON_TRAVEL_TIME * 0.25,
+                ease: "power2.out"
             })
+            // Phase 2: Moon travels across zenith
+            .to(moon, {
+                x: screenWidth * 0.75,
+                y: peakY - 20,
+                rotation: 180,
+                duration: CONFIG.MOON_TRAVEL_TIME * 0.4,
+                ease: "none"
+            })
+            // Phase 3: Moon sets on right
+            .to(moon, {
+                x: endX,
+                y: 80,
+                rotation: 300,
+                opacity: 0,
+                duration: CONFIG.MOON_TRAVEL_TIME * 0.35,
+                ease: "power2.in"
+            })
+            // Phase 4: Reset position (invisible pause)
             .set(moon, {
-                x: -150,
+                x: startX,
                 y: 100,
                 rotation: 0,
                 opacity: 0
-            });
+            })
+            .to({}, { duration: 5 }); // Pause before next cycle
 
-        // Floating effect
+        // Add floating animation
         gsap.to(moon, {
-            y: '+=20',
-            duration: 3,
-            ease: 'sine.inOut',
+            y: "+=15",
+            duration: 4,
+            ease: "sine.inOut",
             repeat: -1,
             yoyo: true
         });
 
-        // Interactive features
-        this.addMoonInteractivity(moon);
-        this.timelines.set('moon', moonTimeline);
-    }
-
-    addMoonInteractivity(moon) {
-        moon.addEventListener('click', () => {
-            this.createMoonClickEffect(moon);
+        // Add subtle rotation wobble
+        gsap.to(moon, {
+            rotation: "+=10",
+            duration: 6,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
         });
 
-        moon.addEventListener('mouseenter', () => {
+        // Enhanced interaction handlers
+        this.setupMoonInteractions(moon);
+    }
+
+    setupMoonInteractions(moon) {
+        // Click/touch interaction
+        const handleMoonClick = (e) => {
+            e.preventDefault();
+            this.createStarBurst(moon);
+            this.moonClickEffect(moon);
+        };
+
+        // Keyboard interaction
+        const handleMoonKeydown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleMoonClick(e);
+            }
+        };
+
+        // Mouse hover effects
+        const handleMoonHover = () => {
             gsap.to(moon, {
                 scale: 1.1,
                 duration: 0.3,
-                ease: 'power2.out'
+                ease: "back.out(1.7)"
             });
-        });
+        };
 
-        moon.addEventListener('mouseleave', () => {
+        const handleMoonLeave = () => {
             gsap.to(moon, {
                 scale: 1,
                 duration: 0.3,
-                ease: 'power2.out'
+                ease: "power2.out"
             });
-        });
+        };
+
+        // Add event listeners
+        moon.addEventListener('click', handleMoonClick);
+        moon.addEventListener('keydown', handleMoonKeydown);
+        moon.addEventListener('mouseenter', handleMoonHover);
+        moon.addEventListener('mouseleave', handleMoonLeave);
+
+        // Add touch support
+        moon.addEventListener('touchstart', handleMoonClick, { passive: false });
     }
 
-    createMoonClickEffect(moon) {
-        // Moon burst animation
-        gsap.to(moon, {
+    moonClickEffect(moon) {
+        // Scale pulse effect
+        const tl = gsap.timeline();
+        
+        tl.to(moon, {
             scale: 1.3,
             duration: 0.1,
-            ease: 'power2.out',
-            yoyo: true,
-            repeat: 1
+            ease: "power2.out"
+        })
+        .to(moon, {
+            scale: 1,
+            duration: 0.4,
+            ease: "elastic.out(1, 0.5)"
         });
 
-        // Create star burst
+        // Glow effect
+        const moonGlow = moon.querySelector('.moon-glow');
+        if (moonGlow) {
+            gsap.fromTo(moonGlow, {
+                opacity: 0.6,
+                scale: 1
+            }, {
+                opacity: 1,
+                scale: 1.5,
+                duration: 0.3,
+                ease: "power2.out",
+                yoyo: true,
+                repeat: 1
+            });
+        }
+    }
+
+    createStarBurst(moon) {
         const rect = moon.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
-        for (let i = 0; i < 12; i++) {
-            this.createBurstStar(centerX, centerY, i);
+        const starCount = 8;
+        const stars = ['✨', '⭐', '🌟', '💫'];
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.innerHTML = stars[Math.floor(Math.random() * stars.length)];
+            star.style.cssText = `
+                position: fixed;
+                left: ${centerX}px;
+                top: ${centerY}px;
+                font-size: ${16 + Math.random() * 8}px;
+                pointer-events: none;
+                z-index: 1000;
+                user-select: none;
+            `;
+            
+            document.body.appendChild(star);
+
+            const angle = (360 / starCount) * i + Math.random() * 30;
+            const distance = 60 + Math.random() * 40;
+            const x = Math.cos(angle * Math.PI / 180) * distance;
+            const y = Math.sin(angle * Math.PI / 180) * distance;
+
+            gsap.to(star, {
+                x: x,
+                y: y,
+                opacity: 0,
+                scale: 0,
+                rotation: Math.random() * 360,
+                duration: 1 + Math.random() * 0.5,
+                ease: "power2.out",
+                onComplete: () => {
+                    if (document.body.contains(star)) {
+                        document.body.removeChild(star);
+                    }
+                }
+            });
         }
     }
 
-    createBurstStar(centerX, centerY, index) {
-        const star = document.createElement('div');
-        star.className = 'burst-star';
-        star.innerHTML = '✨';
-        star.style.cssText = `
-            position: fixed;
-            left: ${centerX}px;
-            top: ${centerY}px;
-            font-size: 20px;
-            pointer-events: none;
-            z-index: 1000;
-            user-select: none;
-        `;
-        
-        document.body.appendChild(star);
+    // ===============================================
+    // TYPEWRITER EFFECT
+    // ===============================================
 
-        const angle = (360 / 12) * index;
-        const distance = Utils.random(80, 120);
-        const x = Math.cos(angle * Math.PI / 180) * distance;
-        const y = Math.sin(angle * Math.PI / 180) * distance;
+    initTypewriter() {
+        const typewriterElement = document.getElementById('typewriterText');
+        if (!typewriterElement || typeof Typed === 'undefined') return;
 
-        gsap.to(star, {
-            x: x,
-            y: y,
-            opacity: 0,
-            scale: 0,
-            rotation: 360,
-            duration: 1.5,
-            ease: 'power2.out',
-            onComplete: () => {
-                if (document.body.contains(star)) {
-                    document.body.removeChild(star);
-                }
-            }
+        new Typed('#typewriterText', {
+            strings: [
+                'Thanatsitt',
+                'an AI Innovator',
+                'a Creative Designer', 
+                'a Voice Artist',
+                'a Digital Creator',
+                'Thanatsitt'
+            ],
+            typeSpeed: CONFIG.TYPEWRITER_SPEED,
+            backSpeed: 50,
+            backDelay: 2000,
+            startDelay: 1000,
+            loop: true,
+            showCursor: true,
+            cursorChar: '|',
+            autoInsertCss: true
         });
     }
 
-    initSkillAnimations() {
-        // Skill progress bars
-        const skillBars = document.querySelectorAll('.skill-progress__fill');
+    // ===============================================
+    // HERO ANIMATIONS
+    // ===============================================
+
+    initHeroAnimations() {
+        const tl = gsap.timeline();
         
-        skillBars.forEach((bar) => {
-            const progress = bar.dataset.progress;
-            
-            ScrollTrigger.create({
-                trigger: bar.closest('.skill-card'),
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.to(bar, {
-                        width: `${progress}%`,
-                        duration: 1.5,
-                        ease: 'power2.out',
-                        delay: Utils.random(0, 0.5)
-                    });
+        tl.from(".hero__title", {
+            duration: 1.2,
+            y: 100,
+            opacity: 0,
+            ease: "power3.out"
+        })
+        .from(".hero__subtitle", {
+            duration: 0.8,
+            y: 50,
+            opacity: 0,
+            ease: "power2.out"
+        }, "-=0.8")
+        .from(".hero__description", {
+            duration: 0.8,
+            y: 30,
+            opacity: 0,
+            ease: "power2.out"
+        }, "-=0.6")
+        .from(".cta-button", {
+            duration: 0.6,
+            scale: 0,
+            opacity: 0,
+            ease: "back.out(1.7)",
+            stagger: 0.2
+        }, "-=0.4")
+        .from(".profile-container", {
+            duration: 1,
+            scale: 0,
+            opacity: 0,
+            ease: "elastic.out(1, 0.5)"
+        }, "-=1");
+    }
+
+    // ===============================================
+    // PARTICLE SYSTEM
+    // ===============================================
+
+    initParticleSystem() {
+        if (typeof particlesJS === 'undefined') return;
+
+        // Hero particles
+        this.initHeroParticles();
+        
+        // Footer particles
+        this.initFooterParticles();
+    }
+
+    initHeroParticles() {
+        const heroParticles = document.getElementById('hero-particles');
+        if (!heroParticles) return;
+
+        particlesJS('hero-particles', {
+            particles: {
+                number: {
+                    value: CONFIG.PARTICLES_COUNT,
+                    density: { enable: true, value_area: 800 }
+                },
+                color: { value: "#ffffff" },
+                shape: {
+                    type: "circle",
+                    stroke: { width: 0, color: "#000000" }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: { enable: true, speed: 1, opacity_min: 0.1 }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: { enable: true, speed: 2, size_min: 0.1 }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#ffffff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: false,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 1 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+    }
+
+    initFooterParticles() {
+        const footerParticles = document.getElementById('footer-particles');
+        if (!footerParticles) return;
+
+        particlesJS('footer-particles', {
+            particles: {
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: "#4f46e5" },
+                shape: { type: "circle" },
+                opacity: {
+                    value: 0.3,
+                    random: true,
+                    anim: { enable: true, speed: 1, opacity_min: 0.1 }
+                },
+                size: {
+                    value: 2,
+                    random: true,
+                    anim: { enable: true, speed: 2, size_min: 0.1 }
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "top",
+                    random: false,
+                    straight: false,
+                    out_mode: "out"
+                }
+            },
+            retina_detect: true
+        });
+    }
+
+    // ===============================================
+    // SCROLL ANIMATIONS
+    // ===============================================
+
+    initScrollAnimations() {
+        if (typeof gsap === 'undefined' || !gsap.registerPlugin) return;
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Section reveal animations
+        gsap.utils.toArray('.section').forEach(section => {
+            gsap.fromTo(section, {
+                opacity: 0,
+                y: 50
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse"
                 }
             });
         });
 
-        // Skill card hover animations
-        document.querySelectorAll('.skill-card').forEach(card => {
+        // Skill cards stagger animation
+        const skillCards = document.querySelectorAll('.skill-card');
+        if (skillCards.length > 0) {
+            gsap.fromTo(skillCards, {
+                opacity: 0,
+                y: 60,
+                scale: 0.8
+            }, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.8,
+                ease: "back.out(1.7)",
+                stagger: 0.2,
+                scrollTrigger: {
+                    trigger: skillCards[0].closest('.skills__grid'),
+                    start: "top 80%"
+                }
+            });
+        }
+    }
+
+    // ===============================================
+    // PROGRESS BAR ANIMATIONS
+    // ===============================================
+
+    initProgressBars() {
+        const progressBars = document.querySelectorAll('.skill-progress__fill');
+        
+        progressBars.forEach(bar => {
+            const progress = parseInt(bar.dataset.progress) || 0;
+            
+            gsap.fromTo(bar, {
+                width: '0%'
+            }, {
+                width: `${progress}%`,
+                duration: 2,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: bar,
+                    start: "top 85%",
+                    onStart: () => this.animatePercentage(bar, progress)
+                }
+            });
+        });
+    }
+
+    animatePercentage(progressBar, targetValue) {
+        const percentageElement = progressBar.closest('.skill-card__progress')
+            ?.querySelector('.progress-percentage');
+        
+        if (!percentageElement) return;
+
+        gsap.fromTo({ value: 0 }, {
+            value: targetValue,
+            duration: 2,
+            ease: "power2.out",
+            onUpdate: function() {
+                percentageElement.textContent = `${Math.round(this.targets()[0].value)}%`;
+            }
+        });
+    }
+
+    // ===============================================
+    // AUDIO HANDLING SYSTEM
+    // ===============================================
+
+    initAudioHandlers() {
+        this.setupVoiceDemoControls();
+        this.setupHeroAudio();
+        
+        // Global audio error handler
+        window.handleAudioError = (audio) => {
+            console.warn('Audio failed to load:', audio.src);
+            this.handleAudioError(audio);
+        };
+    }
+
+    setupVoiceDemoControls() {
+        const demoButtons = [
+            { buttonId: 'playIntroDemo', audioId: 'introDemo' },
+            { buttonId: 'playHobbyDemo', audioId: 'hobbyDemo' }
+        ];
+
+        demoButtons.forEach(({ buttonId, audioId }) => {
+            const button = document.getElementById(buttonId);
+            const audio = document.getElementById(audioId);
+            
+            if (!button || !audio) return;
+
+            this.audioInstances.set(audioId, {
+                audio,
+                button,
+                isPlaying: false,
+                progressBar: button.closest('.demo-card')?.querySelector('.demo-progress__fill'),
+                durationLabel: button.closest('.demo-card')?.querySelector('.demo-duration')
+            });
+
+            this.setupAudioControl(audioId);
+        });
+    }
+
+    setupAudioControl(audioId) {
+        const instance = this.audioInstances.get(audioId);
+        if (!instance) return;
+
+        const { audio, button, progressBar, durationLabel } = instance;
+
+        // Button click handler
+        button.addEventListener('click', () => {
+            if (instance.isPlaying) {
+                this.pauseAudio(audioId);
+            } else {
+                this.playAudio(audioId);
+            }
+        });
+
+        // Audio event listeners
+        audio.addEventListener('loadedmetadata', () => {
+            if (durationLabel) {
+                durationLabel.textContent = `0:00 / ${utils.formatTime(audio.duration)}`;
+            }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            if (progressBar && audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            if (durationLabel) {
+                durationLabel.textContent = 
+                    `${utils.formatTime(audio.currentTime)} / ${utils.formatTime(audio.duration)}`;
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            this.resetAudio(audioId);
+        });
+
+        audio.addEventListener('error', () => {
+            this.handleAudioError(audio);
+        });
+    }
+
+    playAudio(audioId) {
+        // Pause all other audio first
+        this.pauseAllAudio();
+
+        const instance = this.audioInstances.get(audioId);
+        if (!instance) return;
+
+        const { audio, button } = instance;
+
+        audio.play().then(() => {
+            instance.isPlaying = true;
+            this.updateButtonState(button, 'playing');
+        }).catch(error => {
+            console.error('Audio play failed:', error);
+            this.handleAudioError(audio);
+        });
+    }
+
+    pauseAudio(audioId) {
+        const instance = this.audioInstances.get(audioId);
+        if (!instance) return;
+
+        const { audio, button } = instance;
+        
+        audio.pause();
+        instance.isPlaying = false;
+        this.updateButtonState(button, 'paused');
+    }
+
+    resetAudio(audioId) {
+        const instance = this.audioInstances.get(audioId);
+        if (!instance) return;
+
+        const { audio, button, progressBar } = instance;
+        
+        audio.currentTime = 0;
+        instance.isPlaying = false;
+        this.updateButtonState(button, 'stopped');
+        
+        if (progressBar) {
+            progressBar.style.width = '0%';
+        }
+    }
+
+    pauseAllAudio() {
+        this.audioInstances.forEach((instance, audioId) => {
+            if (instance.isPlaying) {
+                this.pauseAudio(audioId);
+            }
+        });
+    }
+
+    updateButtonState(button, state) {
+        const icon = button.querySelector('i');
+        const text = button.querySelector('span');
+        
+        switch (state) {
+            case 'playing':
+                if (icon) icon.className = 'fas fa-pause';
+                if (text) text.textContent = text.textContent.replace('Play', 'Pause');
+                button.classList.add('playing');
+                break;
+            case 'paused':
+            case 'stopped':
+                if (icon) icon.className = 'fas fa-play';
+                if (text) text.textContent = text.textContent.replace('Pause', 'Play');
+                button.classList.remove('playing');
+                break;
+        }
+    }
+
+    setupHeroAudio() {
+        const voiceBtn = document.getElementById('voiceDemoBtn');
+        const heroAudio = document.getElementById('heroVoiceIntroAudio');
+        
+        if (!voiceBtn || !heroAudio) return;
+
+        voiceBtn.addEventListener('click', () => {
+            if (heroAudio.paused) {
+                this.pauseAllAudio();
+                heroAudio.play().catch(error => {
+                    console.error('Hero audio play failed:', error);
+                });
+            } else {
+                heroAudio.pause();
+            }
+        });
+    }
+
+    handleAudioError(audio) {
+        const button = audio.closest('.demo-card, .hero__image')?.querySelector('button');
+        if (button) {
+            button.style.opacity = '0.5';
+            button.disabled = true;
+            button.title = 'Audio unavailable';
+        }
+    }
+
+    // ===============================================
+    // HOVER ANIMATIONS & INTERACTIONS
+    // ===============================================
+
+    initHoverAnimations() {
+        // Skill card hover effects
+        const skillCards = document.querySelectorAll('.skill-card');
+        skillCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 gsap.to(card, {
                     y: -10,
                     scale: 1.02,
-                    duration: CONFIG.animations.duration.fast,
-                    ease: CONFIG.animations.easing
+                    duration: 0.3,
+                    ease: "power2.out"
                 });
             });
 
@@ -405,390 +745,114 @@ class ModernAnimationManager {
                 gsap.to(card, {
                     y: 0,
                     scale: 1,
-                    duration: CONFIG.animations.duration.fast,
-                    ease: CONFIG.animations.easing
+                    duration: 0.3,
+                    ease: "power2.out"
                 });
             });
         });
-    }
 
-    initScrollAnimations() {
-        // Section reveal animations
-        document.querySelectorAll('.section').forEach((section, index) => {
-            ScrollTrigger.create({
-                trigger: section,
-                start: 'top 80%',
-                onEnter: () => {
-                    gsap.from(section.querySelectorAll('.section__title, .section__subtitle'), {
-                        y: 50,
-                        opacity: 0,
-                        duration: 0.8,
-                        ease: 'power2.out',
-                        stagger: 0.2
-                    });
-                }
-            });
-        });
-
-        // Navbar scroll effect
-        ScrollTrigger.create({
-            start: 'top -80',
-            end: 'bottom bottom',
-            onUpdate: (self) => {
-                const navbar = document.querySelector('.navbar');
-                if (self.direction === -1) {
-                    navbar.classList.remove('scrolled');
-                } else {
-                    navbar.classList.add('scrolled');
-                }
-            }
-        });
-    }
-
-    initMicroInteractions() {
-        // Button hover effects
-        document.querySelectorAll('.cta-button, .demo-button').forEach(button => {
+        // CTA button hover effects
+        const ctaButtons = document.querySelectorAll('.cta-button');
+        ctaButtons.forEach(button => {
             button.addEventListener('mouseenter', () => {
                 gsap.to(button, {
-                    y: -2,
-                    duration: 0.2,
-                    ease: 'power2.out'
+                    scale: 1.05,
+                    duration: 0.3,
+                    ease: "back.out(1.7)"
                 });
             });
 
             button.addEventListener('mouseleave', () => {
                 gsap.to(button, {
-                    y: 0,
-                    duration: 0.2,
-                    ease: 'power2.out'
-                });
-            });
-        });
-
-        // Social star animations
-        document.querySelectorAll('.social-star').forEach(star => {
-            star.addEventListener('mouseenter', () => {
-                gsap.to(star, {
-                    y: -3,
-                    scale: 1.1,
-                    rotation: 15,
-                    duration: 0.3,
-                    ease: 'back.out(1.5)'
-                });
-            });
-
-            star.addEventListener('mouseleave', () => {
-                gsap.to(star, {
-                    y: 0,
                     scale: 1,
-                    rotation: 0,
                     duration: 0.3,
-                    ease: 'back.out(1.5)'
+                    ease: "power2.out"
                 });
             });
         });
     }
 
-    playTimeline(name) {
-        const timeline = this.timelines.get(name);
-        if (timeline) timeline.play();
-    }
+    // ===============================================
+    // INTERSECTION OBSERVER FOR PERFORMANCE
+    // ===============================================
 
-    pauseTimeline(name) {
-        const timeline = this.timelines.get(name);
-        if (timeline) timeline.pause();
-    }
-
-    cleanup() {
-        this.scrollTriggers.forEach(trigger => trigger.kill());
-        this.timelines.clear();
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    }
-}
-
-// === ENHANCED PARTICLE SYSTEM ===
-class EnhancedParticleSystem {
-    constructor(containerId, options = {}) {
-        this.container = document.getElementById(containerId);
-        if (!this.container) return;
-
-        this.options = {
-            ...CONFIG.particles,
-            ...options
+    initIntersectionObserver() {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
         };
-        
-        this.particles = [];
-        this.animationId = null;
-        this.init();
-    }
 
-    init() {
-        this.createParticles();
-        this.animate();
-        this.handleResize();
-    }
-
-    createParticles() {
-        const { count, colors, size } = this.options;
-        
-        for (let i = 0; i < count; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            const particleSize = Utils.random(size.min, size.max);
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const opacity = Utils.random(0.3, 0.8);
-            
-            particle.style.cssText = `
-                width: ${particleSize}px;
-                height: ${particleSize}px;
-                background: ${color};
-                opacity: ${opacity};
-                left: ${Utils.random(0, 100)}%;
-                top: ${Utils.random(100, 120)}%;
-                animation-duration: ${Utils.random(15, 25)}s;
-                animation-delay: ${Utils.random(0, 10)}s;
-            `;
-            
-            this.container.appendChild(particle);
-            this.particles.push({
-                element: particle,
-                speed: Utils.random(this.options.speed.min, this.options.speed.max),
-                x: parseFloat(particle.style.left),
-                y: parseFloat(particle.style.top)
-            });
-        }
-    }
-
-    animate() {
-        this.particles.forEach((particle, index) => {
-            particle.y -= particle.speed;
-            
-            if (particle.y < -10) {
-                particle.y = 110;
-                particle.x = Utils.random(0, 100);
-            }
-            
-            particle.element.style.left = particle.x + '%';
-            particle.element.style.top = particle.y + '%';
-        });
-        
-        this.animationId = requestAnimationFrame(() => this.animate());
-    }
-
-    handleResize() {
-        window.addEventListener('resize', Utils.debounce(() => {
-            this.particles.forEach(particle => {
-                if (particle.x > 100) {
-                    particle.x = Utils.random(0, 100);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                } else {
+                    entry.target.classList.remove('in-view');
                 }
             });
-        }, CONFIG.performance.throttleResize));
-    }
+        }, observerOptions);
 
-    destroy() {
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
-        }
-        this.particles.forEach(particle => {
-            if (this.container.contains(particle.element)) {
-                this.container.removeChild(particle.element);
-            }
+        // Observe sections for performance optimization
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
         });
-        this.particles = [];
-    }
-}
-
-// === ENHANCED AUDIO MANAGER ===
-class EnhancedAudioManager {
-    constructor() {
-        this.audioElements = new Map();
-        this.currentlyPlaying = null;
-        this.init();
     }
 
-    init() {
-        this.registerAudioElements();
-        this.setupAudioControls();
-    }
+    // ===============================================
+    // RESPONSIVE HANDLING
+    // ===============================================
 
-    registerAudioElements() {
-        // Register all audio elements
-        const audioElements = document.querySelectorAll('audio[id]');
-        audioElements.forEach(audio => {
-            this.audioElements.set(audio.id, {
-                element: audio,
-                button: document.querySelector(`[id="${audio.id.replace('Audio', '').replace('Demo', '')}DemoBtn"], [id="play${audio.id.replace('Audio', '').replace('Demo', '')}Demo"]`),
-                progress: null,
-                duration: null
+    handleResize() {
+        // Reinitialize moon animation for new screen size
+        this.initMoonAnimation();
+        
+        // Update particle systems
+        if (window.pJSDom && window.pJSDom.length > 0) {
+            window.pJSDom.forEach(pJS => {
+                if (pJS.pJS) {
+                    pJS.pJS.fn.canvasSize();
+                    pJS.pJS.fn.canvasPaint();
+                }
             });
-        });
-    }
-
-    setupAudioControls() {
-        this.audioElements.forEach((audioData, id) => {
-            const { element, button } = audioData;
-            
-            if (button) {
-                button.addEventListener('click', () => this.toggleAudio(id));
-                
-                // Update button on audio events
-                element.addEventListener('loadedmetadata', () => {
-                    this.updateDuration(id);
-                });
-                
-                element.addEventListener('timeupdate', () => {
-                    this.updateProgress(id);
-                });
-                
-                element.addEventListener('ended', () => {
-                    this.resetAudio(id);
-                });
-            }
-        });
-    }
-
-    async toggleAudio(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element, button } = audioData;
-        
-        // Stop currently playing audio
-        if (this.currentlyPlaying && this.currentlyPlaying !== audioId) {
-            this.stopAudio(this.currentlyPlaying);
         }
-
-        try {
-            if (element.paused) {
-                await element.play();
-                this.currentlyPlaying = audioId;
-                button.classList.add('playing');
-                this.updateButtonText(button, 'Pause');
-            } else {
-                element.pause();
-                this.currentlyPlaying = null;
-                button.classList.remove('playing');
-                this.updateButtonText(button, 'Play');
-            }
-        } catch (error) {
-            console.error('Audio playback failed:', error);
-            this.showAudioError(button);
-        }
-    }
-
-    stopAudio(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element, button } = audioData;
-        element.pause();
-        element.currentTime = 0;
-        button.classList.remove('playing');
-        this.updateButtonText(button, 'Play');
-    }
-
-    resetAudio(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element, button } = audioData;
-        element.currentTime = 0;
-        button.classList.remove('playing');
-        this.updateButtonText(button, 'Play');
-        this.currentlyPlaying = null;
-    }
-
-    updateProgress(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element } = audioData;
-        const progressBar = document.querySelector(`#${audioId.replace('Audio', '').replace('Demo', '')}Demo`)
-            ?.parentElement?.querySelector('.demo-progress__fill');
-        const durationSpan = document.querySelector(`#${audioId.replace('Audio', '').replace('Demo', '')}Demo`)
-            ?.parentElement?.querySelector('.demo-duration');
-
-        if (progressBar && element.duration) {
-            const progress = (element.currentTime / element.duration) * 100;
-            progressBar.style.width = `${progress}%`;
-        }
-
-        if (durationSpan && element.duration) {
-            const current = Utils.formatTime(element.currentTime);
-            const total = Utils.formatTime(element.duration);
-            durationSpan.textContent = `${current} / ${total}`;
-        }
-    }
-
-    updateDuration(audioId) {
-        const audioData = this.audioElements.get(audioId);
-        if (!audioData) return;
-
-        const { element } = audioData;
-        const durationSpan = document.querySelector(`#${audioId.replace('Audio', '').replace('Demo', '')}Demo`)
-            ?.parentElement?.querySelector('.demo-duration');
-
-        if (durationSpan && element.duration) {
-            const total = Utils.formatTime(element.duration);
-            durationSpan.textContent = `0:00 / ${total}`;
-        }
-    }
-
-    updateButtonText(button, text) {
-        const textSpan = button.querySelector('span');
-        if (textSpan) {
-            const originalText = textSpan.textContent;
-            if (text === 'Pause') {
-                textSpan.textContent = textSpan.textContent.replace('Play', 'Pause');
-            } else {
-                textSpan.textContent = originalText.replace('Pause', 'Play');
-            }
-        }
-    }
-
-    showAudioError(button) {
-        const originalText = button.textContent;
-        button.textContent = 'Error Loading';
-        button.disabled = true;
-        
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.disabled = false;
-        }, 3000);
     }
 }
 
-// === ENHANCED THEME MANAGER ===
-class EnhancedThemeManager {
+// ===============================================
+// THEME MANAGER
+// ===============================================
+
+class ThemeManager {
     constructor() {
-        this.currentTheme = STATE.currentTheme;
+        this.themeToggle = document.getElementById('themeToggle');
+        this.themeIcon = document.getElementById('themeIcon');
+        this.currentTheme = localStorage.getItem('theme') || 'light';
         this.init();
     }
 
     init() {
         this.applyTheme(this.currentTheme);
-        this.setupThemeToggle();
-        this.setupSystemThemeListener();
+        this.setupEventListeners();
     }
 
-    setupThemeToggle() {
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => {
+    setupEventListeners() {
+        if (!this.themeToggle) return;
+
+        this.themeToggle.addEventListener('click', () => {
+            this.toggleTheme();
+        });
+
+        // Keyboard support
+        this.themeToggle.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
                 this.toggleTheme();
-            });
-            
-            // Update icon based on current theme
-            this.updateThemeIcon(themeIcon);
-        }
-    }
+            }
+        });
 
-    setupSystemThemeListener() {
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addEventListener('change', (e) => {
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
             if (!localStorage.getItem('theme')) {
                 this.applyTheme(e.matches ? 'dark' : 'light');
             }
@@ -798,927 +862,615 @@ class EnhancedThemeManager {
     toggleTheme() {
         const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
         this.applyTheme(newTheme);
-        
-        // Smooth transition animation
-        const themeToggle = document.getElementById('themeToggle');
-        gsap.to(themeToggle, {
-            rotation: 360,
-            duration: 0.6,
-            ease: 'back.out(1.5)'
-        });
+        localStorage.setItem('theme', newTheme);
     }
 
     applyTheme(theme) {
         this.currentTheme = theme;
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        STATE.currentTheme = theme;
         
-        // Update theme icon
-        const themeIcon = document.getElementById('themeIcon');
-        this.updateThemeIcon(themeIcon);
-        
-        // Dispatch theme change event
-        window.dispatchEvent(new CustomEvent('themeChanged', { 
-            detail: { theme } 
-        }));
-    }
-
-    updateThemeIcon(icon) {
-        if (!icon) return;
-        
-        if (this.currentTheme === 'dark') {
-            icon.className = 'fas fa-sun';
-            icon.title = 'Switch to light theme';
-        } else {
-            icon.className = 'fas fa-moon';
-            icon.title = 'Switch to dark theme';
+        if (this.themeIcon) {
+            this.themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         }
+
+        // Animate theme transition
+        gsap.to(document.body, {
+            duration: 0.3,
+            ease: "power2.inOut"
+        });
     }
 }
 
-// === ENHANCED NAVIGATION MANAGER ===
-class EnhancedNavigationManager {
+// ===============================================
+// NAVIGATION MANAGER
+// ===============================================
+
+class NavigationManager {
     constructor() {
-        this.sections = [];
-        this.navLinks = [];
-        this.currentSection = 'home';
+        this.navbar = document.querySelector('.navbar');
+        this.navLinks = document.querySelectorAll('.nav-link');
+        this.backToTop = document.getElementById('backToTop');
+        this.lastScrollTop = 0;
         this.init();
     }
 
     init() {
-        this.setupSections();
-        this.setupNavLinks();
-        this.setupScrollSpy();
         this.setupSmoothScrolling();
-    }
-
-    setupSections() {
-        this.sections = Array.from(document.querySelectorAll('.section[id]'));
-    }
-
-    setupNavLinks() {
-        this.navLinks = Array.from(document.querySelectorAll('.nav-link[href^="#"]'));
-        
-        this.navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                this.scrollToSection(targetId);
-            });
-        });
-    }
-
-    setupScrollSpy() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.updateActiveSection(entry.target.id);
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '-20% 0px -20% 0px'
-        });
-
-        this.sections.forEach(section => {
-            observer.observe(section);
-        });
+        this.setupActiveNavigation();
+        this.setupScrollBehavior();
+        this.setupBackToTop();
     }
 
     setupSmoothScrolling() {
-        // Enhanced smooth scrolling with GSAP
-        this.scrollToSection = (targetId) => {
-            const target = document.getElementById(targetId);
-            if (!target) return;
-
-            const navbarHeight = document.querySelector('.navbar')?.offsetHeight || 0;
-            const targetPosition = target.offsetTop - navbarHeight;
-
-            gsap.to(window, {
-                duration: 1,
-                scrollTo: {
-                    y: targetPosition,
-                    autoKill: false
-                },
-                ease: 'power2.inOut'
+        this.navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    gsap.to(window, {
+                        duration: 1,
+                        scrollTo: {
+                            y: targetElement,
+                            offsetY: 80
+                        },
+                        ease: "power2.inOut"
+                    });
+                }
             });
-        };
+        });
     }
 
-    updateActiveSection(sectionId) {
-        if (this.currentSection === sectionId) return;
-        
-        this.currentSection = sectionId;
-        STATE.currentSection = sectionId;
+        setupActiveNavigation() {
+        const sections = document.querySelectorAll('.section[id]');
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -20% 0px',
+            threshold: 0
+        };
 
-        // Update nav link active states
-        this.navLinks.forEach(link => {
-            const href = link.getAttribute('href').substring(1);
-            if (href === sectionId) {
-                link.classList.add('active');
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const sectionId = entry.target.id;
+                const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                
+                if (entry.isIntersecting) {
+                    // Remove active class from all nav links
+                    this.navLinks.forEach(link => link.classList.remove('active'));
+                    // Add active class to current nav link
+                    if (navLink) navLink.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            navObserver.observe(section);
+        });
+    }
+
+    setupScrollBehavior() {
+        const handleScroll = utils.throttle(() => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Navbar hide/show behavior
+            if (this.navbar) {
+                if (scrollTop > this.lastScrollTop && scrollTop > 100) {
+                    // Scrolling down
+                    gsap.to(this.navbar, {
+                        y: -100,
+                        duration: 0.3,
+                        ease: "power2.inOut"
+                    });
+                } else {
+                    // Scrolling up
+                    gsap.to(this.navbar, {
+                        y: 0,
+                        duration: 0.3,
+                        ease: "power2.inOut"
+                    });
+                }
+            }
+
+            this.lastScrollTop = scrollTop;
+        }, 100);
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+
+    setupBackToTop() {
+        if (!this.backToTop) return;
+
+        const handleScroll = utils.throttle(() => {
+            const scrollTop = window.pageYOffset;
+            
+            if (scrollTop > 300) {
+                gsap.to(this.backToTop, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "back.out(1.7)"
+                });
+                this.backToTop.style.pointerEvents = 'auto';
             } else {
-                link.classList.remove('active');
+                gsap.to(this.backToTop, {
+                    opacity: 0,
+                    scale: 0.8,
+                    duration: 0.3,
+                    ease: "power2.inOut"
+                });
+                this.backToTop.style.pointerEvents = 'none';
+            }
+        }, 100);
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Back to top click handler
+        this.backToTop.addEventListener('click', () => {
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: { y: 0 },
+                ease: "power2.inOut"
+            });
+        });
+    }
+}
+
+// ===============================================
+// LOADING SCREEN MANAGER
+// ===============================================
+
+class LoadingManager {
+    constructor() {
+        this.loadingScreen = document.getElementById('loadingScreen');
+        this.init();
+    }
+
+    init() {
+        this.showLoadingScreen();
+        this.preloadAssets();
+    }
+
+    showLoadingScreen() {
+        if (!this.loadingScreen) return;
+
+        gsap.set(this.loadingScreen, {
+            opacity: 1,
+            display: 'flex'
+        });
+
+        // Animate loading spinner
+        gsap.to('.spinner-ring', {
+            rotation: 360,
+            duration: 2,
+            repeat: -1,
+            ease: "none",
+            stagger: 0.2
+        });
+    }
+
+    preloadAssets() {
+        const assets = [
+            // Images
+            'https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg',
+            // Audio files
+            'https://github.com/Pigletpeakkung/artofppage/raw/feb49ee7640dd7d8aa8ece40bbd8258b69ef1e98/assets/demo/voice/intro/Thann_Intro.wav',
+            'https://github.com/Pigletpeakkung/artofppage/raw/92520ec59362efa20d141a2b031dbb40d28f4f3a/assets/demo/voice/act/Thanattsitt-Hobby-Freetalk.mp3'
+        ];
+
+        let loadedCount = 0;
+        const totalAssets = assets.length;
+
+        const updateProgress = () => {
+            loadedCount++;
+            const progress = (loadedCount / totalAssets) * 100;
+            
+            // Update progress indicator if exists
+            const progressIndicator = document.querySelector('.loading-progress');
+            if (progressIndicator) {
+                progressIndicator.style.width = `${progress}%`;
+            }
+
+            if (loadedCount === totalAssets) {
+                this.hideLoadingScreen();
+            }
+        };
+
+        // Preload images
+        assets.forEach(src => {
+            if (src.includes('.jpg') || src.includes('.png') || src.includes('.webp')) {
+                const img = new Image();
+                img.onload = updateProgress;
+                img.onerror = updateProgress;
+                img.src = src;
+            } else if (src.includes('.wav') || src.includes('.mp3')) {
+                const audio = new Audio();
+                audio.addEventListener('canplaythrough', updateProgress);
+                audio.addEventListener('error', updateProgress);
+                audio.src = src;
             }
         });
 
-        // Update URL without triggering scroll
-        if (history.pushState) {
-            history.pushState(null, null, `#${sectionId}`);
-        }
-    }
-}
-
-// === ENHANCED TYPEWRITER EFFECT ===
-class EnhancedTypewriter {
-    constructor() {
-        this.init();
-    }
-
-    init() {
-        const typewriterElement = document.getElementById('typewriterText');
-        if (!typewriterElement || !window.Typed) return;
-
-        const options = {
-            strings: [
-                'Thanatsitt^1000',
-                'an AI Innovator^1000',
-                'a Creative Designer^1000',
-                'a Voice Artist^1000',
-                'a Digital Creator^1000'
-            ],
-            typeSpeed: 50,
-            backSpeed: 30,
-            backDelay: 2000,
-            startDelay: 1000,
-            loop: true,
-            showCursor: true,
-            cursorChar: '|',
-            smartBackspace: true,
-            onComplete: () => {
-                // Animation complete callback
-            },
-            preStringTyped: (arrayPos, self) => {
-                // Before each string animation
-            }
-        };
-
-        new Typed('#typewriterText', options);
-    }
-}
-
-// === ENHANCED LOADING MANAGER ===
-class EnhancedLoadingManager {
-    constructor() {
-        this.loadingScreen = document.getElementById('loadingScreen');
-        this.loadStartTime = performance.now();
-        this.minLoadTime = 1500; // Minimum loading time for UX
-        this.init();
-    }
-
-    init() {
-        this.preloadAssets();
-        this.setupLoadingAnimation();
-    }
-
-    async preloadAssets() {
-        const imagesToPreload = [
-            'https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg'
-        ];
-
-        try {
-            await Promise.all(imagesToPreload.map(src => Utils.preloadImage(src)));
-            this.assetsLoaded();
-        } catch (error) {
-            console.warn('Some assets failed to preload:', error);
-            this.assetsLoaded();
-        }
-    }
-
-    // === ENHANCED LOADING MANAGER CONTINUED ===
-    setupLoadingAnimation() {
-        // Enhanced loading text animation
-        const loadingText = document.querySelector('.loading-content p');
-        if (loadingText) {
-            const messages = [
-                'Initializing cosmic systems...',
-                'Loading digital universe...',
-                'Preparing stellar experience...',
-                'Calibrating AI systems...',
-                'Ready for launch!'
-            ];
-
-            let messageIndex = 0;
-            const messageInterval = setInterval(() => {
-                if (messageIndex < messages.length - 1) {
-                    gsap.to(loadingText, {
-                        opacity: 0,
-                        duration: 0.3,
-                        onComplete: () => {
-                            messageIndex++;
-                            loadingText.textContent = messages[messageIndex];
-                            gsap.to(loadingText, {
-                                opacity: 1,
-                                duration: 0.3
-                            });
-                        }
-                    });
-                } else {
-                    clearInterval(messageInterval);
-                }
-            }, 800);
-        }
-    }
-
-    async assetsLoaded() {
-        const elapsedTime = performance.now() - this.loadStartTime;
-        const remainingTime = Math.max(0, this.minLoadTime - elapsedTime);
-
-        // Wait for minimum load time
+        // Minimum loading time
         setTimeout(() => {
-            this.hideLoadingScreen();
-        }, remainingTime);
+            if (loadedCount < totalAssets) {
+                this.hideLoadingScreen();
+            }
+        }, 3000);
     }
 
     hideLoadingScreen() {
         if (!this.loadingScreen) return;
 
-        // Stop loading animations
-        const loadingTimeline = window.animationManager?.timelines.get('loading');
-        if (loadingTimeline) loadingTimeline.kill();
-
-        // Fade out loading screen
         gsap.to(this.loadingScreen, {
             opacity: 0,
-            duration: 0.8,
-            ease: 'power2.inOut',
+            duration: 1,
+            ease: "power2.inOut",
             onComplete: () => {
-                this.loadingScreen.classList.add('loading-screen--hidden');
-                STATE.isLoading = false;
+                this.loadingScreen.style.display = 'none';
+                document.body.classList.add('loaded');
                 
-                // Start main animations
-                this.initMainAnimations();
-                
-                // Log performance metrics
-                window.performanceMonitor?.logMetrics();
+                // Initialize animations after loading
+                if (window.animationManager) {
+                    window.animationManager.init();
+                }
             }
         });
-    }
-
-    initMainAnimations() {
-        // Start hero animations
-        window.animationManager?.playTimeline('hero');
-        
-        // Initialize AOS if available
-        if (window.AOS) {
-            AOS.init({
-                duration: 800,
-                offset: 100,
-                easing: 'ease-out-cubic',
-                once: true,
-                mirror: false
-            });
-        }
-
-        // Start typewriter effect
-        new EnhancedTypewriter();
     }
 }
 
-// === ENHANCED UI INTERACTIONS ===
-class EnhancedUIManager {
+// ===============================================
+// NOTIFICATION SYSTEM
+// ===============================================
+
+class NotificationManager {
     constructor() {
-        this.init();
+        this.notifications = [];
+        this.container = this.createContainer();
     }
 
-    init() {
-        this.setupBackToTop();
-        this.setupNewsletterForm();
-        this.setupNotificationSystem();
-        this.setupMiscInteractions();
-    }
-
-    setupBackToTop() {
-        const backToTopBtn = document.getElementById('backToTop');
-        if (!backToTopBtn) return;
-
-        // Show/hide on scroll
-        const scrollTrigger = ScrollTrigger.create({
-            start: 'top -300',
-            end: 'bottom bottom',
-            onUpdate: (self) => {
-                if (self.progress > 0.1) {
-                    backToTopBtn.classList.add('back-to-top--visible');
-                } else {
-                    backToTopBtn.classList.remove('back-to-top--visible');
-                }
-            }
-        });
-
-        // Click handler
-        backToTopBtn.addEventListener('click', () => {
-            gsap.to(window, {
-                duration: 1.2,
-                scrollTo: { y: 0 },
-                ease: 'power2.inOut'
-            });
-
-            // Button animation
-            gsap.to(backToTopBtn, {
-                scale: 0.9,
-                duration: 0.1,
-                yoyo: true,
-                repeat: 1,
-                ease: 'power2.inOut'
-            });
-        });
-    }
-
-    setupNewsletterForm() {
-        const newsletterForm = document.getElementById('newsletterForm');
-        if (!newsletterForm) return;
-
-        newsletterForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const email = document.getElementById('newsletterEmail')?.value;
-            const messageDiv = document.getElementById('newsletterMessage');
-            
-            if (!email) {
-                this.showFormMessage(messageDiv, 'Please enter your email address.', 'error');
-                return;
-            }
-
-            if (!this.isValidEmail(email)) {
-                this.showFormMessage(messageDiv, 'Please enter a valid email address.', 'error');
-                return;
-            }
-
-            // Simulate API call
-            const submitBtn = newsletterForm.querySelector('.newsletter-submit');
-            const originalContent = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            submitBtn.disabled = true;
-
-            try {
-                // Simulate API delay
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                this.showFormMessage(messageDiv, 'Successfully subscribed! Welcome aboard! 🚀', 'success');
-                newsletterForm.reset();
-                
-            } catch (error) {
-                this.showFormMessage(messageDiv, 'Something went wrong. Please try again later.', 'error');
-            } finally {
-                submitBtn.innerHTML = originalContent;
-                submitBtn.disabled = false;
-            }
-        });
-    }
-
-    setupNotificationSystem() {
-        const notifyBtn = document.getElementById('notifyBtn');
-        if (!notifyBtn) return;
-
-        notifyBtn.addEventListener('click', () => {
-            this.showNotification('🚀 You\'ll be notified when new projects are launched!', 'success');
-            
-            // Button animation
-            gsap.to(notifyBtn, {
-                scale: 0.95,
-                duration: 0.1,
-                yoyo: true,
-                repeat: 1
-            });
-
-            // Disable button temporarily
-            notifyBtn.disabled = true;
-            notifyBtn.innerHTML = '<i class="fas fa-check"></i> <span>Subscribed!</span>';
-            
-            setTimeout(() => {
-                notifyBtn.disabled = false;
-                notifyBtn.innerHTML = '<i class="fas fa-bell"></i> <span>Notify Me</span>';
-            }, 3000);
-        });
-    }
-
-    setupMiscInteractions() {
-        // Update copyright year
-        const currentYearElement = document.getElementById('current-year');
-        if (currentYearElement) {
-            currentYearElement.textContent = new Date().getFullYear();
-        }
-
-        // Profile orbit interactions
-        document.querySelectorAll('.profile-orbit').forEach((orbit, index) => {
-            orbit.addEventListener('click', () => {
-                this.createOrbitEffect(orbit, index);
-            });
-        });
-
-        // Voice demo button enhancements
-        const voiceDemoBtn = document.getElementById('voiceDemoBtn');
-        if (voiceDemoBtn) {
-            voiceDemoBtn.addEventListener('click', () => {
-                this.createVoiceWave(voiceDemoBtn);
-            });
-        }
-    }
-
-    createOrbitEffect(orbit, index) {
-        // Create ripple effect
-        const ripple = document.createElement('div');
-        ripple.style.cssText = `
-            position: absolute;
-            inset: -10px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: none;
+    createContainer() {
+        const container = document.createElement('div');
+        container.className = 'notification-container';
+        container.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
             pointer-events: none;
         `;
-        
-        orbit.appendChild(ripple);
-
-        gsap.fromTo(ripple, {
-            scale: 0.8,
-            opacity: 0.8
-        }, {
-            scale: 1.5,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out',
-            onComplete: () => {
-                if (orbit.contains(ripple)) {
-                    orbit.removeChild(ripple);
-                }
-            }
-        });
+        document.body.appendChild(container);
+        return container;
     }
 
-    createVoiceWave(button) {
-        const waves = 3;
-        const rect = button.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        for (let i = 0; i < waves; i++) {
-            const wave = document.createElement('div');
-            wave.style.cssText = `
-                position: fixed;
-                left: ${centerX - 25}px;
-                top: ${centerY - 25}px;
-                width: 50px;
-                height: 50px;
-                border: 2px solid var(--primary-color);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 1000;
-            `;
-            
-            document.body.appendChild(wave);
-
-            gsap.fromTo(wave, {
-                scale: 0,
-                opacity: 0.8
-            }, {
-                scale: 2 + i * 0.5,
-                opacity: 0,
-                duration: 1.5,
-                delay: i * 0.2,
-                ease: 'power2.out',
-                onComplete: () => {
-                    if (document.body.contains(wave)) {
-                        document.body.removeChild(wave);
-                    }
-                }
-            });
-        }
-    }
-
-    isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    showFormMessage(messageDiv, message, type) {
-        if (!messageDiv) return;
-
-        messageDiv.textContent = message;
-        messageDiv.className = `form-message form-message--${type}`;
-        
-        gsap.fromTo(messageDiv, {
-            opacity: 0,
-            y: -10
-        }, {
-            opacity: 1,
-            y: 0,
-            duration: 0.3,
-            ease: 'power2.out'
-        });
-
-        // Auto-hide after 5 seconds
-        setTimeout(() => {
-            gsap.to(messageDiv, {
-                opacity: 0,
-                duration: 0.3,
-                onComplete: () => {
-                    messageDiv.textContent = '';
-                    messageDiv.className = 'form-message';
-                }
-            });
-        }, 5000);
-    }
-
-    showNotification(message, type = 'info') {
+    show(message, type = 'info', duration = 5000) {
         const notification = document.createElement('div');
         notification.className = `notification notification--${type}`;
         notification.innerHTML = `
             <div class="notification__content">
+                <i class="notification__icon fas fa-${this.getIcon(type)}"></i>
                 <span class="notification__message">${message}</span>
                 <button class="notification__close" aria-label="Close notification">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         `;
-
-        // Add styles
+        
         notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-default);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
             border-radius: var(--border-radius-lg);
             padding: var(--space-md);
-            box-shadow: var(--shadow-large);
-            z-index: 10000;
-            max-width: 400px;
-            backdrop-filter: var(--glass-blur);
+            margin-bottom: var(--space-sm);
+            pointer-events: auto;
+            transform: translateX(100%);
+            opacity: 0;
         `;
 
-        document.body.appendChild(notification);
-
-        // Close button functionality
-        const closeBtn = notification.querySelector('.notification__close');
-        closeBtn.addEventListener('click', () => {
-            this.closeNotification(notification);
-        });
-
-        // Auto-close after 5 seconds
-        setTimeout(() => {
-            this.closeNotification(notification);
-        }, 5000);
+        this.container.appendChild(notification);
+        this.notifications.push(notification);
 
         // Animate in
-        gsap.fromTo(notification, {
-            x: 100,
-            opacity: 0
-        }, {
+        gsap.to(notification, {
             x: 0,
             opacity: 1,
-            duration: 0.4,
-            ease: 'back.out(1.5)'
+            duration: 0.3,
+            ease: "back.out(1.7)"
         });
+
+        // Setup close button
+        const closeBtn = notification.querySelector('.notification__close');
+        closeBtn.addEventListener('click', () => {
+            this.hide(notification);
+        });
+
+        // Auto hide
+        if (duration > 0) {
+            setTimeout(() => {
+                this.hide(notification);
+            }, duration);
+        }
     }
 
-    closeNotification(notification) {
+    hide(notification) {
         gsap.to(notification, {
-            x: 100,
+            x: '100%',
             opacity: 0,
             duration: 0.3,
-            ease: 'power2.inOut',
+            ease: "power2.inOut",
             onComplete: () => {
-                if (document.body.contains(notification)) {
-                    document.body.removeChild(notification);
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
                 }
+                this.notifications = this.notifications.filter(n => n !== notification);
             }
         });
     }
+
+    getIcon(type) {
+        const icons = {
+            success: 'check-circle',
+            error: 'exclamation-circle',
+            warning: 'exclamation-triangle',
+            info: 'info-circle'
+        };
+        return icons[type] || icons.info;
+    }
 }
 
-// === ACCESSIBILITY ENHANCEMENTS ===
-class AccessibilityManager {
+// ===============================================
+// FORM HANDLERS
+// ===============================================
+
+class FormManager {
     constructor() {
+        this.notificationManager = new NotificationManager();
         this.init();
     }
 
     init() {
-        this.setupKeyboardNavigation();
-        this.setupFocusManagement();
-        this.setupReducedMotion();
-        this.setupAnnouncements();
+        this.setupNewsletterForm();
+        this.setupNotifyButton();
     }
 
-    setupKeyboardNavigation() {
-        // Escape key handlers
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                // Stop any playing audio
-                if (window.audioManager?.currentlyPlaying) {
-                    window.audioManager.stopAudio(window.audioManager.currentlyPlaying);
-                }
-                
-                // Close any notifications
-                document.querySelectorAll('.notification').forEach(notification => {
-                    window.uiManager.closeNotification(notification);
-                });
-            }
-        });
+    setupNewsletterForm() {
+        const form = document.getElementById('newsletterForm');
+        if (!form) return;
 
-        // Tab trap for modals (if any are added later)
-        this.setupTabTrap();
-    }
-
-    setupTabTrap() {
-        const focusableElementsString = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key !== 'Tab') return;
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
             
-            // Add tab trap logic for future modal implementations
-        });
-    }
-
-    setupFocusManagement() {
-        // Enhanced focus indicators
-        document.addEventListener('focusin', (e) => {
-            if (e.target.classList.contains('interactive-element')) {
-                gsap.to(e.target, {
-                    scale: 1.02,
-                    duration: 0.2,
-                    ease: 'power2.out'
-                });
-            }
-        });
-
-        document.addEventListener('focusout', (e) => {
-            if (e.target.classList.contains('interactive-element')) {
-                gsap.to(e.target, {
-                    scale: 1,
-                    duration: 0.2,
-                    ease: 'power2.out'
-                });
-            }
-        });
-    }
-
-    setupReducedMotion() {
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        
-        const handleReducedMotion = (mediaQuery) => {
-            if (mediaQuery.matches) {
-                // Disable complex animations
-                CONFIG.performance.enableAnimations = false;
-                
-                // Stop particle systems
-                if (window.heroParticles) {
-                    window.heroParticles.destroy();
-                }
-                if (window.footerParticles) {
-                    window.footerParticles.destroy();
-                }
-                
-                // Disable moon animation
-                const moonTimeline = window.animationManager?.timelines.get('moon');
-                if (moonTimeline) {
-                    moonTimeline.pause();
-                }
-            }
-        };
-
-        prefersReducedMotion.addEventListener('change', handleReducedMotion);
-        handleReducedMotion(prefersReducedMotion);
-    }
-
-    setupAnnouncements() {
-        // Create live region for announcements
-        const liveRegion = document.createElement('div');
-        liveRegion.setAttribute('aria-live', 'polite');
-        liveRegion.setAttribute('aria-atomic', 'true');
-        liveRegion.className = 'sr-only';
-        liveRegion.id = 'live-announcements';
-        document.body.appendChild(liveRegion);
-
-        // Listen for theme changes
-        window.addEventListener('themeChanged', (e) => {
-            this.announce(`Theme changed to ${e.detail.theme} mode`);
-        });
-    }
-
-    announce(message) {
-        const liveRegion = document.getElementById('live-announcements');
-        if (liveRegion) {
-            liveRegion.textContent = message;
+            const emailInput = document.getElementById('newsletterEmail');
+            const message = document.getElementById('newsletterMessage');
             
-            // Clear after announcement
+            if (!emailInput) return;
+
+            const email = emailInput.value.trim();
+            if (!this.validateEmail(email)) {
+                this.showFormMessage(message, 'Please enter a valid email address.', 'error');
+                return;
+            }
+
+            this.showFormMessage(message, 'Subscribing...', 'loading');
+
+            // Simulate API call
+            try {
+                await this.simulateAPICall();
+                this.showFormMessage(message, 'Successfully subscribed! 🚀', 'success');
+                emailInput.value = '';
+                this.notificationManager.show('Welcome to the cosmic journey!', 'success');
+            } catch (error) {
+                this.showFormMessage(message, 'Subscription failed. Please try again.', 'error');
+                this.notificationManager.show('Subscription failed. Please try again.', 'error');
+            }
+        });
+    }
+
+    setupNotifyButton() {
+        const notifyBtn = document.getElementById('notifyBtn');
+        if (!notifyBtn) return;
+
+        notifyBtn.addEventListener('click', () => {
+            // Add loading state
+            const originalText = notifyBtn.querySelector('span').textContent;
+            const icon = notifyBtn.querySelector('i');
+            
+            icon.className = 'fas fa-spinner fa-spin';
+            notifyBtn.querySelector('span').textContent = 'Processing...';
+            notifyBtn.disabled = true;
+
+            // Simulate processing
             setTimeout(() => {
-                liveRegion.textContent = '';
-            }, 1000);
+                icon.className = 'fas fa-check';
+                notifyBtn.querySelector('span').textContent = 'Notified!';
+                
+                this.notificationManager.show(
+                    'You\'ll be the first to know when new projects launch! 🌟', 
+                    'success'
+                );
+
+                // Reset button after delay
+                setTimeout(() => {
+                    icon.className = 'fas fa-bell';
+                    notifyBtn.querySelector('span').textContent = originalText;
+                    notifyBtn.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
+    }
+
+    validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    showFormMessage(messageElement, text, type) {
+        if (!messageElement) return;
+
+        messageElement.textContent = text;
+        messageElement.className = `form-message ${type}`;
+        
+        gsap.to(messageElement, {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            ease: "power2.out"
+        });
+
+        if (type !== 'loading') {
+            setTimeout(() => {
+                gsap.to(messageElement, {
+                    opacity: 0,
+                    y: -10,
+                    duration: 0.3,
+                    ease: "power2.inOut"
+                });
+            }, 4000);
         }
+    }
+
+    simulateAPICall() {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // 90% success rate for demo
+                Math.random() > 0.1 ? resolve() : reject();
+            }, 2000);
+        });
     }
 }
 
-// === ERROR HANDLING & MONITORING ===
-class ErrorManager {
+// ===============================================
+// PERFORMANCE MONITORING
+// ===============================================
+
+class PerformanceMonitor {
     constructor() {
-        this.errors = [];
+        this.metrics = {
+            pageLoadTime: 0,
+            domLoadTime: 0,
+            firstContentfulPaint: 0,
+            largestContentfulPaint: 0
+        };
         this.init();
     }
 
     init() {
-        this.setupErrorHandlers();
-        this.setupPerformanceMonitoring();
+        this.measurePageLoad();
+        this.measureWebVitals();
+        this.monitorErrors();
     }
 
-    setupErrorHandlers() {
-        window.addEventListener('error', (e) => {
-            this.logError('JavaScript Error', e.error, e.filename, e.lineno);
+    measurePageLoad() {
+        window.addEventListener('load', () => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            if (perfData) {
+                this.metrics.pageLoadTime = perfData.loadEventEnd - perfData.loadEventStart;
+                this.metrics.domLoadTime = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
+            }
+        });
+    }
+
+    measureWebVitals() {
+        // First Contentful Paint
+        new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+                if (entry.name === 'first-contentful-paint') {
+                    this.metrics.firstContentfulPaint = entry.startTime;
+                }
+            }
+        }).observe({ type: 'paint', buffered: true });
+
+        // Largest Contentful Paint
+        new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            this.metrics.largestContentfulPaint = lastEntry.startTime;
+        }).observe({ type: 'largest-contentful-paint', buffered: true });
+    }
+
+    monitorErrors() {
+        window.addEventListener('error', (error) => {
+            console.error('JavaScript Error:', error);
+            // Could send to analytics service
         });
 
-        window.addEventListener('unhandledrejection', (e) => {
-            this.logError('Unhandled Promise Rejection', e.reason);
+        window.addEventListener('unhandledrejection', (error) => {
+            console.error('Unhandled Promise Rejection:', error);
+            // Could send to analytics service
         });
     }
 
-    setupPerformanceMonitoring() {
-        // Monitor long tasks
-        if ('PerformanceObserver' in window) {
-            const observer = new PerformanceObserver((list) => {
-                list.getEntries().forEach((entry) => {
-                    if (entry.duration > 50) {
-                        console.warn(`Long task detected: ${entry.duration}ms`);
-                    }
-                });
-            });
-            observer.observe({ entryTypes: ['longtask'] });
-        }
-    }
-
-    logError(type, error, filename = '', lineno = 0) {
-        const errorInfo = {
-            type,
-            message: error?.message || error,
-            filename,
-            lineno,
-            timestamp: new Date().toISOString(),
-            userAgent: navigator.userAgent,
-            url: window.location.href
-        };
-
-        this.errors.push(errorInfo);
-        console.error('Error logged:', errorInfo);
-
-        // In production, send to error tracking service
-        // this.sendToErrorTracking(errorInfo);
-    }
-
-    sendToErrorTracking(errorInfo) {
-        // Implementation for error tracking service
-        // Example: Sentry, LogRocket, etc.
+    getMetrics() {
+        return { ...this.metrics };
     }
 }
 
-// === MAIN APPLICATION INITIALIZATION ===
-class PortfolioApp {
-    constructor() {
-        this.managers = {};
-        this.init();
+// ===============================================
+// MAIN INITIALIZATION
+// ===============================================
+
+// Global instances
+window.animationManager = null;
+window.themeManager = null;
+window.navigationManager = null;
+window.loadingManager = null;
+window.formManager = null;
+window.performanceMonitor = null;
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        // Initialize core systems
+        window.loadingManager = new LoadingManager();
+        window.themeManager = new ThemeManager();
+        window.navigationManager = new NavigationManager();
+        window.formManager = new FormManager();
+        window.performanceMonitor = new PerformanceMonitor();
+        
+        // Animation manager will be initialized after loading screen
+        window.animationManager = new AnimationManager();
+
+        console.log('🚀 Portfolio system initialized successfully');
+    } catch (error) {
+        console.error('❌ Portfolio initialization failed:', error);
     }
+});
 
-    async init() {
-        try {
-            // Initialize performance monitoring first
-            this.managers.performance = new PerformanceMonitor();
-            window.performanceMonitor = this.managers.performance;
+// Handle window resize
+window.addEventListener('resize', utils.debounce(() => {
+    if (window.animationManager) {
+        window.animationManager.handleResize();
+    }
+}, 250));
 
-            // Initialize error handling
-            this.managers.error = new ErrorManager();
-
-            // Wait for DOM to be ready
-            if (document.readyState === 'loading') {
-                await new Promise(resolve => {
-                    document.addEventListener('DOMContentLoaded', resolve);
-                });
-            }
-
-            // Initialize core managers
-            await this.initializeManagers();
-
-            // Initialize particle systems if enabled
-            if (CONFIG.performance.enableParticles) {
-                this.initializeParticleSystems();
-            }
-
-            console.log('🚀 Portfolio App initialized successfully');
-
-        } catch (error) {
-            console.error('Failed to initialize Portfolio App:', error);
-            this.managers.error?.logError('Initialization Error', error);
+// Handle visibility changes (for performance)
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        // Pause animations when tab is not visible
+        if (window.animationManager && window.animationManager.moonTimeline) {
+            window.animationManager.moonTimeline.pause();
+        }
+    } else {
+        // Resume animations when tab becomes visible
+        if (window.animationManager && window.animationManager.moonTimeline) {
+            window.animationManager.moonTimeline.resume();
         }
     }
+});
 
-    async initializeManagers() {
-        // Initialize managers in order of dependency
-        this.managers.theme = new EnhancedThemeManager();
-        window.themeManager = this.managers.theme;
+// Expose utilities for console debugging
+window.portfolioUtils = {
+    config: CONFIG,
+    utils,
+    getPerformanceMetrics: () => window.performanceMonitor?.getMetrics(),
+    pauseAnimations: () => window.animationManager?.moonTimeline?.pause(),
+    resumeAnimations: () => window.animationManager?.moonTimeline?.resume(),
+    toggleTheme: () => window.themeManager?.toggleTheme()
+};
 
-        this.managers.animation = new ModernAnimationManager();
-        window.animationManager = this.managers.animation;
-
-        this.managers.audio = new EnhancedAudioManager();
-        window.audioManager = this.managers.audio;
-
-        this.managers.navigation = new EnhancedNavigationManager();
-        window.navigationManager = this.managers.navigation;
-
-        this.managers.loading = new EnhancedLoadingManager();
-        window.loadingManager = this.managers.loading;
-
-        this.managers.ui = new EnhancedUIManager();
-        window.uiManager = this.managers.ui;
-
-        this.managers.accessibility = new AccessibilityManager();
-        window.accessibilityManager = this.managers.accessibility;
-    }
-
-    initializeParticleSystems() {
-        // Hero particles
-        this.managers.heroParticles = new EnhancedParticleSystem('hero-particles', {
-            count: 60,
-            colors: ['#6366f1', '#8b5cf6', '#ec4899']
-        });
-        window.heroParticles = this.managers.heroParticles;
-
-        // Footer particles
-        this.managers.footerParticles = new EnhancedParticleSystem('footer-particles', {
-            count: 40,
-            colors: ['#6366f1', '#8b5cf6'],
-            size: { min: 1, max: 3 }
-        });
-        window.footerParticles = this.managers.footerParticles;
-    }
-
-    destroy() {
-        // Cleanup all managers
-        Object.values(this.managers).forEach(manager => {
-            if (manager.destroy) {
-                manager.destroy();
-            }
-            if (manager.cleanup) {
-                manager.cleanup();
-            }
-        });
-
-        // Clear global references
-        Object.keys(window).forEach(key => {
-            if (key.includes('Manager') || key.includes('Particles')) {
-                delete window[key];
-            }
-        });
-    }
-}
-
-// === INITIALIZE APPLICATION ===
-(function() {
-    'use strict';
-    
-    // Initialize app when ready
-    const app = new PortfolioApp();
-    window.portfolioApp = app;
-
-    // Expose utilities globally for debugging
-    if (process?.env?.NODE_ENV === 'development') {
-        window.CONFIG = CONFIG;
-        window.STATE = STATE;
-        window.Utils = Utils;
-    }
-
-    // Handle page visibility changes
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            // Pause non-essential animations when tab is hidden
-            Object.values(app.managers).forEach(manager => {
-                if (manager.pause) manager.pause();
-            });
-        } else {
-            // Resume animations when tab becomes visible
-            Object.values(app.managers).forEach(manager => {
-                if (manager.resume) manager.resume();
-            });
-        }
-    });
-
-    // Handle page unload
-    window.addEventListener('beforeunload', () => {
-        app.destroy();
-    });
-
-})();
-
-// === SERVICE WORKER REGISTRATION (OPTIONAL) ===
-if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+// Service Worker registration (if available)
+if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
             .then(registration => {
@@ -1729,921 +1481,5 @@ if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
             });
     });
 }
-/**
- * ===============================================
- * THANATSITT PORTFOLIO - ENHANCED JAVASCRIPT v3.0
- * ===============================================
- * Ultra-Modern Portfolio with Advanced Features
- * Author: Thanatsitt Santisamranwilai
- * Version: 3.0.0 (2025 Modern Update)
- * Features: GSAP Animations, Performance Optimization,
- *          Enhanced UX/UI, Modern ES6+ Features
- * ===============================================
- */
 
-// [Your existing code above...]
-
-// === ADVANCED CURSOR EFFECTS ===
-class AdvancedCursorManager {
-    constructor() {
-        this.cursor = null;
-        this.cursorDot = null;
-        this.isPointer = false;
-        this.init();
-    }
-
-    init() {
-        this.createCursor();
-        this.setupEventListeners();
-        this.setupHoverEffects();
-    }
-
-    createCursor() {
-        // Main cursor
-        this.cursor = document.createElement('div');
-        this.cursor.className = 'custom-cursor';
-        this.cursor.style.cssText = `
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--primary-color);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            transition: all 0.3s ease;
-            opacity: 0;
-        `;
-
-        // Cursor dot
-        this.cursorDot = document.createElement('div');
-        this.cursorDot.className = 'custom-cursor-dot';
-        this.cursorDot.style.cssText = `
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transition: all 0.1s ease;
-        `;
-
-        document.body.appendChild(this.cursor);
-        document.body.appendChild(this.cursorDot);
-    }
-
-    setupEventListeners() {
-        let mouseX = 0, mouseY = 0;
-        let cursorX = 0, cursorY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-
-            // Immediate dot follow
-            this.cursorDot.style.left = mouseX + 'px';
-            this.cursorDot.style.top = mouseY + 'px';
-
-            // Show cursor
-            this.cursor.style.opacity = '1';
-            this.cursorDot.style.opacity = '1';
-        });
-
-        document.addEventListener('mouseleave', () => {
-            this.cursor.style.opacity = '0';
-            this.cursorDot.style.opacity = '0';
-        });
-
-        // Smooth cursor follow
-        const updateCursor = () => {
-            const dx = mouseX - cursorX;
-            const dy = mouseY - cursorY;
-            
-            cursorX += dx * 0.1;
-            cursorY += dy * 0.1;
-            
-            this.cursor.style.left = (cursorX - 20) + 'px';
-            this.cursor.style.top = (cursorY - 20) + 'px';
-            
-            requestAnimationFrame(updateCursor);
-        };
-        updateCursor();
-    }
-
-    setupHoverEffects() {
-        // Interactive elements
-        const interactiveSelectors = [
-            'a', 'button', '.skill-card', '.demo-card', 
-            '.social-star', '.nav-link', '.hero__moon'
-        ];
-
-        interactiveSelectors.forEach(selector => {
-            document.querySelectorAll(selector).forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    this.cursor.style.transform = 'scale(1.5)';
-                    this.cursor.style.background = 'rgba(99, 102, 241, 0.1)';
-                    this.cursorDot.style.transform = 'scale(1.5)';
-                });
-
-                element.addEventListener('mouseleave', () => {
-                    this.cursor.style.transform = 'scale(1)';
-                    this.cursor.style.background = 'transparent';
-                    this.cursorDot.style.transform = 'scale(1)';
-                });
-            });
-        });
-    }
-}
-
-// === ENHANCED SCROLL ANIMATIONS ===
-class AdvancedScrollEffects {
-    constructor() {
-        this.scrollY = 0;
-        this.init();
-    }
-
-    init() {
-        this.setupParallaxEffects();
-        this.setupRevealAnimations();
-        this.setupScrollProgress();
-        this.setupSmoothScroll();
-    }
-
-    setupParallaxEffects() {
-        // Parallax backgrounds
-        const parallaxElements = document.querySelectorAll('[data-parallax]');
-        
-        window.addEventListener('scroll', Utils.throttle(() => {
-            const scrollTop = window.pageYOffset;
-            
-            parallaxElements.forEach(element => {
-                const speed = element.dataset.parallax || 0.5;
-                const yPos = -(scrollTop * speed);
-                element.style.transform = `translateY(${yPos}px)`;
-            });
-        }, 16));
-    }
-
-    setupRevealAnimations() {
-        // Advanced intersection observer for reveals
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const element = entry.target;
-                    const delay = element.dataset.delay || 0;
-                    
-                    gsap.to(element, {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.8,
-                        delay: parseFloat(delay),
-                        ease: 'power3.out'
-                    });
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        // Auto-add reveal animations to elements
-        document.querySelectorAll('.skill-card, .demo-card, .contact-method').forEach(element => {
-            gsap.set(element, { y: 50, opacity: 0 });
-            observer.observe(element);
-        });
-    }
-
-    setupScrollProgress() {
-        // Create scroll progress indicator
-        const progressBar = document.createElement('div');
-        progressBar.className = 'scroll-progress';
-        progressBar.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            z-index: 1000;
-            transition: width 0.1s ease;
-        `;
-        document.body.appendChild(progressBar);
-
-        window.addEventListener('scroll', Utils.throttle(() => {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            progressBar.style.width = scrollPercent + '%';
-        }, 16));
-    }
-
-    setupSmoothScroll() {
-        // Enhanced smooth scrolling for all anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = anchor.getAttribute('href').substring(1);
-                const target = document.getElementById(targetId);
-                
-                if (target) {
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    gsap.to(window, {
-                        duration: 1.5,
-                        scrollTo: offsetPosition,
-                        ease: "power3.inOut"
-                    });
-                }
-            });
-        });
-    }
-}
-
-// === DYNAMIC CONTENT LOADER ===
-class DynamicContentManager {
-    constructor() {
-        this.contentCache = new Map();
-        this.init();
-    }
-
-    init() {
-        this.setupLazyLoading();
-        this.setupDynamicProjects();
-    }
-
-    setupLazyLoading() {
-        // Enhanced image lazy loading with fade-in effect
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    const src = img.dataset.src;
-                    
-                    if (src) {
-                        // Create loading placeholder
-                        gsap.set(img, { opacity: 0 });
-                        
-                        img.addEventListener('load', () => {
-                            gsap.to(img, {
-                                opacity: 1,
-                                duration: 0.6,
-                                ease: 'power2.out'
-                            });
-                        });
-                        
-                        img.src = src;
-                        img.removeAttribute('data-src');
-                        imageObserver.unobserve(img);
-                    }
-                }
-            });
-        });
-
-        // Observe all images with data-src
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-
-    async setupDynamicProjects() {
-        // Simulate loading project data
-        const projectsContainer = document.querySelector('.projects__showcase');
-        if (!projectsContainer) return;
-
-        // Add loading projects dynamically
-        const projects = await this.loadProjects();
-        if (projects.length > 0) {
-            this.renderProjects(projects, projectsContainer);
-        }
-    }
-
-    async loadProjects() {
-        // Simulate API call - replace with real data source
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve([
-                    {
-                        id: 1,
-                        title: "AI Voice Synthesis Platform",
-                        description: "Revolutionary AI-powered voice generation system with real-time processing capabilities.",
-                        technologies: ["React", "Python", "TensorFlow", "WebRTC"],
-                        image: "https://via.placeholder.com/600x400/6366f1/ffffff?text=AI+Voice+Platform",
-                        status: "completed",
-                        featured: true
-                    },
-                    {
-                        id: 2,
-                        title: "Interactive Portfolio System",
-                        description: "Modern, responsive portfolio with advanced animations and user experience features.",
-                        technologies: ["GSAP", "Vanilla JS", "CSS3", "HTML5"],
-                        image: "https://via.placeholder.com/600x400/8b5cf6/ffffff?text=Portfolio+System",
-                        status: "completed",
-                        featured: true
-                    }
-                ]);
-            }, 2000);
-        });
-    }
-
-    renderProjects(projects, container) {
-        // Clear existing content
-        container.innerHTML = '';
-
-        const projectsGrid = document.createElement('div');
-        projectsGrid.className = 'projects-grid';
-
-        projects.forEach((project, index) => {
-            const projectCard = this.createProjectCard(project, index);
-            projectsGrid.appendChild(projectCard);
-        });
-
-        container.appendChild(projectsGrid);
-
-        // Animate in project cards
-        gsap.fromTo('.project-card', {
-            y: 100,
-            opacity: 0,
-            scale: 0.8
-        }, {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: 'back.out(1.7)'
-        });
-    }
-
-    createProjectCard(project, index) {
-        const card = document.createElement('article');
-        card.className = 'project-card';
-        card.innerHTML = `
-            <div class="project-card__image">
-                <img src="${project.image}" alt="${project.title}" loading="lazy">
-                <div class="project-card__overlay">
-                    <div class="project-actions">
-                        <button class="project-btn project-btn--view" data-project="${project.id}">
-                            <i class="fas fa-eye"></i>
-                            <span>View Details</span>
-                        </button>
-                        <button class="project-btn project-btn--demo" data-project="${project.id}">
-                            <i class="fas fa-external-link-alt"></i>
-                            <span>Live Demo</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card__content">
-                <h3 class="project-card__title">${project.title}</h3>
-                <p class="project-card__description">${project.description}</p>
-                <div class="project-card__technologies">
-                    ${project.technologies.map(tech => 
-                        `<span class="tech-tag">${tech}</span>`
-                    ).join('')}
-                </div>
-            </div>
-        `;
-
-        // Add interaction handlers
-        this.addProjectInteractions(card, project);
-
-        return card;
-    }
-
-    addProjectInteractions(card, project) {
-        const viewBtn = card.querySelector('.project-btn--view');
-        const demoBtn = card.querySelector('.project-btn--demo');
-
-        viewBtn?.addEventListener('click', () => {
-            this.openProjectModal(project);
-        });
-
-        demoBtn?.addEventListener('click', () => {
-            window.open(`#demo-${project.id}`, '_blank');
-        });
-
-        // Hover effects
-        card.addEventListener('mouseenter', () => {
-            gsap.to(card, {
-                y: -10,
-                scale: 1.02,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-
-        card.addEventListener('mouseleave', () => {
-            gsap.to(card, {
-                y: 0,
-                scale: 1,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-    }
-
-    openProjectModal(project) {
-        // Create and show project modal
-        const modal = this.createProjectModal(project);
-        document.body.appendChild(modal);
-        
-        // Animate modal in
-        gsap.fromTo(modal, {
-            opacity: 0,
-            scale: 0.8
-        }, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.4,
-            ease: 'back.out(1.5)'
-        });
-    }
-
-    createProjectModal(project) {
-        const modal = document.createElement('div');
-        modal.className = 'project-modal';
-        modal.innerHTML = `
-            <div class="project-modal__overlay"></div>
-            <div class="project-modal__content">
-                <button class="project-modal__close" aria-label="Close modal">
-                    <i class="fas fa-times"></i>
-                </button>
-                <div class="project-modal__header">
-                    <h2>${project.title}</h2>
-                    <span class="project-status project-status--${project.status}">
-                        ${project.status.charAt(0).toUpperCase() + project.status.slice(1)}
-                    </span>
-                </div>
-                <div class="project-modal__body">
-                    <img src="${project.image}" alt="${project.title}">
-                    <div class="project-details">
-                        <p>${project.description}</p>
-                        <h4>Technologies Used:</h4>
-                        <div class="tech-stack">
-                            ${project.technologies.map(tech => 
-                                `<span class="tech-tag tech-tag--large">${tech}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                </div>
-                <div class="project-modal__footer">
-                    <button class="cta-button cta-button--primary">
-                        <i class="fas fa-external-link-alt"></i>
-                        <span>View Live Demo</span>
-                    </button>
-                    <button class="cta-button cta-button--secondary">
-                        <i class="fab fa-github"></i>
-                        <span>View Source</span>
-                    </button>
-                </div>
-            </div>
-        `;
-
-        // Add close functionality
-        const closeBtn = modal.querySelector('.project-modal__close');
-        const overlay = modal.querySelector('.project-modal__overlay');
-        
-        const closeModal = () => {
-            gsap.to(modal, {
-                opacity: 0,
-                scale: 0.8,
-                duration: 0.3,
-                ease: 'power2.inOut',
-                onComplete: () => {
-                    if (document.body.contains(modal)) {
-                        document.body.removeChild(modal);
-                    }
-                }
-            });
-        };
-
-        closeBtn.addEventListener('click', closeModal);
-        overlay.addEventListener('click', closeModal);
-
-        // Escape key handler
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && document.body.contains(modal)) {
-                closeModal();
-            }
-        });
-
-        return modal;
-    }
-}
-
-// === ANALYTICS & USER INSIGHTS ===
-class UserInsightsManager {
-    constructor() {
-        this.sessionData = {
-            startTime: Date.now(),
-            interactions: [],
-            scrollDepth: 0,
-            timeOnSections: new Map()
-        };
-        this.init();
-    }
-
-    init() {
-        this.setupInteractionTracking();
-        this.setupScrollTracking();
-        this.setupTimeTracking();
-        this.setupHeatmapData();
-    }
-
-    setupInteractionTracking() {
-        // Track clicks on key elements
-        document.addEventListener('click', (e) => {
-            const target = e.target.closest('[data-track], .cta-button, .skill-card, .demo-button');
-            if (target) {
-                this.trackInteraction('click', {
-                    element: target.className,
-                    section: this.getCurrentSection(),
-                    timestamp: Date.now()
-                });
-            }
-        });
-
-        // Track audio plays
-        window.addEventListener('audioplay', (e) => {
-            this.trackInteraction('audio_play', {
-                audioId: e.detail?.audioId,
-                section: this.getCurrentSection(),
-                timestamp: Date.now()
-            });
-        });
-    }
-
-    setupScrollTracking() {
-        let maxScrollDepth = 0;
-        
-        window.addEventListener('scroll', Utils.throttle(() => {
-            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            
-            if (scrollPercent > maxScrollDepth) {
-                maxScrollDepth = scrollPercent;
-                this.sessionData.scrollDepth = Math.round(maxScrollDepth);
-                
-                // Track milestone scroll depths
-                if (maxScrollDepth > 25 && !this.sessionData.scrollMilestones?.includes(25)) {
-                    this.trackMilestone('scroll_25');
-                }
-                if (maxScrollDepth > 50 && !this.sessionData.scrollMilestones?.includes(50)) {
-                    this.trackMilestone('scroll_50');
-                }
-                if (maxScrollDepth > 75 && !this.sessionData.scrollMilestones?.includes(75)) {
-                    this.trackMilestone('scroll_75');
-                }
-                if (maxScrollDepth > 90 && !this.sessionData.scrollMilestones?.includes(90)) {
-                    this.trackMilestone('scroll_complete');
-                }
-            }
-        }, 1000));
-    }
-
-    setupTimeTracking() {
-        let currentSection = this.getCurrentSection();
-        let sectionStartTime = Date.now();
-
-        setInterval(() => {
-            const newSection = this.getCurrentSection();
-            
-            if (newSection !== currentSection) {
-                // Record time spent on previous section
-                const timeSpent = Date.now() - sectionStartTime;
-                const currentTime = this.sessionData.timeOnSections.get(currentSection) || 0;
-                this.sessionData.timeOnSections.set(currentSection, currentTime + timeSpent);
-                
-                currentSection = newSection;
-                sectionStartTime = Date.now();
-            }
-        }, 5000);
-    }
-
-    setupHeatmapData() {
-        // Track mouse movement for heatmap (simplified)
-        let mouseData = [];
-        
-        document.addEventListener('mousemove', Utils.throttle((e) => {
-            mouseData.push({
-                x: e.clientX / window.innerWidth,
-                y: e.clientY / window.innerHeight,
-                timestamp: Date.now()
-            });
-            
-            // Keep only last 1000 points to prevent memory issues
-            if (mouseData.length > 1000) {
-                mouseData = mouseData.slice(-500);
-            }
-        }, 100));
-
-        // Store heatmap data periodically
-        setInterval(() => {
-            if (mouseData.length > 0) {
-                this.sessionData.heatmapData = mouseData.slice();
-            }
-        }, 30000);
-    }
-
-    trackInteraction(type, data) {
-        this.sessionData.interactions.push({
-            type,
-            ...data
-        });
-
-        // Log to console for development
-        console.log('User interaction tracked:', { type, ...data });
-    }
-
-    trackMilestone(milestone) {
-        if (!this.sessionData.scrollMilestones) {
-            this.sessionData.scrollMilestones = [];
-        }
-        this.sessionData.scrollMilestones.push(milestone);
-        
-        console.log('Milestone reached:', milestone);
-    }
-
-    getCurrentSection() {
-        const sections = document.querySelectorAll('.section[id]');
-        let currentSection = 'unknown';
-        
-        sections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= 200 && rect.bottom >= 200) {
-                currentSection = section.id;
-            }
-        });
-        
-        return currentSection;
-    }
-
-    getSessionSummary() {
-        const sessionDuration = Date.now() - this.sessionData.startTime;
-        
-        return {
-            duration: sessionDuration,
-            interactions: this.sessionData.interactions.length,
-            scrollDepth: this.sessionData.scrollDepth,
-            sectionsViewed: Array.from(this.sessionData.timeOnSections.keys()),
-            timePerSection: Object.fromEntries(this.sessionData.timeOnSections),
-            milestones: this.sessionData.scrollMilestones || []
-        };
-    }
-}
-
-// === ADD TO EXISTING PORTFOLIO APP CLASS ===
-// Extend the existing PortfolioApp class initialization:
-
-// In the PortfolioApp.initializeManagers() method, add:
-async initializeManagers() {
-    // ... existing managers ...
-    
-    // Add new advanced managers
-    this.managers.cursor = new AdvancedCursorManager();
-    window.cursorManager = this.managers.cursor;
-
-    this.managers.scrollEffects = new AdvancedScrollEffects();
-    window.scrollEffects = this.managers.scrollEffects;
-
-    this.managers.dynamicContent = new DynamicContentManager();
-    window.dynamicContentManager = this.managers.dynamicContent;
-
-    this.managers.userInsights = new UserInsightsManager();
-    window.userInsights = this.managers.userInsights;
-}
-
-// === ENHANCED CSS FOR NEW FEATURES ===
-// Add these CSS rules to your stylesheet:
-const additionalCSS = `
-/* Custom Cursor */
-.custom-cursor {
-    pointer-events: none !important;
-}
-
-/* Project Cards */
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--space-xl);
-    margin-top: var(--space-xl);
-}
-
-.project-card {
-    background: var(--bg-card);
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-medium);
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.project-card__image {
-    position: relative;
-    aspect-ratio: 16/10;
-    overflow: hidden;
-}
-
-.project-card__image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.project-card:hover .project-card__image img {
-    transform: scale(1.05);
-}
-
-.project-card__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.project-card:hover .project-card__overlay {
-    opacity: 1;
-}
-
-.project-actions {
-    display: flex;
-    gap: var(--space-md);
-}
-
-.project-btn {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--border-radius-md);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    transition: all 0.3s ease;
-}
-
-.project-btn:hover {
-    background: var(--primary-color-light);
-    transform: translateY(-2px);
-}
-
-.project-card__content {
-    padding: var(--space-lg);
-}
-
-.project-card__title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: var(--space-sm);
-    color: var(--text-primary);
-}
-
-.project-card__description {
-    color: var(--text-secondary);
-    margin-bottom: var(--space-md);
-    line-height: 1.6;
-}
-
-.project-card__technologies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
-}
-
-.tech-tag {
-    background: var(--bg-secondary);
-    color: var(--primary-color);
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--border-radius-sm);
-    font-size: 0.75rem;
-    font-weight: 500;
-}
-
-/* Scroll Progress */
-.scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    z-index: 1001;
-    transition: width 0.1s ease;
-}
-
-/* Project Modal */
-.project-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-lg);
-}
-
-.project-modal__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(4px);
-}
-
-.project-modal__content {
-    background: var(--bg-primary);
-    border-radius: var(--border-radius-lg);
-    max-width: 800px;
-    width: 100%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: var(--shadow-large);
-}
-
-.project-modal__close {
-    position: absolute;
-    top: var(--space-md);
-    right: var(--space-md);
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-secondary);
-    z-index: 10;
-}
-
-.project-modal__header {
-    padding: var(--space-xl);
-    border-bottom: 1px solid var(--border-default);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.project-modal__body {
-    padding: var(--space-xl);
-}
-
-.project-modal__body img {
-    width: 100%;
-    border-radius: var(--border-radius-md);
-    margin-bottom: var(--space-lg);
-}
-
-.project-modal__footer {
-    padding: var(--space-xl);
-    border-top: 1px solid var(--border-default);
-    display: flex;
-    gap: var(--space-md);
-    justify-content: flex-end;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-lg);
-    }
-    
-    .project-modal {
-        padding: var(--space-md);
-    }
-    
-    .project-modal__content {
-        max-height: 90vh;
-    }
-    
-    .custom-cursor,
-    .custom-cursor-dot {
-        display: none;
-    }
-}
-`;
-
-// Inject additional CSS
-const styleSheet = document.createElement('style');
-styleSheet.textContent = additionalCSS;
-document.head.appendChild(styleSheet);
-
-// === CONSOLE STARTUP MESSAGE ===
-console.log(`
-🚀 ENHANCED PORTFOLIO FEATURES LOADED:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✨ Advanced Cursor Effects
-📊 User Insights & Analytics
-🎯 Dynamic Content Loading
-🎨 Enhanced Scroll Animations
-🎭 Project Modal System
-📈 Performance Monitoring
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Version: 3.0.0 | Ready for cosmic adventures!
-`);
+console.log('✨ Enhanced Portfolio Script Loaded - Ready for Cosmic Adventures!');
