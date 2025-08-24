@@ -26,7 +26,7 @@ const LAST_UPDATED = '2025-01-20';
 const CORE_ASSETS = [
     '/',
     '/index.html',
-    '/assets/css/styles.css',
+    '/assets/css/main.css',
     '/assets/css/script.js',
     '/manifest.json',
     '/favicon.ico',
