@@ -1729,3 +1729,921 @@ if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
             });
     });
 }
+/**
+ * ===============================================
+ * THANATSITT PORTFOLIO - ENHANCED JAVASCRIPT v3.0
+ * ===============================================
+ * Ultra-Modern Portfolio with Advanced Features
+ * Author: Thanatsitt Santisamranwilai
+ * Version: 3.0.0 (2025 Modern Update)
+ * Features: GSAP Animations, Performance Optimization,
+ *          Enhanced UX/UI, Modern ES6+ Features
+ * ===============================================
+ */
+
+// [Your existing code above...]
+
+// === ADVANCED CURSOR EFFECTS ===
+class AdvancedCursorManager {
+    constructor() {
+        this.cursor = null;
+        this.cursorDot = null;
+        this.isPointer = false;
+        this.init();
+    }
+
+    init() {
+        this.createCursor();
+        this.setupEventListeners();
+        this.setupHoverEffects();
+    }
+
+    createCursor() {
+        // Main cursor
+        this.cursor = document.createElement('div');
+        this.cursor.className = 'custom-cursor';
+        this.cursor.style.cssText = `
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: all 0.3s ease;
+            opacity: 0;
+        `;
+
+        // Cursor dot
+        this.cursorDot = document.createElement('div');
+        this.cursorDot.className = 'custom-cursor-dot';
+        this.cursorDot.style.cssText = `
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.1s ease;
+        `;
+
+        document.body.appendChild(this.cursor);
+        document.body.appendChild(this.cursorDot);
+    }
+
+    setupEventListeners() {
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Immediate dot follow
+            this.cursorDot.style.left = mouseX + 'px';
+            this.cursorDot.style.top = mouseY + 'px';
+
+            // Show cursor
+            this.cursor.style.opacity = '1';
+            this.cursorDot.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            this.cursor.style.opacity = '0';
+            this.cursorDot.style.opacity = '0';
+        });
+
+        // Smooth cursor follow
+        const updateCursor = () => {
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
+            
+            cursorX += dx * 0.1;
+            cursorY += dy * 0.1;
+            
+            this.cursor.style.left = (cursorX - 20) + 'px';
+            this.cursor.style.top = (cursorY - 20) + 'px';
+            
+            requestAnimationFrame(updateCursor);
+        };
+        updateCursor();
+    }
+
+    setupHoverEffects() {
+        // Interactive elements
+        const interactiveSelectors = [
+            'a', 'button', '.skill-card', '.demo-card', 
+            '.social-star', '.nav-link', '.hero__moon'
+        ];
+
+        interactiveSelectors.forEach(selector => {
+            document.querySelectorAll(selector).forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    this.cursor.style.transform = 'scale(1.5)';
+                    this.cursor.style.background = 'rgba(99, 102, 241, 0.1)';
+                    this.cursorDot.style.transform = 'scale(1.5)';
+                });
+
+                element.addEventListener('mouseleave', () => {
+                    this.cursor.style.transform = 'scale(1)';
+                    this.cursor.style.background = 'transparent';
+                    this.cursorDot.style.transform = 'scale(1)';
+                });
+            });
+        });
+    }
+}
+
+// === ENHANCED SCROLL ANIMATIONS ===
+class AdvancedScrollEffects {
+    constructor() {
+        this.scrollY = 0;
+        this.init();
+    }
+
+    init() {
+        this.setupParallaxEffects();
+        this.setupRevealAnimations();
+        this.setupScrollProgress();
+        this.setupSmoothScroll();
+    }
+
+    setupParallaxEffects() {
+        // Parallax backgrounds
+        const parallaxElements = document.querySelectorAll('[data-parallax]');
+        
+        window.addEventListener('scroll', Utils.throttle(() => {
+            const scrollTop = window.pageYOffset;
+            
+            parallaxElements.forEach(element => {
+                const speed = element.dataset.parallax || 0.5;
+                const yPos = -(scrollTop * speed);
+                element.style.transform = `translateY(${yPos}px)`;
+            });
+        }, 16));
+    }
+
+    setupRevealAnimations() {
+        // Advanced intersection observer for reveals
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const delay = element.dataset.delay || 0;
+                    
+                    gsap.to(element, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        delay: parseFloat(delay),
+                        ease: 'power3.out'
+                    });
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // Auto-add reveal animations to elements
+        document.querySelectorAll('.skill-card, .demo-card, .contact-method').forEach(element => {
+            gsap.set(element, { y: 50, opacity: 0 });
+            observer.observe(element);
+        });
+    }
+
+    setupScrollProgress() {
+        // Create scroll progress indicator
+        const progressBar = document.createElement('div');
+        progressBar.className = 'scroll-progress';
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            z-index: 1000;
+            transition: width 0.1s ease;
+        `;
+        document.body.appendChild(progressBar);
+
+        window.addEventListener('scroll', Utils.throttle(() => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = scrollPercent + '%';
+        }, 16));
+    }
+
+    setupSmoothScroll() {
+        // Enhanced smooth scrolling for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = anchor.getAttribute('href').substring(1);
+                const target = document.getElementById(targetId);
+                
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    gsap.to(window, {
+                        duration: 1.5,
+                        scrollTo: offsetPosition,
+                        ease: "power3.inOut"
+                    });
+                }
+            });
+        });
+    }
+}
+
+// === DYNAMIC CONTENT LOADER ===
+class DynamicContentManager {
+    constructor() {
+        this.contentCache = new Map();
+        this.init();
+    }
+
+    init() {
+        this.setupLazyLoading();
+        this.setupDynamicProjects();
+    }
+
+    setupLazyLoading() {
+        // Enhanced image lazy loading with fade-in effect
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const src = img.dataset.src;
+                    
+                    if (src) {
+                        // Create loading placeholder
+                        gsap.set(img, { opacity: 0 });
+                        
+                        img.addEventListener('load', () => {
+                            gsap.to(img, {
+                                opacity: 1,
+                                duration: 0.6,
+                                ease: 'power2.out'
+                            });
+                        });
+                        
+                        img.src = src;
+                        img.removeAttribute('data-src');
+                        imageObserver.unobserve(img);
+                    }
+                }
+            });
+        });
+
+        // Observe all images with data-src
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
+    async setupDynamicProjects() {
+        // Simulate loading project data
+        const projectsContainer = document.querySelector('.projects__showcase');
+        if (!projectsContainer) return;
+
+        // Add loading projects dynamically
+        const projects = await this.loadProjects();
+        if (projects.length > 0) {
+            this.renderProjects(projects, projectsContainer);
+        }
+    }
+
+    async loadProjects() {
+        // Simulate API call - replace with real data source
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve([
+                    {
+                        id: 1,
+                        title: "AI Voice Synthesis Platform",
+                        description: "Revolutionary AI-powered voice generation system with real-time processing capabilities.",
+                        technologies: ["React", "Python", "TensorFlow", "WebRTC"],
+                        image: "https://via.placeholder.com/600x400/6366f1/ffffff?text=AI+Voice+Platform",
+                        status: "completed",
+                        featured: true
+                    },
+                    {
+                        id: 2,
+                        title: "Interactive Portfolio System",
+                        description: "Modern, responsive portfolio with advanced animations and user experience features.",
+                        technologies: ["GSAP", "Vanilla JS", "CSS3", "HTML5"],
+                        image: "https://via.placeholder.com/600x400/8b5cf6/ffffff?text=Portfolio+System",
+                        status: "completed",
+                        featured: true
+                    }
+                ]);
+            }, 2000);
+        });
+    }
+
+    renderProjects(projects, container) {
+        // Clear existing content
+        container.innerHTML = '';
+
+        const projectsGrid = document.createElement('div');
+        projectsGrid.className = 'projects-grid';
+
+        projects.forEach((project, index) => {
+            const projectCard = this.createProjectCard(project, index);
+            projectsGrid.appendChild(projectCard);
+        });
+
+        container.appendChild(projectsGrid);
+
+        // Animate in project cards
+        gsap.fromTo('.project-card', {
+            y: 100,
+            opacity: 0,
+            scale: 0.8
+        }, {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: 'back.out(1.7)'
+        });
+    }
+
+    createProjectCard(project, index) {
+        const card = document.createElement('article');
+        card.className = 'project-card';
+        card.innerHTML = `
+            <div class="project-card__image">
+                <img src="${project.image}" alt="${project.title}" loading="lazy">
+                <div class="project-card__overlay">
+                    <div class="project-actions">
+                        <button class="project-btn project-btn--view" data-project="${project.id}">
+                            <i class="fas fa-eye"></i>
+                            <span>View Details</span>
+                        </button>
+                        <button class="project-btn project-btn--demo" data-project="${project.id}">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>Live Demo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card__content">
+                <h3 class="project-card__title">${project.title}</h3>
+                <p class="project-card__description">${project.description}</p>
+                <div class="project-card__technologies">
+                    ${project.technologies.map(tech => 
+                        `<span class="tech-tag">${tech}</span>`
+                    ).join('')}
+                </div>
+            </div>
+        `;
+
+        // Add interaction handlers
+        this.addProjectInteractions(card, project);
+
+        return card;
+    }
+
+    addProjectInteractions(card, project) {
+        const viewBtn = card.querySelector('.project-btn--view');
+        const demoBtn = card.querySelector('.project-btn--demo');
+
+        viewBtn?.addEventListener('click', () => {
+            this.openProjectModal(project);
+        });
+
+        demoBtn?.addEventListener('click', () => {
+            window.open(`#demo-${project.id}`, '_blank');
+        });
+
+        // Hover effects
+        card.addEventListener('mouseenter', () => {
+            gsap.to(card, {
+                y: -10,
+                scale: 1.02,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
+                y: 0,
+                scale: 1,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+    }
+
+    openProjectModal(project) {
+        // Create and show project modal
+        const modal = this.createProjectModal(project);
+        document.body.appendChild(modal);
+        
+        // Animate modal in
+        gsap.fromTo(modal, {
+            opacity: 0,
+            scale: 0.8
+        }, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            ease: 'back.out(1.5)'
+        });
+    }
+
+    createProjectModal(project) {
+        const modal = document.createElement('div');
+        modal.className = 'project-modal';
+        modal.innerHTML = `
+            <div class="project-modal__overlay"></div>
+            <div class="project-modal__content">
+                <button class="project-modal__close" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="project-modal__header">
+                    <h2>${project.title}</h2>
+                    <span class="project-status project-status--${project.status}">
+                        ${project.status.charAt(0).toUpperCase() + project.status.slice(1)}
+                    </span>
+                </div>
+                <div class="project-modal__body">
+                    <img src="${project.image}" alt="${project.title}">
+                    <div class="project-details">
+                        <p>${project.description}</p>
+                        <h4>Technologies Used:</h4>
+                        <div class="tech-stack">
+                            ${project.technologies.map(tech => 
+                                `<span class="tech-tag tech-tag--large">${tech}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+                <div class="project-modal__footer">
+                    <button class="cta-button cta-button--primary">
+                        <i class="fas fa-external-link-alt"></i>
+                        <span>View Live Demo</span>
+                    </button>
+                    <button class="cta-button cta-button--secondary">
+                        <i class="fab fa-github"></i>
+                        <span>View Source</span>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Add close functionality
+        const closeBtn = modal.querySelector('.project-modal__close');
+        const overlay = modal.querySelector('.project-modal__overlay');
+        
+        const closeModal = () => {
+            gsap.to(modal, {
+                opacity: 0,
+                scale: 0.8,
+                duration: 0.3,
+                ease: 'power2.inOut',
+                onComplete: () => {
+                    if (document.body.contains(modal)) {
+                        document.body.removeChild(modal);
+                    }
+                }
+            });
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        overlay.addEventListener('click', closeModal);
+
+        // Escape key handler
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.body.contains(modal)) {
+                closeModal();
+            }
+        });
+
+        return modal;
+    }
+}
+
+// === ANALYTICS & USER INSIGHTS ===
+class UserInsightsManager {
+    constructor() {
+        this.sessionData = {
+            startTime: Date.now(),
+            interactions: [],
+            scrollDepth: 0,
+            timeOnSections: new Map()
+        };
+        this.init();
+    }
+
+    init() {
+        this.setupInteractionTracking();
+        this.setupScrollTracking();
+        this.setupTimeTracking();
+        this.setupHeatmapData();
+    }
+
+    setupInteractionTracking() {
+        // Track clicks on key elements
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('[data-track], .cta-button, .skill-card, .demo-button');
+            if (target) {
+                this.trackInteraction('click', {
+                    element: target.className,
+                    section: this.getCurrentSection(),
+                    timestamp: Date.now()
+                });
+            }
+        });
+
+        // Track audio plays
+        window.addEventListener('audioplay', (e) => {
+            this.trackInteraction('audio_play', {
+                audioId: e.detail?.audioId,
+                section: this.getCurrentSection(),
+                timestamp: Date.now()
+            });
+        });
+    }
+
+    setupScrollTracking() {
+        let maxScrollDepth = 0;
+        
+        window.addEventListener('scroll', Utils.throttle(() => {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            
+            if (scrollPercent > maxScrollDepth) {
+                maxScrollDepth = scrollPercent;
+                this.sessionData.scrollDepth = Math.round(maxScrollDepth);
+                
+                // Track milestone scroll depths
+                if (maxScrollDepth > 25 && !this.sessionData.scrollMilestones?.includes(25)) {
+                    this.trackMilestone('scroll_25');
+                }
+                if (maxScrollDepth > 50 && !this.sessionData.scrollMilestones?.includes(50)) {
+                    this.trackMilestone('scroll_50');
+                }
+                if (maxScrollDepth > 75 && !this.sessionData.scrollMilestones?.includes(75)) {
+                    this.trackMilestone('scroll_75');
+                }
+                if (maxScrollDepth > 90 && !this.sessionData.scrollMilestones?.includes(90)) {
+                    this.trackMilestone('scroll_complete');
+                }
+            }
+        }, 1000));
+    }
+
+    setupTimeTracking() {
+        let currentSection = this.getCurrentSection();
+        let sectionStartTime = Date.now();
+
+        setInterval(() => {
+            const newSection = this.getCurrentSection();
+            
+            if (newSection !== currentSection) {
+                // Record time spent on previous section
+                const timeSpent = Date.now() - sectionStartTime;
+                const currentTime = this.sessionData.timeOnSections.get(currentSection) || 0;
+                this.sessionData.timeOnSections.set(currentSection, currentTime + timeSpent);
+                
+                currentSection = newSection;
+                sectionStartTime = Date.now();
+            }
+        }, 5000);
+    }
+
+    setupHeatmapData() {
+        // Track mouse movement for heatmap (simplified)
+        let mouseData = [];
+        
+        document.addEventListener('mousemove', Utils.throttle((e) => {
+            mouseData.push({
+                x: e.clientX / window.innerWidth,
+                y: e.clientY / window.innerHeight,
+                timestamp: Date.now()
+            });
+            
+            // Keep only last 1000 points to prevent memory issues
+            if (mouseData.length > 1000) {
+                mouseData = mouseData.slice(-500);
+            }
+        }, 100));
+
+        // Store heatmap data periodically
+        setInterval(() => {
+            if (mouseData.length > 0) {
+                this.sessionData.heatmapData = mouseData.slice();
+            }
+        }, 30000);
+    }
+
+    trackInteraction(type, data) {
+        this.sessionData.interactions.push({
+            type,
+            ...data
+        });
+
+        // Log to console for development
+        console.log('User interaction tracked:', { type, ...data });
+    }
+
+    trackMilestone(milestone) {
+        if (!this.sessionData.scrollMilestones) {
+            this.sessionData.scrollMilestones = [];
+        }
+        this.sessionData.scrollMilestones.push(milestone);
+        
+        console.log('Milestone reached:', milestone);
+    }
+
+    getCurrentSection() {
+        const sections = document.querySelectorAll('.section[id]');
+        let currentSection = 'unknown';
+        
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 200 && rect.bottom >= 200) {
+                currentSection = section.id;
+            }
+        });
+        
+        return currentSection;
+    }
+
+    getSessionSummary() {
+        const sessionDuration = Date.now() - this.sessionData.startTime;
+        
+        return {
+            duration: sessionDuration,
+            interactions: this.sessionData.interactions.length,
+            scrollDepth: this.sessionData.scrollDepth,
+            sectionsViewed: Array.from(this.sessionData.timeOnSections.keys()),
+            timePerSection: Object.fromEntries(this.sessionData.timeOnSections),
+            milestones: this.sessionData.scrollMilestones || []
+        };
+    }
+}
+
+// === ADD TO EXISTING PORTFOLIO APP CLASS ===
+// Extend the existing PortfolioApp class initialization:
+
+// In the PortfolioApp.initializeManagers() method, add:
+async initializeManagers() {
+    // ... existing managers ...
+    
+    // Add new advanced managers
+    this.managers.cursor = new AdvancedCursorManager();
+    window.cursorManager = this.managers.cursor;
+
+    this.managers.scrollEffects = new AdvancedScrollEffects();
+    window.scrollEffects = this.managers.scrollEffects;
+
+    this.managers.dynamicContent = new DynamicContentManager();
+    window.dynamicContentManager = this.managers.dynamicContent;
+
+    this.managers.userInsights = new UserInsightsManager();
+    window.userInsights = this.managers.userInsights;
+}
+
+// === ENHANCED CSS FOR NEW FEATURES ===
+// Add these CSS rules to your stylesheet:
+const additionalCSS = `
+/* Custom Cursor */
+.custom-cursor {
+    pointer-events: none !important;
+}
+
+/* Project Cards */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+}
+
+.project-card {
+    background: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.project-card__image {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+}
+
+.project-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-card__image img {
+    transform: scale(1.05);
+}
+
+.project-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-card__overlay {
+    opacity: 1;
+}
+
+.project-actions {
+    display: flex;
+    gap: var(--space-md);
+}
+
+.project-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    transition: all 0.3s ease;
+}
+
+.project-btn:hover {
+    background: var(--primary-color-light);
+    transform: translateY(-2px);
+}
+
+.project-card__content {
+    padding: var(--space-lg);
+}
+
+.project-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+.project-card__description {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+    line-height: 1.6;
+}
+
+.project-card__technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.tech-tag {
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Scroll Progress */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    z-index: 1001;
+    transition: width 0.1s ease;
+}
+
+/* Project Modal */
+.project-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+
+.project-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+.project-modal__content {
+    background: var(--bg-primary);
+    border-radius: var(--border-radius-lg);
+    max-width: 800px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: var(--shadow-large);
+}
+
+.project-modal__close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    z-index: 10;
+}
+
+.project-modal__header {
+    padding: var(--space-xl);
+    border-bottom: 1px solid var(--border-default);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.project-modal__body {
+    padding: var(--space-xl);
+}
+
+.project-modal__body img {
+    width: 100%;
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--space-lg);
+}
+
+.project-modal__footer {
+    padding: var(--space-xl);
+    border-top: 1px solid var(--border-default);
+    display: flex;
+    gap: var(--space-md);
+    justify-content: flex-end;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+    
+    .project-modal {
+        padding: var(--space-md);
+    }
+    
+    .project-modal__content {
+        max-height: 90vh;
+    }
+    
+    .custom-cursor,
+    .custom-cursor-dot {
+        display: none;
+    }
+}
+`;
+
+// Inject additional CSS
+const styleSheet = document.createElement('style');
+styleSheet.textContent = additionalCSS;
+document.head.appendChild(styleSheet);
+
+// === CONSOLE STARTUP MESSAGE ===
+console.log(`
+🚀 ENHANCED PORTFOLIO FEATURES LOADED:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ Advanced Cursor Effects
+📊 User Insights & Analytics
+🎯 Dynamic Content Loading
+🎨 Enhanced Scroll Animations
+🎭 Project Modal System
+📈 Performance Monitoring
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Version: 3.0.0 | Ready for cosmic adventures!
+`);
