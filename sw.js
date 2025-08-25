@@ -1,91 +1,103 @@
-/**
- * ✅ Enhanced Service Worker for WCAG-Compliant Portfolio PWA
- * Features: Offline support, accessibility caching, performance optimization
- */
+// ===============================================
+// COMPLETE SERVICE WORKER FOR PORTFOLIO
+// Version: 3.0 - Covers ALL Resources
+// ===============================================
 
-const CACHE_NAME = 'thanatsitt-portfolio-v1.0.0';
-const CACHE_PREFIX = 'thanatsitt-pwa';
-const ACCESSIBILITY_CACHE = `${CACHE_PREFIX}-accessibility`;
-const STATIC_CACHE = `${CACHE_PREFIX}-static`;
-const DYNAMIC_CACHE = `${CACHE_PREFIX}-dynamic`;
+const CACHE_NAME = 'portfolio-v3.0';
+const STATIC_CACHE = `${CACHE_NAME}-static`;
+const DYNAMIC_CACHE = `${CACHE_NAME}-dynamic`;
+const AUDIO_CACHE = `${CACHE_NAME}-audio`;
+const IMAGE_CACHE = `${CACHE_NAME}-images`;
 
-// ✅ Essential files for offline functionality
-const STATIC_ASSETS = [
+// ===============================================
+// COMPLETE RESOURCE LIST
+// ===============================================
+const STATIC_RESOURCES = [
+  // 📄 Core HTML/CSS/JS
   '/',
-  '/site.webmanifest',
-  '/browserconfig.xml',
+  '/index.html',
+  '/manifest.json',
   
-  // CSS Files
-  '/assets/css/styles.css',
+  // 🎨 Stylesheets
+  'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css',
+  'https://unpkg.com/aos@2.3.1/dist/aos.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
   
-  // JavaScript Files
-  '/assets/js/script.js',
+  // 🔤 Fonts
+  'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap',
+  'https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecg.woff2',
+  'https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLCz7Z1xlFQ.woff2',
   
-  // Essential External Libraries (CDN fallbacks)
-  'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css',
-  'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
+  // 📚 JavaScript Libraries
+  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
+  'https://unpkg.com/aos@2.3.1/dist/aos.js',
+  'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js',
   
-  // Essential JavaScript Libraries
-  'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js',
-  'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+  // 🎵 Audio Files
+  'https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/demo/voice/intro/Thann_Intro.wav',
+  'https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3',
   
-  // Essential Images
-  'https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg',
-  'https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/favicon.svg',
+  // 🖼️ Images
+  'https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/images/data/profile/1755844218313.jpg',
   
-  // Essential Fonts
-  'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap'
+  // 📱 PWA Icons (add these if you have them)
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png',
+  '/favicon.ico'
 ];
 
-// ✅ Accessibility-specific resources
-const ACCESSIBILITY_ASSETS = [
-  // Voice demos for offline access
-  'https://github.com/Pigletpeakkung/artofppage/raw/feb49ee7640dd7d8aa8ece40bbd8258b69ef1e98/assets/demo/voice/intro/Thann_Intro.wav',
-  'https://github.com/Pigletpeakkung/artofppage/raw/92520ec59362efa20d141a2b031dbb40d28f4f3a/assets/demo/voice/act/Thanattsitt-Hobby-Freetalk.mp3'
-];
+// Audio file extensions for special handling
+const AUDIO_EXTENSIONS = ['.wav', '.mp3', '.ogg', '.m4a', '.aac'];
+const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.ico'];
+const FONT_EXTENSIONS = ['.woff', '.woff2', '.ttf', '.otf', '.eot'];
 
-// ✅ Service Worker Installation
-self.addEventListener('install', (event) => {
-  console.log('🌟 WCAG-Compliant Portfolio SW: Installing...');
+// ===============================================
+// INSTALL EVENT - Cache All Resources
+// ===============================================
+self.addEventListener('install', event => {
+  console.log('🚀 Portfolio Service Worker installing...');
   
   event.waitUntil(
     Promise.all([
-      // Cache static assets
-      caches.open(STATIC_CACHE).then((cache) => {
-        console.log('📦 Caching static assets...');
-        return cache.addAll(STATIC_ASSETS);
+      // Cache static resources
+      caches.open(STATIC_CACHE).then(cache => {
+        console.log('📦 Caching static resources...');
+        return cache.addAll(STATIC_RESOURCES.map(url => new Request(url, {
+          cache: 'no-cache',
+          mode: 'cors'
+        })));
       }),
       
-      // Cache accessibility assets
-      caches.open(ACCESSIBILITY_CACHE).then((cache) => {
-        console.log('♿ Caching accessibility assets...');
-        return cache.addAll(ACCESSIBILITY_ASSETS);
-      })
+      // Initialize other caches
+      caches.open(AUDIO_CACHE),
+      caches.open(IMAGE_CACHE),
+      caches.open(DYNAMIC_CACHE)
+      
     ]).then(() => {
-      console.log('✅ SW Installation complete');
-      return self.skipWaiting();
-    }).catch((error) => {
-      console.error('❌ SW Installation failed:', error);
+      console.log('✅ All resources cached successfully');
+      self.skipWaiting();
+    }).catch(error => {
+      console.error('❌ Caching failed:', error);
+      // Don't fail completely, some resources might be unavailable
+      self.skipWaiting();
     })
   );
 });
 
-// ✅ Service Worker Activation
-self.addEventListener('activate', (event) => {
-  console.log('🚀 WCAG-Compliant Portfolio SW: Activating...');
+// ===============================================
+// ACTIVATE EVENT - Clean Old Caches
+// ===============================================
+self.addEventListener('activate', event => {
+  console.log('🔄 Portfolio Service Worker activating...');
   
   event.waitUntil(
     Promise.all([
-      // Clean up old caches
-      caches.keys().then((cacheNames) => {
+      // Clean old caches
+      caches.keys().then(cacheNames => {
         return Promise.all(
-          cacheNames.map((cacheName) => {
-            if (cacheName.startsWith(CACHE_PREFIX) && cacheName !== STATIC_CACHE && 
-                cacheName !== ACCESSIBILITY_CACHE && cacheName !== DYNAMIC_CACHE) {
+          cacheNames.map(cacheName => {
+            if (!cacheName.startsWith(CACHE_NAME)) {
               console.log('🗑️ Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
@@ -93,107 +105,151 @@ self.addEventListener('activate', (event) => {
         );
       }),
       
-      // Claim all clients
+      // Take control of all clients
       self.clients.claim()
-    ]).then(() => {
-      console.log('✅ SW Activation complete');
       
-      // Notify clients about accessibility features
-      self.clients.matchAll().then((clients) => {
-        clients.forEach((client) => {
-          client.postMessage({
-            type: 'SW_ACTIVATED',
-            features: {
-              offlineSupport: true,
-              accessibilityCache: true,
-              voiceDemosOffline: true,
-              reducedMotion: false // Will be detected by client
-            }
-          });
+    ]).then(() => {
+      console.log('✅ Service Worker activated successfully');
+      
+      // Notify clients about activation
+      return self.clients.matchAll();
+    }).then(clients => {
+      clients.forEach(client => {
+        client.postMessage({
+          type: 'SW_ACTIVATED',
+          message: '🎉 Portfolio is now available offline!'
         });
       });
     })
   );
 });
 
-// ✅ Enhanced Fetch Strategy with Accessibility Focus
-self.addEventListener('fetch', (event) => {
+// ===============================================
+// FETCH EVENT - Smart Caching Strategy
+// ===============================================
+self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
   
   // Skip non-GET requests
-  if (request.method !== 'GET') {
-    return;
-  }
+  if (request.method !== 'GET') return;
   
-  // Handle different types of requests
-  if (isStaticAsset(request.url)) {
-    event.respondWith(cacheFirst(request, STATIC_CACHE));
-  } else if (isAccessibilityAsset(request.url)) {
-    event.respondWith(cacheFirst(request, ACCESSIBILITY_CACHE));
-  } else if (isAPIRequest(url)) {
-    event.respondWith(networkFirst(request));
-  } else if (isImageRequest(request)) {
-    event.respondWith(cacheFirst(request, DYNAMIC_CACHE));
-  } else {
-    event.respondWith(staleWhileRevalidate(request));
-  }
+  // Skip chrome-extension and other protocols
+  if (!url.protocol.startsWith('http')) return;
+  
+  event.respondWith(handleRequest(request));
 });
 
-// ✅ Cache-First Strategy (for static assets)
-async function cacheFirst(request, cacheName) {
-  try {
-    const cache = await caches.open(cacheName);
-    const cachedResponse = await cache.match(request);
-    
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    
-    const networkResponse = await fetch(request);
-    
-    if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
-    }
-    
-    return networkResponse;
-  } catch (error) {
-    console.error('Cache-first strategy failed:', error);
-    return getOfflineFallback(request);
-  }
-}
-
-// ✅ Network-First Strategy (for API calls)
-async function networkFirst(request) {
-  try {
-    const networkResponse = await fetch(request);
-    
-    if (networkResponse.ok) {
-      const cache = await caches.open(DYNAMIC_CACHE);
-      cache.put(request, networkResponse.clone());
-    }
-    
-    return networkResponse;
-  } catch (error) {
-    const cache = await caches.open(DYNAMIC_CACHE);
-    const cachedResponse = await cache.match(request);
-    
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    
-    return getOfflineFallback(request);
-  }
-}
-
-// ✅ Stale-While-Revalidate Strategy
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(DYNAMIC_CACHE);
-  const cachedResponse = await cache.match(request);
+// ===============================================
+// SMART REQUEST HANDLER
+// ===============================================
+async function handleRequest(request) {
+  const url = new URL(request.url);
   
-  const fetchPromise = fetch(request).then((networkResponse) => {
-    if (networkResponse.ok) {
+  try {
+    // Strategy 1: Audio files (Cache First with special handling)
+    if (isAudioRequest(request)) {
+      return await handleAudioRequest(request);
+    }
+    
+    // Strategy 2: Images (Cache First)
+    if (isImageRequest(request)) {
+      return await handleImageRequest(request);
+    }
+    
+    // Strategy 3: Fonts (Cache First)
+    if (isFontRequest(request)) {
+      return await cacheFirst(request, STATIC_CACHE);
+    }
+    
+    // Strategy 4: JavaScript Libraries (Stale While Revalidate)
+    if (isJavaScriptLibrary(request)) {
+      return await staleWhileRevalidate(request, STATIC_CACHE);
+    }
+    
+    // Strategy 5: CSS Libraries (Stale While Revalidate)
+    if (isCSSLibrary(request)) {
+      return await staleWhileRevalidate(request, STATIC_CACHE);
+    }
+    
+    // Strategy 6: GitHub Raw Content (Cache First)
+    if (url.hostname === 'raw.githubusercontent.com') {
+      return await cacheFirst(request, STATIC_CACHE);
+    }
+    
+    // Strategy 7: Google Fonts (Stale While Revalidate)
+    if (url.hostname.includes('googleapis.com') || url.hostname.includes('gstatic.com')) {
+      return await staleWhileRevalidate(request, STATIC_CACHE);
+    }
+    
+    // Strategy 8: CDN Resources (Stale While Revalidate)
+    if (isCDNRequest(request)) {
+      return await staleWhileRevalidate(request, STATIC_CACHE);
+    }
+    
+    // Strategy 9: Same Origin (Network First)
+    if (url.origin === self.location.origin) {
+      return await networkFirst(request, DYNAMIC_CACHE);
+    }
+    
+    // Strategy 10: Everything else (Network First)
+    return await networkFirst(request, DYNAMIC_CACHE);
+    
+  } catch (error) {
+    console.error('❌ Request failed:', request.url, error);
+    return await handleFailedRequest(request, error);
+  }
+}
+
+// ===============================================
+// CACHING STRATEGIES
+// ===============================================
+
+// Cache First Strategy
+async function cacheFirst(request, cacheName) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+  
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(cacheName);
       cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Network First Strategy
+async function networkFirst(request, cacheName) {
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(cacheName);
+      cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    throw error;
+  }
+}
+
+// Stale While Revalidate Strategy
+async function staleWhileRevalidate(request, cacheName) {
+  const cachedResponse = await caches.match(request);
+  
+  const fetchPromise = fetch(request).then(networkResponse => {
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = caches.open(cacheName);
+      cache.then(c => c.put(request, networkResponse.clone()));
     }
     return networkResponse;
   }).catch(() => cachedResponse);
@@ -201,211 +257,306 @@ async function staleWhileRevalidate(request) {
   return cachedResponse || fetchPromise;
 }
 
-// ✅ Offline Fallbacks with Accessibility Support
-function getOfflineFallback(request) {
+// ===============================================
+// SPECIALIZED HANDLERS
+// ===============================================
+
+// Audio Request Handler
+async function handleAudioRequest(request) {
+  try {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    
+    const networkResponse = await fetch(request);
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(AUDIO_CACHE);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    
+    throw new Error('Audio network response not ok');
+  } catch (error) {
+    // Return audio placeholder or error response
+    return new Response('', {
+      status: 404,
+      statusText: 'Audio not available offline'
+    });
+  }
+}
+
+// Image Request Handler
+async function handleImageRequest(request) {
+  try {
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    
+    const networkResponse = await fetch(request);
+    if (networkResponse && networkResponse.status === 200) {
+      const cache = await caches.open(IMAGE_CACHE);
+      cache.put(request, networkResponse.clone());
+      return networkResponse;
+    }
+    
+    throw new Error('Image network response not ok');
+  } catch (error) {
+    // Return placeholder image
+    return createImagePlaceholder();
+  }
+}
+
+// Failed Request Handler
+async function handleFailedRequest(request, error) {
   const url = new URL(request.url);
   
-  if (request.destination === 'document') {
-    return new Response(`
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Offline - Thanatsitt Portfolio</title>
-        <style>
-          body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
-            text-align: center;
-            padding: 20px;
-          }
-          .offline-content {
-            max-width: 500px;
-          }
-          .offline-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-          }
-          .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="offline-content" role="main" aria-labelledby="offline-title">
-          <div class="offline-icon" aria-hidden="true">📡</div>
-          <h1 id="offline-title">You're Offline</h1>
-          <p>Don't worry! This WCAG-compliant portfolio works offline too.</p>
-          <p>Voice demos and key content are cached and available.</p>
-          <button onclick="window.location.reload()" 
-                  style="background: white; color: #6366f1; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 1rem;">
-            Try Again
-          </button>
-          <div class="sr-only" aria-live="polite">
-            You are currently offline. Cached content is available for browsing.
-          </div>
-        </div>
-      </body>
-      </html>
-    `, {
-      headers: { 'Content-Type': 'text/html' }
+  // Handle navigation requests (pages)
+  if (request.mode === 'navigate') {
+    const cachedResponse = await caches.match('/') || await caches.match('/index.html');
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    
+    return createOfflinePage();
+  }
+  
+  // Handle image requests
+  if (isImageRequest(request)) {
+    return createImagePlaceholder();
+  }
+  
+  // Handle audio requests
+  if (isAudioRequest(request)) {
+    return new Response('', {
+      status: 404,
+      statusText: 'Audio not available offline'
     });
   }
   
-  if (request.destination === 'image') {
-    return new Response(`
-      <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="offline-image-title">
-        <title id="offline-image-title">Image unavailable offline</title>
-        <rect width="100%" height="100%" fill="#f3f4f6"/>
-        <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#6b7280" font-family="system-ui, sans-serif" font-size="14">
-          Image unavailable offline
-        </text>
-      </svg>
-    `, {
-      headers: { 'Content-Type': 'image/svg+xml' }
-    });
+  // For other requests, try to find any cached version
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) {
+    return cachedResponse;
   }
   
-  return new Response('Offline content not available', { 
-    status: 503, 
-    statusText: 'Service Unavailable' 
-  });
+  throw error;
 }
 
-// ✅ Helper Functions
-function isStaticAsset(url) {
-  return STATIC_ASSETS.includes(url) || 
-         url.includes('/assets/') ||
-         url.includes('bootstrap') ||
-         url.includes('font-awesome') ||
-         url.includes('aos') ||
-         url.includes('swiper') ||
-         url.includes('particles');
-}
+// ===============================================
+// UTILITY FUNCTIONS
+// ===============================================
 
-function isAccessibilityAsset(url) {
-  return ACCESSIBILITY_ASSETS.includes(url) ||
-         url.includes('.wav') ||
-         url.includes('.mp3') ||
-         url.includes('voice') ||
-         url.includes('demo');
-}
-
-function isAPIRequest(url) {
-  return url.pathname.startsWith('/api/') ||
-         url.pathname.startsWith('/contact/') ||
-         url.hostname.includes('api.');
+// Request Type Checkers
+function isAudioRequest(request) {
+  const url = new URL(request.url);
+  return AUDIO_EXTENSIONS.some(ext => url.pathname.includes(ext)) ||
+         request.destination === 'audio';
 }
 
 function isImageRequest(request) {
-  return request.destination === 'image' ||
-         request.url.includes('.jpg') ||
-         request.url.includes('.jpeg') ||
-         request.url.includes('.png') ||
-         request.url.includes('.gif') ||
-         request.url.includes('.webp') ||
-         request.url.includes('.svg');
+  const url = new URL(request.url);
+  return IMAGE_EXTENSIONS.some(ext => url.pathname.includes(ext)) ||
+         request.destination === 'image';
 }
 
-// ✅ Background Sync for Contact Forms
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'contact-form-sync') {
-    event.waitUntil(syncContactForm());
-  }
-});
-
-async function syncContactForm() {
-  try {
-    // Handle queued contact form submissions
-    const queuedForms = await getQueuedContactForms();
-    
-    for (const form of queuedForms) {
-      await fetch('/api/contact', {
-        method: 'POST',
-        body: JSON.stringify(form),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-    }
-    
-    await clearQueuedContactForms();
-    console.log('✅ Contact forms synced successfully');
-  } catch (error) {
-    console.error('❌ Contact form sync failed:', error);
-  }
+function isFontRequest(request) {
+  const url = new URL(request.url);
+  return FONT_EXTENSIONS.some(ext => url.pathname.includes(ext)) ||
+         request.destination === 'font';
 }
 
-// ✅ Push Notifications for Updates
-self.addEventListener('push', (event) => {
-  if (event.data) {
-    const data = event.data.json();
-    
-    const options = {
-      body: data.body,
-      icon: 'https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/icon-32x32.png',
-      badge: 'https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/icon-16x16.png',
-      vibrate: [200, 100, 200],
-      tag: 'portfolio-update',
-      actions: [
-        {
-          action: 'view',
-          title: 'View Update',
-          icon: 'https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/icon-16x16.png'
-        },
-        {
-          action: 'dismiss',
-          title: 'Dismiss',
-          icon: 'https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/icon-16x16.png'
-        }
-      ],
-      data: {
-        url: data.url || '/'
-      }
-    };
-    
-    event.waitUntil(
-      self.registration.showNotification(data.title, options)
-    );
-  }
-});
+function isJavaScriptLibrary(request) {
+  const url = new URL(request.url);
+  return url.pathname.includes('.js') && (
+    url.hostname.includes('cdnjs.cloudflare.com') ||
+    url.hostname.includes('unpkg.com') ||
+    url.hostname.includes('jsdelivr.net')
+  );
+}
 
-// ✅ Notification Click Handling
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
+function isCSSLibrary(request) {
+  const url = new URL(request.url);
+  return url.pathname.includes('.css') && (
+    url.hostname.includes('cdnjs.cloudflare.com') ||
+    url.hostname.includes('unpkg.com') ||
+    url.hostname.includes('jsdelivr.net')
+  );
+}
+
+function isCDNRequest(request) {
+  const url = new URL(request.url);
+  return url.hostname.includes('cdn') ||
+         url.hostname.includes('unpkg.com') ||
+         url.hostname.includes('jsdelivr.net') ||
+         url.hostname.includes('cdnjs.cloudflare.com');
+}
+
+// Placeholder Creators
+function createImagePlaceholder() {
+  const svg = `
+    <svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#8b5cf6"/>
+          <stop offset="100%" style="stop-color:#ec4899"/>
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grad)" opacity="0.1"/>
+      <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" 
+            font-family="system-ui" font-size="16" fill="#8b5cf6">
+        📸 Image Unavailable Offline
+      </text>
+    </svg>
+  `;
   
-  if (event.action === 'view') {
-    event.waitUntil(
-      clients.openWindow(event.notification.data.url)
-    );
+  return new Response(svg, {
+    status: 200,
+    headers: {
+      'Content-Type': 'image/svg+xml',
+      'Cache-Control': 'no-cache'
+    }
+  });
+}
+
+function createOfflinePage() {
+  const html = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Offline - Portfolio</title>
+      <style>
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #8b5cf6, #ec4899);
+          color: white;
+          text-align: center;
+          padding: 2rem;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          margin: 0;
+        }
+        .offline-container {
+          max-width: 500px;
+          padding: 2rem;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 20px;
+          backdrop-filter: blur(10px);
+        }
+        .offline-icon { font-size: 4rem; margin-bottom: 1rem; }
+        .offline-title { font-size: 2rem; margin-bottom: 1rem; font-weight: 600; }
+        .offline-message { font-size: 1.1rem; opacity: 0.9; line-height: 1.6; }
+        .retry-btn {
+          margin-top: 2rem;
+          padding: 1rem 2rem;
+          background: rgba(255, 255, 255, 0.2);
+          border: none;
+          border-radius: 50px;
+          color: white;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .retry-btn:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-2px);
+        }
+      </style>
+    </head>
+    <body>
+      <div class="offline-container">
+        <div class="offline-icon">🌐</div>
+        <h1 class="offline-title">You're Offline</h1>
+        <p class="offline-message">
+          Don't worry! You can still browse the cached version of the portfolio. 
+          Some features like voice demos and external links may not work until you're back online.
+        </p>
+        <button class="retry-btn" onclick="location.reload()">
+          🔄 Try Again
+        </button>
+      </div>
+    </body>
+    </html>
+  `;
+  
+  return new Response(html, {
+    status: 200,
+    headers: { 'Content-Type': 'text/html' }
+  });
+}
+
+// ===============================================
+// BACKGROUND SYNC & MESSAGING
+// ===============================================
+
+// Handle messages from main thread
+self.addEventListener('message', event => {
+  const { type, payload } = event.data;
+  
+  switch (type) {
+    case 'SKIP_WAITING':
+      self.skipWaiting();
+      break;
+      
+    case 'GET_CACHE_STATUS':
+      getCacheStatus().then(status => {
+        event.ports[0].postMessage(status);
+      });
+      break;
+      
+    case 'CLEAR_CACHE':
+      clearAllCaches().then(() => {
+        event.ports[0].postMessage({ success: true });
+      });
+      break;
+      
+    case 'PRELOAD_AUDIO':
+      preloadAudio(payload.urls).then(() => {
+        event.ports[0].postMessage({ success: true });
+      });
+      break;
   }
 });
 
-// ✅ Utility Functions for IndexedDB (Contact Form Queue)
-async function getQueuedContactForms() {
-  // Implementation would use IndexedDB to store/retrieve queued forms
-  return [];
+// Get cache status
+async function getCacheStatus() {
+  const caches_list = await caches.keys();
+  const status = {};
+  
+  for (const cacheName of caches_list) {
+    const cache = await caches.open(cacheName);
+    const keys = await cache.keys();
+    status[cacheName] = keys.length;
+  }
+  
+  return status;
 }
 
-async function clearQueuedContactForms() {
-  // Implementation would clear IndexedDB queue
-  return true;
+// Clear all caches
+async function clearAllCaches() {
+  const cacheNames = await caches.keys();
+  await Promise.all(cacheNames.map(name => caches.delete(name)));
+  console.log('🗑️ All caches cleared');
 }
 
-console.log('🌟 WCAG-Compliant Portfolio Service Worker Loaded');
-console.log('♿ Accessibility-focused PWA features active');
+// Preload audio files
+async function preloadAudio(urls) {
+  const cache = await caches.open(AUDIO_CACHE);
+  await Promise.all(urls.map(url => {
+    return fetch(url).then(response => {
+      if (response.ok) {
+        return cache.put(url, response);
+      }
+    }).catch(error => {
+      console.warn('Failed to preload audio:', url, error);
+    });
+  }));
+}
+
+console.log('🚀 Complete Portfolio Service Worker loaded successfully!');
