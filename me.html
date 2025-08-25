@@ -1,0 +1,3773 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanatsitt Santisamranwilai | AI Creative Designer</title>
+  <meta name="description" content="A multilingual AI content developer with 7+ years experience, specializing in AI data, creative storytelling, and voice acting.">
+  <meta name="keywords" content="AI Developer, Voice Actor, Content Creator, Multilingual, Thai, English, Japanese">
+  <meta name="author" content="Thanatsitt Santisamranwilai">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Thanatsitt Santisamranwilai | AI Creative Designer">
+  <meta property="og:description" content="Multilingual AI content developer specializing in ethical AI training data and voice acting">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pigletpeakkung.github.io/artofppage/">
+  
+  <!-- Favicons -->
+  <link rel="icon" href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous">
+
+  <style>
+    /* ===============================================
+       ENHANCED CSS VARIABLES & BASE STYLES
+    =============================================== */
+    :root {
+      --primary-light: #A78BFA;
+      --primary-accent: #F9A8D4;
+      --primary-rgb: 167,139,250;
+      --accent-rgb: 249,168,212;
+      --background-light: #F8FAFC;
+      --text-dark: #2D3748;
+      --text-color: var(--text-dark);
+      --glass-bg: rgba(255,255,255,0.12);
+      --glass-border: rgba(255,255,255,0.18);
+      --shadow-light: rgba(0,0,0,0.08);
+      --shadow-medium: rgba(0,0,0,0.12);
+      --navbar-bg: rgba(255, 255, 255, 0.9);
+      --navbar-text: var(--text-dark);
+      --footer-gradient: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(249,168,212,0.08) 100%);
+      --floating-voice-bg: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+      --section-divider: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+      --timeline-color: var(--primary-light);
+    }
+    
+    [data-theme="dark"] {
+      --background-light: #0F172A;
+      --text-dark: #F1F5F9;
+      --text-color: var(--text-dark);
+      --glass-bg: rgba(15,23,42,0.4);
+      --glass-border: rgba(255,255,255,0.08);
+      --shadow-light: rgba(0,0,0,0.25);
+      --shadow-medium: rgba(0,0,0,0.35);
+      --navbar-bg: rgba(15, 23, 42, 0.9);
+      --navbar-text: var(--text-dark);
+      --footer-gradient: linear-gradient(135deg, rgba(167,139,250,0.04) 0%, rgba(249,168,212,0.04) 100%);
+    }
+
+    /* Base Styles with Validation */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
+    html { 
+      scroll-behavior: smooth; 
+      font-size: 16px; 
+      line-height: 1.6; 
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text-color);
+      background: linear-gradient(135deg, var(--background-light) 0%, rgba(var(--primary-rgb), 0.03) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      font-feature-settings: 'kern' 1, 'liga' 1;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Enhanced Preloader */
+    #preloader {
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(135deg, #A78BFA, #F9A8D4);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .spinner {
+      width: 60px; height: 60px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-top: 4px solid #fff;
+      border-radius: 50%;
+      animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      margin-bottom: 1rem;
+    }
+    
+    .preloader-text {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    
+    @keyframes spin { 
+      0% { transform: rotate(0deg); } 
+      100% { transform: rotate(360deg); } 
+    }
+
+    /* ===============================================
+       AUTO-HIDE HEADER SYSTEM
+    =============================================== */
+    
+    .theme-toggle {
+      position: fixed; 
+      top: 20px; right: 20px;
+      background: var(--glass-bg); 
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--glass-border); 
+      border-radius: 50%;
+      width: 56px; height: 56px;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      color: var(--text-color); 
+      font-size: 1.4rem;
+      cursor: pointer; 
+      z-index: 1001;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 32px rgba(var(--primary-rgb), 0.12);
+      transform: translateY(0);
+    }
+    
+    .theme-toggle.header-hidden {
+      transform: translateY(-100px);
+    }
+    
+    .theme-toggle:hover { 
+      transform: scale(1.1) rotate(15deg); 
+      box-shadow: 0 12px 40px rgba(var(--primary-rgb), 0.2);
+      border-color: var(--primary-light);
+    }
+
+    /* Auto-Hide Navbar System */
+    .navbar {
+      position: fixed; 
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: transparent;
+      padding: 1.5rem 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(0px);
+      border-bottom: 1px solid transparent;
+      transform: translateY(0);
+    }
+    
+    .navbar.scrolled {
+      background: var(--navbar-bg);
+      backdrop-filter: blur(25px);
+      padding: 1rem 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    
+    .navbar.hidden {
+      transform: translateY(-100%);
+    }
+    
+    .navbar.show {
+      transform: translateY(0);
+    }
+    
+    .navbar-brand {
+      font-weight: 800; 
+      font-size: 2rem;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-left: 20px;
+      position: relative;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      z-index: 1;
+    }
+    
+    .nav-link {
+      color: var(--navbar-text); 
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.8rem 1.4rem; 
+      position: relative;
+      border-radius: 30px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+    }
+    
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(var(--primary-rgb), 0.08);
+      border-radius: 30px;
+      transform: scale(0);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+    
+    .nav-link:hover::before,
+    .nav-link.active::before {
+      transform: scale(1);
+    }
+
+    /* ===============================================
+       TWO-COLUMN HERO SECTION
+    =============================================== */
+    
+    .hero {
+      min-height: 100vh;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      padding: 8rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(var(--primary-rgb), 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(var(--accent-rgb), 0.06) 0%, transparent 50%);
+    }
+    
+    .hero__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 3;
+    }
+    
+    .hero__content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+      text-align: center;
+    }
+    
+    /* Desktop Two-Column Layout */
+    @media (min-width: 992px) {
+      .hero__content {
+        grid-template-columns: 1fr 1.2fr;
+        text-align: left;
+        gap: 5rem;
+      }
+    }
+
+    /* Hero Photo Section */
+    .hero__photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .profile-image {
+      width: 280px; 
+      height: 280px; 
+      border-radius: 50%; 
+      object-fit: cover;
+      position: relative;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 20px 40px rgba(var(--primary-rgb), 0.15));
+    }
+    
+    .profile-image::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--primary-light), var(--primary-accent), var(--primary-light));
+      z-index: -1;
+      animation: rotate 15s linear infinite;
+    }
+    
+    .profile-image:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 25px 50px rgba(var(--primary-rgb), 0.25));
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Hero Info Section */
+    .hero__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .hero__subtitle {
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 600;
+      color: var(--primary-accent);
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+    
+    .hero__name {
+      font-size: clamp(2.8rem, 6vw, 4.5rem); 
+      font-weight: 900; 
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-accent) 50%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientShift 8s ease-in-out infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .hero__description {
+      font-size: clamp(1.1rem, 2.2vw, 1.3rem); 
+      color: var(--text-color);
+      line-height: 1.8;
+      opacity: 0.85;
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+    }
+    
+    .hero__cta-buttons {
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 991px) {
+      .hero__cta-buttons {
+        justify-content: center;
+      }
+    }
+
+    /* Enhanced Buttons */
+    .btn {
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center;
+      padding: 1.2rem 2.5rem; 
+      border-radius: 50px; 
+      border: none;
+      font-weight: 600; 
+      font-size: 1rem; 
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      min-width: 160px;
+    }
+    
+    .btn i { 
+      margin-right: 0.6rem; 
+      font-size: 1.1rem; 
+      transition: transform 0.3s ease;
+    }
+    
+    .btn:hover i {
+      transform: scale(1.1);
+    }
+    
+    .btn-primary { 
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-accent)); 
+      color: #fff;
+      box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.2);
+    }
+    
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary-accent), var(--primary-light));
+      opacity: 0;
+      transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-primary:hover::before { 
+      opacity: 1; 
+    }
+    
+    .btn-primary:hover { 
+      transform: translateY(-4px); 
+      box-shadow: 0 15px 35px rgba(var(--primary-rgb), 0.3);
+    }
+    
+    .btn-secondary { 
+      background: var(--glass-bg); 
+      border: 2px solid var(--glass-border); 
+      color: var(--text-color);
+      backdrop-filter: blur(20px);
+    }
+    
+    .btn-secondary:hover { 
+      background: rgba(var(--primary-rgb), 0.12); 
+      transform: translateY(-4px); 
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-light);
+    }
+
+    /* ===============================================
+       FLOATING VOICE VISUALIZER BUTTON
+    =============================================== */
+    
+    .floating-voice-btn {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 70px;
+      height: 70px;
+      background: var(--floating-voice-bg);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.6rem;
+      cursor: pointer;
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        0 8px 25px rgba(var(--primary-rgb), 0.3),
+        0 0 0 0 rgba(var(--primary-rgb), 0.4);
+      animation: floatingPulse 3s infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+    }
+    
+    .floating-voice-btn.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .floating-voice-btn:hover {
+      transform: scale(1.1) translateY(-5px);
+      box-shadow: 
+        0 15px 40px rgba(var(--primary-rgb), 0.4),
+        0 0 0 15px rgba(var(--primary-rgb), 0.1);
+    }
+    
+    /* Audio Visualizer Bars */
+    .voice-visualizer {
+      position: absolute;
+      inset: -15px;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .floating-voice-btn.playing .voice-visualizer {
+      opacity: 1;
+    }
+    
+    .visualizer-bar {
+      position: absolute;
+      width: 3px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 2px;
+      transform-origin: bottom center;
+      animation: visualizerPulse 0.8s ease-in-out infinite alternate;
+    }
+    
+    /* Generate 12 bars around the circle */
+    .visualizer-bar:nth-child(1) { height: 8px; top: 0; left: 50%; margin-left: -1.5px; animation-delay: 0s; }
+    .visualizer-bar:nth-child(2) { height: 12px; top: 5px; right: 15px; transform: rotate(30deg); animation-delay: 0.1s; }
+    .visualizer-bar:nth-child(3) { height: 6px; top: 20px; right: 5px; transform: rotate(60deg); animation-delay: 0.2s; }
+    .visualizer-bar:nth-child(4) { height: 15px; top: 50%; right: 0; margin-top: -7.5px; transform: rotate(90deg); animation-delay: 0.3s; }
+    .visualizer-bar:nth-child(5) { height: 10px; bottom: 20px; right: 5px; transform: rotate(120deg); animation-delay: 0.4s; }
+    .visualizer-bar:nth-child(6) { height: 8px; bottom: 5px; right: 15px; transform: rotate(150deg); animation-delay: 0.5s; }
+    .visualizer-bar:nth-child(7) { height: 14px; bottom: 0; left: 50%; margin-left: -1.5px; transform: rotate(180deg); animation-delay: 0.6s; }
+    .visualizer-bar:nth-child(8) { height: 7px; bottom: 5px; left: 15px; transform: rotate(210deg); animation-delay: 0.7s; }
+    .visualizer-bar:nth-child(9) { height: 11px; bottom: 20px; left: 5px; transform: rotate(240deg); animation-delay: 0.8s; }
+    .visualizer-bar:nth-child(10) { height: 9px; top: 50%; left: 0; margin-top: -4.5px; transform: rotate(270deg); animation-delay: 0.9s; }
+    .visualizer-bar:nth-child(11) { height: 13px; top: 20px; left: 5px; transform: rotate(300deg); animation-delay: 1s; }
+    .visualizer-bar:nth-child(12) { height: 6px; top: 5px; left: 15px; transform: rotate(330deg); animation-delay: 1.1s; }
+    
+    @keyframes visualizerPulse {
+      0% { transform: scaleY(0.3); }
+      100% { transform: scaleY(1); }
+    }
+    
+    .floating-voice-btn.playing {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    }
+    
+    @keyframes floatingPulse {
+      0%, 100% { 
+        box-shadow: 
+          0 8px 25px rgba(var(--primary-rgb), 0.3),
+          0 0 0 0 rgba(var(--primary-rgb), 0.4);
+      }
+      50% { 
+        box-shadow: 
+          0 8px 25px rgba(var(--primary-rgb), 0.3),
+          0 0 0 20px rgba(var(--primary-rgb), 0);
+      }
+    }
+
+    /* Floating Voice Button Tooltip */
+    .floating-voice-btn::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      right: 85px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      color: var(--text-color);
+      padding: 0.8rem 1.2rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .floating-voice-btn:hover::before {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ===============================================
+       SECTION DIVIDERS & STYLING
+    =============================================== */
+    
+    section { 
+      padding: 6rem 0; 
+      position: relative; 
+      z-index: 2; 
+    }
+    
+    .section-divider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.05), rgba(var(--accent-rgb), 0.05));
+      clip-path: var(--section-divider);
+      z-index: -1;
+    }
+    
+    .container { 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 0 2rem; 
+    }
+    
+    h2, h3, h4 {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    h2 { 
+      font-size: clamp(2.2rem, 4vw, 3.5rem); 
+      font-weight: 800; 
+      margin-bottom: 4rem;
+    }
+    
+    h3 { 
+      font-size: clamp(1.6rem, 3vw, 2.2rem); 
+      font-weight: 700; 
+    }
+
+    /* ===============================================
+       ENHANCED METRICS SECTION
+    =============================================== */
+    
+    .metrics-grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .metric-highlight {
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+      color: white;
+      padding: 2.5rem 1.5rem;
+      border-radius: 20px;
+      text-align: center;
+      transform: translateY(0);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.2);
+    }
+    
+    .metric-highlight::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .metric-highlight:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(var(--primary-rgb), 0.3);
+    }
+    
+    .metric-highlight:hover::before {
+      opacity: 1;
+    }
+    
+    .metric-number {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .metric-label {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    
+    .metric-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+
+    /* ===============================================
+       TIMELINE EXPERIENCE SECTION
+    =============================================== */
+    
+    .timeline-container {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 1rem;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--primary-light), var(--primary-accent));
+      border-radius: 2px;
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 32px var(--shadow-light);
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -3.2rem;
+      top: 2rem;
+      width: 16px;
+      height: 16px;
+      background: var(--primary-accent);
+      border: 3px solid var(--background-light);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+    
+    .timeline-item:hover {
+      transform: translateX(10px);
+      box-shadow: 0 15px 40px var(--shadow-medium);
+      border-color: rgba(var(--primary-rgb), 0.2);
+    }
+    
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .timeline-role {
+      color: var(--primary-light);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .timeline-company {
+      color: var(--primary-accent);
+      font-size: 1.1rem;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+    
+    .timeline-period {
+      background: rgba(var(--primary-rgb), 0.1);
+      color: var(--primary-light);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    
+    .timeline-responsibilities {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    
+    .timeline-responsibilities li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+    
+    .timeline-responsibilities li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--primary-accent);
+      font-weight: bold;
+    }
+    
+    .timeline-technologies {
+      margin-top: 1.5rem;
+    }
+    
+    .timeline-tech-label {
+      color: var(--text-color);
+      font-size: 0.9rem;
+      font-weight: 600;
+      opacity: 0.8;
+      margin-bottom: 0.8rem;
+    }
+    
+    .timeline-tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .tech-tag {
+      background: rgba(var(--primary-rgb), 0.08);
+      color: var(--text-color);
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      border: 1px solid rgba(var(--primary-rgb), 0.15);
+      transition: all 0.3s ease;
+    }
+    
+    .tech-tag:hover {
+      background: rgba(var(--primary-rgb), 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* ===============================================
+       ENHANCED GLASS CARDS
+    =============================================== */
+    
+    .glass-card {
+      background: var(--glass-bg); 
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border); 
+      border-radius: 24px;
+      padding: 3rem; 
+      margin: 2.5rem auto;
+      box-shadow: 
+        0 8px 32px var(--shadow-light),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.02), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    
+    .glass-card:hover::before { 
+      opacity: 1; 
+    }
+    
+    .glass-card:hover { 
+      transform: translateY(-8px); 
+      box-shadow: 
+        0 20px 40px var(--shadow-medium),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      border-color: rgba(var(--primary-rgb), 0.15);
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+    
+    .skill-item {
+      margin-bottom: 2rem;
+    }
+    
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+    
+    .skill-name {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .skill-icon {
+      margin-right: 0.8rem;
+      color: var(--primary-light);
+      font-size: 1.2rem;
+    }
+    
+    .skill-percentage {
+      color: var(--primary-light);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    
+    .skill-progress {
+      height: 10px;
+      background: rgba(var(--primary-rgb), 0.1);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.8rem;
+    }
+    
+    .skill-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-light), var(--primary-accent));
+      border-radius: 6px;
+      width: 0%;
+      transition: width 3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .skill-progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+    
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+    
+    .skill-description {
+      font-size: 1rem;
+      opacity: 0.85;
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+
+    /* Background Elements */
+    .floating-shape {
+      position: absolute; 
+      border-radius: 50%;
+      background: linear-gradient(45deg, rgba(var(--primary-rgb), 0.08), rgba(var(--accent-rgb), 0.06));
+      animation: complexFloat 12s ease-in-out infinite; 
+      will-change: transform;
+      filter: blur(0.5px);
+    }
+    
+    .floating-shape:nth-child(1) { 
+      width: 150px; height: 150px; 
+      top: 15%; left: 10%; 
+      animation-delay: 0s; 
+    }
+    
+    .floating-shape:nth-child(2) { 
+      width: 200px; height: 200px; 
+      top: 25%; right: 15%; 
+      animation-delay: 3s; 
+    }
+    
+    .floating-shape:nth-child(3) { 
+      width: 120px; height: 120px; 
+      bottom: 25%; left: 20%; 
+      animation-delay: 6s; 
+    }
+    
+    .floating-shape:nth-child(4) { 
+      width: 180px; height: 180px; 
+      bottom: 15%; right: 10%; 
+      animation-delay: 1.5s; 
+    }
+    
+    @keyframes complexFloat {
+      0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+        opacity: 0.4;
+      }
+      25% { 
+        transform: translateY(-40px) rotate(90deg) scale(1.1); 
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translateY(-20px) rotate(180deg) scale(0.9); 
+        opacity: 0.8;
+      }
+      75% { 
+        transform: translateY(-60px) rotate(270deg) scale(1.05); 
+        opacity: 0.5;
+      }
+    }
+
+    /* Enhanced Moon Animation */
+    .hero-moon {
+      position: absolute; 
+      top: 100px; left: -200px; 
+      font-size: 80px;
+      z-index: 2; 
+      cursor: pointer;
+      text-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.8),
+        0 0 60px rgba(255, 255, 255, 0.6),
+        0 0 90px rgba(255, 255, 255, 0.4);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    }
+    
+    .hero-moon:hover { 
+      transform: scale(1.2) rotate(20deg); 
+      text-shadow: 
+        0 0 40px rgba(255, 255, 255, 1),
+        0 0 80px rgba(255, 255, 255, 0.8),
+        0 0 120px rgba(255, 255, 255, 0.6);
+    }
+
+    /* ===============================================
+       ENHANCED FOOTER
+    =============================================== */
+    
+    footer {
+      background: var(--footer-gradient);
+      padding: 5rem 0 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      border-top: 1px solid var(--glass-border);
+    }
+    
+    .footer-content {
+      max-width: 1000px; 
+      margin: 0 auto; 
+      padding: 0 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .footer-brand {
+      font-size: 2.4rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+    }
+    
+    .social-links { 
+      margin: 3rem 0; 
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    
+    .social-links a {
+      display: inline-flex; 
+      justify-content: center; 
+      align-items: center;
+      width: 60px; height: 60px; 
+      border-radius: 50%;
+      background: var(--glass-bg); 
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--glass-border);
+      color: var(--text-color); 
+      font-size: 1.4rem;
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .social-links a::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+    
+    .social-links a:hover::before {
+      transform: scale(1);
+    }
+    
+    .social-links a:hover { 
+      transform: translateY(-8px) scale(1.1); 
+      color: #fff;
+      box-shadow: 0 15px 40px rgba(var(--primary-rgb), 0.3);
+      border-color: transparent;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed; 
+      bottom: 30px; right: 30px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
+      color: #fff; 
+      border: none; 
+      border-radius: 50%;
+      width: 65px; height: 65px;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      cursor: pointer; 
+      font-size: 1.4rem;
+      opacity: 0; 
+      visibility: hidden; 
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000; 
+      box-shadow: 0 8px 25px rgba(var(--primary-rgb), 0.3);
+    }
+    
+    .back-to-top.visible { 
+      opacity: 1; 
+      visibility: visible; 
+    }
+    
+    .back-to-top:hover { 
+      transform: translateY(-8px) scale(1.1); 
+      box-shadow: 0 20px 50px rgba(var(--primary-rgb), 0.4);
+    }
+
+    /* Particles */
+    #particles-js { 
+      position: absolute; 
+      inset: 0; 
+      z-index: 1; 
+      opacity: 0.7;
+    }
+
+    /* ===============================================
+       RESPONSIVE DESIGN
+    =============================================== */
+    
+    @media (max-width: 1200px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .navbar-collapse { 
+        text-align: center; 
+        background: var(--navbar-bg); 
+        backdrop-filter: blur(25px);
+        padding: 2rem; 
+        border-radius: 20px;
+        margin-top: 1rem;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+      
+      .hero { padding-top: 6rem; }
+      .profile-image { width: 240px; height: 240px; }
+      .hero-moon { font-size: 65px; }
+      .floating-voice-btn { width: 60px; height: 60px; font-size: 1.4rem; }
+      .glass-card { padding: 2rem; }
+      
+      .timeline {
+        padding-left: 2rem;
+      }
+      
+      .timeline::before {
+        left: 0.5rem;
+      }
+      
+      .timeline-item::before {
+        left: -2.7rem;
+      }
+      
+      .timeline-item:hover {
+        transform: translateY(-5px);
+      }
+      
+      .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1.5rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      section { padding: 4rem 0; }
+      .container { padding: 0 1.5rem; }
+      
+      .hero {
+        padding: 5rem 0 3rem;
+        min-height: 90vh;
+      }
+      
+      .hero__content {
+        gap: 2.5rem;
+      }
+      
+      .profile-image { 
+        width: 200px; 
+        height: 200px; 
+      }
+      
+      .hero__cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .floating-voice-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
+        bottom: 80px;
+        right: 20px;
+      }
+      
+      .floating-voice-btn::before {
+        right: 65px;
+        font-size: 0.8rem;
+      }
+      
+      .back-to-top {
+        width: 55px;
+        height: 55px;
+        font-size: 1.2rem;
+        bottom: 20px;
+        right: 20px;
+      }
+      
+      .theme-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        top: 15px;
+        right: 15px;
+      }
+      
+      .glass-card { 
+        padding: 1.8rem; 
+        border-radius: 20px;
+      }
+      
+      .timeline {
+        padding-left: 1.5rem;
+      }
+      
+      .timeline-item {
+        padding: 2rem 1.5rem;
+      }
+      
+      .timeline-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .hero-moon { 
+        font-size: 50px; 
+        top: 80px;
+      }
+      
+      .floating-shape {
+        opacity: 0.3;
+      }
+      
+      .floating-shape:nth-child(1) { width: 100px; height: 100px; }
+      .floating-shape:nth-child(2) { width: 120px; height: 120px; }
+      .floating-shape:nth-child(3) { width: 80px; height: 80px; }
+      .floating-shape:nth-child(4) { width: 110px; height: 110px; }
+    }
+    
+    @media (max-width: 480px) {
+      .hero__name {
+        font-size: 2.2rem;
+      }
+      
+      .hero__description {
+        font-size: 1rem;
+      }
+      
+      .profile-image {
+        width: 180px;
+        height: 180px;
+      }
+      
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .metric-highlight {
+        padding: 2rem 1.2rem;
+      }
+      
+      .timeline-item {
+        padding: 1.5rem 1.2rem;
+      }
+      
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===============================================
+       ACCESSIBILITY & PERFORMANCE
+    =============================================== */
+    
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      
+      .floating-shape,
+      .hero-moon,
+      .skill-progress-fill::after {
+        animation: none !important;
+      }
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        --background-light: #0F172A;
+        --text-dark: #F1F5F9;
+        --text-color: var(--text-dark);
+        --glass-bg: rgba(15,23,42,0.4);
+        --glass-border: rgba(255,255,255,0.08);
+        --navbar-bg: rgba(15, 23, 42, 0.9);
+        --navbar-text: var(--text-dark);
+      }
+    }
+    
+    /* Focus styles for accessibility */
+    button:focus-visible,
+    a:focus-visible,
+    .nav-link:focus-visible {
+      outline: 2px solid var(--primary-light);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+    
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      .glass-card {
+        border-width: 2px;
+        background: var(--background-light);
+      }
+      
+      .btn {
+        border: 2px solid currentColor;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .navbar,
+      .floating-voice-btn,
+      .back-to-top,
+      .theme-toggle,
+      #particles-js,
+      .floating-shape,
+      .hero-moon {
+        display: none !important;
+      }
+      
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      
+      .glass-card {
+        background: white !important;
+        border: 1px solid #ccc !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Enhanced Preloader -->
+  <div id="preloader" aria-label="Loading content">
+    <div class="spinner" aria-hidden="true"></div>
+    <div class="preloader-text">Loading Portfolio...</div>
+  </div>
+
+  <!-- Particles Background -->
+  <div id="particles-js" aria-hidden="true"></div>
+
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+    <i id="themeIcon" class="fas fa-sun" aria-hidden="true"></i>
+  </button>
+
+  <!-- Floating Voice Demo Button with Visualizer -->
+  <button class="floating-voice-btn" id="floatingVoiceBtn" 
+          data-tooltip="🎵 Voice Demo" 
+          aria-label="Play voice demonstration">
+    <div class="voice-visualizer" aria-hidden="true">
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+      <div class="visualizer-bar"></div>
+    </div>
+    <i id="floatingVoiceIcon" class="fas fa-play" aria-hidden="true"></i>
+  </button>
+
+  <!-- Auto-Hide Navigation -->
+  <nav class="navbar" id="mainNavbar" role="navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a href="#hero" class="navbar-brand">Thanatsitt</a>
+      </div>
+      
+      <button class="navbar-toggler d-lg-none" type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" 
+              aria-expanded="false" 
+              aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">☰</span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#hero">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#skills">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#metrics">Metrics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#experience">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#voice-demos">Voice</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main role="main">
+    <!-- Background Elements -->
+    <div class="floating-shape" aria-hidden="true"></div>
+    <div class="floating-shape" aria-hidden="true"></div>
+    <div class="floating-shape" aria-hidden="true"></div>
+    <div class="floating-shape" aria-hidden="true"></div>
+    
+    <!-- Interactive Moon -->
+    <div class="hero-moon" id="heroMoon" 
+         role="button" 
+         tabindex="0" 
+         aria-label="Interactive moon - click for animation">
+      🌙
+    </div>
+
+    <!-- Enhanced Two-Column Hero Section -->
+    <section id="hero" class="hero">
+      <div class="hero__container">
+        <div class="hero__content">
+          <!-- Hero Photo Section -->
+          <div class="hero__photo">
+            <img id="profile-image" 
+                 src="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg" 
+                 alt="Thanatsitt Santisamranwilai - Professional Portrait" 
+                 class="profile-image"
+                 loading="eager">
+          </div>
+          
+          <!-- Hero Info Section -->
+          <div class="hero__info">
+            <div class="hero__subtitle" id="hero-subtitle">AI Creative Designer & Voice Artist</div>
+            <h1 id="hero-name" class="hero__name">Thanatsitt Santisamranwilai</h1>
+            <p id="hero-description" class="hero__description">
+              A multilingual AI content developer with 7+ years of experience in combining creative storytelling, voice acting, and technology. Specialising in ethical AI training data, cross-cultural content creation, and multimedia development for Southeast Asian and global markets.
+            </p>
+            
+            <div class="hero__cta-buttons">
+              <a id="cv-download-btn" 
+                 href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/5e6abfde6ec3b3844068542b319da5c71ee47044/assets/sitedata/doc/Thanns_Main_CV-4.pdf" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 class="btn btn-primary" 
+                 aria-label="Download CV PDF">
+                <i class="fas fa-download"></i> Download CV
+              </a>
+              <button id="play-voice-btn" 
+                      class="btn btn-secondary btn-play-voice" 
+                      aria-label="Play voice sample introduction">
+                <i class="fas fa-play"></i> Play Voice Sample
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Hidden audio elements -->
+      <audio id="hero-voice-sample" 
+             src="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/demo/voice/intro/Thann_Intro.wav" 
+             preload="metadata"
+             aria-label="Hero voice introduction sample">
+        Your browser does not support the audio element.
+      </audio>
+      
+      <audio id="floating-voice-sample" 
+             src="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3" 
+             preload="metadata"
+             aria-label="Professional voice demonstration">
+        Your browser does not support the audio element.
+      </audio>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <h2>Skills & Expertise</h2>
+        <div id="skills-grid" class="skills-grid">
+          <!-- Skills populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced Performance Metrics Section -->
+    <section id="metrics">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <h2>2024 Performance Metrics</h2>
+        <div id="metrics-grid" class="metrics-grid">
+          <!-- Metrics populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline Experience Section -->
+    <section id="experience">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <h2>Professional Experience</h2>
+        <div class="timeline-container">
+          <div id="experience-timeline" class="timeline">
+            <!-- Timeline items populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Voice Demos Section -->
+    <section id="voice-demos">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <h2>Voice Demonstrations</h2>
+        <div id="voice-demos-list">
+          <!-- Voice demos populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced Contact Section -->
+    <section id="contact">
+      <div class="section-divider" aria-hidden="true"></div>
+      <div class="container">
+        <h2>Get In Touch</h2>
+        <div class="glass-card" style="max-width: 800px; margin: 3rem auto;">
+          <p style="font-size: 1.3rem; margin-bottom: 2.5rem; line-height: 1.7; text-align: center;">
+            Ready to collaborate on your next AI or creative project? Let's connect and create something amazing together!
+          </p>
+          
+          <!-- Contact Form -->
+          <form class="contact-form" style="margin-bottom: 3rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+              <input type="text" placeholder="Your Name" required 
+                     style="padding: 1rem; border: 2px solid var(--glass-border); border-radius: 15px; background: var(--glass-bg); color: var(--text-color); font-size: 1rem;">
+              <input type="email" placeholder="Your Email" required 
+                     style="padding: 1rem; border: 2px solid var(--glass-border); border-radius: 15px; background: var(--glass-bg); color: var(--text-color); font-size: 1rem;">
+            </div>
+            <textarea placeholder="Your Message" rows="4" required 
+                      style="width: 100%; padding: 1rem; border: 2px solid var(--glass-border); border-radius: 15px; background: var(--glass-bg); color: var(--text-color); font-size: 1rem; margin-bottom: 1.5rem; resize: vertical;"></textarea>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+          
+          <div class="social-links">
+            <a href="https://github.com/Pigletpeakkung" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="GitHub Profile - View my code repositories">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linkedin.com/in/thanatsitt-s" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="LinkedIn Profile - Connect professionally">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://www.youtube.com/@pegearts" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="YouTube Channel - Watch my creative content">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://www.voquent.com/voice-actor/2033447" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               aria-label="Voice Acting Portfolio - Professional voice services">
+              <i class="fas fa-microphone"></i>
+            </a>
+            <a href="mailto:thanattsitt.info@yahoo.co.uk" 
+               aria-label="Send Email - Direct contact">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Enhanced Footer -->
+  <footer role="contentinfo">
+    <div class="footer-content">
+      <div class="footer-brand">Thanatsitt</div>
+      <p class="footer-text" style="font-size: 1.1rem; margin: 1rem 0;">
+        © <span id="current-year">2024</span> Thanatsitt Santisamranwilai • Bangkok, Kamphaeng Phet, Thailand
+      </p>
+      <p style="font-size: 1.2rem; opacity: 0.85; margin: 2rem 0; line-height: 1.6;">
+        Crafting the future through AI innovation and creative expression.
+      </p>
+      
+      <div class="social-links">
+        <a href="https://github.com/Pigletpeakkung" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="GitHub Profile">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/thanatsitt-s" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="LinkedIn Profile">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://www.youtube.com/@pegearts" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="YouTube Channel">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="https://www.voquent.com/voice-actor/2033447" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           aria-label="Voice Acting Portfolio">
+          <i class="fas fa-microphone"></i>
+        </a>
+        <a href="mailto:thanattsitt.info@yahoo.co.uk" 
+           aria-label="Send Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+      
+      <p class="copyright" style="margin-top: 3rem; font-size: 0.95rem; opacity: 0.7; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+        Made with 💜 using ethical AI practices and modern web technologies
+      </p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="back-to-top-btn" aria-label="Back to top of page">
+    <i class="fas fa-rocket"></i>
+  </button>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" 
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" 
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <script>
+    // ===============================================
+    // VALIDATED DATA SYSTEM (ENHANCED)
+    // ===============================================
+    const DATA = {
+      profile: {
+        name: "Thanatsitt Santisamranwilai",
+        subtitle: "AI Creative Designer & Voice Artist",
+        location: "Bangkok, Kamphaeng Phet, Thailand",
+        email: "thanattsitt.info@yahoo.co.uk",
+        summary: "A multilingual AI content developer with 7+ years of experience in combining creative storytelling, voice acting, and technology. Specialising in ethical AI training data, cross-cultural content creation, and multimedia development for Southeast Asian and global markets.",
+        photo: "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg",
+        cv: "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/5e6abfde6ec3b3844068542b319da5c71ee47044/assets/sitedata/doc/Thanns_Main_CV-4.pdf"
+      },
+      
+      expertise: {
+        AI_technology: [
+          { 
+            skill: "Conversational AI Training Data", 
+            level: 95, 
+            description: "Thai, English, Japanese datasets with 75% 5-star rating",
+            icon: "fas fa-robot"
+          },
+          { 
+            skill: "Prompt Engineering & AI Integration", 
+            level: 88, 
+            description: "Advanced prompt design and model optimization",
+            icon: "fas fa-brain"
+          },
+          { 
+            skill: "Web Development", 
+            level: 85, 
+            description: "React, JavaScript, HTML/CSS, TON Mini Apps",
+            icon: "fas fa-code"
+          },
+          { 
+            skill: "Blockchain & Smart Contracts", 
+            level: 80, 
+            description: "TON ecosystem development and integration",
+            icon: "fas fa-link"
+          }
+        ],
+        content_communication: [
+          { 
+            skill: "Multilingual Content Creation", 
+            level: 95, 
+            description: "Thai, English, Japanese localization",
+            icon: "fas fa-globe"
+          },
+          { 
+            skill: "Voice Acting & Audio Production", 
+            level: 92, 
+            description: "75+ projects, 81% client satisfaction",
+            icon: "fas fa-microphone"
+          },
+          { 
+            skill: "SEO Strategy & Copywriting", 
+            level: 88, 
+            description: "+40% organic visibility improvement",
+            icon: "fas fa-search"
+          },
+          { 
+            skill: "Cross-Cultural Adaptation", 
+            level: 90, 
+            description: "Southeast Asian market expertise",
+            icon: "fas fa-users"
+          }
+        ]
+      },
+
+      performance_metrics: {
+        verified_results_2024: [
+          { metric: "Voice Projects Completed", result: "75+", icon: "fas fa-microphone-alt" },
+          { metric: "Client Satisfaction Rate", result: "81%", icon: "fas fa-heart" },
+          { metric: "AI Training Excellence", result: "75% 5★", icon: "fas fa-star" },
+          { metric: "SEO Visibility Increase", result: "+40%", icon: "fas fa-chart-line" },
+          { metric: "User Engagement Growth", result: "+35%", icon: "fas fa-users" },
+          { metric: "CTR Improvement", result: "+20%", icon: "fas fa-mouse-pointer" }
+        ]
+      },
+
+      professional_experience: [
+        {
+          role: "AI Content Contributor",
+          employer: "Confidential AI Platform",
+          years: "2024–Present",
+          location: "Remote",
+          responsibilities: [
+            "Developed high-quality conversational datasets in Thai language for LLM training",
+            "Achieved 75% five-star ratings across 16+ specialized AI training tasks",
+            "Specialized in ethical AI training methodologies and bias mitigation techniques",
+            "Contributed to multilingual model improvements with cultural context awareness"
+          ],
+          technologies: ["Python", "NLP", "Machine Learning", "Data Annotation"]
+        },
+        {
+          role: "Full-Stack Developer & Creative Director",
+          employer: "Pegearts.com",
+          years: "2024–Present",
+          location: "Bangkok, Thailand",
+          responsibilities: [
+            "Led comprehensive full-stack development and creative strategy initiatives",
+            "Built TON blockchain Mini App achieving +35% user engagement increase",
+            "Implemented modern web technologies with focus on performance optimization",
+            "Managed end-to-end project delivery from concept to deployment"
+          ],
+          technologies: ["React", "Node.js", "TON Blockchain", "JavaScript", "CSS3"]
+        },
+        {
+          role: "Content Strategist & SEO Manager",
+          employer: "PageantEmpress.com",
+          years: "2023–Present",
+          location: "Remote",
+          responsibilities: [
+            "Increased organic search visibility by +40% through strategic SEO optimization",
+            "Developed and managed comprehensive YouTube and social media content strategy",
+            "Implemented cross-platform content optimization systems and analytics",
+            "Created data-driven content calendars resulting in +20% CTR improvement"
+          ],
+          technologies: ["Google Analytics", "SEO Tools", "Content Management", "Social Media APIs"]
+        },
+        {
+          role: "Professional Voice Artist",
+          employer: "Freelance & Voquent",
+          years: "2018–Present",
+          location: "Global Remote",
+          responsibilities: [
+            "Delivered 75+ professional voice-over projects with 81% success rate",
+            "Specialized in Thai-English bilingual narration and commercial voice work",
+            "Developed innovative audio-visual storytelling techniques for diverse clients",
+            "Maintained consistent quality standards across multiple project types"
+          ],
+          technologies: ["Pro Tools", "Adobe Audition", "Voice Recording", "Audio Processing"]
+        }
+      ],
+
+      media: {
+        voice_intro: "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/demo/voice/intro/Thann_Intro.wav",
+        voice_narrative: "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3"
+      },
+
+      social_links: {
+        github: "https://github.com/Pigletpeakkung",
+        linkedin: "https://linkedin.com/in/thanatsitt-s",
+        youtube: "https://www.youtube.com/@pegearts",
+        voquent: "https://www.voquent.com/voice-actor/2033447",
+        email: "mailto:thanattsitt.info@yahoo.co.uk"
+      }
+    };
+
+    // ===============================================
+    // CRASH-SAFE PORTFOLIO APPLICATION CLASS
+    // ===============================================
+    class EnhancedPortfolioApp {
+      constructor() {
+        this.currentAudio = null;
+        this.isAudioPlaying = false;
+        this.lastScrollY = 0;
+        this.headerHidden = false;
+        this.scrollDirection = 'up';
+        this.animations = {
+          timeline: null,
+          moonTimeline: null
+        };
+        this.observers = new Map();
+        this.isInitialized = false;
+        this.performanceMode = 'normal';
+        
+        this.init();
+      }
+
+      // ===============================================
+      // SAFE INITIALIZATION WITH ERROR HANDLING
+      // ===============================================
+      async init() {
+        try {
+          console.log('🚀 Initializing Enhanced Portfolio App...');
+          
+          // Validate environment safely
+          if (!this.validateEnvironment()) {
+            throw new Error('Environment validation failed');
+          }
+          
+          // Initialize core systems with fallbacks
+          await this.initializeCore();
+          
+          // Setup all components safely
+          this.setupComponents();
+          
+          // Mark as initialized
+          this.isInitialized = true;
+          
+          console.log('✅ Portfolio App initialized successfully!');
+          
+        } catch (error) {
+          console.error('❌ Failed to initialize Portfolio App:', error);
+          this.handleInitializationError(error);
+        }
+      }
+
+      validateEnvironment() {
+        try {
+          // Check required APIs with fallbacks
+          const requiredApis = {
+            IntersectionObserver: !!window.IntersectionObserver,
+            requestAnimationFrame: !!window.requestAnimationFrame,
+            localStorage: !!window.localStorage
+          };
+          
+          const missingApis = Object.entries(requiredApis)
+            .filter(([api, available]) => !available)
+            .map(([api]) => api);
+          
+          if (missingApis.length > 0) {
+            console.warn('⚠️ Missing APIs (using fallbacks):', missingApis);
+          }
+
+          // Check GSAP safely
+          if (typeof gsap === 'undefined') {
+            console.warn('⚠️ GSAP not loaded, animations will be limited');
+          }
+
+          // Validate data structure safely
+          return this.validateDataStructure();
+          
+        } catch (error) {
+          console.error('Environment validation error:', error);
+          return false;
+        }
+      }
+
+      validateDataStructure() {
+        try {
+          const requiredFields = [
+            'profile.name',
+            'profile.email',
+            'expertise.AI_technology',
+            'professional_experience'
+          ];
+
+          const missing = requiredFields.filter(field => {
+            const value = this.getNestedValue(DATA, field);
+            return value === undefined || value === null;
+          });
+
+          if (missing.length > 0) {
+            console.warn('⚠️ Missing data fields (using fallbacks):', missing);
+          }
+
+          return true;
+        } catch (error) {
+          console.error('Data validation error:', error);
+          return false;
+        }
+      }
+
+      getNestedValue(obj, path) {
+        try {
+          return path.split('.').reduce((current, key) => current?.[key], obj);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      async initializeCore() {
+        try {
+          // Remove preloader with enhanced animation
+          await this.removePreloader();
+          
+          // Populate content safely
+          this.populateContent();
+          
+          // Setup event listeners with error handling
+          this.setupEventListeners();
+          
+          // Initialize animations if available
+          if (window.gsap) {
+            this.initAnimations();
+          }
+          
+          // Initialize particles if available
+          if (window.particlesJS) {
+            this.initParticles();
+          }
+          
+          // Setup intersection observers if supported
+          if (window.IntersectionObserver) {
+            this.setupIntersectionObservers();
+          }
+          
+          // Update current year
+          this.updateCurrentYear();
+          
+          // Load theme preference
+          this.loadThemePreference();
+          
+        } catch (error) {
+          console.error('Core initialization error:', error);
+          throw error;
+        }
+      }
+
+      setupComponents() {
+        try {
+          // Initialize magnetic effects if GSAP available
+          if (window.gsap) {
+            this.initMagneticEffects();
+          }
+          
+          // Setup auto-hide header
+          this.setupAutoHideHeader();
+          
+          // Initialize floating voice button
+          this.initFloatingVoiceButton();
+          
+          // Setup performance monitoring
+          this.setupPerformanceMonitoring();
+          
+        } catch (error) {
+          console.error('Component setup error:', error);
+          // Continue anyway with basic functionality
+        }
+      }
+
+      handleInitializationError(error) {
+        try {
+          console.error('Falling back to basic initialization');
+          
+          // Remove preloader even if other init fails
+          const preloader = document.getElementById('preloader');
+          if (preloader) {
+            preloader.style.display = 'none';
+          }
+          
+          // Basic content population
+          this.populateBasicContent();
+          this.setupBasicEventListeners();
+          
+        } catch (fallbackError) {
+          console.error('Even fallback initialization failed:', fallbackError);
+          // Last resort - just remove preloader
+          const preloader = document.getElementById('preloader');
+          if (preloader) {
+            preloader.remove();
+          }
+        }
+      }
+
+      // ===============================================
+      // ENHANCED PRELOADER WITH SAFE REMOVAL
+      // ===============================================
+      async removePreloader() {
+        return new Promise((resolve) => {
+          const preloader = document.getElementById('preloader');
+          if (!preloader) return resolve();
+
+          try {
+            if (window.gsap) {
+              gsap.to(preloader, {
+                opacity: 0,
+                scale: 1.1,
+                duration: 0.8,
+                ease: "power2.inOut",
+                onComplete: () => {
+                  preloader.remove();
+                  resolve();
+                }
+              });
+            } else {
+              // Fallback CSS transition
+              preloader.style.transition = 'opacity 0.5s ease';
+              preloader.style.opacity = '0';
+              setTimeout(() => {
+                preloader.remove();
+                resolve();
+              }, 500);
+            }
+          } catch (error) {
+            console.error('Preloader removal error:', error);
+            preloader.remove();
+            resolve();
+          }
+        });
+      }
+
+      // ===============================================
+      // SAFE CONTENT POPULATION
+      // ===============================================
+      populateContent() {
+        try {
+          this.populateHero();
+          this.populateSkills();
+          this.populateMetrics();
+          this.populateExperience();
+          this.populateVoiceDemos();
+        } catch (error) {
+          console.error('Content population error:', error);
+          this.populateBasicContent();
+        }
+      }
+
+      populateBasicContent() {
+        try {
+          const nameEl = document.getElementById('hero-name');
+          if (nameEl) nameEl.textContent = DATA.profile?.name || 'Thanatsitt Santisamranwilai';
+          
+          const descEl = document.getElementById('hero-description');
+          if (descEl) descEl.textContent = DATA.profile?.summary || 'AI Creative Designer & Voice Artist';
+        } catch (error) {
+          console.error('Basic content population error:', error);
+        }
+      }
+
+      populateHero() {
+        try {
+          const elements = {
+            'hero-name': DATA.profile?.name,
+            'hero-subtitle': DATA.profile?.subtitle,
+            'hero-description': DATA.profile?.summary
+          };
+
+          Object.entries(elements).forEach(([id, content]) => {
+            const element = document.getElementById(id);
+            if (element && content) {
+              element.textContent = content;
+            }
+          });
+
+          // Profile image with error handling
+          this.setupProfileImage();
+          
+          // Audio sources with validation
+          this.setupAudioSources();
+          
+          // CV download link
+          const cvBtn = document.getElementById('cv-download-btn');
+          if (cvBtn && DATA.profile?.cv) {
+            cvBtn.href = DATA.profile.cv;
+          }
+        } catch (error) {
+          console.error('Hero population error:', error);
+        }
+      }
+
+      setupProfileImage() {
+        try {
+          const profileImg = document.getElementById('profile-image');
+          if (profileImg && DATA.profile?.photo) {
+            profileImg.src = DATA.profile.photo;
+            profileImg.onerror = () => {
+              console.warn('Profile image failed to load');
+              profileImg.style.display = 'none';
+            };
+          }
+        } catch (error) {
+          console.error('Profile image setup error:', error);
+        }
+      }
+
+      setupAudioSources() {
+        try {
+          const audioElements = [
+            { id: 'hero-voice-sample', src: DATA.media?.voice_intro },
+            { id: 'floating-voice-sample', src: DATA.media?.voice_narrative }
+          ];
+
+          audioElements.forEach(({ id, src }) => {
+            const audio = document.getElementById(id);
+            if (audio && src) {
+              audio.src = src;
+              audio.onerror = () => {
+                console.warn(`Audio ${id} failed to load: ${src}`);
+              };
+            }
+          });
+        } catch (error) {
+          console.error('Audio setup error:', error);
+        }
+      }
+
+      populateSkills() {
+        try {
+          const skillsGrid = document.getElementById('skills-grid');
+          if (!skillsGrid) return;
+
+          skillsGrid.innerHTML = '';
+          
+          const skillCategories = [
+            { 
+              title: 'AI & Technology', 
+              icon: 'fas fa-robot', 
+              skills: DATA.expertise?.AI_technology || [], 
+              color: 'var(--primary-light)' 
+            },
+            { 
+              title: 'Content & Communication', 
+              icon: 'fas fa-palette', 
+              skills: DATA.expertise?.content_communication || [], 
+              color: 'var(--primary-accent)' 
+            }
+          ];
+
+          skillCategories.forEach((category, index) => {
+            if (category.skills.length > 0) {
+              const skillCard = this.createSkillCard(category, index);
+              skillsGrid.appendChild(skillCard);
+            }
+          });
+        } catch (error) {
+          console.error('Skills population error:', error);
+        }
+      }
+
+      createSkillCard(category, index) {
+        try {
+          const skillCard = document.createElement('div');
+          skillCard.className = 'glass-card skill-card';
+          skillCard.style.animationDelay = `${index * 0.2}s`;
+          
+          skillCard.innerHTML = `
+            <h3 style="color: ${category.color}; display: flex; align-items: center; margin-bottom: 2rem; text-align: left;">
+              <i class="${category.icon}" style="margin-right: 1rem; font-size: 1.8rem;"></i>
+              ${category.title}
+            </h3>
+            <div class="skills-list">
+              ${category.skills.map(skill => this.createSkillItem(skill)).join('')}
+            </div>
+          `;
+          
+          return skillCard;
+        } catch (error) {
+          console.error('Skill card creation error:', error);
+          return document.createElement('div');
+        }
+      }
+
+      createSkillItem(skill) {
+        try {
+          return `
+            <div class="skill-item">
+              <div class="skill-header">
+                <div class="skill-name">
+                  <i class="${skill.icon || 'fas fa-star'}" class="skill-icon"></i>
+                  <span>${skill.skill || 'Unknown Skill'}</span>
+                </div>
+                <span class="skill-percentage">${skill.level || 0}%</span>
+              </div>
+              <div class="skill-progress">
+                <div class="skill-progress-fill" 
+                     data-width="${skill.level || 0}">
+                </div>
+              </div>
+              <p class="skill-description">${skill.description || ''}</p>
+            </div>
+          `;
+        } catch (error) {
+          console.error('Skill item creation error:', error);
+          return '<div class="skill-item">Error loading skill</div>';
+        }
+      }
+
+      populateMetrics() {
+        try {
+          const metricsGrid = document.getElementById('metrics-grid');
+          if (!metricsGrid) return;
+
+          metricsGrid.innerHTML = '';
+          
+          const metrics = DATA.performance_metrics?.verified_results_2024 || [];
+          
+          metrics.forEach((metric, index) => {
+            const metricCard = this.createMetricCard(metric, index);
+            metricsGrid.appendChild(metricCard);
+          });
+        } catch (error) {
+          console.error('Metrics population error:', error);
+        }
+      }
+
+      createMetricCard(metric, index) {
+        try {
+          const metricCard = document.createElement('div');
+          metricCard.className = 'metric-highlight';
+          metricCard.style.animationDelay = `${index * 0.1}s`;
+          
+          metricCard.innerHTML = `
+            <div class="metric-icon">
+              <i class="${metric.icon || 'fas fa-star'}"></i>
+            </div>
+            <div class="metric-number" data-count="${metric.result || '0'}">
+              ${metric.result || '0'}
+            </div>
+            <div class="metric-label">
+              ${metric.metric || 'Unknown Metric'}
+            </div>
+          `;
+          
+          return metricCard;
+        } catch (error) {
+          console.error('Metric card creation error:', error);
+          return document.createElement('div');
+        }
+      }
+
+      populateExperience() {
+        try {
+          const timelineContainer = document.getElementById('experience-timeline');
+          if (!timelineContainer) return;
+
+          timelineContainer.innerHTML = '';
+          
+          const experiences = DATA.professional_experience || [];
+          
+          experiences.forEach((job, index) => {
+            const timelineItem = this.createTimelineItem(job, index);
+            timelineContainer.appendChild(timelineItem);
+          });
+        } catch (error) {
+          console.error('Experience population error:', error);
+        }
+      }
+
+      createTimelineItem(job, index) {
+        try {
+          const timelineItem = document.createElement('div');
+          timelineItem.className = 'timeline-item';
+          timelineItem.style.animationDelay = `${index * 0.15}s`;
+          
+          timelineItem.innerHTML = `
+            <div class="timeline-header">
+              <div>
+                <div class="timeline-role">${job.role || 'Unknown Role'}</div>
+                <div class="timeline-company">${job.employer || 'Unknown Company'}</div>
+              </div>
+              <div class="timeline-period">${job.years || 'Unknown Period'}</div>
+            </div>
+            
+            <ul class="timeline-responsibilities">
+              ${(job.responsibilities || []).map(resp => `
+                <li>${resp}</li>
+              `).join('')}
+            </ul>
+            
+            ${job.technologies ? `
+              <div class="timeline-technologies">
+                <div class="timeline-tech-label">Technologies:</div>
+                <div class="timeline-tech-tags">
+                  ${job.technologies.map(tech => `
+                    <span class="tech-tag">${tech}</span>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+          `;
+          
+          return timelineItem;
+        } catch (error) {
+          console.error('Timeline item creation error:', error);
+          return document.createElement('div');
+        }
+      }
+
+      populateVoiceDemos() {
+        try {
+          const voiceDemosList = document.getElementById('voice-demos-list');
+          if (!voiceDemosList) return;
+
+          const demos = [
+            { 
+              title: 'Professional Introduction', 
+              src: DATA.media?.voice_intro, 
+              description: 'A warm, professional introduction showcasing vocal clarity, tone, and multilingual capabilities.' 
+            },
+            { 
+              title: 'Creative Narrative Sample', 
+              src: DATA.media?.voice_narrative, 
+              description: 'Creative storytelling with emotional range, character development, and engaging delivery.' 
+            }
+          ].filter(demo => demo.src); // Only include demos with valid sources
+
+          voiceDemosList.innerHTML = '';
+          
+          demos.forEach((demo, index) => {
+            const demoCard = this.createVoiceDemoCard(demo, index);
+            voiceDemosList.appendChild(demoCard);
+          });
+        } catch (error) {
+          console.error('Voice demos population error:', error);
+        }
+      }
+
+      createVoiceDemoCard(demo, index) {
+        try {
+          const demoCard = document.createElement('div');
+          demoCard.className = 'glass-card voice-demo-card';
+          demoCard.style.cssText = `
+            text-align: center; 
+            max-width: 550px; 
+            margin: 2.5rem auto; 
+            animation-delay: ${index * 0.2}s;
+          `;
+          
+          demoCard.innerHTML = `
+            <h4 style="color: var(--primary-light); margin-bottom: 1.5rem; font-size: 1.3rem;">
+              ${demo.title}
+            </h4>
+            <audio controls 
+                   style="width: 100%; max-width: 450px; margin: 1.5rem 0; height: 50px;"
+                   preload="metadata">
+              <source src="${demo.src}" type="audio/mpeg">
+              <source src="${demo.src}" type="audio/wav">
+              <p>Your browser does not support the audio element. 
+                 <a href="${demo.src}" target="_blank" rel="noopener noreferrer">Download audio file</a>
+              </p>
+            </audio>
+            <p style="font-size: 1rem; opacity: 0.85; margin-top: 1.5rem; line-height: 1.6;">
+              ${demo.description}
+            </p>
+          `;
+          
+                    return demoCard;
+        } catch (error) {
+          console.error('Voice demo card creation error:', error);
+          return document.createElement('div');
+        }
+      }
+
+      // ===============================================
+      // SAFE EVENT LISTENERS SETUP
+      // ===============================================
+      setupEventListeners() {
+        try {
+          this.setupBasicEventListeners();
+          this.setupAdvancedEventListeners();
+        } catch (error) {
+          console.error('Event listeners setup error:', error);
+          this.setupBasicEventListeners();
+        }
+      }
+
+      setupBasicEventListeners() {
+        try {
+          // Theme toggle with error handling
+          const themeToggle = document.getElementById('themeToggle');
+          if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.safeExecute(() => this.toggleTheme()));
+          }
+
+          // Scroll events with throttling
+          let scrollTimeout;
+          window.addEventListener('scroll', () => {
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+              this.safeExecute(() => this.handleScroll());
+            }, 16); // ~60fps throttling
+          }, { passive: true });
+
+          // Resize events with debouncing
+          let resizeTimeout;
+          window.addEventListener('resize', () => {
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+              this.safeExecute(() => this.handleResize());
+            }, 250);
+          });
+
+          // Back to top button
+          const backToTopBtn = document.getElementById('back-to-top-btn');
+          if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', () => this.safeExecute(() => this.scrollToTop()));
+          }
+
+          // Navigation links
+          document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+              this.safeExecute(() => this.handleNavClick(e));
+            });
+          });
+
+          // Voice buttons
+          const playVoiceBtn = document.getElementById('play-voice-btn');
+          if (playVoiceBtn) {
+            playVoiceBtn.addEventListener('click', () => {
+              this.safeExecute(() => this.toggleVoicePlayback('hero-voice-sample', playVoiceBtn));
+            });
+          }
+
+        } catch (error) {
+          console.error('Basic event listeners error:', error);
+        }
+      }
+
+      setupAdvancedEventListeners() {
+        try {
+          // Global error handlers
+          window.addEventListener('error', (event) => this.handleGlobalError(event));
+          window.addEventListener('unhandledrejection', (event) => this.handleUnhandledRejection(event));
+
+          // Visibility change handler
+          document.addEventListener('visibilitychange', () => this.safeExecute(() => this.handleVisibilityChange()));
+
+          // Moon interaction
+          const moon = document.getElementById('heroMoon');
+          if (moon) {
+            moon.addEventListener('click', () => this.safeExecute(() => this.handleMoonClick()));
+            moon.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.safeExecute(() => this.handleMoonClick());
+              }
+            });
+          }
+
+          // Audio event handlers
+          document.querySelectorAll('audio').forEach(audio => {
+            audio.addEventListener('play', (e) => this.safeExecute(() => this.handleAudioPlay(e)));
+            audio.addEventListener('pause', (e) => this.safeExecute(() => this.handleAudioPause(e)));
+            audio.addEventListener('ended', (e) => this.safeExecute(() => this.handleAudioEnd(e)));
+            audio.addEventListener('error', () => this.safeExecute(() => this.showAudioError()));
+          });
+
+          // Contact form submission
+          const contactForm = document.querySelector('.contact-form');
+          if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+              e.preventDefault();
+              this.safeExecute(() => this.handleContactForm(e));
+            });
+          }
+
+        } catch (error) {
+          console.error('Advanced event listeners error:', error);
+        }
+      }
+
+      // Safe execution wrapper
+      safeExecute(fn) {
+        try {
+          return fn();
+        } catch (error) {
+          console.error('Safe execution error:', error);
+          return null;
+        }
+      }
+
+      // ===============================================
+      // AUTO-HIDE HEADER SYSTEM
+      // ===============================================
+      setupAutoHideHeader() {
+        try {
+          this.lastScrollY = window.scrollY;
+          this.headerHidden = false;
+        } catch (error) {
+          console.error('Auto-hide header setup error:', error);
+        }
+      }
+
+      handleScroll() {
+        try {
+          const currentScrollY = window.scrollY;
+          const navbar = document.getElementById('mainNavbar');
+          const themeToggle = document.getElementById('themeToggle');
+          const backToTopBtn = document.getElementById('back-to-top-btn');
+          
+          if (!navbar) return;
+
+          // Determine scroll direction
+          this.scrollDirection = currentScrollY > this.lastScrollY ? 'down' : 'up';
+          
+          // Auto-hide logic
+          if (currentScrollY > 100) {
+            navbar.classList.add('scrolled');
+            
+            if (this.scrollDirection === 'down' && currentScrollY > this.lastScrollY + 60) {
+              if (!this.headerHidden) {
+                navbar.classList.add('hidden');
+                if (themeToggle) themeToggle.classList.add('header-hidden');
+                this.headerHidden = true;
+              }
+            } else if (this.scrollDirection === 'up' && currentScrollY < this.lastScrollY - 10) {
+              if (this.headerHidden) {
+                navbar.classList.remove('hidden');
+                if (themeToggle) themeToggle.classList.remove('header-hidden');
+                this.headerHidden = false;
+              }
+            }
+          } else {
+            navbar.classList.remove('scrolled', 'hidden');
+            if (themeToggle) themeToggle.classList.remove('header-hidden');
+            this.headerHidden = false;
+          }
+
+          // Back to top button visibility
+          if (backToTopBtn) {
+            if (currentScrollY > 300) {
+              backToTopBtn.classList.add('visible');
+            } else {
+              backToTopBtn.classList.remove('visible');
+            }
+          }
+
+          // Update floating voice button visibility
+          this.updateFloatingVoiceVisibility(currentScrollY);
+
+          // Update active navigation
+          this.updateActiveNavigation();
+
+          this.lastScrollY = currentScrollY;
+
+        } catch (error) {
+          console.error('Scroll handling error:', error);
+        }
+      }
+
+      // ===============================================
+      // ENHANCED FLOATING VOICE BUTTON WITH VISUALIZER
+      // ===============================================
+      initFloatingVoiceButton() {
+        try {
+          const floatingBtn = document.getElementById('floatingVoiceBtn');
+          if (!floatingBtn) return;
+
+          floatingBtn.addEventListener('click', () => {
+            this.safeExecute(() => this.toggleFloatingVoice());
+          });
+
+          // Initialize visibility
+          this.updateFloatingVoiceVisibility(window.scrollY);
+
+        } catch (error) {
+          console.error('Floating voice button init error:', error);
+        }
+      }
+
+      updateFloatingVoiceVisibility(scrollY) {
+        try {
+          const floatingBtn = document.getElementById('floatingVoiceBtn');
+          if (!floatingBtn) return;
+
+          const heroHeight = window.innerHeight;
+          
+          if (scrollY > heroHeight * 0.5) {
+            floatingBtn.classList.add('visible');
+          } else {
+            floatingBtn.classList.remove('visible');
+          }
+        } catch (error) {
+          console.error('Floating voice visibility error:', error);
+        }
+      }
+
+      toggleFloatingVoice() {
+        try {
+          const floatingBtn = document.getElementById('floatingVoiceBtn');
+          const floatingIcon = document.getElementById('floatingVoiceIcon');
+          const audio = document.getElementById('floating-voice-sample');
+          
+          if (!floatingBtn || !floatingIcon || !audio) return;
+
+          if (this.isAudioPlaying && this.currentAudio === audio) {
+            // Stop current audio
+            audio.pause();
+            audio.currentTime = 0;
+            floatingBtn.classList.remove('playing');
+            floatingIcon.className = 'fas fa-play';
+            floatingBtn.setAttribute('data-tooltip', '🎵 Voice Demo');
+          } else {
+            // Stop any other audio first
+            this.stopAllAudio();
+            
+            // Play floating audio
+            audio.play().then(() => {
+              floatingBtn.classList.add('playing');
+              floatingIcon.className = 'fas fa-stop';
+              floatingBtn.setAttribute('data-tooltip', '⏸️ Stop Demo');
+            }).catch(error => {
+              console.error('Floating audio playback error:', error);
+              this.showAudioError();
+            });
+          }
+        } catch (error) {
+          console.error('Toggle floating voice error:', error);
+        }
+      }
+
+      // ===============================================
+      // THEME SYSTEM WITH SAFE STORAGE
+      // ===============================================
+      toggleTheme() {
+        try {
+          const html = document.documentElement;
+          const themeIcon = document.getElementById('themeIcon');
+          
+          const currentTheme = html.getAttribute('data-theme');
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          
+          html.setAttribute('data-theme', newTheme);
+          
+          if (themeIcon) {
+            if (window.gsap) {
+              gsap.to(themeIcon, {
+                rotation: 360,
+                scale: 1.2,
+                duration: 0.4,
+                ease: "back.out(1.7)",
+                onComplete: () => {
+                  themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+                  gsap.set(themeIcon, { rotation: 0, scale: 1 });
+                }
+              });
+            } else {
+              themeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+          }
+
+          // Save preference safely
+          this.saveThemePreference(newTheme);
+
+        } catch (error) {
+          console.error('Theme toggle error:', error);
+        }
+      }
+
+      loadThemePreference() {
+        try {
+          if (!window.localStorage) return;
+          
+          const saved = localStorage.getItem('portfolio-theme');
+          if (saved && ['light', 'dark'].includes(saved)) {
+            document.documentElement.setAttribute('data-theme', saved);
+            
+            const themeIcon = document.getElementById('themeIcon');
+            if (themeIcon) {
+              themeIcon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+          }
+        } catch (error) {
+          console.warn('Could not load theme preference:', error);
+        }
+      }
+
+      saveThemePreference(theme) {
+        try {
+          if (window.localStorage) {
+            localStorage.setItem('portfolio-theme', theme);
+          }
+        } catch (error) {
+          console.warn('Could not save theme preference:', error);
+        }
+      }
+
+      // ===============================================
+      // ENHANCED AUDIO SYSTEM
+      // ===============================================
+      toggleVoicePlayback(audioId, button) {
+        try {
+          const audio = document.getElementById(audioId);
+          if (!audio || !button) return;
+
+          if (this.isAudioPlaying && this.currentAudio === audio) {
+            // Stop current audio
+            audio.pause();
+            audio.currentTime = 0;
+            button.innerHTML = '<i class="fas fa-play"></i> Play Voice Sample';
+            button.classList.remove('playing');
+          } else {
+            // Stop any other audio first
+            this.stopAllAudio();
+            
+            // Play selected audio
+            audio.play().then(() => {
+              button.innerHTML = '<i class="fas fa-stop"></i> Stop Sample';
+              button.classList.add('playing');
+            }).catch(error => {
+              console.error('Audio playback error:', error);
+              this.showAudioError();
+            });
+          }
+        } catch (error) {
+          console.error('Voice playback toggle error:', error);
+        }
+      }
+
+      stopAllAudio() {
+        try {
+          const audios = document.querySelectorAll('audio');
+          audios.forEach(audio => {
+            if (!audio.paused) {
+              audio.pause();
+              audio.currentTime = 0;
+            }
+          });
+
+          this.currentAudio = null;
+          this.isAudioPlaying = false;
+
+          // Reset button states
+          const playBtn = document.getElementById('play-voice-btn');
+          if (playBtn) {
+            playBtn.innerHTML = '<i class="fas fa-play"></i> Play Voice Sample';
+            playBtn.classList.remove('playing');
+          }
+
+          const floatingBtn = document.getElementById('floatingVoiceBtn');
+          const floatingIcon = document.getElementById('floatingVoiceIcon');
+          if (floatingBtn && floatingIcon) {
+            floatingBtn.classList.remove('playing');
+            floatingIcon.className = 'fas fa-play';
+            floatingBtn.setAttribute('data-tooltip', '🎵 Voice Demo');
+          }
+
+        } catch (error) {
+          console.error('Stop all audio error:', error);
+        }
+      }
+
+      handleAudioPlay(e) {
+        try {
+          if (e.target !== this.currentAudio) {
+            this.stopAllAudio();
+          }
+          
+          this.currentAudio = e.target;
+          this.isAudioPlaying = true;
+          
+          if (e.target.id === 'hero-voice-sample') {
+            const button = document.getElementById('play-voice-btn');
+            if (button) {
+              button.innerHTML = '<i class="fas fa-stop"></i> Stop Sample';
+              button.classList.add('playing');
+            }
+          }
+        } catch (error) {
+          console.error('Audio play handler error:', error);
+        }
+      }
+
+      handleAudioPause(e) {
+        try {
+          this.isAudioPlaying = false;
+          
+          if (e.target.id === 'hero-voice-sample') {
+            const button = document.getElementById('play-voice-btn');
+            if (button) {
+              button.innerHTML = '<i class="fas fa-play"></i> Play Voice Sample';
+              button.classList.remove('playing');
+            }
+          }
+        } catch (error) {
+          console.error('Audio pause handler error:', error);
+        }
+      }
+
+      handleAudioEnd(e) {
+        try {
+          this.handleAudioPause(e);
+          
+          // Reset floating voice button if it was the active audio
+          if (e.target.id === 'floating-voice-sample') {
+            const floatingBtn = document.getElementById('floatingVoiceBtn');
+            const floatingIcon = document.getElementById('floatingVoiceIcon');
+            if (floatingBtn && floatingIcon) {
+              floatingBtn.classList.remove('playing');
+              floatingIcon.className = 'fas fa-play';
+              floatingBtn.setAttribute('data-tooltip', '🎵 Voice Demo');
+            }
+          }
+        } catch (error) {
+          console.error('Audio end handler error:', error);
+        }
+      }
+
+      showAudioError() {
+        try {
+          console.warn('Audio playback failed - check browser audio permissions');
+          
+          // Show user-friendly error message
+          const errorMsg = document.createElement('div');
+          errorMsg.style.cssText = `
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white; padding: 1rem 2rem; border-radius: 25px;
+            font-weight: 600; z-index: 10000; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            animation: slideDown 0.5s ease;
+          `;
+          errorMsg.textContent = '⚠️ Audio playback unavailable. Please check browser permissions.';
+          
+          document.body.appendChild(errorMsg);
+          
+          setTimeout(() => {
+            if (errorMsg.parentNode) {
+              errorMsg.remove();
+            }
+          }, 4000);
+
+        } catch (error) {
+          console.error('Show audio error failed:', error);
+        }
+      }
+
+      // ===============================================
+      // ENHANCED NAVIGATION
+      // ===============================================
+      handleNavClick(e) {
+        try {
+          const href = e.target.getAttribute('href');
+          if (!href || !href.startsWith('#')) return;
+
+          e.preventDefault();
+          
+          const targetId = href.substring(1);
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+            const navbarHeight = 80;
+            const targetPosition = targetElement.offsetTop - navbarHeight;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+
+          // Close mobile menu if open
+          this.closeMobileMenu();
+
+        } catch (error) {
+          console.error('Nav click handler error:', error);
+        }
+      }
+
+      closeMobileMenu() {
+        try {
+          const navbarCollapse = document.querySelector('.navbar-collapse');
+          if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+            
+            // Safe Bootstrap collapse handling
+            if (window.bootstrap && window.bootstrap.Collapse) {
+              const bsCollapse = window.bootstrap.Collapse.getInstance(navbarCollapse);
+              if (bsCollapse) {
+                bsCollapse.hide();
+              }
+            } else {
+              // Fallback: manually remove show class
+              navbarCollapse.classList.remove('show');
+            }
+          }
+        } catch (error) {
+          console.error('Close mobile menu error:', error);
+        }
+      }
+
+      updateActiveNavigation() {
+        try {
+          const sections = document.querySelectorAll('section[id]');
+          const navLinks = document.querySelectorAll('.nav-link');
+          
+          let current = '';
+          const scrollY = window.scrollY;
+          
+          sections.forEach(section => {
+            const sectionTop = section.offsetTop - 150;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+              current = section.getAttribute('id');
+            }
+          });
+          
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === `#${current}`) {
+              link.classList.add('active');
+            }
+          });
+
+        } catch (error) {
+          console.error('Update active navigation error:', error);
+        }
+      }
+
+      // ===============================================
+      // SCROLL INTERACTIONS
+      // ===============================================
+      scrollToTop() {
+        try {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+          // Enhanced rocket animation
+          const rocket = document.getElementById('back-to-top-btn');
+          if (rocket && window.gsap) {
+            gsap.timeline()
+              .to(rocket, {
+                scale: 0.8,
+                duration: 0.1,
+                ease: "power2.inOut"
+              })
+              .to(rocket, {
+                scale: 1.2,
+                y: -10,
+                duration: 0.2,
+                ease: "power2.out"
+              })
+              .to(rocket, {
+                scale: 1,
+                y: 0,
+                rotation: 360,
+                duration: 0.3,
+                ease: "back.out(1.7)"
+              });
+          }
+        } catch (error) {
+          console.error('Scroll to top error:', error);
+        }
+      }
+
+      // ===============================================
+      // ENHANCED MOON INTERACTION
+      // ===============================================
+      handleMoonClick() {
+        try {
+          const moon = document.getElementById('heroMoon');
+          if (!moon) return;
+
+          const rect = moon.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          
+          // Enhanced starburst effect
+          for (let i = 0; i < 15; i++) {
+            this.createStar(centerX, centerY, i);
+          }
+          
+          // Enhanced moon animation
+          if (window.gsap) {
+            gsap.timeline()
+              .to(moon, {
+                scale: 1.5,
+                rotation: 180,
+                duration: 0.3,
+                ease: "back.out(1.7)"
+              })
+              .to(moon, {
+                scale: 1,
+                rotation: 360,
+                duration: 0.4,
+                ease: "elastic.out(1, 0.3)"
+              });
+          }
+        } catch (error) {
+          console.error('Moon click handler error:', error);
+        }
+      }
+
+      createStar(centerX, centerY, index) {
+        try {
+          const stars = ['✨', '⭐', '🌟', '💫', '🌠'];
+          const star = document.createElement('div');
+          star.innerHTML = stars[index % stars.length];
+          star.style.cssText = `
+            position: fixed;
+            left: ${centerX}px;
+            top: ${centerY}px;
+            font-size: ${20 + Math.random() * 15}px;
+            pointer-events: none;
+            z-index: 1000;
+            user-select: none;
+          `;
+          document.body.appendChild(star);
+
+          const angle = (360 / 15) * index;
+          const distance = 100 + Math.random() * 60;
+          const x = Math.cos(angle * Math.PI / 180) * distance;
+          const y = Math.sin(angle * Math.PI / 180) * distance;
+
+          if (window.gsap) {
+            gsap.to(star, {
+              x: x,
+              y: y,
+              opacity: 0,
+              scale: 0,
+              rotation: 360 + Math.random() * 180,
+              duration: 2.5 + Math.random(),
+              ease: "power2.out",
+              onComplete: () => {
+                if (star.parentNode) {
+                  document.body.removeChild(star);
+                }
+              }
+            });
+          } else {
+            setTimeout(() => {
+              if (star.parentNode) {
+                document.body.removeChild(star);
+              }
+            }, 3000);
+          }
+        } catch (error) {
+          console.error('Create star error:', error);
+        }
+      }
+
+      // ===============================================
+      // ENHANCED ANIMATIONS (GSAP)
+      // ===============================================
+      initAnimations() {
+        try {
+          if (!window.gsap) return;
+
+          // Register ScrollTrigger safely
+          if (window.ScrollTrigger) {
+            gsap.registerPlugin(ScrollTrigger);
+          }
+          
+          // Initialize animation sequences
+          this.initHeroAnimations();
+          this.initMoonAnimation();
+          this.animateSkillBars();
+          this.animateCards();
+          this.animateMetrics();
+
+        } catch (error) {
+          console.error('Animations initialization error:', error);
+        }
+      }
+
+      initHeroAnimations() {
+        try {
+          if (!window.gsap) return;
+
+          const tl = gsap.timeline({ delay: 0.5 });
+          
+          tl.from('.profile-image', { 
+            scale: 0, 
+            opacity: 0, 
+            rotation: -180,
+            duration: 1.5, 
+            ease: "back.out(1.7)" 
+          })
+          .from('#hero-subtitle', { 
+            y: 30, 
+            opacity: 0, 
+            duration: 0.8, 
+            ease: "power2.out" 
+          }, "-=0.8")
+          .from('#hero-name', { 
+            y: 50, 
+            opacity: 0, 
+            duration: 1, 
+            ease: "power3.out" 
+          }, "-=0.6")
+          .from('#hero-description', { 
+            y: 30, 
+            opacity: 0, 
+            duration: 0.8, 
+            ease: "power2.out" 
+          }, "-=0.4")
+          .from('.hero__cta-buttons .btn', { 
+            y: 40, 
+            opacity: 0, 
+            scale: 0.8,
+            duration: 0.6, 
+            stagger: 0.2, 
+            ease: "back.out(1.7)" 
+          }, "-=0.2");
+
+          // Floating shapes animation
+          gsap.utils.toArray('.floating-shape').forEach((shape, index) => {
+            gsap.fromTo(shape, {
+              y: 100,
+              opacity: 0,
+              scale: 0.5
+            }, {
+              y: 0,
+              opacity: 0.6,
+              scale: 1,
+              duration: 2,
+              delay: index * 0.3,
+              ease: "power2.out"
+            });
+          });
+
+          this.animations.timeline = tl;
+
+        } catch (error) {
+          console.error('Hero animations error:', error);
+        }
+      }
+
+      initMoonAnimation() {
+        try {
+          if (!window.gsap) return;
+
+          const moon = document.getElementById('heroMoon');
+          if (!moon) return;
+
+          const screenWidth = window.innerWidth;
+          const moonTl = gsap.timeline({ repeat: -1 });
+          
+          moonTl.fromTo(moon, {
+            x: -200,
+            y: 100,
+            rotation: 0,
+            opacity: 0,
+            scale: 0.8
+          }, {
+            x: screenWidth * 0.2,
+            y: 40,
+            rotation: 60,
+            opacity: 1,
+            scale: 1,
+            duration: 20,
+            ease: "power1.inOut"
+          })
+          .to(moon, {
+            x: screenWidth * 0.8,
+            y: 80,
+            rotation: 180,
+            scale: 1.1,
+            duration: 25,
+            ease: "none"
+          })
+          .to(moon, {
+            x: screenWidth + 200,
+            y: 100,
+            rotation: 300,
+            opacity: 0,
+            scale: 0.8,
+            duration: 15,
+            ease: "power1.inOut"
+          })
+          .set(moon, { x: -200, y: 100, rotation: 0, opacity: 0, scale: 0.8 });
+
+          // Enhanced floating effect
+          gsap.to(moon, {
+            y: "+=25",
+            duration: 4.5,
+            ease: "sine.inOut",
+            repeat: -1,
+            yoyo: true
+          });
+
+          this.animations.moonTimeline = moonTl;
+
+        } catch (error) {
+          console.error('Moon animation error:', error);
+        }
+      }
+
+      animateSkillBars() {
+        try {
+          if (!window.gsap) return;
+
+          gsap.utils.toArray('.skill-progress-fill').forEach(bar => {
+            const width = bar.getAttribute('data-width');
+            if (width) {
+              gsap.to(bar, {
+                width: `${width}%`,
+                duration: 3,
+                ease: "power2.out",
+                scrollTrigger: window.ScrollTrigger ? {
+                  trigger: bar,
+                  start: "top 85%",
+                  toggleActions: "play none none reverse"
+                } : {}
+              });
+            }
+          });
+
+        } catch (error) {
+          console.error('Skill bars animation error:', error);
+        }
+      }
+
+      animateCards() {
+        try {
+          if (!window.gsap) return;
+
+          gsap.utils.toArray('.glass-card').forEach((card, index) => {
+            gsap.from(card, {
+              y: 80,
+              opacity: 0,
+              scale: 0.95,
+              duration: 1,
+              ease: "power2.out",
+              scrollTrigger: window.ScrollTrigger ? {
+                trigger: card,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+              } : {},
+              delay: index * 0.1
+            });
+          });
+
+        } catch (error) {
+          console.error('Cards animation error:', error);
+        }
+      }
+
+      animateMetrics() {
+        try {
+          if (!window.gsap || !window.ScrollTrigger) return;
+
+          gsap.utils.toArray('.metric-number').forEach(metric => {
+            ScrollTrigger.create({
+              trigger: metric,
+              start: "top 80%",
+              onEnter: () => this.animateCounter(metric)
+            });
+          });
+
+        } catch (error) {
+          console.error('Metrics animation error:', error);
+        }
+      }
+
+      animateCounter(element) {
+        try {
+          if (!window.gsap) return;
+
+          const finalValue = element.getAttribute('data-count');
+          if (!finalValue) return;
+
+          const isPercentage = finalValue.includes('%');
+          const isPlus = finalValue.includes('+');
+          const numericValue = parseInt(finalValue.replace(/[^\d]/g, ''));
+          
+          if (isNaN(numericValue)) {
+            element.textContent = finalValue;
+            return;
+          }
+
+          gsap.to(element, {
+            innerHTML: numericValue,
+            duration: 2.5,
+            ease: "power2.out",
+            snap: { innerHTML: 1 },
+            onUpdate: function() {
+              let current = Math.floor(this.targets()[0].innerHTML);
+              if (isPercentage) current += '%';
+              if (isPlus) current += '+';
+              element.textContent = current;
+            },
+            onComplete: function() {
+              element.textContent = finalValue;
+            }
+          });
+
+        } catch (error) {
+          console.error('Counter animation error:', error);
+          // Fallback: just set the final value
+          const finalValue = element.getAttribute('data-count');
+          if (finalValue) element.textContent = finalValue;
+        }
+      }
+
+      // ===============================================
+      // MAGNETIC EFFECTS (GSAP DEPENDENT)
+      // ===============================================
+      initMagneticEffects() {
+        try {
+          if (!window.gsap) return;
+
+          const magneticElements = document.querySelectorAll('.btn, .social-links a, .theme-toggle, .floating-voice-btn');
+          
+          magneticElements.forEach(element => {
+            element.addEventListener('mousemove', (e) => {
+              const rect = element.getBoundingClientRect();
+              const x = e.clientX - rect.left - rect.width / 2;
+              const y = e.clientY - rect.top - rect.height / 2;
+              
+              gsap.to(element, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.3,
+                ease: "power2.out"
+              });
+            });
+            
+            element.addEventListener('mouseleave', () => {
+              gsap.to(element, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.5)"
+              });
+            });
+          });
+
+        } catch (error) {
+          console.error('Magnetic effects error:', error);
+        }
+      }
+
+      // ===============================================
+      // PARTICLES SYSTEM
+      // ===============================================
+      initParticles() {
+        try {
+          if (!window.particlesJS) return;
+
+          particlesJS('particles-js', {
+            particles: {
+              number: { 
+                value: window.innerWidth < 768 ? 30 : 80, 
+                density: { enable: true, value_area: 800 } 
+              },
+              color: { value: ["#A78BFA", "#F9A8D4", "#ffffff"] },
+              shape: { type: "circle" },
+              opacity: { 
+                value: 0.5, 
+                random: true, 
+                anim: { enable: true, speed: 1, opacity_min: 0.1 } 
+              },
+              size: { 
+                value: 4, 
+                random: true, 
+                anim: { enable: true, speed: 2, size_min: 0.5 } 
+              },
+              line_linked: { enable: false },
+              move: { 
+                enable: true, 
+                speed: 1.5, 
+                direction: "none", 
+                random: true, 
+                straight: false, 
+                out_mode: "out", 
+                bounce: false 
+              }
+            },
+            interactivity: {
+              detect_on: "canvas",
+              events: { 
+                onhover: { enable: true, mode: "repulse" }, 
+                onclick: { enable: true, mode: "push" }, 
+                resize: true 
+              },
+              modes: {
+                repulse: { distance: 120, duration: 0.4 },
+                push: { particles_nb: 4 }
+              }
+            },
+            retina_detect: true
+          });
+
+        } catch (error) {
+          console.error('Particles initialization error:', error);
+        }
+      }
+
+      // ===============================================
+      // INTERSECTION OBSERVERS
+      // ===============================================
+      setupIntersectionObservers() {
+        try {
+          if (!window.IntersectionObserver) return;
+
+          // Navigation active state observer
+          const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                this.safeExecute(() => this.updateActiveNavigation());
+              }
+            });
+          }, {
+            threshold: 0.5,
+            rootMargin: '-100px 0px -100px 0px'
+          });
+
+          document.querySelectorAll('section[id]').forEach(section => {
+            navObserver.observe(section);
+          });
+
+          this.observers.set('navigation', navObserver);
+
+          // Lazy loading observer for images
+          const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const img = entry.target;
+                if (img.dataset.src) {
+                  img.src = img.dataset.src;
+                  img.removeAttribute('data-src');
+                  imageObserver.unobserve(img);
+                }
+              }
+            });
+          });
+
+          document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+          });
+
+          this.observers.set('images', imageObserver);
+
+        } catch (error) {
+          console.error('Intersection observers setup error:', error);
+        }
+      }
+
+      // ===============================================
+      // PERFORMANCE MONITORING
+      // ===============================================
+      setupPerformanceMonitoring() {
+        try {
+          // Monitor performance and adjust animations accordingly
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+              this.safeExecute(() => this.optimizePerformance());
+            });
+          }
+
+          // Monitor frame rate
+          this.monitorFrameRate();
+
+        } catch (error) {
+          console.error('Performance monitoring setup error:', error);
+        }
+      }
+
+      optimizePerformance() {
+        try {
+          const deviceMemory = navigator.deviceMemory || 4;
+          const connectionType = navigator.connection?.effectiveType || '4g';
+          
+          // Reduce animations on low-end devices
+          if (deviceMemory <= 2 || connectionType === 'slow-2g' || connectionType === '2g') {
+            document.documentElement.style.setProperty('--animation-duration', '0.1s');
+            this.performanceMode = 'reduced';
+            console.log('Performance optimizations applied for low-end device');
+          }
+        } catch (error) {
+          console.error('Performance optimization error:', error);
+        }
+      }
+
+      monitorFrameRate() {
+        try {
+          let frames = 0;
+          let lastTime = performance.now();
+          
+          const measureFPS = (currentTime) => {
+            frames++;
+            
+            if (currentTime >= lastTime + 1000) {
+              const fps = Math.round((frames * 1000) / (currentTime - lastTime));
+              
+              if (fps < 30 && this.performanceMode === 'normal') {
+                this.reduceAnimations();
+              }
+              
+              frames = 0;
+              lastTime = currentTime;
+            }
+            
+            if (this.isInitialized) {
+              requestAnimationFrame(measureFPS);
+            }
+          };
+          
+          requestAnimationFrame(measureFPS);
+
+        } catch (error) {
+          console.error('Frame rate monitoring error:', error);
+        }
+      }
+
+      reduceAnimations() {
+        try {
+          if (window.gsap) {
+            gsap.globalTimeline.timeScale(0.5);
+            this.performanceMode = 'reduced';
+            console.log('Animations reduced due to low frame rate');
+          }
+        } catch (error) {
+          console.error('Reduce animations error:', error);
+        }
+      }
+
+      // ===============================================
+      // CONTACT FORM HANDLING
+      // ===============================================
+      handleContactForm(e) {
+        try {
+          const formData = new FormData(e.target);
+          const data = Object.fromEntries(formData);
+          
+          // Here you would typically send to a backend service
+          console.log('Contact form submitted:', data);
+          
+          // Show success message
+          this.showFormMessage('Thank you for your message! I\'ll get back to you soon.', 'success');
+          
+          // Reset form
+          e.target.reset();
+
+        } catch (error) {
+          console.error('Contact form handling error:', error);
+          this.showFormMessage('Sorry, there was an error sending your message. Please try again.', 'error');
+        }
+      }
+
+      showFormMessage(message, type) {
+        try {
+          const messageEl = document.createElement('div');
+          messageEl.style.cssText = `
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: ${type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
+            color: white; padding: 1rem 2rem; border-radius: 25px;
+            font-weight: 600; z-index: 10000; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            max-width: 90vw; text-align: center;
+          `;
+          messageEl.textContent = message;
+          
+          document.body.appendChild(messageEl);
+          
+          setTimeout(() => {
+            if (messageEl.parentNode) {
+              messageEl.remove();
+            }
+          }, 5000);
+
+        } catch (error) {
+          console.error('Show form message error:', error);
+        }
+      }
+
+      // ===============================================
+      // RESIZE HANDLING
+      // ===============================================
+      handleResize() {
+        try {
+          // Reinitialize moon animation with new screen dimensions
+          if (this.animations.moonTimeline && window.gsap) {
+            this.animations.moonTimeline.kill();
+            this.initMoonAnimation();
+          }
+
+          // Update particles for mobile
+          if (window.particlesJS && window.pJSDom && window.pJSDom[0]) {
+            const particleCount = window.innerWidth < 768 ? 30 : 80;
+            window.pJSDom[0].pJS.particles.number.value = particleCount;
+            window.pJSDom[0].pJS.fn.particlesRefresh();
+          }
+
+        } catch (error) {
+          console.error('Resize handling error:', error);
+        }
+      }
+
+      // ===============================================
+      // VISIBILITY AND ERROR HANDLING
+      // ===============================================
+      handleVisibilityChange() {
+        try {
+          if (document.hidden) {
+            // Pause animations when tab is not visible
+            if (window.gsap) {
+              gsap.globalTimeline.pause();
+            }
+            this.stopAllAudio();
+          } else {
+            // Resume animations when tab is visible
+            if (window.gsap) {
+              gsap.globalTimeline.resume();
+            }
+          }
+        } catch (error) {
+          console.error('Visibility change handling error:', error);
+        }
+      }
+
+      handleGlobalError(event) {
+        console.error('Global error:', event.error);
+        // Could implement error reporting here
+      }
+
+      handleUnhandledRejection(event) {
+        console.error('Unhandled promise rejection:', event.reason);
+        // Could implement error reporting here
+      }
+
+      // ===============================================
+      // UTILITY METHODS
+      // ===============================================
+      updateCurrentYear() {
+        try {
+          const yearElement = document.getElementById('current-year');
+          if (yearElement) {
+            yearElement.textContent = new Date().getFullYear();
+          }
+        } catch (error) {
+          console.error('Update current year error:', error);
+        }
+      }
+
+      // ===============================================
+      // CLEANUP METHOD
+      // ===============================================
+      destroy() {
+        try {
+          console.log('🧹 Cleaning up Portfolio App...');
+          
+          // Mark as not initialized
+          this.isInitialized = false;
+          
+          // Stop all audio
+          this.stopAllAudio();
+          
+          // Kill GSAP animations
+          if (window.gsap) {
+            gsap.killTweensOf("*");
+            if (this.animations.timeline) this.animations.timeline.kill();
+            if (this.animations.moonTimeline) this.animations.moonTimeline.kill();
+          }
+          
+          // Disconnect observers
+          this.observers.forEach(observer => observer.disconnect());
+          this.observers.clear();
+          
+          console.log('✅ Portfolio app cleaned up successfully');
+
+        } catch (error) {
+          console.error('Cleanup error:', error);
+        }
+      }
+    }
+
+    // ===============================================
+    // INITIALIZATION WITH COMPREHENSIVE ERROR HANDLING
+    // ===============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        // Check for reduced motion preference
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.style.setProperty('--animation-duration', '0.01s');
+          if (window.gsap) {
+            gsap.globalTimeline.timeScale(0);
+          }
+        }
+        
+        // Initialize the enhanced portfolio app
+        window.portfolioApp = new EnhancedPortfolioApp();
+        
+        console.log('🎉 Portfolio application loaded successfully!');
+        
+      } catch (error) {
+        console.error('❌ Failed to initialize portfolio application:', error);
+        
+        // Fallback initialization
+        try {
+          const preloader = document.getElementById('preloader');
+          if (preloader) preloader.style.display = 'none';
+          
+          console.log('⚠️ Running in fallback mode');
+        } catch (fallbackError) {
+          console.error('❌ Even fallback failed:', fallbackError);
+        }
+      }
+    });
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', () => {
+      try {
+        if (window.portfolioApp && window.portfolioApp.destroy) {
+          window.portfolioApp.destroy();
+        }
+      } catch (error) {
+        console.error('Cleanup on unload error:', error);
+      }
+    });
+
+    // Safe service Worker registration (removed to prevent crashes)
+    // Note: Commented out to prevent GitHub Pages crashes
+    /*
+    if ('serviceWorker' in navigator && location.hostname !== 'github.io') {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registered: ', registration);
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+    */
+  </script>
+</body>
+</html>
