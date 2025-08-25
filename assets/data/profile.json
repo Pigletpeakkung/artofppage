@@ -1,0 +1,83 @@
+{
+  "profile": {
+    "name": "Thanatsitt Santisamranwilai",
+    "location": "Bangkok, Kamphaeng Phet, Thailand",
+    "email": "thanattsitt.info@yahoo.co.uk",
+    "summary": "A multilingual AI content developer with 7+ years of experience in combining creative storytelling, voice acting, and technology. Specialising in ethical AI training data, cross-cultural content creation, and multimedia development for Southeast Asian and global markets.",
+    "photo": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg",
+    "cv": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/5e6abfde6ec3b3844068542b319da5c71ee47044/assets/sitedata/doc/Thanns_Main_CV-4.pdf"
+  },
+  "digital_presence": {
+    "professional": {
+      "portfolio": "https://pigletpeakkung.github.io/Thannxai/",
+      "linkedin": "https://linkedin.com/in/thanattsitts",
+      "github": "https://github.com/Pigletpeakkung",
+      "linktree": "https://linktr.ee/ThanttEzekiel"
+    },
+    "voice_media": {
+      "voice123": "https://voice123.com/voice-actor/zeintharts",
+      "spotify": "https://open.spotify.com/show/3egk7b6MS2PwDPSSS1FUNW",
+      "youtube": "https://www.youtube.com/@pegearts"
+    },
+    "writing": {
+      "medium": "https://medium.com/@zeintharts",
+      "wattpad": "https://www.wattpad.com/user/Ezekielarts"
+    }
+  },
+  "expertise": {
+    "AI_technology": [
+      "Conversational AI Training Data Development (Thai, English, Japanese)",
+      "Prompt Engineering & AI Integration",
+      "Web Development (React, JavaScript, HTML/CSS)",
+      "Blockchain & Telegram Mini Apps"
+    ],
+    "content_communication": [
+      "Multilingual Content Creation (Thai Native / English Fluent / Japanese Conversational)",
+      "Voice Acting & Audio Production (75+ projects, 81% client satisfaction rate)",
+      "SEO Strategy & E-commerce Copywriting",
+      "Cross-Cultural Adaptation & Localization"
+    ]
+  },
+  "performance_metrics": {
+    "verified_results_2024": [
+      {"metric": "Voice Projects Completed", "result": "75+"},
+      {"metric": "Client Satisfaction Rate", "result": "81%"},
+      {"metric": "AI Training Task Excellence", "result": "75% ratings (5/5), 16+ tasks"},
+      {"metric": "SEO Improvement", "result": "+40% organic visibility"},
+      {"metric": "Engagement Increase", "result": "+35% on TON Mini App"},
+      {"metric": "CTR Boost", "result": "+20% via AI-optimized content"}
+    ]
+  },
+  "professional_experience": [
+    {
+      "role": "AI Content Contributor",
+      "employer": "Confidential Platform",
+      "years": "2024–Present",
+      "responsibilities": [
+        "Developed high-quality conversational datasets in Thai for AI models",
+        "Achieved 75% excellent performance ratings (5/5) across 16+ tasks",
+        "Maintained 100% compliance with data privacy and quality protocols",
+        "Applied trilingual expertise for culturally-aware data"
+      ]
+    },
+    {
+      "role": "Web Developer & Creative Lead",
+      "employer": "Pegearts.com",
+      "years": "2024–Present",
+      "responsibilities": [
+        "Led full-stack web development and creative direction for clients",
+        "Built TON Foundation-funded Telegram Mini App (+35% engagement)",
+        "Integrated GPT + MidJourney into content workflow",
+        "Delivered solutions blending design + AI tech"
+      ]
+    }
+  ],
+  "media": {
+    "voice_intro": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/demo/voice/intro/Thann_Intro.wav",
+    "voice_project": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3"
+  },
+  "icons": {
+    "favicon_svg": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/favicon.svg",
+    "favicon_ico": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/icons/favicon.ico"
+  }
+}
