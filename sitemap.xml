@@ -9,15 +9,13 @@
     <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <!-- Only include images that actually exist -->
     <image:image>
         <image:loc>https://pegearts.com/assets/images/data/profile/1755844218313.jpg</image:loc>
         <image:caption>Thanatsitt Santisamranwilai - Professional Profile Photo</image:caption>
         <image:title>Professional Portfolio Profile</image:title>
     </image:image>
-    <!-- Include your actual voice demos -->
     <audio:audio>
-        <audio:content_loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
+        <audio:content_loc>https://pegearts.com/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
         <audio:title>Thanatsitt Professional Voice Introduction</audio:title>
         <audio:description>Professional voice introduction demo showcasing clear articulation and presentation skills</audio:description>
         <audio:duration>120</audio:duration>
@@ -25,7 +23,7 @@
         <audio:family_friendly>yes</audio:family_friendly>
     </audio:audio>
     <audio:audio>
-        <audio:content_loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
+        <audio:content_loc>https://pegearts.com/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
         <audio:title>Thanatsitt Narrative Voice Demo</audio:title>
         <audio:description>Narrative voice demonstration showcasing storytelling and voice modulation skills</audio:description>
         <audio:duration>180</audio:duration>
@@ -42,8 +40,7 @@
     <priority>0.9</priority>
 </url>
 
-<!-- ONLY INCLUDE PAGES THAT ACTUALLY EXIST -->
-<!-- About Page (if it exists) -->
+<!-- About Page ✅ EXISTS -->
 <url>
     <loc>https://pegearts.com/about.html</loc>
     <lastmod>2024-12-19</lastmod>
@@ -59,7 +56,7 @@
     <priority>0.6</priority>
 </url>
 
-<!-- Legal Pages (only if they exist) -->
+<!-- Terms of Service ✅ EXISTS -->
 <url>
     <loc>https://pegearts.com/term-of-service.html</loc>
     <lastmod>2024-12-19</lastmod>
@@ -67,6 +64,7 @@
     <priority>0.3</priority>
 </url>
 
+<!-- Cookie Policy -->
 <url>
     <loc>https://pegearts.com/cookie-policy.html</loc>
     <lastmod>2024-12-19</lastmod>
@@ -74,12 +72,20 @@
     <priority>0.3</priority>
 </url>
 
-<!-- Sitemap HTML Version -->
+<!-- Sitemap HTML Version ✅ EXISTS -->
 <url>
     <loc>https://pegearts.com/sitemap.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+</url>
+
+<!-- Offline Page ✅ EXISTS -->
+<url>
+    <loc>https://pegearts.com/offline.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
 </url>
 
 <!-- Error Page -->
@@ -90,9 +96,9 @@
     <priority>0.1</priority>
 </url>
 
-<!-- CV/Resume as direct document link -->
+<!-- CV/Resume -->
 <url>
-    <loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/sitedata/doc/Thanns_Main_CV-4.pdf</loc>
+    <loc>https://pegearts.com/assets/sitedata/doc/Thanns_Main_CV-4.pdf</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
