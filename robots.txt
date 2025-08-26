@@ -1,20 +1,10 @@
 User-agent: *
 Allow: /
 
-# Sitemaps
 Sitemap: https://pegearts.com/sitemap.xml
-Sitemap: https://pegearts.com/audiositemap.xml
 
-# Important pages
-Crawl-delay: 1
-
-# Audio content
+# Allow important assets
 Allow: /assets/demo/voice/
 Allow: /assets/projects/voice/
-
-# Documents
+Allow: /assets/images/data/profile/
 Allow: /assets/sitedata/doc/
-
-# Disallow admin or temporary files
-Disallow: /temp/
-Disallow: /_*
