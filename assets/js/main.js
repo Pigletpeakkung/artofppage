@@ -1,1180 +1,1135 @@
-/**
- * ===============================================
- * THANATSITT PORTFOLIO - MODERN JAVASCRIPT 2025
- * Enhanced PWA with Service Workers, Animations & Theme System
- * ===============================================
- */
-
-// === MODERN 2025 JAVASCRIPT FEATURES ===
-"use strict";
-
-// === GLOBAL STATE MANAGEMENT ===
-class PortfolioApp {
-    constructor() {
-        this.state = {
-            theme: localStorage.getItem('theme') || 'light',
-            currentSection: 'home',
-            animations: new Map(),
-            isOffline: false,
-            pwaInstallPrompt: null,
-            touchStartY: 0,
-            scrollThreshold: 50
-        };
+// ===============================================
+    // ENHANCED PORTFOLIO APPLICATION CLASS WITH FIXED THEME
+    // ===============================================
+    class EnhancedPortfolioApp {
+      constructor() {
+        this.isInitialized = false;
+        this.currentAudio = null;
+        this.isPlaying = false;
+        this.lastScrollY = 0;
+        this.scrollDirection = 'up';
+        this.ticking = false;
         
+        // Initialize the app
         this.init();
-    }
+      }
 
-    // === INITIALIZATION ===
-    async init() {
+      async init() {
         try {
-            // DOM Content Loaded
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => this.setupApp());
-            } else {
-                this.setupApp();
-            }
+          console.log('🚀 Initializing Enhanced Portfolio...');
+          
+          // Show loading screen
+          this.showLoadingScreen();
+          
+          // Initialize core systems
+          await this.initializeCore();
+          
+          // Initialize theme FIRST
+          this.initializeTheme();
+          
+          // Initialize libraries
+          this.initializeLibraries();
+          
+          // Setup event listeners
+          this.setupEventListeners();
+          
+          // Initialize animations
+          this.initializeAnimations();
+          
+          // Setup scroll effects
+          this.setupScrollEffects();
+          
+          // Hide loading screen
+          await this.hideLoadingScreen();
+          
+          this.isInitialized = true;
+          console.log('✅ Portfolio initialized successfully!');
+          
         } catch (error) {
-            console.error('App initialization failed:', error);
-            this.showErrorFallback();
+          console.error('❌ Initialization error:', error);
+          this.fallbackInitialization();
         }
-    }
+      }
 
-    async setupApp() {
-        // Core functionality setup
-        await this.setupServiceWorker();
-        this.setupTheme();
-        this.setupNavigation();
-        this.setupAnimations();
-        this.setupInteractions();
-        this.setupPWA();
-        this.setupOfflineDetection();
-        this.setupPerformanceOptimizations();
-        
-        // Hide loading screen after setup
-        setTimeout(() => this.hideLoadingScreen(), 1500);
-        
-        console.log('🚀 Portfolio App initialized successfully');
-    }
-
-    // === SERVICE WORKER SETUP ===
-    async setupServiceWorker() {
-        if ('serviceWorker' in navigator) {
-            try {
-                const registration = await navigator.serviceWorker.register('/service-worker.js', {
-                    scope: '/'
-                });
-                
-                console.log('✅ Service Worker registered:', registration.scope);
-                
-                // Listen for updates
-                registration.addEventListener('updatefound', () => {
-                    const newWorker = registration.installing;
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            this.showUpdateNotification();
-                        }
-                    });
-                });
-                
-            } catch (error) {
-                console.log('❌ Service Worker registration failed:', error);
-            }
+      showLoadingScreen() {
+        const loader = document.getElementById('loadingScreen');
+        if (loader) {
+          loader.style.display = 'flex';
         }
-    }
+      }
 
-    // === THEME MANAGEMENT ===
-    setupTheme() {
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        
-        // Apply initial theme
-        this.applyTheme(this.state.theme);
-        
-        // Theme toggle handler
-        themeToggle?.addEventListener('click', () => {
-            this.state.theme = this.state.theme === 'light' ? 'dark' : 'light';
-            this.applyTheme(this.state.theme);
-            
-            // Animate icon transition
-            this.animateThemeToggle(themeIcon);
-        });
-
-        // System theme preference detection
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        mediaQuery.addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                this.state.theme = e.matches ? 'dark' : 'light';
-                this.applyTheme(this.state.theme);
-            }
-        });
-    }
-
-    applyTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        
-        const themeIcon = document.getElementById('theme-icon');
-        if (themeIcon) {
-            themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-
-        // Update theme color meta tag
-        const themeColorMeta = document.querySelector('meta[name="theme-color"]');
-        if (themeColorMeta) {
-            themeColorMeta.setAttribute('content', theme === 'dark' ? '#1e293b' : '#6366F1');
-        }
-    }
-
-    animateThemeToggle(icon) {
-        if (!icon) return;
-        
-        icon.style.transform = 'scale(0) rotate(180deg)';
-        
-        setTimeout(() => {
-            icon.style.transform = 'scale(1) rotate(0deg)';
-        }, 150);
-    }
-
-    // === NAVIGATION SYSTEM ===
-    setupNavigation() {
-        const navbar = document.getElementById('navbar');
-        const navLinks = document.querySelectorAll('.nav-link');
-        let lastScrollY = window.scrollY;
-
-        // Smooth scrolling for navigation links
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                
-                if (targetSection) {
-                    this.smoothScrollTo(targetSection);
-                    this.setActiveNavLink(link);
-                    
-                    // Close mobile menu if open
-                    const navbarCollapse = document.querySelector('.navbar-collapse');
-                    if (navbarCollapse?.classList.contains('show')) {
-                        const navbarToggler = document.querySelector('.navbar-toggler');
-                        navbarToggler?.click();
-                    }
-                }
-            });
-        });
-
-        // Navbar scroll behavior
-        window.addEventListener('scroll', this.throttle(() => {
-            const currentScrollY = window.scrollY;
-            
-            // Add/remove scrolled class
-            navbar?.classList.toggle('scrolled', currentScrollY > 50);
-            
-            // Auto-hide navbar on scroll down (mobile)
-            if (window.innerWidth <= 768) {
-                if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                    navbar?.style.setProperty('transform', 'translateY(-100%)');
-                } else {
-                    navbar?.style.setProperty('transform', 'translateY(0)');
-                }
-            }
-            
-            lastScrollY = currentScrollY;
-            
-            // Update active navigation based on scroll position
-            this.updateActiveNavigation();
-        }, 100));
-
-        // Initial active nav update
-        this.updateActiveNavigation();
-    }
-
-    smoothScrollTo(element) {
-        const headerOffset = 80;
-        const elementPosition = element.offsetTop;
-        const offsetPosition = elementPosition - headerOffset;
-
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-        });
-    }
-
-    updateActiveNavigation() {
-        const sections = document.querySelectorAll('.section');
-        const navLinks = document.querySelectorAll('.nav-link');
-        let currentSection = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            const scrollPosition = window.scrollY + 100;
-
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-
-        // Update active nav link
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSection}`) {
-                link.classList.add('active');
-            }
-        });
-
-        this.state.currentSection = currentSection;
-    }
-
-    setActiveNavLink(activeLink) {
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        activeLink.classList.add('active');
-    }
-
-    // === ANIMATION SYSTEM ===
-    setupAnimations() {
-        // Initialize AOS (Animate On Scroll)
-        if (typeof AOS !== 'undefined') {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-out-cubic',
-                once: true,
-                offset: 100,
-                disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-            });
-        }
-
-        // Setup typewriter effect
-        this.setupTypewriter();
-        
-        // Setup skill progress bars animation
-        this.setupSkillsAnimation();
-        
-        // Setup portfolio filters animation
-        this.setupPortfolioFilters();
-        
-        // Setup advanced animations
-        this.setupAdvancedAnimations();
-    }
-
-    setupTypewriter() {
-        const typewriterElement = document.getElementById('typewriter');
-        if (!typewriterElement) return;
-
-        const phrases = [
-            'AI Creative Designer',
-            'Digital Innovation Specialist',
-            'Voice Acting Professional',
-            'Multilingual Content Creator',
-            'Full-Stack Developer',
-            'Creative Technology Expert'
-        ];
-
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typingSpeed = 100;
-        const deletingSpeed = 50;
-        const pauseTime = 2000;
-
-        const typeWriter = () => {
-            const currentPhrase = phrases[phraseIndex];
-            
-            if (isDeleting) {
-                typewriterElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typewriterElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++;
-            }
-
-            let nextTimeout = isDeleting ? deletingSpeed : typingSpeed;
-
-            if (!isDeleting && charIndex === currentPhrase.length) {
-                nextTimeout = pauseTime;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-            }
-
-            setTimeout(typeWriter, nextTimeout);
-        };
-
-        typeWriter();
-    }
-
-    setupSkillsAnimation() {
-        const skillCards = document.querySelectorAll('.skill-card');
-        
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const skillObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const progressBar = entry.target.querySelector('.skill-progress-bar');
-                    if (progressBar && !progressBar.classList.contains('animated')) {
-                        // Animate progress bar
-                        setTimeout(() => {
-                            const targetWidth = progressBar.style.width || '0%';
-                            progressBar.style.width = '0%';
-                            progressBar.style.transition = 'width 2s ease-out';
-                            
-                            requestAnimationFrame(() => {
-                                progressBar.style.width = targetWidth;
-                            });
-                        }, 200);
-                        
-                        progressBar.classList.add('animated');
-                    }
-                }
-            });
-        }, observerOptions);
-
-        skillCards.forEach(card => {
-            skillObserver.observe(card);
-        });
-    }
-
-    setupPortfolioFilters() {
-        const filterButtons = document.querySelectorAll('.portfolio-filter');
-        const portfolioCards = document.querySelectorAll('.portfolio-card');
-
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const filter = button.dataset.filter;
-                
-                // Update active filter
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                // Animate portfolio cards
-                this.filterPortfolioCards(portfolioCards, filter);
-            });
-        });
-    }
-
-    filterPortfolioCards(cards, filter) {
-        cards.forEach((card, index) => {
-            const categories = card.dataset.category?.split(' ') || [];
-            const shouldShow = filter === 'all' || categories.includes(filter);
-            
-            // Animate out
-            card.style.transition = 'all 0.3s ease';
-            card.style.transform = 'scale(0.8)';
-            card.style.opacity = '0';
-            
+      async hideLoadingScreen() {
+        return new Promise(resolve => {
+          const loader = document.getElementById('loadingScreen');
+          if (loader) {
             setTimeout(() => {
-                if (shouldShow) {
-                    card.style.display = 'block';
-                    setTimeout(() => {
-                        card.style.transform = 'scale(1)';
-                        card.style.opacity = '1';
-                    }, 50);
-                } else {
-                    card.style.display = 'none';
-                }
-            }, 200);
+              loader.style.opacity = '0';
+              setTimeout(() => {
+                loader.style.display = 'none';
+                resolve();
+              }, 500);
+            }, 1000);
+          } else {
+            resolve();
+          }
         });
-    }
+      }
 
-    setupAdvancedAnimations() {
-        // Parallax effect for hero section
-        this.setupParallax();
-        
-        // Mouse trail effect
-        this.setupMouseTrail();
-        
-        // Scroll-triggered animations
-        this.setupScrollAnimations();
-    }
-
-    setupParallax() {
-        const parallaxElements = document.querySelectorAll('.hero-section__geometric-shapes .shape');
-        
-        window.addEventListener('scroll', this.throttle(() => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            
-            parallaxElements.forEach((element, index) => {
-                const speed = (index + 1) * 0.2;
-                element.style.transform = `translateY(${rate * speed}px) rotate(${scrolled * 0.05}deg)`;
-            });
-        }, 16));
-    }
-
-    setupMouseTrail() {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        
-        const trail = [];
-        const trailLength = 5;
-        
-        document.addEventListener('mousemove', (e) => {
-            trail.unshift({ x: e.clientX, y: e.clientY });
-            
-            if (trail.length > trailLength) {
-                trail.pop();
-            }
-            
-            this.updateMouseTrail(trail);
-        });
-    }
-
-    updateMouseTrail(trail) {
-        // Implement mouse trail visualization if needed
-        // This could create floating particles or cursor effects
-    }
-
-    setupScrollAnimations() {
-        const animateElements = document.querySelectorAll('[data-animate]');
-        
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const animationType = entry.target.dataset.animate;
-                    this.triggerScrollAnimation(entry.target, animationType);
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        animateElements.forEach(element => {
-            scrollObserver.observe(element);
-        });
-    }
-
-    triggerScrollAnimation(element, type) {
-        switch (type) {
-            case 'fadeInUp':
-                element.style.animation = 'fadeInUp 0.6s ease-out forwards';
-                break;
-            case 'slideInLeft':
-                element.style.animation = 'slideInLeft 0.8s ease-out forwards';
-                break;
-            case 'zoomIn':
-                element.style.animation = 'zoomIn 0.5s ease-out forwards';
-                break;
-            default:
-                element.style.animation = 'fadeIn 0.6s ease-out forwards';
+      async initializeCore() {
+        // Update current year
+        const yearElement = document.getElementById('currentYear');
+        if (yearElement) {
+          yearElement.textContent = new Date().getFullYear();
         }
-    }
-
-    // === INTERACTIVE FEATURES ===
-    setupInteractions() {
-        // Voice demo functionality
-        this.setupVoiceDemo();
         
-        // Contact form handling
-        this.setupContactForm();
+        // Initialize scroll progress
+        this.updateScrollProgress();
         
-        // Newsletter form handling
-        this.setupNewsletterForm();
-        
-        // Touch gestures for mobile
-        this.setupTouchGestures();
-        
-        // Keyboard navigation
-        this.setupKeyboardNavigation();
-    }
-
-    setupVoiceDemo() {
-        const voiceTrigger = document.getElementById('voice-demo-trigger');
-        const voiceAudio = document.getElementById('voice-intro-audio');
-        
-        if (!voiceTrigger || !voiceAudio) return;
-
-        // Preload audio
-        voiceAudio.preload = 'metadata';
-        
-        const playVoiceDemo = async () => {
-            try {
-                // Reset audio to beginning
-                voiceAudio.currentTime = 0;
-                
-                // Add visual feedback
-                voiceTrigger.style.transform = 'scale(0.95)';
-                voiceTrigger.style.filter = 'brightness(1.1)';
-                
-                await voiceAudio.play();
-                
-                console.log('🎵 Voice demo playing');
-                
-                // Visual animation during playback
-                this.animateVoiceDemo(voiceTrigger, voiceAudio.duration * 1000);
-                
-            } catch (error) {
-                console.error('Voice demo playback failed:', error);
-                this.showToast('Voice demo temporarily unavailable', 'warning');
-            }
-        };
-
-        // Click handler
-        voiceTrigger.addEventListener('click', playVoiceDemo);
-        
-        // Keyboard handler
-        voiceTrigger.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                playVoiceDemo();
-            }
-        });
-
-        // Audio event handlers
-        voiceAudio.addEventListener('ended', () => {
-            voiceTrigger.style.transform = 'scale(1)';
-            voiceTrigger.style.filter = 'brightness(1)';
-        });
-
-        voiceAudio.addEventListener('error', (e) => {
-            console.error('Audio error:', e);
-            this.showToast('Could not load voice demo', 'error');
-        });
-    }
-
-    animateVoiceDemo(element, duration) {
-        // Create pulsing animation during voice playback
-        element.style.animation = `voicePulse ${duration/1000}s ease-in-out`;
-        
-        setTimeout(() => {
-            element.style.animation = '';
-        }, duration);
-    }
-
-    setupContactForm() {
-        const contactForm = document.getElementById('contactForm');
-        if (!contactForm) return;
-
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await this.handleFormSubmission(contactForm, 'contact');
-        });
-
-        // Real-time validation
-        const formInputs = contactForm.querySelectorAll('input, textarea, select');
-        formInputs.forEach(input => {
-            input.addEventListener('blur', () => this.validateField(input));
-            input.addEventListener('input', () => this.clearFieldError(input));
-        });
-    }
-
-    setupNewsletterForm() {
-        const newsletterForm = document.getElementById('newsletterForm');
-        if (!newsletterForm) return;
-
-        newsletterForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await this.handleFormSubmission(newsletterForm, 'newsletter');
-        });
-    }
-
-    async handleFormSubmission(form, type) {
-        const submitButton = form.querySelector('button[type="submit"]');
-        const statusElement = form.querySelector(`#${type === 'contact' ? 'submit' : 'newsletter'}-status`);
-        
-        // Show loading state
-        const originalText = submitButton.innerHTML;
-        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-        submitButton.disabled = true;
-
-        try {
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            
-            // Simulate API call (replace with actual endpoint)
-            await this.simulateApiCall(data);
-            
-            // Success feedback
-            this.showToast(
-                type === 'contact' 
-                    ? 'Message sent successfully! I\'ll get back to you soon.' 
-                    : 'Successfully subscribed to updates!',
-                'success'
-            );
-            
-            form.reset();
-            
-        } catch (error) {
-            console.error(`${type} form submission failed:`, error);
-            this.showToast(
-                'Something went wrong. Please try again later.',
-                'error'
-            );
-        } finally {
-            // Restore button state
-            submitButton.innerHTML = originalText;
-            submitButton.disabled = false;
-        }
-    }
-
-    async simulateApiCall(data) {
-        // Simulate network delay
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                // Simulate random success/failure for demo
-                if (Math.random() > 0.1) {
-                    resolve({ success: true, data });
-                } else {
-                    reject(new Error('Network error'));
-                }
-            }, 1500);
-        });
-    }
-
-    validateField(field) {
-        const value = field.value.trim();
-        let isValid = true;
-        let errorMessage = '';
-
-        switch (field.type) {
-            case 'email':
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                isValid = emailPattern.test(value);
-                errorMessage = 'Please enter a valid email address';
-                break;
-            case 'text':
-                if (field.required) {
-                    isValid = value.length > 0;
-                    errorMessage = 'This field is required';
-                }
-                break;
-            case 'textarea':
-                if (field.required) {
-                    isValid = value.length >= 10;
-                    errorMessage = 'Please enter at least 10 characters';
-                }
-                break;
-        }
-
-        this.showFieldValidation(field, isValid, errorMessage);
-        return isValid;
-    }
-
-    showFieldValidation(field, isValid, errorMessage) {
-        field.classList.toggle('is-invalid', !isValid);
-        field.classList.toggle('is-valid', isValid);
-        
-        // Remove existing error message
-        const existingError = field.parentNode.querySelector('.field-error');
-        if (existingError) {
-            existingError.remove();
-        }
-
-        // Show error message if invalid
-        if (!isValid && errorMessage) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'field-error';
-            errorDiv.textContent = errorMessage;
-            errorDiv.style.color = 'var(--error-color)';
-            errorDiv.style.fontSize = 'var(--fs-sm)';
-            errorDiv.style.marginTop = 'var(--space-xs)';
-            field.parentNode.appendChild(errorDiv);
-        }
-    }
-
-    clearFieldError(field) {
-        field.classList.remove('is-invalid', 'is-valid');
-        const errorDiv = field.parentNode.querySelector('.field-error');
-        if (errorDiv) {
-            errorDiv.remove();
-        }
-    }
-
-    setupTouchGestures() {
-        let touchStartX = 0;
-        let touchStartY = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        }, { passive: true });
-
-        document.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].clientX;
-            const touchEndY = e.changedTouches[0].clientY;
-            
-            const deltaX = touchEndX - touchStartX;
-            const deltaY = touchEndY - touchStartY;
-            
-            // Swipe detection
-            const minSwipeDistance = 100;
-            
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                // Horizontal swipe
-                if (Math.abs(deltaX) > minSwipeDistance) {
-                    if (deltaX > 0) {
-                        this.handleSwipeRight();
-                    } else {
-                        this.handleSwipeLeft();
-                    }
-                }
-            } else {
-                // Vertical swipe
-                if (Math.abs(deltaY) > minSwipeDistance) {
-                    if (deltaY > 0) {
-                        this.handleSwipeDown();
-                    } else {
-                        this.handleSwipeUp();
-                    }
-                }
-            }
-        }, { passive: true });
-    }
-
-    handleSwipeLeft() {
-        // Navigate to next section
-        this.navigateSection('next');
-    }
-
-    handleSwipeRight() {
-        // Navigate to previous section
-        this.navigateSection('prev');
-    }
-
-    handleSwipeUp() {
-        // Scroll to next section
-        this.scrollToNextSection();
-    }
-
-    handleSwipeDown() {
-        // Scroll to previous section
-        this.scrollToPrevSection();
-    }
-
-    setupKeyboardNavigation() {
-        document.addEventListener('keydown', (e) => {
-            // Skip if user is typing in a form field
-            if (e.target.matches('input, textarea, select')) return;
-
-            switch (e.key) {
-                case 'ArrowUp':
-                    e.preventDefault();
-                    this.scrollToPrevSection();
-                    break;
-                case 'ArrowDown':
-                    e.preventDefault();
-                    this.scrollToNextSection();
-                    break;
-                case 'Home':
-                    e.preventDefault();
-                    this.scrollToSection('home-section');
-                    break;
-                case 'End':
-                    e.preventDefault();
-                    this.scrollToSection('contact-section');
-                    break;
-                case 'Escape':
-                    // Close any open modals or menus
-                    this.closeAllModals();
-                    break;
-            }
-        });
-    }
-
-    navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('.section'));
-        const currentIndex = sections.findIndex(section => 
-            section.id === this.state.currentSection
-        );
-        
-        if (currentIndex === -1) return;
-
-        let nextIndex;
-        if (direction === 'next') {
-            nextIndex = (currentIndex + 1) % sections.length;
-        } else {
-            nextIndex = currentIndex === 0 ? sections.length - 1 : currentIndex - 1;
-        }
-
-        this.smoothScrollTo(sections[nextIndex]);
-    }
-
-    scrollToNextSection() {
-        this.navigateSection('next');
-    }
-
-    scrollToPrevSection() {
-        this.navigateSection('prev');
-    }
-
-    scrollToSection(sectionId) {
-        const section = document.getElementById(sectionId);
-        if (section) {
-            this.smoothScrollTo(section);
-        }
-    }
-
-    closeAllModals() {
-        // Close any open modals, menus, or overlays
-        const openElements = document.querySelectorAll('.show, .open, .active');
-        openElements.forEach(element => {
-            element.classList.remove('show', 'open', 'active');
-        });
-    }
-
-    // === PWA FUNCTIONALITY ===
-    setupPWA() {
-        // Install prompt handling
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            this.state.pwaInstallPrompt = e;
-            this.showPWAInstallPrompt();
-        });
-
-        // PWA install button
-        const installButton = document.getElementById('pwa-install-button');
-        installButton?.addEventListener('click', () => {
-            this.installPWA();
-        });
-
-        // PWA dismiss button
-        const dismissButton = document.getElementById('pwa-dismiss-button');
-        dismissButton?.addEventListener('click', () => {
-            this.dismissPWAPrompt();
-        });
-
-        // Check if app is already installed
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('🎉 PWA is installed and running in standalone mode');
-        }
-    }
-
-    showPWAInstallPrompt() {
-        const promptElement = document.getElementById('pwa-install-prompt');
-        if (!promptElement) return;
-
-        // Don't show if user previously dismissed
-        if (localStorage.getItem('pwa-install-dismissed')) return;
-
-        // Show prompt after a delay
-        setTimeout(() => {
-            promptElement.classList.add('show');
-        }, 5000);
-    }
-
-    async installPWA() {
-        if (!this.state.pwaInstallPrompt) return;
-
-        try {
-            const result = await this.state.pwaInstallPrompt.prompt();
-            console.log('PWA install prompt result:', result.outcome);
-            
-            if (result.outcome === 'accepted') {
-                this.showToast('App installed successfully!', 'success');
-            }
-            
-            this.state.pwaInstallPrompt = null;
-            this.dismissPWAPrompt();
-            
-        } catch (error) {
-            console.error('PWA installation failed:', error);
-            this.showToast('Installation failed. Please try again.', 'error');
-        }
-    }
-
-    dismissPWAPrompt() {
-        const promptElement = document.getElementById('pwa-install-prompt');
-        promptElement?.classList.remove('show');
-        localStorage.setItem('pwa-install-dismissed', 'true');
-    }
-
-    // === OFFLINE DETECTION ===
-    setupOfflineDetection() {
-        const offlineIndicator = document.getElementById('offline-indicator');
-        const offlineText = document.getElementById('offline-text');
-
-        const updateOnlineStatus = () => {
-            this.state.isOffline = !navigator.onLine;
-            
-            if (offlineIndicator && offlineText) {
-                if (this.state.isOffline) {
-                    offlineText.textContent = 'You\'re offline';
-                    offlineIndicator.classList.add('offline', 'show');
-                    offlineIndicator.classList.remove('online');
-                } else {
-                    offlineText.textContent = 'You\'re online';
-                    offlineIndicator.classList.add('online', 'show');
-                    offlineIndicator.classList.remove('offline');
-                    
-                    // Hide online indicator after 3 seconds
-                    setTimeout(() => {
-                        offlineIndicator.classList.remove('show');
-                    }, 3000);
-                }
-            }
-        };
-
-        window.addEventListener('online', updateOnlineStatus);
-        window.addEventListener('offline', updateOnlineStatus);
-        
-        // Initial check
-        updateOnlineStatus();
-    }
-
-    // === UPDATE NOTIFICATION ===
-    showUpdateNotification() {
-        const updateNotification = document.getElementById('update-notification');
-        const updateButton = document.getElementById('update-button');
-        const dismissUpdate = document.getElementById('dismiss-update');
-        
-        if (!updateNotification) return;
-
-        updateNotification.classList.add('show');
-
-        updateButton?.addEventListener('click', () => {
-            window.location.reload();
-        });
-
-        dismissUpdate?.addEventListener('click', () => {
-            updateNotification.classList.remove('show');
-        });
-    }
-
-    // === PERFORMANCE OPTIMIZATIONS ===
-    setupPerformanceOptimizations() {
-        // Lazy loading for images
-        this.setupLazyLoading();
-        
-        // Preload critical resources
-        this.preloadCriticalResources();
-        
-        // Performance monitoring
-        this.setupPerformanceMonitoring();
-    }
-
-    setupLazyLoading() {
-        const images = document.querySelectorAll('img[data-src]');
-        
-        const imageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.add('loaded');
-                    imageObserver.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: '50px 0px'
-        });
-
-        images.forEach(img => {
-            imageObserver.observe(img);
-        });
-    }
-
-    preloadCriticalResources() {
-        // Preload voice demo if not already done
-        const voiceAudio = document.getElementById('voice-intro-audio');
-        if (voiceAudio) {
-            voiceAudio.preload = 'metadata';
-        }
-
         // Preload critical images
-        const criticalImages = [
-            'assets/images/data/profile/1755844218313.jpg'
+        await this.preloadImages();
+      }
+
+      async preloadImages() {
+        const imageUrls = [
+          'https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/images/data/profile/1755844218313.jpg'
         ];
-
-        criticalImages.forEach(src => {
+        
+        const loadPromises = imageUrls.map(url => {
+          return new Promise((resolve, reject) => {
             const img = new Image();
-            img.src = src;
+            img.onload = resolve;
+            img.onerror = () => {
+              console.warn(`Failed to load image: ${url}`);
+              resolve(); // Don't reject, just continue
+            };
+            img.src = url;
+            setTimeout(resolve, 2000); // Timeout after 2 seconds
+          });
         });
+        
+        await Promise.all(loadPromises);
+      }
+
+// ADD THESE ENHANCEMENTS TO YOUR EXISTING CLASS
+
+// 1. Enhanced Particle Creation (add to your class)
+createCustomParticles() {
+  const heroSection = document.querySelector('#hero');
+  if (heroSection && !heroSection.querySelector('.custom-particles')) {
+    const container = document.createElement('div');
+    container.className = 'custom-particles';
+    container.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    `;
+    
+    // Create floating particles
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.style.cssText = `
+        position: absolute;
+        width: ${Math.random() * 6 + 2}px;
+        height: ${Math.random() * 6 + 2}px;
+        background: rgba(139, 92, 246, ${Math.random() * 0.5 + 0.3});
+        border-radius: 50%;
+        left: ${Math.random() * 100}%;
+        bottom: -10px;
+        animation: floatUp ${Math.random() * 10 + 15}s linear infinite;
+        animation-delay: ${Math.random() * 5}s;
+      `;
+      container.appendChild(particle);
     }
-
-    setupPerformanceMonitoring() {
-        // Monitor Largest Contentful Paint
-        if ('PerformanceObserver' in window) {
-            try {
-                const observer = new PerformanceObserver((list) => {
-                    const entries = list.getEntries();
-                    entries.forEach(entry => {
-                        console.log('Performance metric:', entry.name, entry.value);
-                    });
-                });
-                
-                observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input'] });
-            } catch (error) {
-                console.log('Performance monitoring not available');
-            }
-        }
-    }
-
-    // === UTILITY FUNCTIONS ===
-    hideLoadingScreen() {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-            loadingScreen.classList.add('fade-out');
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 500);
-        }
-    }
-
-    showToast(message, type = 'info') {
-        // Create toast notification
-        const toast = document.createElement('div');
-        toast.className = `toast toast--${type}`;
-        toast.innerHTML = `
-            <div class="toast-content">
-                <i class="fas fa-${this.getToastIcon(type)}"></i>
-                <span>${message}</span>
-            </div>
-            <button class="toast-close" aria-label="Close notification">
-                <i class="fas fa-times"></i>
-            </button>
-        `;
-
-        // Styles for toast
-        Object.assign(toast.style, {
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            padding: '1rem 1.5rem',
-            borderRadius: '0.5rem',
-            color: 'white',
-            zIndex: '9999',
-            transform: 'translateX(100%)',
-            transition: 'transform 0.3s ease',
-            maxWidth: '400px',
-            backgroundColor: this.getToastColor(type),
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-        });
-
-        document.body.appendChild(toast);
-
-        // Animate in
-        requestAnimationFrame(() => {
-            toast.style.transform = 'translateX(0)';
-        });
-
-        // Close button handler
-        const closeButton = toast.querySelector('.toast-close');
-        closeButton.addEventListener('click', () => {
-            this.closeToast(toast);
-        });
-
-        // Auto-close after 5 seconds
-        setTimeout(() => {
-            this.closeToast(toast);
-        }, 5000);
-    }
-
-    closeToast(toast) {
-        toast.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
-    }
-
-    getToastIcon(type) {
-        const icons = {
-            success: 'check-circle',
-            error: 'exclamation-circle',
-            warning: 'exclamation-triangle',
-            info: 'info-circle'
-        };
-        return icons[type] || icons.info;
-    }
-
-    getToastColor(type) {
-        const colors = {
-            success: '#10B981',
-            error: '#EF4444',
-            warning: '#F59E0B',
-            info: '#3B82F6'
-        };
-        return colors[type] || colors.info;
-    }
-
-    throttle(func, limit) {
-        let inThrottle;
-        return function() {
-            const args = arguments;
-            const context = this;
-            if (!inThrottle) {
-                func.apply(context, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        }
-    }
-
-    debounce(func, delay) {
-        let timeoutId;
-        return function (...args) {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => func.apply(this, args), delay);
-        };
-    }
-
-    showErrorFallback() {
-        document.body.innerHTML = `
-            <div style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-                font-family: Arial, sans-serif;
-                text-align: center;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-            ">
-                <div>
-                    <h1>⚠️ Something went wrong</h1>
-                    <p>Please refresh the page or try again later.</p>
-                    <button onclick="window.location.reload()" 
-                            style="
-                                padding: 12px 24px;
-                                background: rgba(255,255,255,0.2);
-                                border: 2px solid rgba(255,255,255,0.3);
-                                color: white;
-                                border-radius: 8px;
-                                cursor: pointer;
-                                margin-top: 20px;
-                            ">
-                        Reload Page
-                    </button>
-                </div>
-            </div>
-        `;
-    }
+    
+    heroSection.appendChild(container);
+  }
 }
 
-// === ADDITIONAL CSS ANIMATIONS (Injected Dynamically) ===
-const additionalStyles = `
-    @keyframes voicePulse {
-        0%, 100% { transform: scale(1); filter: brightness(1); }
-        25% { transform: scale(1.05); filter: brightness(1.2); }
-        50% { transform: scale(1.1); filter: brightness(1.3); }
-        75% { transform: scale(1.05); filter: brightness(1.2); }
+// 2. Enhanced Voice Feedback (add to your class)
+enhanceVoiceFeedback() {
+  // Add speech synthesis for voice commands
+  this.speechSynth = window.speechSynthesis;
+  
+  // Voice command responses
+  this.voiceResponses = {
+    play: "Voice demo is now playing",
+    stop: "Voice demo stopped",
+    themeChange: "Theme has been switched",
+    scroll: "Scrolling to section"
+  };
+}
+      // 🎨 FIXED THEME SYSTEM
+      initializeTheme() {
+        // Load saved theme or detect system preference
+        const savedTheme = localStorage.getItem('portfolio-theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+        this.setTheme(theme);
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('portfolio-theme')) {
+            this.setTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      }
+
+      toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        this.setTheme(newTheme);
+        localStorage.setItem('portfolio-theme', newTheme);
+        
+        // Show theme change notification
+        this.showNotification(`Switched to ${newTheme} theme`, 'info');
+      }
+
+      setTheme(theme) {
+        const html = document.documentElement;
+        const themeIcon = document.querySelector('#themeToggle i');
+        
+        // Remove existing theme classes
+        html.classList.remove('light', 'dark');
+        
+        if (theme === 'dark') {
+          html.classList.add('dark');
+          html.setAttribute('data-theme', 'dark');
+          
+          if (themeIcon) {
+            themeIcon.className = 'fas fa-sun text-white text-lg group-hover:rotate-180 transition-transform duration-300 relative z-10';
+          }
+        } else {
+          html.classList.add('light');
+          html.setAttribute('data-theme', 'light');
+          
+          if (themeIcon) {
+            themeIcon.className = 'fas fa-moon text-white text-lg group-hover:rotate-180 transition-transform duration-300 relative z-10';
+          }
+        }
+        
+        console.log(`🎨 Theme set to: ${theme}`);
+      }
+
+      initializeLibraries() {
+        // Initialize AOS (Animate On Scroll)
+        if (typeof AOS !== 'undefined') {
+          AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+          });
+        }
+
+        // Initialize GSAP
+        if (typeof gsap !== 'undefined') {
+          gsap.registerPlugin(ScrollTrigger);
+          
+          // Set GSAP defaults
+          gsap.defaults({
+            duration: 0.8,
+            ease: "power2.out"
+          });
+        }
+
+        // Initialize Particles (optional, for performance)
+        this.initializeParticles();
+      }
+
+      initializeParticles() {
+        // Only initialize on desktop for performance
+        if (window.innerWidth > 1024 && typeof particlesJS !== 'undefined') {
+          particlesJS('particles-js', {
+            particles: {
+              number: { value: 50, density: { enable: true, value_area: 800 } },
+              color: { value: ["#8b5cf6", "#ec4899", "#06b6d4"] },
+              shape: { type: "circle" },
+              opacity: { value: 0.3, random: true },
+              size: { value: 3, random: true },
+              line_linked: { enable: false },
+              move: { 
+                enable: true, 
+                speed: 1, 
+                direction: "none", 
+                random: true, 
+                out_mode: "out" 
+              }
+            },
+            interactivity: {
+              detect_on: "canvas",
+              events: { 
+                onhover: { enable: true, mode: "repulse" }, 
+                onclick: { enable: true, mode: "push" } 
+              },
+              modes: {
+                repulse: { distance: 100, duration: 0.4 },
+                push: { particles_nb: 2 }
+              }
+            },
+            retina_detect: true
+          });
+        }
+      }
+
+      setupEventListeners() {
+        // Scroll events with throttling
+        window.addEventListener('scroll', this.throttle(() => {
+          this.updateScrollProgress();
+          this.updateNavigationVisibility();
+          this.updateBackToTopVisibility();
+        }, 16), { passive: true });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+          themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+
+        // Voice buttons
+        const heroVoiceBtn = document.getElementById('heroVoiceBtn');
+        if (heroVoiceBtn) {
+          heroVoiceBtn.addEventListener('click', () => this.toggleVoice('hero'));
+        }
+
+        const voiceButton = document.getElementById('voiceButton');
+        if (voiceButton) {
+          voiceButton.addEventListener('click', () => this.toggleVoice('floating'));
+        }
+
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+          backToTop.addEventListener('click', () => this.scrollToTop());
+        }
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuBtn && mobileMenu) {
+          mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+          });
+        }
+
+        // Navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(anchor.getAttribute('href'));
+            if (target) {
+              this.smoothScrollTo(target);
+              // Close mobile menu if open
+              const mobileMenu = document.getElementById('mobileMenu');
+              if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+              }
+            }
+          });
+        });
+
+        // Contact form
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+          contactForm.addEventListener('submit', (e) => this.handleContactForm(e));
+        }
+
+        // Audio event listeners
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => {
+          audio.addEventListener('ended', () => this.handleAudioEnd());
+          audio.addEventListener('error', () => this.handleAudioError());
+        });
+
+        // Resize events
+        window.addEventListener('resize', this.debounce(() => {
+          this.handleResize();
+        }, 250));
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            this.stopAllAudio();
+            const mobileMenu = document.getElementById('mobileMenu');
+                        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+              mobileMenu.classList.add('hidden');
+            }
+          }
+        });
+
+        // Performance monitoring
+        this.measurePerformance();
+
+        // Accessibility enhancements
+        this.enhanceAccessibility();
+
+        // Error handling
+        this.setupErrorHandling();
+      }
+
+      initializeAnimations() {
+        if (typeof gsap === 'undefined') return;
+
+        // Hero animations
+        gsap.timeline()
+          .from("#profileImage", { 
+            scale: 0, 
+            rotation: 180, 
+            duration: 1.2, 
+            ease: "back.out(1.7)" 
+          })
+          .from(".hero-content", { 
+            y: 50, 
+            opacity: 0, 
+            duration: 0.8 
+          }, "-=0.6");
+
+        // Counter animations
+        this.animateCounters();
+
+        // Skill bar animations
+        this.animateSkillBars();
+
+        // GSAP ScrollTrigger animations
+        this.setupScrollTriggerAnimations();
+      }
+
+      animateCounters() {
+        const counters = document.querySelectorAll('[data-counter]');
+        
+        counters.forEach(counter => {
+          const target = parseInt(counter.getAttribute('data-counter'));
+          
+          if (typeof gsap !== 'undefined') {
+            gsap.to(counter, {
+              innerText: target,
+              duration: 2,
+              ease: "power2.out",
+              snap: { innerText: 1 },
+              scrollTrigger: {
+                trigger: counter,
+                start: "top 80%",
+                toggleActions: "play none none none"
+              }
+            });
+          } else {
+            // Fallback animation
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                counter.textContent = target;
+                clearInterval(timer);
+              } else {
+                counter.textContent = Math.floor(current);
+              }
+            }, 40);
+          }
+        });
+      }
+
+      animateSkillBars() {
+        const skillBars = document.querySelectorAll('.skill-bar div[data-width]');
+        
+        skillBars.forEach(bar => {
+          const width = bar.getAttribute('data-width');
+          
+          if (typeof gsap !== 'undefined') {
+            gsap.to(bar, {
+              width: width + '%',
+              duration: 1.5,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: bar,
+                start: "top 80%",
+                toggleActions: "play none none none"
+              }
+            });
+          } else {
+            // Fallback animation
+            setTimeout(() => {
+              bar.style.width = width + '%';
+            }, 500);
+          }
+        });
+      }
+
+      setupScrollTriggerAnimations() {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+        // Parallax effect for background elements
+        gsap.utils.toArray('.parallax-element').forEach(element => {
+          gsap.to(element, {
+            yPercent: -50,
+            ease: "none",
+            scrollTrigger: {
+              trigger: element,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          });
+        });
+
+        // Fade in animations for sections
+        gsap.utils.toArray('section').forEach(section => {
+          gsap.fromTo(section, 
+            { opacity: 0.8, y: 30 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              scrollTrigger: {
+                trigger: section,
+                start: "top 85%",
+                end: "top 50%",
+                toggleActions: "play none none reverse"
+              }
+            }
+          );
+        });
+      }
+
+      setupScrollEffects() {
+        // Update active navigation
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const observerOptions = {
+          rootMargin: '-20% 0px -60% 0px',
+          threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              
+              // Update active nav link
+              navLinks.forEach(link => {
+                link.classList.remove('text-purple-400');
+                link.classList.add('theme-text-primary');
+                
+                if (link.getAttribute('href') === `#${id}`) {
+                  link.classList.add('text-purple-400');
+                  link.classList.remove('theme-text-primary');
+                }
+              });
+            }
+          });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+      }
+
+      // 🔊 VOICE FUNCTIONALITY
+      toggleVoice(source) {
+        if (this.isPlaying) {
+          this.stopAllAudio();
+        } else {
+          this.playVoice(source);
+        }
+      }
+
+      playVoice(source) {
+        // Stop any currently playing audio
+        this.stopAllAudio();
+
+        const audioId = source === 'hero' ? 'heroAudio' : 'floatingAudio';
+        const audio = document.getElementById(audioId);
+        
+        if (!audio) {
+          console.error('Audio element not found:', audioId);
+          this.showNotification('Audio not available. Please try again later.', 'warning');
+          return;
+        }
+
+        // Update UI for playing state
+        this.updateVoiceUI(source, 'playing');
+        
+        // Play audio
+        audio.currentTime = 0;
+        
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              this.currentAudio = audio;
+              this.isPlaying = true;
+              console.log('🔊 Voice demo playing');
+            })
+            .catch(error => {
+              console.error('Audio play failed:', error);
+              this.handleAudioError();
+            });
+        }
+      }
+
+      updateVoiceUI(source, state) {
+        if (state === 'playing') {
+          if (source === 'hero') {
+            const heroIcon = document.getElementById('heroVoiceIcon');
+            const heroText = document.getElementById('heroVoiceText');
+            const heroButton = document.getElementById('heroVoiceBtn');
+            
+            if (heroIcon) heroIcon.className = 'fas fa-stop mr-2';
+            if (heroText) heroText.textContent = 'Stop Voice';
+            if (heroButton) heroButton.classList.add('playing');
+          }
+          
+          if (source === 'floating') {
+            const floatingIcon = document.getElementById('voiceIcon');
+            const floatingButton = document.getElementById('voiceButton');
+            const visualizer = document.querySelector('.voice-visualizer');
+            
+            if (floatingIcon) floatingIcon.className = 'fas fa-stop text-white text-lg';
+            if (floatingButton) floatingButton.classList.add('playing');
+            if (visualizer) visualizer.classList.add('active');
+          }
+        } else {
+          // Reset to default state
+          this.resetAudioUI();
+        }
+      }
+
+      resetAudioUI() {
+        // Reset all UI elements
+        const heroIcon = document.getElementById('heroVoiceIcon');
+        const heroText = document.getElementById('heroVoiceText');
+        const floatingIcon = document.getElementById('voiceIcon');
+        const visualizer = document.querySelector('.voice-visualizer');
+        const heroButton = document.getElementById('heroVoiceBtn');
+        const floatingButton = document.getElementById('voiceButton');
+        
+        if (heroIcon) heroIcon.className = 'fas fa-play mr-2';
+        if (heroText) heroText.textContent = 'Play Voice Demo';
+        if (floatingIcon) floatingIcon.className = 'fas fa-play text-white text-lg';
+        if (visualizer) visualizer.classList.remove('active');
+        
+        // Reset button states
+        if (heroButton) {
+          heroButton.classList.remove('playing');
+          heroButton.setAttribute('aria-pressed', 'false');
+        }
+        if (floatingButton) {
+          floatingButton.classList.remove('playing');
+          floatingButton.setAttribute('aria-pressed', 'false');
+        }
+        
+        // Global cleanup
+        document.querySelectorAll('.playing').forEach(btn => {
+          btn.classList.remove('playing');
+        });
+      }
+
+      stopAllAudio() {
+        // Stop current audio
+        if (this.currentAudio) {
+          this.currentAudio.pause();
+          this.currentAudio.currentTime = 0;
+        }
+        
+        // Stop all audio elements
+        document.querySelectorAll('audio').forEach(audio => {
+          audio.pause();
+          audio.currentTime = 0;
+        });
+        
+        // Reset UI
+        this.resetAudioUI();
+        
+        this.currentAudio = null;
+        this.isPlaying = false;
+      }
+
+      handleAudioEnd() {
+        this.stopAllAudio();
+      }
+
+      handleAudioError() {
+        console.error('Audio loading/playback error');
+        this.stopAllAudio();
+        this.showNotification('Audio unavailable. Please try again later.', 'warning');
+      }
+
+      // 📜 SCROLL FUNCTIONALITY
+      updateScrollProgress() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / scrollHeight) * 100;
+        
+        const progressBar = document.getElementById('scrollProgress');
+        if (progressBar) {
+          progressBar.style.width = `${Math.min(progress, 100)}%`;
+        }
+        
+        // Update scroll direction
+        if (scrollTop > this.lastScrollY) {
+          this.scrollDirection = 'down';
+        } else {
+          this.scrollDirection = 'up';
+        }
+        this.lastScrollY = scrollTop;
+      }
+
+      updateNavigationVisibility() {
+        const navbar = document.getElementById('navbar');
+        if (!navbar) return;
+        
+        const isLight = document.documentElement.classList.contains('light');
+        
+        if (this.lastScrollY > 100) {
+          if (this.scrollDirection === 'down') {
+            navbar.style.transform = 'translateY(-100%)';
+          } else {
+            navbar.style.transform = 'translateY(0)';
+            if (isLight) {
+              navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+              navbar.style.borderColor = 'rgba(0, 0, 0, 0.1)';
+            } else {
+              navbar.style.background = 'rgba(0, 0, 0, 0.4)';
+              navbar.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            }
+          }
+        } else {
+          navbar.style.transform = 'translateY(0)';
+          navbar.style.background = isLight ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)';
+        }
+      }
+
+      updateBackToTopVisibility() {
+        const backToTop = document.getElementById('backToTop');
+        if (!backToTop) return;
+        
+        if (this.lastScrollY > 500) {
+          backToTop.style.opacity = '1';
+          backToTop.style.transform = 'translateY(0)';
+        } else {
+          backToTop.style.opacity = '0';
+          backToTop.style.transform = 'translateY(16px)';
+        }
+      }
+
+      scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+
+      smoothScrollTo(target) {
+        const headerOffset = 80;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+
+      // 📧 CONTACT FORM
+      async handleContactForm(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const submitText = document.getElementById('submitText');
+        const formData = new FormData(form);
+        
+        // Show loading state
+        if (submitBtn) submitBtn.disabled = true;
+        if (submitText) submitText.textContent = 'Sending...';
+        
+        try {
+          // Simulate form submission (replace with actual endpoint)
+          await this.simulateFormSubmission(formData);
+          
+          // Success
+          this.showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+          form.reset();
+          
+        } catch (error) {
+          console.error('Form submission error:', error);
+          this.showNotification('Failed to send message. Please try again or contact me directly.', 'error');
+        } finally {
+          // Reset button state
+          if (submitBtn) submitBtn.disabled = false;
+          if (submitText) submitText.textContent = 'Send Message';
+        }
+      }
+
+      async simulateFormSubmission(formData) {
+        // Simulate API call
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            // Simulate success/failure based on email validation
+            const email = formData.get('email');
+            if (email && email.includes('@')) {
+              resolve({ success: true });
+            } else {
+              reject(new Error('Invalid email'));
+            }
+          }, 2000);
+        });
+      }
+
+      // 🔔 NOTIFICATION SYSTEM
+      showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `fixed top-20 right-4 p-4 rounded-lg shadow-lg z-50 max-w-sm transform translate-x-full transition-transform duration-300`;
+        
+        // Set color based on type
+        const colors = {
+          success: 'bg-green-500 text-white',
+          error: 'bg-red-500 text-white',
+          warning: 'bg-yellow-500 text-black',
+          info: 'bg-blue-500 text-white'
+        };
+        
+        notification.className += ` ${colors[type] || colors.info}`;
+        notification.innerHTML = `
+          <div class="flex items-center gap-3">
+            <i class="fas fa-${this.getNotificationIcon(type)}"></i>
+            <span>${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-2 opacity-70 hover:opacity-100">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+          notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+          notification.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+            if (notification.parentElement) {
+              notification.remove();
+            }
+          }, 300);
+        }, 5000);
+      }
+
+      getNotificationIcon(type) {
+        const icons = {
+          success: 'check-circle',
+          error: 'exclamation-circle',
+          warning: 'exclamation-triangle',
+          info: 'info-circle'
+        };
+        return icons[type] || icons.info;
+      }
+
+      // 🎯 UTILITY FUNCTIONS
+      handleResize() {
+        // Reinitialize particles on resize if needed
+        if (window.innerWidth <= 1024 && typeof pJSDom !== 'undefined' && pJSDom[0]) {
+          pJSDom[0].pJS.fn.vendors.destroypJS();
+        } else if (window.innerWidth > 1024) {
+          this.initializeParticles();
+        }
+        
+        // Update AOS on resize
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+      }
+
+      fallbackInitialization() {
+        console.log('🔄 Running fallback initialization...');
+        
+        // Basic functionality without advanced features
+        this.setupBasicEventListeners();
+        this.hideLoadingScreen();
+        
+        // Show fallback message
+        this.showNotification('Portfolio loaded in compatibility mode.', 'info');
+      }
+
+      setupBasicEventListeners() {
+        // Basic scroll to top
+        const backToTop = document.getElementById('backToTop');
+        if (backToTop) {
+          backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+        
+        // Basic mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenuBtn && mobileMenu) {
+          mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+          });
+        }
+        
+        // Basic smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(anchor.getAttribute('href'));
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      }
+
+      // 🔧 HELPER FUNCTIONS
+      throttle(func, limit) {
+        let inThrottle;
+        return function() {
+          const args = arguments;
+          const context = this;
+          if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+          }
+        };
+      }
+
+      debounce(func, wait, immediate) {
+        let timeout;
+        return function() {
+          const context = this;
+          const args = arguments;
+          const later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+          };
+          const callNow = immediate && !timeout;
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+          if (callNow) func.apply(context, args);
+        };
+      }
+
+      // 📊 PERFORMANCE MONITORING
+      measurePerformance() {
+        if (typeof performance !== 'undefined' && performance.timing) {
+          window.addEventListener('load', () => {
+            setTimeout(() => {
+              const timing = performance.timing;
+              const loadTime = timing.loadEventEnd - timing.navigationStart;
+              console.log(`📊 Page load time: ${loadTime}ms`);
+              
+              // Log performance metrics
+              if (loadTime > 3000) {
+                console.warn('⚠️ Slow page load detected');
+              }
+            }, 1000);
+          });
+        }
+      }
+
+      // ♿ ACCESSIBILITY ENHANCEMENTS
+      enhanceAccessibility() {
+        // Add focus indicators
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Tab') {
+            document.body.classList.add('keyboard-navigation');
+          }
+        });
+        
+        document.addEventListener('mousedown', () => {
+          document.body.classList.remove('keyboard-navigation');
+        });
+        
+        // Add skip to content link
+        const skipLink = document.createElement('a');
+        skipLink.href = '#hero';
+        skipLink.textContent = 'Skip to main content';
+        skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-purple-600 text-white px-4 py-2 rounded z-50';
+        document.body.insertBefore(skipLink, document.body.firstChild);
+      }
+
+      // 🚨 ERROR HANDLING
+      setupErrorHandling() {
+        window.addEventListener('error', (e) => {
+          console.error('🚨 JavaScript error:', e.error);
+          
+          // Don't show error notifications in production
+          if (window.location.hostname === 'localhost') {
+            this.showNotification('A JavaScript error occurred. Check the console for details.', 'error');
+          }
+        });
+        
+        window.addEventListener('unhandledrejection', (e) => {
+          console.error('🚨 Unhandled promise rejection:', e.reason);
+        });
+      }
     }
+
+    // ===============================================
+    // 🚀 APPLICATION INITIALIZATION
+    // ===============================================
     
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
+    // Initialize the portfolio when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        window.portfolioApp = new EnhancedPortfolioApp();
+      });
+    } else {
+      window.portfolioApp = new EnhancedPortfolioApp();
     }
+
+    // ===============================================
+    // 🛠️ ADDITIONAL UTILITY FUNCTIONS
+    // ===============================================
     
-    @keyframes slideInLeft {
-        from { opacity: 0; transform: translateX(-30px); }
-        to { opacity: 1; transform: translateX(0); }
+    // Lazy loading for images
+    function initializeLazyLoading() {
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+              observer.unobserve(img);
+            }
+          });
+        });
+        
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          imageObserver.observe(img);
+        });
+      }
     }
-    
-    @keyframes zoomIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
+
+    // Service Worker registration for PWA capabilities
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('🔧 Service Worker registered successfully');
+          })
+          .catch(error => {
+            console.log('❌ Service Worker registration failed');
+          });
+      });
     }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+
+    // Enhanced keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      // ESC key functionality
+      if (e.key === 'Escape') {
+        // Close mobile menu
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+        
+        // Stop audio
+        if (window.portfolioApp) {
+          window.portfolioApp.stopAllAudio();
+        }
+      }
+      
+      // Ctrl/Cmd + K for search (future enhancement)
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        console.log('🔍 Search functionality - coming soon!');
+      }
+    });
+
+    // Performance optimization: Reduce motion for users who prefer it
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Disable animations for users who prefer reduced motion
+      const style = document.createElement('style');
+      style.textContent = `
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      `;
+      document.head.appendChild(style);
     }
+
+    // Analytics tracking (placeholder)
+    function trackEvent(action, category, label) {
+      // Replace with your analytics service
+      console.log(`📊 Event tracked: ${category} - ${action} - ${label}`);
+      
+      // Example: Google Analytics 4
+      // gtag('event', action, {
+      //   event_category: category,
+      //   event_label: label,
+      // });
+    }
+
+    // Track important interactions
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('a, button');
+      if (target) {
+        const text = target.textContent.trim();
+        const href = target.href;
+        
+        if (href && href.startsWith('#')) {
+          trackEvent('navigation', 'internal_link', text);
+        } else if (href && href.startsWith('http')) {
+          trackEvent('click', 'external_link', href);
+        } else if (target.tagName === 'BUTTON') {
+          trackEvent('click', 'button', text);
+        }
+      }
+    });
+
+    // Console Easter Egg
+    console.log(`
+    🎨 Welcome to Thanatsitt's Portfolio!
     
-    .toast {
-        display: flex;
-        align-items: center;
-        justify-content
+    ╔══════════════════════════════════════╗
+    ║  Thanks for checking out the code!   ║
+    ║                                      ║
+    ║  Built with:                         ║
+    ║  • Vanilla JavaScript                ║
+    ║  • Tailwind CSS                      ║
+    ║  • GSAP Animations                   ║
+    ║  • Modern Web Standards              ║
+    ║                                      ║
+    ║  Want to collaborate?                ║
+    ║  📧 thanattsitt.info@yahoo.co.uk    ║
+    ╚══════════════════════════════════════╝
+    
+    🚀 Portfolio loaded successfully!
+    `);
+
+  </script>
+
+  <!-- 🎨 QUICK THEME FIX SCRIPT -->
+  <script>
+    // Additional theme fix to ensure immediate theme application
+    (function() {
+      const savedTheme = localStorage.getItem('portfolio-theme') || 
+                        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      
+      document.documentElement.classList.add(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      // Apply theme immediately to prevent flash
+      if (savedTheme === 'light') {
+        document.documentElement.style.setProperty('--bg-primary', 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)');
+        document.documentElement.style.setProperty('--text-primary', '#1e293b');
+      } else {
+        document.documentElement.style.setProperty('--bg-primary', 'linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)');
+        document.documentElement.style.setProperty('--text-primary', '#f1f5f9');
+      }
+    })();
