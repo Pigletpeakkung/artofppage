@@ -1,25 +1,13 @@
 User-agent: *
 Allow: /
 
-# Block access to admin areas (if any)
-Disallow: /admin/
-Disallow: /private/
-Disallow: /.git/
-
-# Block common system files
-Disallow: /.htaccess
-Disallow: /config/
-
-# Allow important files
-Allow: /assets/
-Allow: /css/
-Allow: /js/
-Allow: /images/
-
 # Sitemaps
-Sitemap: https://pegearts.com/sitemap.html
-Sitemap: https://pegearts.com/sitemap.xml
-Sitemap: https://pegearts.com/audiositemap.xml
+Sitemap: https://pigletpeakkung.github.io/artofppage/sitemap.xml
+Sitemap: https://pigletpeakkung.github.io/artofppage/audio-sitemap.xml
 
-# Crawl delay (optional - helps prevent server overload)
-Crawl-delay: 1
+# Audio assets
+Allow: /assets/demo/voice/
+Allow: /assets/projects/voice/
+Allow: /assets/images/
+Allow: /assets/icons/
+Allow: /assets/sitedata/
