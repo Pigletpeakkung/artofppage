@@ -19,7 +19,8 @@
   <meta property="og:url" content="https://pegearts.com/">
   <meta property="og:title" content="Thanatsitt Santisamranwilai | AI Creative Designer & Voice Artist">
   <meta property="og:description" content="Professional AI content developer and voice artist with 7+ years experience in AI training data, voice acting, and creative technology solutions.">
-  <meta property="og:image" content="https://pegearts.com/assets/images/og-image.jpg">
+  <!-- ✅ FIXED: Updated to actual profile image -->
+  <meta property="og:image" content="https://pegearts.com/assets/images/data/profile/1755844218313.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Pegearts - Creative Technology Solutions">
@@ -30,7 +31,8 @@
   <meta property="twitter:url" content="https://pegearts.com/">
   <meta property="twitter:title" content="Thanatsitt Santisamranwilai | AI Creative Designer & Voice Artist">
   <meta property="twitter:description" content="Professional AI content developer and voice artist with 7+ years experience in AI training data, voice acting, and creative technology solutions.">
-  <meta property="twitter:image" content="https://pegearts.com/assets/images/og-image.jpg">
+  <!-- ✅ FIXED: Updated to actual profile image -->
+  <meta property="twitter:image" content="https://pegearts.com/assets/images/data/profile/1755844218313.jpg">
   <meta property="twitter:creator" content="@pegearts">
   <meta property="twitter:site" content="@pegearts">
   
@@ -48,12 +50,13 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://pegearts.com/">
   
-  <!-- Alternate Languages (if you plan to add more languages) -->
+  <!-- Alternate Languages -->
   <link rel="alternate" hreflang="en" href="https://pegearts.com/">
   <link rel="alternate" hreflang="th" href="https://pegearts.com/th/">
   <link rel="alternate" hreflang="x-default" href="https://pegearts.com/">
   
-  <!-- Favicon and App Icons -->
+  <!-- ✅ ENHANCED: Favicon and App Icons with fallbacks -->
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
@@ -73,114 +76,91 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://raw.githubusercontent.com">
   
-  <!-- DNS Prefetch for Performance -->
+  <!-- ✅ FIXED: Complete DNS Prefetch for Performance -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
   <link rel="dns-prefetch" href="//unpkg.com">
   <link rel="dns-prefetch" href="//github.com">
+  <link rel="dns-prefetch" href="//raw.githubusercontent.com">
   <link rel="dns-prefetch" href="//youtube.com">
   <link rel="dns-prefetch" href="//linkedin.com">
   
-  <!-- Preload Critical Resources -->
+  <!-- ✅ FIXED: Preload Critical Resources with correct paths -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"></noscript>
   
-  <link rel="preload" href="/assets/images/profile/thanatsitt-profile.jpg" as="image" type="image/jpeg">
-  <link rel="preload" href="/assets/audio/voice-demo.mp3" as="audio" type="audio/mpeg">
-  
-  <!-- Critical CSS Framework - Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            'poppins': ['Poppins', 'sans-serif'],
+  <!-- ✅ FIXED: Updated to actual asset paths -->
+  <link rel="preload" href="/assets/images/data/profile/1755844218313.jpg" as="image" type="image/jpeg">
+  <link rel="preload" href="/assets/demo/voice/intro/Thann_Intro.wav" as="audio" type="audio/wav">
+  <!-- ✅ ADDED: Second voice demo preload -->
+  <link rel="preload" href="/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3" as="audio" type="audio/mpeg">
+
+<!-- Critical CSS Framework - Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          'poppins': ['Poppins', 'sans-serif'],
+        },
+        colors: {
+          primary: {
+            50: '#f5f3ff',
+            500: '#8b5cf6',
+            600: '#7c3aed',
+            700: '#6d28d9',
+            800: '#5b21b6',
+            900: '#4c1d95',
           },
-          colors: {
-            primary: {
-              50: '#f5f3ff',
-              100: '#ede9fe',
-              200: '#ddd6fe',
-              300: '#c4b5fd',
-              400: '#a78bfa',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
-              800: '#5b21b6',
-              900: '#4c1d95',
-            },
-            'pegearts': {
-              50: '#f0f9ff',
-              500: '#8b5cf6',
-              600: '#7c3aed',
-              700: '#6d28d9',
-            }
-          },
-          animation: {
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'bounce-slow': 'bounce 3s infinite',
-            'spin-slow': 'spin 8s linear infinite',
-            'gradient-x': 'gradient-x 15s ease infinite',
-            'gradient-y': 'gradient-y 15s ease infinite',
-            'gradient-xy': 'gradient-xy 15s ease infinite',
-          },
-          keyframes: {
-            'gradient-y': {
-              '0%, 100%': {
-                'background-size': '400% 400%',
-                'background-position': 'center top'
-              },
-              '50%': {
-                'background-size': '200% 200%',
-                'background-position': 'center center'
-              }
-            },
-            'gradient-x': {
-              '0%, 100%': {
-                'background-size': '200% 200%',
-                'background-position': 'left center'
-              },
-              '50%': {
-                'background-size': '200% 200%',
-                'background-position': 'right center'
-              }
-            },
-            'gradient-xy': {
-              '0%, 100%': {
-                'background-size': '400% 400%',
-                'background-position': 'left center'
-              },
-              '25%': {
-                'background-size': '400% 400%',
-                'background-position': 'left top'
-              },
-              '50%': {
-                'background-size': '400% 400%',
-                'background-position': 'right top'
-              },
-              '75%': {
-                'background-size': '400% 400%',
-                'background-position': 'right center'
-              }
-            }
-          },
-          backdropBlur: {
-            xs: '2px',
-          },
-          boxShadow: {
-            'glow': '0 0 20px rgba(139, 92, 246, 0.3)',
-            'glow-lg': '0 0 40px rgba(139, 92, 246, 0.4)',
-            'inner-glow': 'inset 0 2px 4px 0 rgba(139, 92, 246, 0.1)',
+          'pegearts': {
+            50: '#f0f9ff',
+            500: '#8b5cf6',
+            600: '#7c3aed',
+            700: '#6d28d9',
           }
+        },
+        animation: {
+          'float': 'float 6s ease-in-out infinite',
+          'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          'gradient-x': 'gradient-x 15s ease infinite',
+          'gradient-y': 'gradient-y 15s ease infinite',
+          'gradient-xy': 'gradient-xy 15s ease infinite',
+        },
+        keyframes: {
+          'float': {
+            '0%, 100%': { transform: 'translateY(0px)' },
+            '50%': { transform: 'translateY(-20px)' }
+          },
+          'gradient-y': {
+            '0%, 100%': { 'background-position': 'center top' },
+            '50%': { 'background-position': 'center center' }
+          },
+          'gradient-x': {
+            '0%, 100%': { 'background-position': 'left center' },
+            '50%': { 'background-position': 'right center' }
+          },
+          'gradient-xy': {
+            '0%, 100%': { 'background-position': 'left center' },
+            '25%': { 'background-position': 'left top' },
+            '50%': { 'background-position': 'right top' },
+            '75%': { 'background-position': 'right center' }
+          }
+        },
+        boxShadow: {
+          'glow': '0 0 20px rgba(139, 92, 246, 0.3)',
+          'glow-lg': '0 0 40px rgba(139, 92, 246, 0.4)',
+          'inner-glow': 'inset 0 2px 4px 0 rgba(139, 92, 246, 0.1)',
         }
-      },
-      plugins: []
-    }
-  </script>
-  
+      }
+    },
+    plugins: []
+  }
+</script>
+
+
+
   <!-- Font Awesome Icons -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
@@ -189,7 +169,7 @@
   <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"></noscript>
   
-  <!-- Schema.org Structured Data -->
+  <!-- ✅ COMPLETELY FIXED: Schema.org Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -197,7 +177,7 @@
     "name": "Thanatsitt Santisamranwilai",
     "alternateName": "Pegearts",
     "url": "https://pegearts.com",
-    "image": "https://pegearts.com/assets/images/profile/thanatsitt-profile.jpg",
+    "image": "https://pegearts.com/assets/images/data/profile/1755844218313.jpg",
     "sameAs": [
       "https://github.com/Pigletpeakkung",
       "https://linkedin.com/in/thanatsitt-s",
@@ -240,6 +220,24 @@
         "@type": "Occupation",
         "name": "Full-Stack Developer",
         "description": "Modern web applications and blockchain solutions development"
+      }
+    ],
+    "audio": [
+      {
+        "@type": "AudioObject",
+        "name": "Professional Voice Introduction",
+        "contentUrl": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/demo/voice/intro/Thann_Intro.wav",
+        "description": "Professional voice introduction demo showcasing clear articulation and presentation skills",
+        "duration": "PT2M",
+        "encodingFormat": "audio/wav"
+      },
+      {
+        "@type": "AudioObject",
+        "name": "Narrative Voice Demo",
+        "contentUrl": "https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3",
+        "description": "Narrative voice demonstration showcasing storytelling and voice modulation skills",
+        "duration": "PT3M",
+        "encodingFormat": "audio/mpeg"
       }
     ]
   }
