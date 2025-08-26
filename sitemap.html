@@ -1,290 +1,324 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sitemap | Thanatsitt's Portfolio</title>
-    <meta name="description" content="Complete sitemap of Thanatsitt Santisamranwilai's Portfolio website">
-    <link rel="canonical" href="https://yourportfolio.com/sitemap">
+    <title>Sitemap - PegeArts Portfolio</title>
+    <meta name="description" content="Complete sitemap of Thanatsitt's portfolio including pages, voice demos, and resources.">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        .sitemap-page {
-            padding: 8rem 0 4rem;
-            min-height: 100vh;
-            background: var(--background-light);
-        }
-        
-        .sitemap-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .sitemap-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        
-        .sitemap-title {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-        
-        .sitemap-subtitle {
-            color: var(--text-medium);
-            font-size: 1.2rem;
-        }
-        
-        .sitemap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .sitemap-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .section-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary-accent));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        
-        .sitemap-links {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .sitemap-links li {
-            margin-bottom: 0.75rem;
-        }
-        
-        .sitemap-links a {
-            color: var(--text-medium);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .sitemap-links a:hover {
-            background: var(--background-light);
-            color: var(--primary-light);
-            transform: translateX(5px);
-        }
-        
-        .link-icon {
-            opacity: 0.6;
-            font-size: 0.9rem;
-        }
-        
-        .last-updated {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 2rem;
-            background: var(--background-light);
-            border-radius: 12px;
-            color: var(--text-medium);
-        }
-        
-        @media (max-width: 768px) {
-            .sitemap-title { font-size: 2.5rem; }
-            .sitemap-grid { grid-template-columns: 1fr; }
-            .sitemap-section { padding: 1.5rem; }
-        }
+        * { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3); }
     </style>
 </head>
-<body>
-    <main class="sitemap-page">
-        <div class="sitemap-container">
-            <header class="sitemap-header">
-                <h1 class="sitemap-title">Site Map</h1>
-                <p class="sitemap-subtitle">
-                    Complete navigation guide to all pages on my portfolio
-                </p>
-            </header>
-            
-            <div class="sitemap-grid">
-                <!-- Main Pages -->
-                <div class="sitemap-section">
-                    <h2 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-home"></i>
-                        </div>
-                        Main Pages
-                    </h2>
-                    <ul class="sitemap-links">
-                        <li><a href="/"><i class="fas fa-chevron-right link-icon"></i>Home</a></li>
-                        <li><a href="/about"><i class="fas fa-chevron-right link-icon"></i>About Me</a></li>
-                        <li><a href="/portfolio"><i class="fas fa-chevron-right link-icon"></i>Portfolio</a></li>
-                        <li><a href="/skills"><i class="fas fa-chevron-right link-icon"></i>Skills</a></li>
-                        <li><a href="/contact"><i class="fas fa-chevron-right link-icon"></i>Contact</a></li>
-                        <li><a href="/resume"><i class="fas fa-chevron-right link-icon"></i>Resume</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Portfolio Projects -->
-                <div class="sitemap-section">
-                    <h2 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-briefcase"></i>
-                        </div>
-                        Portfolio Projects
-                    </h2>
-                    <ul class="sitemap-links">
-                        <li><a href="/portfolio/project-1"><i class="fas fa-chevron-right link-icon"></i>E-commerce Platform</a></li>
-                        <li><a href="/portfolio/project-2"><i class="fas fa-chevron-right link-icon"></i>Mobile App Design</a></li>
-                        <li><a href="/portfolio/project-3"><i class="fas fa-chevron-right link-icon"></i>Web Application</a></li>
-                        <li><a href="/portfolio/project-4"><i class="fas fa-chevron-right link-icon"></i>UI/UX Case Study</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Services -->
-                <div class="sitemap-section">
-                    <h2 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        Services
-                    </h2>
-                    <ul class="sitemap-links">
-                        <li><a href="/services"><i class="fas fa-chevron-right link-icon"></i>All Services</a></li>
-                        <li><a href="/services/web-development"><i class="fas fa-chevron-right link-icon"></i>Web Development</a></li>
-                        <li><a href="/services/ui-ux-design"><i class="fas fa-chevron-right link-icon"></i>UI/UX Design</a></li>
-                        <li><a href="/services/mobile-development"><i class="fas fa-chevron-right link-icon"></i>Mobile Development</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Blog/Articles -->
-                <div class="sitemap-section">
-                    <h2 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-blog"></i>
-                        </div>
-                        Blog & Articles
-                    </h2>
-                    <ul class="sitemap-links">
-                        <li><a href="/blog"><i class="fas fa-chevron-right link-icon"></i>All Articles</a></li>
-                        <li><a href="/blog/web-design-trends"><i class="fas fa-chevron-right link-icon"></i>Web Design Trends 2024</a></li>
-                        <li><a href="/blog/mobile-first-design"><i class="fas fa-chevron-right link-icon"></i>Mobile-First Design</a></li>
-                        <li><a href="/blog/javascript-tips"><i class="fas fa-chevron-right link-icon"></i>JavaScript Tips & Tricks</a></li>
-                    </ul>
-                </div>
-                
-                              <!-- Resources -->
-                <div class="sitemap-section">
-                    <h2 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        Resources
-                    </h2>
-                    <ul class="sitemap-links">
-                        <li><a href="/downloads/resume.pdf"><i class="fas fa-chevron-right link-icon"></i>Download Resume (PDF)</a></li>
-                        <li><a href="/downloads/portfolio.pdf"><i class="fas fa-chevron-right link-icon"></i>Portfolio Brochure</a></li>
-                        <li><a href="/testimonials"><i class="fas fa-chevron-right link-icon"></i>Client Testimonials</a></li>
-                        <li><a href="/awards"><i class="fas fa-chevron-right link-icon"></i>Awards & Recognition</a></li>
-                        <li><a href="/certifications"><i class="fas fa-chevron-right link-icon"></i>Certifications</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Support & Legal -->
-                <div class="sitemap-section">
-                    <h2 class="section-title">
-                        <div class="section-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        Support & Legal
-                    </h2>
-                    <ul class="sitemap-links">
-                        <li><a href="/faq"><i class="fas fa-chevron-right link-icon"></i>Frequently Asked Questions</a></li>
-                        <li><a href="/privacy-policy"><i class="fas fa-chevron-right link-icon"></i>Privacy Policy</a></li>
-                        <li><a href="/terms-of-service"><i class="fas fa-chevron-right link-icon"></i>Terms of Service</a></li>
-                        <li><a href="/cookie-policy"><i class="fas fa-chevron-right link-icon"></i>Cookie Policy</a></li>
-                        <li><a href="/404"><i class="fas fa-chevron-right link-icon"></i>404 Page</a></li>
-                    </ul>
-                </div>
+<body class="gradient-bg text-white min-h-screen">
+    
+    <!-- Header -->
+    <header class="container mx-auto px-6 py-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    Portfolio Sitemap
+                </h1>
+                <p class="text-gray-400 mt-2">Complete navigation guide to PegeArts</p>
             </div>
-            
-            <div class="last-updated">
-                <i class="fas fa-clock"></i>
-                <strong>Last Updated:</strong> December 19, 2024
-                <br>
-                <small>This sitemap is automatically updated when new content is added</small>
+            <a href="/" class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg transition-colors">
+                <i class="fas fa-home mr-2"></i> Back to Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pb-12">
+        
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+            <div class="bg-purple-900/30 p-6 rounded-xl text-center">
+                <div class="text-3xl mb-2">📄</div>
+                <div class="text-2xl font-bold text-purple-400">8</div>
+                <div class="text-sm text-gray-400">Total Pages</div>
+            </div>
+            <div class="bg-pink-900/30 p-6 rounded-xl text-center">
+                <div class="text-3xl mb-2">🎵</div>
+                <div class="text-2xl font-bold text-pink-400">2</div>
+                <div class="text-sm text-gray-400">Voice Demos</div>
+            </div>
+            <div class="bg-blue-900/30 p-6 rounded-xl text-center">
+                <div class="text-3xl mb-2">📄</div>
+                <div class="text-2xl font-bold text-blue-400">1</div>
+                <div class="text-sm text-gray-400">Documents</div>
+            </div>
+            <div class="bg-green-900/30 p-6 rounded-xl text-center">
+                <div class="text-3xl mb-2">🖼️</div>
+                <div class="text-2xl font-bold text-green-400">1</div>
+                <div class="text-sm text-gray-400">Profile Images</div>
             </div>
         </div>
-    </main>
-    
-    <script>
-        // Add some interactivity
-        document.addEventListener('DOMContentLoaded', () => {
-            // Count total links
-            const totalLinks = document.querySelectorAll('.sitemap-links a').length;
-            console.log(`📊 Total pages in sitemap: ${totalLinks}`);
-            
-            // Add hover effects
-            const sections = document.querySelectorAll('.sitemap-section');
-            sections.forEach(section => {
-                section.addEventListener('mouseenter', () => {
-                    section.style.transform = 'translateY(-5px)';
-                });
+
+        <!-- Main Pages Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-sitemap text-purple-400 mr-3"></i>
+                Main Pages
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                section.addEventListener('mouseleave', () => {
-                    section.style.transform = 'translateY(0)';
-                });
-            });
-            
-            // Track clicks (optional analytics)
-            document.querySelectorAll('.sitemap-links a').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const url = e.target.getAttribute('href');
-                    console.log(`🔗 Sitemap navigation: ${url}`);
-                    
-                    // Send to analytics if available
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'sitemap_navigation', {
-                            'page_location': url,
-                            'source': 'sitemap'
-                        });
-                    }
-                });
-            });
-        });
-    </script>
+                <a href="/" class="card-hover bg-gradient-to-br from-purple-900/50 to-purple-800/30 p-6 rounded-xl border border-purple-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-home text-2xl text-purple-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">Home</h3>
+                            <p class="text-sm text-gray-400">Main portfolio page</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300">Welcome page with portfolio highlights, voice demos, and contact information.</p>
+                    <div class="mt-4 text-xs text-purple-300">Priority: High • Updated: Weekly</div>
+                </a>
+
+                <a href="/about.html" class="card-hover bg-gradient-to-br from-pink-900/50 to-pink-800/30 p-6 rounded-xl border border-pink-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-user text-2xl text-pink-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">About</h3>
+                            <p class="text-sm text-gray-400">Personal information</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300">Detailed background, skills, experience, and personal story.</p>
+                    <div class="mt-4 text-xs text-pink-300">Priority: High • Updated: Monthly</div>
+                </a>
+
+                <a href="/faq.html" class="card-hover bg-gradient-to-br from-blue-900/50 to-blue-800/30 p-6 rounded-xl border border-blue-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-question-circle text-2xl text-blue-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">FAQ</h3>
+                            <p class="text-sm text-gray-400">Frequently asked questions</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300">Common questions about services, pricing, and collaboration.</p>
+                    <div class="mt-4 text-xs text-blue-300">Priority: Medium • Updated: Monthly</div>
+                </a>
+
+                <a href="/term-of-service.html" class="card-hover bg-gradient-to-br from-gray-900/50 to-gray-800/30 p-6 rounded-xl border border-gray-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-file-contract text-2xl text-gray-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">Terms of Service</h3>
+                            <p class="text-sm text-gray-400">Legal terms</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300">Service terms, conditions, and usage policies.</p>
+                    <div class="mt-4 text-xs text-gray-300">Priority: Low • Updated: Yearly</div>
+                </a>
+
+                <a href="/cookie-policy.html" class="card-hover bg-gradient-to-br from-yellow-900/50 to-yellow-800/30 p-6 rounded-xl border border-yellow-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-cookie-bite text-2xl text-yellow-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">Cookie Policy</h3>
+                            <p class="text-sm text-gray-400">Privacy & cookies</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300">Information about cookies usage and privacy protection.</p>
+                    <div class="mt-4 text-xs text-yellow-300">Priority: Low • Updated: Yearly</div>
+                </a>
+
+                <a href="/404.html" class="card-hover bg-gradient-to-br from-red-900/50 to-red-800/30 p-6 rounded-xl border border-red-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-exclamation-triangle text-2xl text-red-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">404 Error</h3>
+                            <p class="text-sm text-gray-400">Page not found</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300">Custom error page with navigation back to main content.</p>
+                    <div class="mt-4 text-xs text-red-300">Priority: Low • Updated: Rarely</div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Voice Demos Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-microphone text-pink-400 mr-3"></i>
+                Voice Demonstrations
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                
+                <div class="card-hover bg-gradient-to-br from-purple-900/50 to-pink-900/30 p-6 rounded-xl border border-purple-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-play-circle text-2xl text-purple-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">Introduction Demo</h3>
+                            <p class="text-sm text-gray-400">Personal voice introduction</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-4">Professional voice introduction showcasing presentation style and vocal qualities.</p>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-purple-300">Format: WAV • Duration: ~2 min</span>
+                        <a href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/demo/voice/intro/Thann_Intro.wav" 
+                           class="text-purple-400 hover:text-purple-300" target="_blank">
+                            <i class="fas fa-external-link-alt mr-1"></i>Direct Link
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-pink-900/50 to-purple-900/30 p-6 rounded-xl border border-pink-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-book-open text-2xl text-pink-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">Narrative Demo</h3>
+                            <p class="text-sm text-gray-400">Storytelling voice sample</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-4">Narrative voice demonstration showcasing storytelling abilities and voice modulation.</p>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-pink-300">Format: MP3 • Duration: ~3 min</span>
+                        <a href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3" 
+                           class="text-pink-400 hover:text-pink-300" target="_blank">
+                            <i class="fas fa-external-link-alt mr-1"></i>Direct Link
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Documents Section -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-file-pdf text-blue-400 mr-3"></i>
+                Documents & Resources
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                
+                <div class="card-hover bg-gradient-to-br from-blue-900/50 to-indigo-900/30 p-6 rounded-xl border border-blue-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-file-pdf text-2xl text-blue-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">Professional CV</h3>
+                            <p class="text-sm text-gray-400">Complete resume</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-4">Comprehensive CV with education, experience, skills, and achievements.</p>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-blue-300">Format: PDF • Size: ~2MB</span>
+                        <a href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/sitedata/doc/Thanns_Main_CV-4.pdf" 
+                           class="text-blue-400 hover:text-blue-300" target="_blank">
+                            <i class="fas fa-download mr-1"></i>Download
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-green-900/50 to-emerald-900/30 p-6 rounded-xl border border-green-500/20">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-image text-2xl text-green-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold">Profile Photo</h3>
+                            <p class="text-sm text-gray-400">Professional headshot</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-4">High-quality professional profile photograph for portfolio and contact.</p>
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-green-300">Format: JPG • Resolution: High</span>
+                        <a href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/images/data/profile/1755844218313.jpg" 
+                           class="text-green-400 hover:text-green-300" target="_blank">
+                            <i class="fas fa-external-link-alt mr-1"></i>View Image
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Technical Info -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-cogs text-yellow-400 mr-3"></i>
+                Technical Information
+            </h2>
+            <div class="bg-gradient-to-r from-gray-900/50 to-gray-800/30 p-6 rounded-xl border border-gray-500/20">
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-yellow-400 mb-2">Sitemap Files</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li><a href="/sitemap.xml" class="hover:text-white">• sitemap.xml</a></li>
+                            <li><a href="/sitemap.html" class="hover:text-white">• sitemap.html</a></li>
+                            <li><a href="/audiositemap.xml" class="hover:text-white">• audiositemap.xml</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-yellow-400 mb-2">PWA Files</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li><a href="/manifest.json" class="hover:text-white">• manifest.json</a></li>
+                            <li><a href="/sw.js" class="hover:text-white">• service-worker.js</a></li>
+                            <li><a href="/offline.html" class="hover:text-white">• offline.html</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-yellow-400 mb-2">Icons</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li>• favicon.ico</li>
+                            <li>• favicon.svg</li>
+                            <li>• icon-192x192.png</li>
+                            <li>• icon-512x512.png</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-yellow-400 mb-2">Technologies</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li>• HTML5 + CSS3</li>
+                            <li>• Tailwind CSS</li>
+                            <li>• GSAP Animations</li>
+                            <li>• Progressive Web App</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Navigation -->
+        <section>
+            <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 p-8 rounded-xl border border-purple-500/20 text-center">
+                <h3 class="text-xl font-semibold mb-4">Quick Navigation</h3>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="/" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <a href="/about.html" class="bg-pink-600 hover:bg-pink-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                        <i class="fas fa-user mr-2"></i>About
+                    </a>
+                    <a href="/faq.html" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                        <i class="fas fa-question mr-2"></i>FAQ
+                    </a>
+                    <a href="/sitemap.xml" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm transition-colors">
+                        <i class="fas fa-file-code mr-2"></i>XML Sitemap
+                    </a>
+                </div>
+                <p class="text-sm text-gray-400 mt-4">
+                    Last updated: <span class="text-purple-300">January 2024</span> • 
+                    Total URLs: <span class="text-pink-300">12+</span>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p>&copy; 2024 PegeArts Portfolio. All rights reserved.</p>
+            <p class="text-sm mt-2">This sitemap provides comprehensive navigation to all portfolio content.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
