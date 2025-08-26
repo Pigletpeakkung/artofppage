@@ -1,10 +1,25 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pegearts.com/sitemap.xml
+# Block access to admin areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
 
-# Allow important assets
-Allow: /assets/demo/voice/
-Allow: /assets/projects/voice/
-Allow: /assets/images/data/profile/
-Allow: /assets/sitedata/doc/
+# Block common system files
+Disallow: /.htaccess
+Disallow: /config/
+
+# Allow important files
+Allow: /assets/
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Sitemaps
+Sitemap: https://pegearts.com/sitemap.html
+Sitemap: https://pegearts.com/sitemap.xml
+Sitemap: https://pegearts.com/audiositemap.xml
+
+# Crawl delay (optional - helps prevent server overload)
+Crawl-delay: 1
