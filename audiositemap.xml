@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:audio="http://www.google.com/schemas/sitemap-audio/1.0">
+        
+  <!-- Voice Introduction Demo -->
+  <url>
+    <loc>https://pegearts.com/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <audio:audio>
+      <audio:content_loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
+      <audio:title>Thanatsitt Professional Voice Introduction</audio:title>
+      <audio:description>Professional voice introduction demo by Thanatsitt showcasing clear articulation, professional tone, and presentation skills. Perfect for understanding voice quality and speaking style.</audio:description>
+      <audio:duration>120</audio:duration>
+      <audio:category>Voice Demo</audio:category>
+      <audio:family_friendly>yes</audio:family_friendly>
+      <audio:tags>voice over, introduction, professional voice, portfolio demo, presentation</audio:tags>
+      <audio:player_loc>https://pegearts.com/#voice-demos</audio:player_loc>
+      <audio:uploader>Thanatsitt</audio:uploader>
+      <audio:uploader_info>https://pegearts.com/about.html</audio:uploader_info>
+    </audio:audio>
+  </url>
+  
+  <!-- Narrative Voice Demo -->
+  <url>
+    <loc>https://pegearts.com/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <audio:audio>
+      <audio:content_loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
+      <audio:title>Thanatsitt Narrative Voice Demonstration</audio:title>
+      <audio:description>Professional narrative voice demonstration showcasing storytelling abilities, voice modulation, and engaging delivery style. Demonstrates versatility in voice acting and narration skills.</audio:description>
+      <audio:duration>180</audio:duration>
+      <audio:category>Voice Demo</audio:category>
+      <audio:family_friendly>yes</audio:family_friendly>
+      <audio:tags>narrative voice, storytelling, voice acting, professional narration, voice modulation</audio:tags>
+      <audio:player_loc>https://pegearts.com/#voice-demos</audio:player_loc>
+      <audio:uploader>Thanatsitt</audio:uploader>
+      <audio:uploader_info>https://pegearts.com/about.html</audio:uploader_info>
+    </audio:audio>
+  </url>
+  
+</urlset>
+
