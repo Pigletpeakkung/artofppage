@@ -1,44 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:audio="http://www.google.com/schemas/sitemap-audio/1.0">
+
 <!-- Homepage - Highest Priority -->
 <url>
     <loc>https://pegearts.com/</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <!-- Only include images that actually exist -->
     <image:image>
-        <image:loc>https://pegearts.com/assets/images/profile-hero.jpg</image:loc>
-        <image:caption>Thanatsitt Santisamranwilai - Full Stack Developer Portfolio</image:caption>
-        <image:title>Portfolio Hero Image</image:title>
+        <image:loc>https://pegearts.com/assets/images/data/profile/1755844218313.jpg</image:loc>
+        <image:caption>Thanatsitt Santisamranwilai - Professional Profile Photo</image:caption>
+        <image:title>Professional Portfolio Profile</image:title>
     </image:image>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/ecommerce-platform.jpg</image:loc>
-        <image:caption>E-commerce Platform Project</image:caption>
-        <image:title>E-commerce Platform</image:title>
-    </image:image>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/task-manager.jpg</image:loc>
-        <image:caption>Task Management Application</image:caption>
-        <image:title>Task Manager App</image:title>
-    </image:image>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/weather-app.jpg</image:loc>
-        <image:caption>Weather Forecast Application</image:caption>
-        <image:title>Weather App</image:title>
-    </image:image>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/blog-api.jpg</image:loc>
-        <image:caption>RESTful Blog API Backend</image:caption>
-        <image:title>Blog API</image:title>
-    </image:image>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/dashboard.jpg</image:loc>
-        <image:caption>Analytics Dashboard Interface</image:caption>
-        <image:title>Analytics Dashboard</image:title>
-    </image:image>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/fitness-tracker.jpg</image:loc>
-        <image:caption>Fitness Tracking Mobile Application</image:caption>
-        <image:title>Fitness Tracker</image:title>
-    </image:image>
+    <!-- Include your actual voice demos -->
+    <audio:audio>
+        <audio:content_loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
+        <audio:title>Thanatsitt Professional Voice Introduction</audio:title>
+        <audio:description>Professional voice introduction demo showcasing clear articulation and presentation skills</audio:description>
+        <audio:duration>120</audio:duration>
+        <audio:category>Voice Demo</audio:category>
+        <audio:family_friendly>yes</audio:family_friendly>
+    </audio:audio>
+    <audio:audio>
+        <audio:content_loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
+        <audio:title>Thanatsitt Narrative Voice Demo</audio:title>
+        <audio:description>Narrative voice demonstration showcasing storytelling and voice modulation skills</audio:description>
+        <audio:duration>180</audio:duration>
+        <audio:category>Voice Demo</audio:category>
+        <audio:family_friendly>yes</audio:family_friendly>
+    </audio:audio>
 </url>
 
 <!-- Main Index Page (alternative URL) -->
@@ -49,26 +42,13 @@
     <priority>0.9</priority>
 </url>
 
-<!-- Legal and Information Pages -->
+<!-- ONLY INCLUDE PAGES THAT ACTUALLY EXIST -->
+<!-- About Page (if it exists) -->
 <url>
-    <loc>https://pegearts.com/privacy-policy.html</loc>
+    <loc>https://pegearts.com/about.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/terms-of-service.html</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/cookie-policy.html</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.8</priority>
 </url>
 
 <!-- FAQ Page -->
@@ -76,15 +56,22 @@
     <loc>https://pegearts.com/faq.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.6</priority>
 </url>
 
-<!-- Error and Utility Pages -->
+<!-- Legal Pages (only if they exist) -->
 <url>
-    <loc>https://pegearts.com/404.html</loc>
+    <loc>https://pegearts.com/term-of-service.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.1</priority>
+    <priority>0.3</priority>
+</url>
+
+<url>
+    <loc>https://pegearts.com/cookie-policy.html</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
 </url>
 
 <!-- Sitemap HTML Version -->
@@ -92,320 +79,23 @@
     <loc>https://pegearts.com/sitemap.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-</url>
-
-<!-- Portfolio Project Deep Links (if using hash routing) -->
-<!-- These would be actual pages if you implement individual project pages -->
-<url>
-    <loc>https://pegearts.com/#portfolio</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/#about</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/#skills</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/#experience</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/#contact</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-</url>
-
-<!-- Individual Project Pages (if you create separate pages for each project) -->
-<url>
-    <loc>https://pegearts.com/projects/ecommerce-platform</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/ecommerce-platform.jpg</image:loc>
-        <image:caption>Full-stack e-commerce platform with modern UI/UX</image:caption>
-        <image:title>E-commerce Platform Project</image:title>
-    </image:image>
-</url>
-
-<url>
-    <loc>https://pegearts.com/projects/task-manager</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/task-manager.jpg</image:loc>
-        <image:caption>Collaborative task management application</image:caption>
-        <image:title>Task Manager Application</image:title>
-    </image:image>
-</url>
-
-<url>
-    <loc>https://pegearts.com/projects/weather-app</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/weather-app.jpg</image:loc>
-        <image:caption>Real-time weather forecast application</image:caption>
-        <image:title>Weather Forecast App</image:title>
-    </image:image>
-</url>
-
-<url>
-    <loc>https://pegearts.com/projects/blog-api</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/blog-api.jpg</image:loc>
-        <image:caption>RESTful API for blog management system</image:caption>
-        <image:title>Blog API Backend</image:title>
-    </image:image>
-</url>
-
-<url>
-    <loc>https://pegearts.com/projects/analytics-dashboard</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/dashboard.jpg</image:loc>
-        <image:caption>Interactive analytics dashboard with real-time data</image:caption>
-        <image:title>Analytics Dashboard</image:title>
-    </image:image>
-</url>
-
-<url>
-    <loc>https://pegearts.com/projects/fitness-tracker</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/projects/fitness-tracker.jpg</image:loc>
-        <image:caption>Mobile fitness tracking application</image:caption>
-        <image:title>Fitness Tracker App</image:title>
-    </image:image>
-</url>
-
-<!-- Blog Section (if you add a blog) -->
-<url>
-    <loc>https://pegearts.com/blog</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-</url>
-
-<!-- Sample Blog Posts (add actual posts as you create them) -->
-<url>
-    <loc>https://pegearts.com/blog/modern-web-development-trends-2024</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/blog/building-scalable-react-applications</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/blog/nodejs-best-practices-2024</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/blog/database-optimization-techniques</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/blog/full-stack-developer-roadmap</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<!-- Resources and Downloads -->
-<url>
-    <loc>https://pegearts.com/resume</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
-
-<!-- Services Page (if you offer freelance services) -->
-<url>
-    <loc>https://pegearts.com/services</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-</url>
-
-<!-- Testimonials Page (if you have client testimonials) -->
-<url>
-    <loc>https://pegearts.com/testimonials</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-</url>
-
-<!-- Case Studies (detailed project breakdowns) -->
-<url>
-    <loc>https://pegearts.com/case-studies</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/case-studies/ecommerce-platform-development</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/case-studies/task-management-system-design</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<!-- Skills and Technologies Deep Dives -->
-<url>
-    <loc>https://pegearts.com/skills/frontend-development</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/skills/backend-development</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/skills/database-management</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/skills/cloud-technologies</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<!-- API Documentation (if you provide APIs) -->
-<url>
-    <loc>https://pegearts.com/api/documentation</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.4</priority>
 </url>
 
-<!-- Resources and Tools -->
+<!-- Error Page -->
 <url>
-    <loc>https://pegearts.com/resources</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/resources/code-snippets</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.4</priority>
-</url>
-
-<url>
-    <loc>https://pegearts.com/resources/templates</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-</url>
-
-<!-- Portfolio Archive (older projects) -->
-<url>
-    <loc>https://pegearts.com/archive</loc>
+    <loc>https://pegearts.com/404.html</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.1</priority>
 </url>
 
-<!-- Language Versions (if you support multiple languages) -->
+<!-- CV/Resume as direct document link -->
 <url>
-    <loc>https://pegearts.com/th/</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-</url>
-
-<!-- Mobile App Links (if you have mobile apps) -->
-<url>
-    <loc>https://pegearts.com/mobile-apps</loc>
+    <loc>https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/sitedata/doc/Thanns_Main_CV-4.pdf</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
 </url>
 
-<!-- Open Source Contributions -->
-<url>
-    <loc>https://pegearts.com/open-source</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-</url>
-
-<!-- Speaking and Events -->
-<url>
-    <loc>https://pegearts.com/speaking</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-</url>
-
-<!-- Newsletter Signup -->
-<url>
-    <loc>https://pegearts.com/newsletter</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.4</priority>
-</url>
-
-<!-- Accessibility Statement -->
-<url>
-    <loc>https://pegearts.com/accessibility</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-</url>
+</urlset>
