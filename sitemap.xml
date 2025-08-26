@@ -14,22 +14,6 @@
         <image:caption>Thanatsitt Santisamranwilai - Professional Profile Photo</image:caption>
         <image:title>Professional Portfolio Profile</image:title>
     </image:image>
-    <audio:audio>
-        <audio:content_loc>https://pegearts.com/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
-        <audio:title>Thanatsitt Professional Voice Introduction</audio:title>
-        <audio:description>Professional voice introduction demo showcasing clear articulation and presentation skills</audio:description>
-        <audio:duration>120</audio:duration>
-        <audio:category>Voice Demo</audio:category>
-        <audio:family_friendly>yes</audio:family_friendly>
-    </audio:audio>
-    <audio:audio>
-        <audio:content_loc>https://pegearts.com/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
-        <audio:title>Thanatsitt Narrative Voice Demo</audio:title>
-        <audio:description>Narrative voice demonstration showcasing storytelling and voice modulation skills</audio:description>
-        <audio:duration>180</audio:duration>
-        <audio:category>Voice Demo</audio:category>
-        <audio:family_friendly>yes</audio:family_friendly>
-    </audio:audio>
 </url>
 
 <!-- Main Index Page (alternative URL) -->
