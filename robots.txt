@@ -3,26 +3,18 @@ Allow: /
 
 # Sitemaps
 Sitemap: https://pegearts.com/sitemap.xml
+Sitemap: https://pegearts.com/audiositemap.xml
 
-# Crawl delay
+# Important pages
 Crawl-delay: 1
 
-# Disallow unnecessary files
-Disallow: /assets/js/
-Disallow: *.json$
-Disallow: /sw.js
+# Audio content
+Allow: /assets/demo/voice/
+Allow: /assets/projects/voice/
 
-# Allow important assets
-Allow: /assets/css/
-Allow: /assets/images/
-Allow: /assets/icons/
+# Documents
+Allow: /assets/sitedata/doc/
 
-# Block bad bots
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: MJ12bot
-Disallow: /
-
-User-agent: DotBot
-Disallow: /
+# Disallow admin or temporary files
+Disallow: /temp/
+Disallow: /_*
