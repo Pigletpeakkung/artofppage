@@ -1,41 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:audio="http://www.google.com/schemas/sitemap-audio/1.0">
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
-<!-- Homepage - Highest Priority with Audio Content -->
+<!-- Homepage - Highest Priority -->
 <url>
     <loc>https://pegearts.com/</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    
-    <!-- Profile Image -->
     <image:image>
-        <image:loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg</image:loc>
-        <image:caption>Thanatsitt Santisamranwilai - AI Creative Designer and Voice Artist Professional Profile</image:caption>
-        <image:title>Professional Portfolio Profile - Creative Designer</image:title>
+        <image:loc>https://pegearts.com/assets/images/data/profile/1755844218313.jpg</image:loc>
+        <image:caption>Thanatsitt Santisamranwilai - Professional Profile Photo</image:caption>
+        <image:title>Professional Portfolio Profile</image:title>
     </image:image>
-    
-    <!-- Voice Demo - Professional Introduction -->
-    <audio:audio>
-        <audio:thumbnail_loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg</audio:thumbnail_loc>
-        <audio:title>Thanatsitt Santisamranwilai - Professional Voice Introduction</audio:title>
-        <audio:description>Professional voice introduction showcasing clear, engaging delivery perfect for corporate presentations, commercials, and professional content.</audio:description>
-        <audio:content_loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
-        <audio:duration>30</audio:duration>
-        <audio:family_friendly>yes</audio:family_friendly>
-    </audio:audio>
-    
-    <!-- Voice Demo - Narrative Sample -->
-    <audio:audio>
-        <audio:thumbnail_loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg</audio:thumbnail_loc>
-        <audio:title>Thanatsitt Santisamranwilai - Professional Narrative Voice Sample</audio:title>
-        <audio:description>Engaging narrative voice work demonstrating storytelling ability for documentaries, e-learning content, and educational materials.</audio:description>
-        <audio:content_loc>https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
-        <audio:duration>105</audio:duration>
-        <audio:family_friendly>yes</audio:family_friendly>
-    </audio:audio>
 </url>
 
 <!-- Main Index Page (alternative URL) -->
@@ -52,16 +29,9 @@
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    
-    <!-- Profile Image for About Page -->
-    <image:image>
-        <image:loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg</image:loc>
-        <image:caption>About Thanatsitt Santisamranwilai - Professional Background and Experience</image:caption>
-        <image:title>About - Creative Professional Background</image:title>
-    </image:image>
 </url>
 
-<!-- Portfolio/Services Page -->
+<!-- Services Page -->
 <url>
     <loc>https://pegearts.com/services.html</loc>
     <lastmod>2024-12-19</lastmod>
@@ -69,7 +39,7 @@
     <priority>0.8</priority>
 </url>
 
-<!-- Portfolio Gallery -->
+<!-- Portfolio Page -->
 <url>
     <loc>https://pegearts.com/portfolio.html</loc>
     <lastmod>2024-12-19</lastmod>
@@ -141,26 +111,11 @@
     <priority>0.1</priority>
 </url>
 
-<!-- CV/Resume Document -->
+<!-- Blog/News Section (if exists) -->
 <url>
-    <loc>https://github.com/Pigletpeakkung/artofppage/raw/5e6abfde6ec3b3844068542b319da5c71ee47044/assets/sitedata/doc/Thanns_Main_CV-4.pdf</loc>
+    <loc>https://pegearts.com/blog.html</loc>
     <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-</url>
-
-<!-- Audio Assets Direct Links for SEO -->
-<url>
-    <loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/demo/voice/intro/Thann_Intro.wav</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-</url>
-
-<url>
-    <loc>https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>weekly</changefreq>
     <priority>0.6</priority>
 </url>
 
