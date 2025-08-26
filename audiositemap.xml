@@ -1,39 +1,25 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:audio="http://www.google.com/schemas/sitemap-audio/1.0">
-
-<!-- Voice Introduction Demo -->
-<url>
-<loc>https://pegearts.com/voice-intro-demo</loc>
-<lastmod>2024-12-19</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.8</priority>
-<audio:audio>
-<audio:content_loc>https://pegearts.com/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
-<audio:title>Thanatsitt Professional Voice Introduction</audio:title>
-<audio:description>Professional voice introduction demo showcasing clear articulation and presentation skills</audio:description>
-<audio:duration>120</audio:duration>
-<audio:category>Voice Demo</audio:category>
-<audio:family_friendly>yes</audio:family_friendly>
-<audio:player_loc>https://pegearts.com/#voice-demos</audio:player_loc>
-</audio:audio>
-</url>
-
-<!-- Narrative Voice Demo -->
-<url>
-<loc>https://pegearts.com/voice-narrative-demo</loc>
-<lastmod>2024-12-19</lastmod>
-<changefreq>monthly</changefreq>
-<priority>0.8</priority>
-<audio:audio>
-<audio:content_loc>https://pegearts.com/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
-<audio:title>Thanatsitt Narrative Voice Demonstration</audio:title>
-<audio:description>Professional narrative voice demonstration showcasing storytelling and voice modulation skills</audio:description>
-<audio:duration>180</audio:duration>
-<audio:category>Voice Demo</audio:category>
-<audio:family_friendly>yes</audio:family_friendly>
-<audio:player_loc>https://pegearts.com/#voice-demos</audio:player_loc>
-</audio:audio>
-</url>
-
+    
+    <url>
+        <loc>https://pigletpeakkung.github.io/artofppage/</loc>
+        <audio:audio>
+            <audio:thumbnail_loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg</audio:thumbnail_loc>
+            <audio:title>Thanatsitt Santisamranwilai - Professional Introduction</audio:title>
+            <audio:description>Professional voice introduction showcasing clear, engaging delivery for corporate and commercial projects.</audio:description>
+            <audio:content_loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/demo/voice/intro/Thann_Intro.wav</audio:content_loc>
+            <audio:duration>30</audio:duration>
+        </audio:audio>
+        
+        <audio:audio>
+            <audio:thumbnail_loc>https://github.com/Pigletpeakkung/artofppage/raw/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg</audio:thumbnail_loc>
+            <audio:title>Thanatsitt Santisamranwilai - Narrative Sample</audio:title>
+            <audio:description>Engaging narrative voice work demonstrating storytelling ability for documentaries and educational content.</audio:description>
+            <audio:content_loc>https://github.com/Pigletpeakkung/artofppage/raw/de951d75e32a77c8f18f95ec69d9219c332a783a/assets/projects/voice/narrative/thanattsitt-2033447-tha-4d5m7gd2g.mp3</audio:content_loc>
+            <audio:duration>105</audio:duration>
+        </audio:audio>
+    </url>
+    
 </urlset>
