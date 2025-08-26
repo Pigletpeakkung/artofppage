@@ -130,6 +130,19 @@ const STATIC_RESOURCES = [
   '/icons/icon-512x512.png'
 ];
 
+// Add to STATIC_RESOURCES array in your sw.js:
+const STATIC_RESOURCES = [
+  // ... existing resources ...
+  
+  // 🗺️ Sitemap Files
+  '/sitemap.xml',
+  '/sitemap.html', 
+  '/audiositemap.xml',
+  
+  // ... rest of resources ...
+];
+
+
 // Asset type mapping for better organization
 const ASSET_TYPES = {
   audio: ['.wav', '.mp3', '.ogg', '.m4a', '.aac'],
