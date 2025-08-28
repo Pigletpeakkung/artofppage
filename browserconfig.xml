@@ -1,142 +1,57 @@
-{
-  "name": "Pegearts - Creative Technology Solutions",
-  "short_name": "Pegearts",
-  "description": "Professional AI Creative Designer, Voice Artist, and Full-Stack Developer portfolio showcasing innovative projects and creative solutions",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#0f0f23",
-  "theme_color": "#8b5cf6",
-  "orientation": "portrait-primary",
-  "scope": "/",
-  "lang": "en-US",
-  "dir": "ltr",
-  "categories": ["business", "productivity", "technology", "design"],
-  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
-  "screenshots": [
-    {
-      "src": "/assets/images/screenshot-desktop.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Desktop view of Pegearts portfolio"
-    },
-    {
-      "src": "/assets/images/screenshot-mobile.png",
-      "sizes": "640x1136",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Mobile view of Pegearts portfolio"
-    }
-  ],
-  "icons": [
-    {
-      "src": "/assets/icons/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/ms-icon-70x70.png",
-      "sizes": "70x70",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/ms-icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/assets/icons/ms-icon-150x150.png",
-      "sizes": "150x150",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/assets/icons/web-app-manifest-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/assets/icons/ms-icon-310x310.png",
-      "sizes": "310x310",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/web-app-manifest-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Portfolio Projects",
-      "short_name": "Projects",
-      "description": "View my latest creative projects and case studies",
-      "url": "/#projects",
-      "icons": [
-        {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Voice Demonstrations",
-      "short_name": "Voice Demo",
-      "description": "Listen to professional voice-over samples",
-      "url": "/#skills",
-      "icons": [
-        {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Contact & Hire",
-      "short_name": "Contact",
-      "description": "Get in touch for project collaborations",
-      "url": "/#contact",
-      "icons": [
-        {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "About & Services",
-      "short_name": "About",
-      "description": "Learn about my expertise and services",
-      "url": "/#about",
-      "icons": [
-        {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
-        }
-      ]
-    }
-  ],
-  "related_applications": [
-    {
-      "platform": "web",
-      "url": "https://pegearts.vercel.app"
-    }
-  ],
-  "prefer_related_applications": false
-}
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+    <msapplication>
+        <tile>
+            <square70x70logo src="/assets/icons/ms-icon-70x70.png"/>
+            <square150x150logo src="/assets/icons/ms-icon-150x150.png"/>
+            <wide310x150logo src="/assets/icons/ms-icon-310x150.png"/>
+            <square310x310logo src="/assets/icons/ms-icon-310x310.png"/>
+            <TileColor>#8b5cf6</TileColor>
+        </tile>
+        
+        <notification>
+            <polling-uri src="/api/notifications/updates"/>
+            <frequency>360</frequency>
+            <cycle>1</cycle>
+        </notification>
+        
+        <application>
+            <name>Pegearts</name>
+            <description>AI Creative Designer &amp; Voice Artist Portfolio</description>
+            <author>Thanatsitt Santisamranwilai</author>
+            <version>1.2.0</version>
+            <category>Business &amp; Technology</category>
+            <keywords>AI Designer, Voice Artist, Web Development, Creative Technology, Portfolio</keywords>
+            <url>https://pegearts.vercel.app</url>
+        </application>
+        
+        <pinnedsite>
+            <jumplist>
+                <task>
+                    <name>View Portfolio</name>
+                    <action-uri>/#projects</action-uri>
+                    <icon-uri>/assets/icons/ms-icon-70x70.png</icon-uri>
+                    <tooltip>Browse latest projects</tooltip>
+                </task>
+                <task>
+                    <name>Voice Samples</name>
+                    <action-uri>/#skills</action-uri>
+                    <icon-uri>/assets/icons/ms-icon-70x70.png</icon-uri>
+                    <tooltip>Listen to voice demonstrations</tooltip>
+                </task>
+                <task>
+                    <name>Contact</name>
+                    <action-uri>/#contact</action-uri>
+                    <icon-uri>/assets/icons/ms-icon-70x70.png</icon-uri>
+                    <tooltip>Get in touch for projects</tooltip>
+                </task>
+            </jumplist>
+            
+            <navbutton>
+                <color>#8b5cf6</color>
+            </navbutton>
+            
+            <tooltip>Pegearts - AI Creative Designer &amp; Voice Artist</tooltip>
+        </pinnedsite>
+    </msapplication>
+</browserconfig>
