@@ -123,7 +123,6 @@ const STATIC_RESOURCES = [
   '/faq.html',
   '/404.html',
   '/me.html',
-  '/manifest.json',
   '/browserconfig.xml',
   '/assets/icons/favicon-16x16.png',
   '/assets/icons/favicon-32x32.png',
