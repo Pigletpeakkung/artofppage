@@ -94,6 +94,9 @@ const STATIC_RESOURCES = [
   '/cookie-policy.html',
   '/faq.html',
   '/404.html',
+  '/cookie-policy.html',
+  '/me.html',
+  '/offline.html',
   
   // 📱 PWA Files
   '/manifest.json',
