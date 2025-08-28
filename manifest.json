@@ -1,18 +1,32 @@
 {
-  "id": "/",
-  "name": "Thanatsitt Santisamranwilai - AI Creative Designer",
-  "short_name": "Thanatsitt Portfolio",
-  "description": "AI Creative Designer & Digital Innovation Specialist portfolio showcasing cutting-edge projects in AI, creative design, and digital innovation.",
+  "name": "Pegearts - Creative Technology Solutions",
+  "short_name": "Pegearts",
+  "description": "Professional AI Creative Designer, Voice Artist, and Full-Stack Developer portfolio",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
+  "background_color": "#0f0f23",
+  "theme_color": "#8b5cf6",
   "orientation": "portrait-primary",
-  "theme_color": "#6366F1",
-  "background_color": "#F9FAFB",
-  "categories": ["portfolio", "design", "technology", "ai"],
-  "lang": "en-US",
+  "scope": "/",
+  "lang": "en",
   "dir": "ltr",
-  "prefer_related_applications": false,
+  "categories": ["business", "productivity", "technology"],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop view of Pegearts portfolio"
+    },
+    {
+      "src": "/assets/images/screenshot-narrow.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile view of Pegearts portfolio"
+    }
+  ],
   "icons": [
     {
       "src": "/assets/icons/icon-72x72.png",
@@ -63,42 +77,40 @@
       "purpose": "maskable any"
     }
   ],
-  "screenshots": [
-    {
-      "src": "/assets/screenshots/desktop-1.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "/assets/screenshots/mobile-1.png", 
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
   "shortcuts": [
     {
-      "name": "View Projects",
-      "description": "See my latest AI and design projects",
+      "name": "Portfolio",
+      "short_name": "Portfolio",
+      "description": "View my project portfolio",
       "url": "/#projects",
       "icons": [
         {
-          "src": "/assets/icons/shortcut-projects.png",
-          "sizes": "96x96",
-          "type": "image/png"
+          "src": "/assets/icons/shortcut-portfolio.png",
+          "sizes": "96x96"
         }
       ]
     },
     {
-      "name": "Contact Me",
-      "description": "Get in touch for collaborations",
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch for projects",
       "url": "/#contact",
       "icons": [
         {
           "src": "/assets/icons/shortcut-contact.png",
-          "sizes": "96x96", 
-          "type": "image/png"
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Voice Demo",
+      "short_name": "Voice Demo",
+      "description": "Listen to voice samples",
+      "url": "/#skills",
+      "icons": [
+        {
+          "src": "/assets/icons/shortcut-voice.png",
+          "sizes": "96x96"
         }
       ]
     }
