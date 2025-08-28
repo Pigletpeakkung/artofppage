@@ -3,63 +3,1580 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Frequently Asked Questions about Thanatsitt Santisamranwilai - Full-Stack Developer. Get answers about my services, experience, and development process.">
-    <meta name="keywords" content="FAQ, Full-Stack Developer, Web Development, React, Node.js, Questions, Services, Thanatsitt">
-    <meta name="author" content="Thanatsitt Santisamranwilai">
-    <meta name="robots" content="index, follow">
+    <title>FAQ - Pegearts | Creative AI & Voice Portfolio</title>
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
+    <!-- Enhanced Meta Tags -->
+    <meta name="description" content="Frequently asked questions about Pegearts' AI development, voice-over services, and creative technology solutions. Get answers about working together and project processes.">
+    <meta name="keywords" content="FAQ, Pegearts, AI development, voice over, web development, creative technology, questions, answers">
+    <meta name="author" content="Thanatsitt Pegearts">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="FAQ - Pegearts | Creative AI & Voice Portfolio">
+    <meta property="og:description" content="Get answers to frequently asked questions about AI development, voice-over services, and creative technology solutions.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/og-faq.jpg">
     <meta property="og:url" content="https://pegearts.com/faq">
-    <meta property="og:title" content="FAQ - Thanatsitt Santisamranwilai | Full-Stack Developer">
-    <meta property="og:description" content="Frequently Asked Questions about my development services, experience, and technical expertise. Get all your questions answered.">
-    <meta property="og:image" content="https://pegearts.com/assets/images/og-faq.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Thanatsitt Portfolio">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pegearts Portfolio">
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://pegearts.com/faq">
-    <meta property="twitter:title" content="FAQ - Thanatsitt Santisamranwilai | Full-Stack Developer">
-    <meta property="twitter:description" content="Frequently Asked Questions about my development services, experience, and technical expertise.">
-    <meta property="twitter:image" content="https://pegearts.com/assets/images/twitter-faq.jpg">
-    <meta property="twitter:creator" content="@thanatsitt">
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FAQ - Pegearts | Creative AI & Voice Portfolio">
+    <meta name="twitter:description" content="Get answers to frequently asked questions about AI development, voice-over services, and creative technology solutions.">
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/og-faq.jpg">
     
-    <!-- Favicons -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#667eea">
-    <meta name="msapplication-TileColor" content="#667eea">
-    <meta name="msapplication-config" content="/browserconfig.xml">
-    <meta name="theme-color" content="#667eea">
-    
-    <!-- Preconnect to external domains -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/favicon.ico">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/Pigletpeakkung/artofppage/main/assets/apple-touch-icon.png">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- AOS - Animate On Scroll -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    
-    <!-- Page Title -->
-    <title>FAQ - Thanatsitt Santisamranwilai | Full-Stack Developer</title>
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://pegearts.com/faq">
-    
-    <!-- Structured Data -->
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#667eea',
+                        'secondary': '#764ba2',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .nav-link.active {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.15);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .page-header .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* FAQ Styles */
+        .faq-categories {
+            margin-bottom: 3rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .faq-category-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 25px;
+            color: #6b7280;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .faq-category-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .faq-category-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .faq-category-btn i {
+            font-size: 16px;
+        }
+
+        .faq-category-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .faq-category-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #f3f4f6;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            border-color: #e5e7eb;
+        }
+
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8fafc;
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .faq-question i {
+            color: #667eea;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            background: #f8fafc;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 24px;
+            max-height: 1000px;
+        }
+
+        .faq-answer p {
+            margin-bottom: 16px;
+            line-height: 1.7;
+            color: #4b5563;
+        }
+
+        .faq-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        .faq-answer ul,
+        .faq-answer ol {
+            margin: 16px 0;
+            padding-left: 20px;
+        }
+
+        .faq-answer li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: #4b5563;
+        }
+
+        .faq-answer li strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .faq-answer strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: #d1d5db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 30px;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 100px 0 60px;
+            }
+            
+            .faq-categories {
+                text-align: center;
+            }
+            
+            .faq-category-btn {
+                margin: 5px;
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+            
+            .faq-question {
+                padding: 20px;
+            }
+            
+            .faq-question h3 {
+                font-size: 16px;
+                padding-right: 15px;
+            }
+            
+            .faq-answer {
+                padding: 0 20px;
+            }
+            
+            .faq-item.active .faq-answer {
+                padding: 20px;
+            }
+
+            .nav-link {
+                display: block;
+                padding: 12px 20px;
+                border-bottom: 1px solid #f3f4f6;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .faq-category-btn {
+                width: calc(50% - 10px);
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .page-header p {
+                font-size: 1rem;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .mobile-menu.show {
+            display: block;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Skip Links for Accessibility */
+        .skip-links {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #667eea;
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+
+        .skip-links:focus {
+            top: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip Links for Accessibility -->
+    <div class="skip-links">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+        <a href="#navigation" class="skip-link">Skip to navigation</a>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="flex items-center justify-between py-4" id="navigation">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-gray-900 hover:text-primary transition-colors">
+                        <i class="fas fa-palette mr-2 text-primary"></i>
+                        Pegearts
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="desktop-nav hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/#about" class="nav-link">About</a>
+                    <a href="/#projects" class="nav-link">Projects</a>
+                    <a href="/#services" class="nav-link">Services</a>
+                    <a href="/faq" class="nav-link active">FAQ</a>
+                    <a href="/#contact" class="nav-link">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="mobile-menu-toggle md:hidden" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="py-4">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/#about" class="nav-link">About</a>
+                    <a href="/#projects" class="nav-link">Projects</a>
+                    <a href="/#services" class="nav-link">Services</a>
+                    <a href="/faq" class="nav-link active">FAQ</a>
+                    <a href="/#contact" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Frequently Asked Questions
+            </h1>
+            <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">
+                Everything you need to know about working with me and my services
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="main-content" class="py-20">
+        <div class="container">
+            <!-- FAQ Categories -->
+            <div class="faq-categories">
+                <button class="faq-category-btn active" data-category="about">
+                    <i class="fas fa-user"></i>
+                    About Me
+                </button>
+                <button class="faq-category-btn" data-category="voice">
+                    <i class="fas fa-microphone"></i>
+                    Voice Work
+                </button>
+                <button class="faq-category-btn" data-category="ai">
+                    <i class="fas fa-robot"></i>
+                    AI Development
+                </button>
+                <button class="faq-category-btn" data-category="web">
+                    <i class="fas fa-code"></i>
+                    Web Development
+                </button>
+                <button class="faq-category-btn" data-category="business">
+                    <i class="fas fa-handshake"></i>
+                    Working Together
+                </button>
+            </div>
+
+            <!-- FAQ Content -->
+            <div class="faq-content max-w-4xl mx-auto">
+                
+                <!-- About Me FAQs -->
+                <div class="faq-category-content active" data-category="about">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Who is Thanatsitt (Pegearts)?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I'm Thanatsitt, also known as Pegearts - a creative technologist who bridges the gap between art and technology. With a background in AI development, professional voice acting, and full-stack web development, I bring a unique multidisciplinary approach to every project.</p>
+                            <p>My journey started with a passion for storytelling through voice, which evolved into creating intelligent systems that can communicate and interact naturally with users.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What makes your approach unique?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>My unique combination of skills allows me to:</p>
+                            <ul>
+                                <li>Create AI systems with human-like communication understanding</li>
+                                <li>Develop voice interfaces with professional audio quality standards</li>
+                                <li>Build web applications that truly understand user experience</li>
+                                <li>Bridge technical complexity with accessible, engaging presentations</li>
+                            </ul>
+                            <p>This multidisciplinary background means I can see projects from multiple perspectives and create more holistic solutions.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Where are you based and do you work internationally?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I work globally with clients across different time zones. My experience includes projects with teams in North America, Europe, and Asia. I'm comfortable with remote collaboration and have established workflows for international projects.</p>
+                            <p>For voice work, I have a professional home studio setup that meets broadcast standards, allowing me to deliver high-quality recordings regardless of location.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What languages do you speak?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I'm fluent in:</p>
+                            <ul>
+                                <li><strong>English</strong> - Native level, various accents available</li>
+                                <li><strong>Thai</strong> - Native speaker</li>
+                            </ul>
+                            <p>For voice work, I can provide authentic pronunciation in both languages and adapt my delivery style to match cultural contexts and target audiences.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Work FAQs -->
+                <div class="faq-category-content" data-category="voice">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What types of voice work do you specialize in?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I offer a full range of professional voice services:</p>
+                            <ul>
+                                <li><strong>Commercial & Advertising</strong> - TV, radio, online ads</li>
+                                <li><strong>Narration</strong> - Documentaries, audiobooks, educational content</li>
+                                <li><strong>E-learning</strong> - Training modules, online courses, tutorials</li>
+                                <li><strong>IVR & Phone Systems</strong> - Professional phone greetings and menus</li>
+                                <li><strong>Animation & Gaming</strong> - Character voices, game narration</li>
+                                <li><strong>Corporate</strong> - Presentations, internal communications</li>
+                                <li><strong>AI Voice Training</strong> - Data collection for voice AI systems</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What does your voice sound like?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>My voice is characterized as:</p>
+                            <ul>
+                                <li><strong>Warm and approachable</strong> - Perfect for educational and corporate content</li>
+                                <li><strong>Clear and articulate</strong> - Ideal for technical explanations and e-learning</li>
+                                <li><strong>Versatile range</strong> - From professional and authoritative to friendly and conversational</li>
+                                <li><strong>Accent-neutral English</strong> - Easily understood by international audiences</li>
+                            </ul>
+                            <p>You can listen to samples in the voice demo section on the <a href="/#voice-demo" style="color: #667eea; text-decoration: underline;">main page</a> to get a feel for my range and style.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What's your studio setup like?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I maintain a professional home studio with:</p>
+                            <ul>
+                                <li><strong>Acoustically treated recording space</strong> - Minimal echo and noise</li>
+                                <li><strong>Professional microphone</strong> - Broadcast-quality audio capture</li>
+                                <li><strong>High-end audio interface</strong> - Clean, professional sound processing</li>
+                                <li><strong>Professional monitoring</strong> - Accurate playback for quality control</li>
+                                <li><strong>Backup systems</strong> - Redundant equipment to ensure project continuity</li>
+                            </ul>
+                            <p>All recordings are delivered in professional formats (WAV/AIFF) at your required specifications.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How do voice recording sessions work?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>My voice recording process is streamlined and professional:</p>
+                            <ol>
+                                <li><strong>Script Review</strong> - I analyze your script and discuss pronunciation, tone, and pacing</li>
+                                <li><strong>Sample Recording</strong> - For larger projects, I provide a sample for approval</li>
+                                <li><strong>Full Recording</strong> - Professional recording in my treated studio</li>
+                                <li><strong>Quality Check</strong> - Audio editing, noise removal, and level matching</li>
+                                <li><strong>Delivery</strong> - Files delivered in your preferred format via secure transfer</li>
+                                <li><strong>Revisions</strong> - Minor adjustments included, major changes quoted separately</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can you do live voice recording sessions?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! I offer live directed sessions via:</p>
+                            <ul>
+                                <li><strong>Zoom/Teams</strong> - Screen sharing for script review</li>
+                                <li><strong>Source Connect</strong> - Professional remote recording platform</li>
+                                <li><strong>Phone Patch</strong> - Traditional phone direction with studio recording</li>
+                            </ul>
+                            <p>Live sessions allow for real-time direction and immediate feedback, ensuring we get exactly the performance you're looking for.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What are your voice work rates?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Voice work rates vary based on:</p>
+                            <ul>
+                                <li><strong>Usage</strong> - Local, national, or international</li>
+                                <li><strong>Duration</strong> - Final runtime of the content</li>
+                                <li><strong>Distribution</strong> - Web, broadcast, internal use</li>
+                                <li><strong>Timeline</strong> - Standard or rush delivery</li>
+                            </ul>
+                            <p>I provide competitive rates aligned with industry standards. Contact me with your project details for a detailed quote.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Development FAQs -->
+                <div class="faq-category-content" data-category="ai">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What AI services do you offer?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I specialize in practical AI solutions:</p>
+                            <ul>
+                                <li><strong>Natural Language Processing</strong> - Text analysis, sentiment analysis, content generation</li>
+                                <li><strong>Voice AI Systems</strong> - Speech recognition, voice synthesis, conversational AI</li>
+                                <li><strong>Machine Learning Models</strong> - Custom ML solutions for specific business needs</li>
+                                <li><strong>AI Integration</strong> - Implementing AI features into existing applications</li>
+                                <li><strong>Training Data Development</strong> - Creating high-quality datasets for AI training</li>
+                                <li><strong>AI Strategy Consulting</strong> - Helping businesses identify AI opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you work with existing AI platforms or build from scratch?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I work with both approaches:</p>
+                            <p><strong>Existing Platforms:</strong> OpenAI GPT, Google Cloud AI, AWS ML services, Hugging Face models</p>
+                            <p><strong>Custom Development:</strong> TensorFlow, PyTorch, scikit-learn for specialized requirements</p>
+                            <p>The choice depends on your specific needs, budget, and requirements. I'll recommend the most cost-effective approach that meets your goals.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How do you ensure AI ethics and responsible development?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Ethical AI is fundamental to my practice:</p>
+                            <ul>
+                                <li><strong>Bias Testing</strong> - Regular testing for unfair bias in AI outputs</li>
+                                <li><strong>Transparency</strong> - Clear documentation of AI capabilities and limitations</li>
+                                <li><strong>Privacy Protection</strong> - Ensuring user data is handled responsibly</li>
+                                <li><strong>Human Oversight</strong> - Building in human review processes where appropriate</li>
+                                <li><strong>Explainable AI</strong> - Making AI decisions understandable to users</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Development FAQs -->
+                <div class="faq-category-content" data-category="web">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What web technologies do you specialize in?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I work with modern web technologies:</p>
+                            <p><strong>Frontend:</strong> React, Vue.js, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS</p>
+                            <p><strong>Backend:</strong> Node.js, Python, PHP, Laravel</p>
+                            <p><strong>Databases:</strong> MySQL, PostgreSQL, MongoDB</p>
+                            <p><strong>Cloud & DevOps:</strong> AWS, Google Cloud, Docker, CI/CD pipelines</p>
+                            <p><strong>Mobile:</strong> React Native, Progressive Web Apps (PWA)</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you handle both design and development?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, I offer full-stack development including:</p>
+                            <ul>
+                                <li><strong>UI/UX Design</strong> - User interface and experience design</li>
+                                <li><strong>Frontend Development</strong> - Responsive, interactive user interfaces</li>
+                                <li><strong>Backend Development</strong> - Server logic, APIs, and databases</li>
+                                <li><strong>DevOps</strong> - Deployment, hosting, and maintenance</li>
+                            </ul>
+                            <p>I can work with your existing designs or create the complete solution from concept to deployment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Working Together FAQs -->
+                <div class="faq-category-content" data-category="business">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How do you handle project timelines?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I believe in realistic timelines and clear communication:</p>
+                            <ul>
+                                <li><strong>Detailed Planning</strong> - Breaking projects into clear milestones</li>
+                                <li><strong>Regular Updates</strong> - Weekly progress reports and check-ins</li>
+                                <li><strong>Buffer Time</strong> - Building in contingency for unforeseen challenges</li>
+                                <li><strong>Flexible Scheduling</strong> - Accommodating urgent requests when possible</li>
+                            </ul>
+                            <p>For voice work, typical turnaround is 3-5 business days. Development projects vary based on scope and complexity.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What's your communication style?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>I prioritize clear, proactive communication:</p>
+                            <ul>
+                                <li><strong>Response Time</strong> - I typically respond within 24 hours</li>
+                                <li><strong>Preferred Channels</strong> - Email for formal communication, Slack/Teams for ongoing projects</li>
+                                <li><strong>Meeting Availability</strong> - Flexible scheduling across time zones</li>
+                                <li><strong>Documentation</strong> - Detailed project documentation and progress reports</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Do you work with agencies and teams?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! I collaborate with:</p>
+                            <ul>
+                                <li><strong>Creative Agencies</strong> - As a specialist voice talent or developer</li>
+                                <li><strong>Production Companies</strong> - For multimedia and video projects</li>
+                                <li><strong>Development Teams</strong> - As a contractor or consultant</li>
+                                <li><strong>Marketing Teams</strong> - For campaigns requiring multiple skills</li>
+                            </ul>
+                            <p>I'm comfortable working as part of larger teams and can adapt to your existing workflows and tools.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What's your pricing structure?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Pricing depends on the service and project scope:</p>
+                            <p><strong>Voice Work:</strong> Per-project rates based on usage, duration, and timeline</p>
+                            <p><strong>Development:</strong> Hourly rates or fixed-price projects based on requirements</p>
+                            <p><strong>AI Consulting:</strong> Hourly consulting or project-based rates</p>
+                            <p>I provide detailed quotes for all projects and discuss payment terms upfront. Rush jobs may include additional fees.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>How do I get started with a project?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Getting started is easy:</p>
+                            <ol>
+                                <li><strong>Contact Me</strong> - Email me with your project details</li>
+                                <li><strong>Discussion</strong> - We'll discuss your needs and requirements</li>
+                                <li><strong>Quote</strong> - I'll provide a detailed proposal and timeline</li>
+                                <li><strong>Agreement</strong> - Once approved, we'll formalize the project scope</li>
+                                <li><strong>Kick-off</strong> - Project begins with clear milestones and deliverables</li>
+                            </ol>
+                            <p>Currently, please contact me directly at <strong>thanattsitt.info@yahoo.co.uk</strong> as the contact form is being updated.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-16 p-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Still have questions?</h3>
+                <p class="text-gray-600 mb-6">Don't hesitate to reach out! I'm here to help and discuss your project needs.</p>
+                <a href="mailto:thanattsitt.info@yahoo.co.uk" class="btn btn-primary">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Get In Touch
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pegearts</h3>
+                    <p>Creative AI Developer & Voice Artist specializing in innovative digital solutions and immersive audio experiences.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/#services">AI Development</a></li>
+                        <li><a href="/#services">Voice Over</a></li>
+                        <li><a href="/#services">Web Development</a></li>
+                        <li><a href="/#services">Consultation</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#about">About</a></li>
+                        <li><a href="/#projects">Projects</a></li>
+                        <li><a href="/faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope mr-2"></i> thanattsitt.info@yahoo.co.uk</p>
+                    <p><i class="fas fa-clock mr-2"></i> Available globally</p>
+                    <p><i class="fas fa-language mr-2"></i> English & Thai</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pegearts. All rights reserved. | Built with passion for innovation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('show');
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // FAQ Category switching
+            const categoryBtns = document.querySelectorAll('.faq-category-btn');
+            const categoryContents = document.querySelectorAll('.faq-category-content');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const category = btn.dataset.category;
+                    
+                    // Update active button
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Update active content
+                    categoryContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.dataset.category === category) {
+                            content.classList.add('active');
+                        }
+                    });
+                    
+                    // Track category selection
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'faq_category_selected', {
+                            event_category: 'FAQ',
+                            event_label: `Category: ${category}`,
+                            faq_category: category
+                        });
+                    }
+                });
+            });
+            
+            // FAQ item toggle
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close other items in the same category
+                    const currentCategory = item.closest('.faq-category-content');
+                    const categoryItems = currentCategory.querySelectorAll('.faq-item');
+                    
+                    categoryItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                    
+                    // Track FAQ interaction
+                    if (typeof gtag === 'function') {
+                        const questionText = question.querySelector('h3').textContent;
+                        const isOpening = item.classList.contains('active');
+                        
+                        gtag('event', 'faq_interaction', {
+                            event_category: 'FAQ',
+                            event_label: isOpening ? 'Question Opened' : 'Question Closed',
+                            faq_question: questionText,
+                            action: isOpening ? 'open' : 'close'
+                        });
+                    }
+                });
+            });
+
+            // Keyboard navigation for FAQ items
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.setAttribute('tabindex', '0');
+                
+                question.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        question.click();
+                    }
+                });
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                mobileMenu.classList.remove('show');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'                    });
+                }
+            });
+        });
+
+        // Email link tracking
+        document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+            link.addEventListener('click', () => {
+                if (typeof gtag === 'function') {
+                    gtag('event', 'email_click', {
+                        event_category: 'Contact',
+                        event_label: 'FAQ Page Email Click',
+                        page: 'FAQ'
+                    });
+                }
+            });
+        });
+
+        // Search functionality (optional enhancement)
+        function addFAQSearch() {
+            // Create search input
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'faq-search-container mb-8 text-center';
+            searchContainer.innerHTML = `
+                <div class="relative max-w-md mx-auto">
+                    <input type="text" 
+                           id="faqSearch" 
+                           placeholder="Search FAQ questions..."
+                           class="w-full px-4 py-3 pl-12 pr-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            `;
+
+            // Insert search before categories
+            const categories = document.querySelector('.faq-categories');
+            categories.parentNode.insertBefore(searchContainer, categories);
+
+            // Add search functionality
+            const searchInput = document.getElementById('faqSearch');
+            let searchTimeout;
+
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const query = e.target.value.toLowerCase().trim();
+                    searchFAQ(query);
+                }, 300);
+            });
+        }
+
+        function searchFAQ(query) {
+            const allItems = document.querySelectorAll('.faq-item');
+            const allCategories = document.querySelectorAll('.faq-category-content');
+            let hasResults = false;
+
+            if (query === '') {
+                // Show all items and return to category view
+                allItems.forEach(item => {
+                    item.style.display = 'block';
+                    item.classList.remove('active');
+                });
+                
+                allCategories.forEach(cat => cat.classList.remove('active'));
+                document.querySelector('.faq-category-content[data-category="about"]').classList.add('active');
+                
+                document.querySelector('.faq-categories').style.display = 'flex';
+                return;
+            }
+
+            // Hide categories when searching
+            document.querySelector('.faq-categories').style.display = 'none';
+            
+            // Show all categories during search
+            allCategories.forEach(cat => cat.classList.add('active'));
+
+            allItems.forEach(item => {
+                const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(query) || answer.includes(query)) {
+                    item.style.display = 'block';
+                    hasResults = true;
+                    
+                    // Highlight matching text
+                    highlightSearchTerm(item, query);
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show no results message if needed
+            showNoResultsMessage(!hasResults, query);
+
+            // Track search
+            if (typeof gtag === 'function') {
+                gtag('event', 'faq_search', {
+                    event_category: 'FAQ',
+                    event_label: 'Search Query',
+                    search_term: query,
+                    has_results: hasResults
+                });
+            }
+        }
+
+        function highlightSearchTerm(item, query) {
+            // Remove previous highlights
+            const highlightedElements = item.querySelectorAll('.search-highlight');
+            highlightedElements.forEach(el => {
+                el.outerHTML = el.innerHTML;
+            });
+
+            if (query.length < 2) return;
+
+            // Highlight in question
+            const questionEl = item.querySelector('.faq-question h3');
+            questionEl.innerHTML = questionEl.textContent.replace(
+                new RegExp(`(${query})`, 'gi'),
+                '<span class="search-highlight" style="background-color: #fef3c7; padding: 2px 4px; border-radius: 4px;">$1</span>'
+            );
+
+            // Highlight in answer
+            const answerEl = item.querySelector('.faq-answer');
+            const walker = document.createTreeWalker(
+                answerEl,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            textNodes.forEach(textNode => {
+                if (textNode.textContent.toLowerCase().includes(query)) {
+                    const span = document.createElement('span');
+                    span.innerHTML = textNode.textContent.replace(
+                        new RegExp(`(${query})`, 'gi'),
+                        '<span class="search-highlight" style="background-color: #fef3c7; padding: 2px 4px; border-radius: 4px;">$1</span>'
+                    );
+                    textNode.parentNode.replaceChild(span, textNode);
+                }
+            });
+        }
+
+        function showNoResultsMessage(show, query) {
+            let noResultsEl = document.getElementById('noResults');
+            
+            if (show && !noResultsEl) {
+                noResultsEl = document.createElement('div');
+                noResultsEl.id = 'noResults';
+                noResultsEl.className = 'text-center py-12';
+                noResultsEl.innerHTML = `
+                    <div class="max-w-md mx-auto">
+                        <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-600 mb-2">No results found</h3>
+                        <p class="text-gray-500 mb-4">No FAQ items match "${query}". Try different keywords or browse categories above.</p>
+                        <button onclick="clearFAQSearch()" class="btn btn-outline">
+                            <i class="fas fa-times mr-2"></i>
+                            Clear Search
+                        </button>
+                    </div>
+                `;
+                document.querySelector('.faq-content').appendChild(noResultsEl);
+            } else if (!show && noResultsEl) {
+                noResultsEl.remove();
+            }
+        }
+
+        function clearFAQSearch() {
+            const searchInput = document.getElementById('faqSearch');
+            if (searchInput) {
+                searchInput.value = '';
+                searchFAQ('');
+            }
+        }
+
+        // Initialize search functionality
+        // addFAQSearch(); // Uncomment to enable search
+
+        // Print FAQ functionality
+        function printFAQ() {
+            const printContent = document.querySelector('.faq-content').cloneNode(true);
+            
+            // Show all categories and expand all items for printing
+            const categories = printContent.querySelectorAll('.faq-category-content');
+            const items = printContent.querySelectorAll('.faq-item');
+            
+            categories.forEach(cat => {
+                cat.classList.add('active');
+                cat.style.display = 'block';
+            });
+            
+            items.forEach(item => {
+                item.classList.add('active');
+                const answer = item.querySelector('.faq-answer');
+                if (answer) {
+                    answer.style.maxHeight = 'none';
+                    answer.style.padding = '24px';
+                }
+            });
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Pegearts FAQ</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                        .faq-item { margin-bottom: 20px; page-break-inside: avoid; }
+                        .faq-question h3 { font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #667eea; }
+                        .faq-answer { padding-left: 20px; }
+                        .faq-answer p, .faq-answer li { font-size: 14px; line-height: 1.5; }
+                        .faq-answer ul, .faq-answer ol { margin: 10px 0; }
+                        .faq-category-btn { display: none; }
+                        h2 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px; }
+                        @media print { body { margin: 0; } }
+                    </style>
+                </head>
+                <body>
+                    <h1>Pegearts - Frequently Asked Questions</h1>
+                    <p><strong>Website:</strong> pegearts.com | <strong>Email:</strong> thanattsitt.info@yahoo.co.uk</p>
+                    <hr>
+                    ${printContent.outerHTML}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Add print button (optional)
+        function addPrintButton() {
+            const printButton = document.createElement('button');
+            printButton.className = 'btn btn-outline mb-6';
+            printButton.innerHTML = '<i class="fas fa-print mr-2"></i>Print FAQ';
+            printButton.onclick = printFAQ;
+            
+            const container = document.querySelector('.faq-content');
+            container.parentNode.insertBefore(printButton, container);
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply fade-in animation to FAQ items
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+                observer.observe(item);
+            });
+        });
+
+        // Breadcrumb functionality
+        function updateBreadcrumbs() {
+            const breadcrumbContainer = document.createElement('div');
+            breadcrumbContainer.className = 'breadcrumbs mb-8';
+            breadcrumbContainer.innerHTML = `
+                <nav class="text-sm">
+                    <ol class="flex items-center space-x-2 text-gray-600">
+                        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><i class="fas fa-chevron-right text-xs"></i></li>
+                        <li class="text-primary font-medium">FAQ</li>
+                    </ol>
+                </nav>
+            `;
+            
+            const container = document.querySelector('.container');
+            const faqCategories = container.querySelector('.faq-categories');
+            container.insertBefore(breadcrumbContainer, faqCategories);
+        }
+
+        // Table of Contents (TOC) functionality
+        function createTableOfContents() {
+            const tocContainer = document.createElement('div');
+            tocContainer.className = 'toc-container mb-8 p-6 bg-gray-50 rounded-lg';
+            tocContainer.innerHTML = `
+                <h3 class="font-semibold text-lg mb-4 text-gray-900">
+                    <i class="fas fa-list mr-2"></i>Table of Contents
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="font-medium text-primary mb-2">About Me</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li><a href="#" data-category="about" data-question="0">Who is Thanatsitt?</a></li>
+                            <li><a href="#" data-category="about" data-question="1">Unique approach</a></li>
+                            <li><a href="#" data-category="about" data-question="2">Location & international work</a></li>
+                            <li><a href="#" data-category="about" data-question="3">Languages spoken</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-primary mb-2">Voice Work</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li><a href="#" data-category="voice" data-question="0">Types of voice work</a></li>
+                            <li><a href="#" data-category="voice" data-question="1">Voice characteristics</a></li>
+                            <li><a href="#" data-category="voice" data-question="2">Studio setup</a></li>
+                            <li><a href="#" data-category="voice" data-question="3">Recording process</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-primary mb-2">AI & Development</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li><a href="#" data-category="ai" data-question="0">AI services offered</a></li>
+                            <li><a href="#" data-category="web" data-question="0">Web technologies</a></li>
+                            <li><a href="#" data-category="ai" data-question="2">AI ethics</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-medium text-primary mb-2">Working Together</h4>
+                        <ul class="text-sm space-y-1 text-gray-600">
+                            <li><a href="#" data-category="business" data-question="0">Project timelines</a></li>
+                            <li><a href="#" data-category="business" data-question="3">Pricing structure</a></li>
+                            <li><a href="#" data-category="business" data-question="4">Getting started</a></li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            const container = document.querySelector('.faq-content');
+            container.parentNode.insertBefore(tocContainer, container);
+
+            // Add click handlers for TOC links
+            tocContainer.querySelectorAll('a[data-category]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const category = link.dataset.category;
+                    const questionIndex = parseInt(link.dataset.question);
+                    
+                    // Switch category
+                    document.querySelector(`[data-category="${category}"].faq-category-btn`).click();
+                    
+                    // Open specific question after a short delay
+                    setTimeout(() => {
+                        const categoryContent = document.querySelector(`[data-category="${category}"].faq-category-content`);
+                        const questionItem = categoryContent.querySelectorAll('.faq-item')[questionIndex];
+                        if (questionItem) {
+                            questionItem.classList.add('active');
+                            questionItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 300);
+                });
+            });
+        }
+
+        // Initialize additional features
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBreadcrumbs();
+            createTableOfContents();
+            // addPrintButton(); // Uncomment to add print functionality
+        });
+
+        // Analytics for page views and time spent
+        let pageStartTime = Date.now();
+        let timeSpentInterval;
+
+        function trackTimeSpent() {
+            const timeSpent = Math.round((Date.now() - pageStartTime) / 1000);
+            
+            if (typeof gtag === 'function') {
+                gtag('event', 'page_view_duration', {
+                    event_category: 'Engagement',
+                    event_label: 'FAQ Page Time Spent',
+                    value: timeSpent,
+                    page: 'FAQ'
+                });
+            }
+        }
+
+        // Track time spent every 30 seconds
+        timeSpentInterval = setInterval(trackTimeSpent, 30000);
+
+        // Track when user leaves page
+        window.addEventListener('beforeunload', () => {
+            clearInterval(timeSpentInterval);
+            trackTimeSpent();
+        });
+
+        // Track scroll depth
+        let maxScrollDepth = 0;
+        
+        window.addEventListener('scroll', throttle(() => {
+            const scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+            
+            if (scrollPercent > maxScrollDepth) {
+                maxScrollDepth = scrollPercent;
+                
+                // Track milestone percentages
+                if ([25, 50, 75, 90].includes(scrollPercent) && typeof gtag === 'function') {
+                    gtag('event', 'scroll_depth', {
+                        event_category: 'Engagement',
+                        event_label: 'FAQ Page Scroll',
+                        value: scrollPercent,
+                        page: 'FAQ'
+                    });
+                }
+            }
+        }, 1000));
+
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        }
+
+        // Console message for developers
+        console.log('🎯 Pegearts FAQ Page Loaded Successfully!');
+        console.log('📱 Mobile responsive design active');
+        console.log('♿ Accessibility features enabled');
+        console.log('📊 Analytics tracking initialized');
+        
+        // Development helpers
+        if (window.location.hostname === 'localhost' || window.location.hostname.includes('127.0.0.1')) {
+            window.faqDebug = {
+                openAllQuestions: () => {
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        item.classList.add('active');
+                    });
+                },
+                closeAllQuestions: () => {
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                },
+                switchToCategory: (category) => {
+                    document.querySelector(`[data-category="${category}"].faq-category-btn`).click();
+                },
+                printFAQ: printFAQ,
+                searchFAQ: searchFAQ
+            };
+            console.log('🛠️ Development mode: Use faqDebug object for testing');
+        }
+    </script>
+
+    <!-- Google Analytics (replace with your GA4 measurement ID) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W5LYJZ4TPF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-W5LYJZ4TPF', {
+            page_title: 'FAQ - Pegearts Portfolio',
+            page_location: window.location.href,
+            content_group1: 'FAQ',
+            content_group2: 'Support'
+        });
+
+        // Track page view
+        gtag('event', 'page_view', {
+            page_title: 'FAQ - Pegearts Portfolio',
+            page_location: window.location.href,
+            page_referrer: document.referrer
+        });
+    </script>
+
+    <!-- Schema.org Structured Data for FAQ -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -67,1338 +1584,38 @@
         "mainEntity": [
             {
                 "@type": "Question",
-                "name": "What technologies do you specialize in?",
+                "name": "Who is Thanatsitt (Pegearts)?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "I specialize in modern web technologies including React, Node.js, TypeScript, Python, and cloud platforms like AWS. I'm experienced in both frontend and backend development."
+                    "text": "I'm Thanatsitt, also known as Pegearts - a creative technologist who bridges the gap between art and technology. With a background in AI development, professional voice acting, and full-stack web development, I bring a unique multidisciplinary approach to every project."
+                }
+            },
+            {
+                "@type": "Question", 
+                "name": "What types of voice work do you specialize in?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "I offer commercial & advertising, narration, e-learning, IVR & phone systems, animation & gaming, corporate presentations, and AI voice training services."
                 }
             },
             {
                 "@type": "Question",
-                "name": "How long does a typical project take?",
+                "name": "What AI services do you offer?",
                 "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Project timelines vary based on complexity. Small websites typically take 2-4 weeks, while complex web applications can take 2-6 months. I provide detailed timelines during project planning."
+                    "@type": "Answer", 
+                    "text": "I specialize in Natural Language Processing, Voice AI Systems, Machine Learning Models, AI Integration, Training Data Development, and AI Strategy Consulting."
                 }
             },
             {
                 "@type": "Question",
-                "name": "Do you work with remote clients?",
+                "name": "How do I get started with a project?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes, I work with clients worldwide. I'm experienced in remote collaboration using modern communication tools and project management platforms."
+                    "text": "Contact me via email with your project details, we'll discuss requirements, I'll provide a quote, and once approved we'll formalize the scope and begin with clear milestones."
                 }
             }
         ]
     }
-    </script>
-</head>
-
-<body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loading-screen" aria-hidden="true">
-        <div class="loading-content">
-            <div class="loading-spinner">
-                <div class="spinner-ring"></div>
-                <div class="spinner-ring"></div>
-                <div class="spinner-ring"></div>
-            </div>
-            <p class="loading-text">Loading FAQ...</p>
-        </div>
-    </div>
-
-    <!-- Skip to Content -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <!-- Header -->
-    <header class="header" role="banner">
-        <nav class="navbar" role="navigation" aria-label="Main navigation">
-            <div class="container">
-                <div class="navbar-content">
-                    <!-- Brand -->
-                    <div class="navbar-brand">
-                        <a href="/" class="brand-link" aria-label="Thanatsitt - Home">
-                            <div class="brand-icon">
-                                <svg viewBox="0 0 40 40" class="brand-svg" aria-hidden="true">
-                                    <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-                                    <path d="M15 15 L25 20 L15 25 Z" fill="currentColor"/>
-                                </svg>
-                            </div>
-                            <span class="brand-text">Thanatsitt</span>
-                        </a>
-                    </div>
-
-                    <!-- Desktop Navigation -->
-                    <ul class="navbar-nav" role="menubar">
-                        <li class="nav-item" role="none">
-                            <a href="/" class="nav-link" role="menuitem">
-                                <i class="fas fa-home" aria-hidden="true"></i>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="none">
-                            <a href="/#about" class="nav-link" role="menuitem">
-                                <i class="fas fa-user" aria-hidden="true"></i>
-                                <span>About</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="none">
-                            <a href="/#portfolio" class="nav-link" role="menuitem">
-                                <i class="fas fa-briefcase" aria-hidden="true"></i>
-                                <span>Portfolio</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="none">
-                            <a href="/#contact" class="nav-link" role="menuitem">
-                                <i class="fas fa-envelope" aria-hidden="true"></i>
-                                <span>Contact</span>
-                            </a>
-                        </li>
-                        <li class="nav-item" role="none">
-                            <a href="/faq" class="nav-link active" role="menuitem" aria-current="page">
-                                <i class="fas fa-question-circle" aria-hidden="true"></i>
-                                <span>FAQ</span>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <!-- Mobile Menu Toggle -->
-                    <button class="mobile-menu-toggle" 
-                            type="button" 
-                            aria-label="Toggle mobile menu"
-                            aria-expanded="false"
-                            aria-controls="mobile-menu">
-                        <span class="hamburger-line"></span>
-                        <span class="hamburger-line"></span>
-                        <span class="hamburger-line"></span>
-                    </button>
-                </div>
-
-                <!-- Mobile Navigation -->
-                <div class="mobile-menu" id="mobile-menu" role="menu">
-                    <ul class="mobile-nav">
-                        <li class="mobile-nav-item" role="none">
-                            <a href="/" class="mobile-nav-link" role="menuitem">
-                                <i class="fas fa-home" aria-hidden="true"></i>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                        <li class="mobile-nav-item" role="none">
-                            <a href="/#about" class="mobile-nav-link" role="menuitem">
-                                <i class="fas fa-user" aria-hidden="true"></i>
-                                <span>About</span>
-                            </a>
-                        </li>
-                        <li class="mobile-nav-item" role="none">
-                            <a href="/#portfolio" class="mobile-nav-link" role="menuitem">
-                                <i class="fas fa-briefcase" aria-hidden="true"></i>
-                                <span>Portfolio</span>
-                            </a>
-                        </li>
-                        <li class="mobile-nav-item" role="none">
-                            <a href="/#contact" class="mobile-nav-link" role="menuitem">
-                                <i class="fas fa-envelope" aria-hidden="true"></i>
-                                <span>Contact</span>
-                            </a>
-                        </li>
-                        <li class="mobile-nav-item" role="none">
-                            <a href="/faq" class="mobile-nav-link active" role="menuitem" aria-current="page">
-                                <i class="fas fa-question-circle" aria-hidden="true"></i>
-                                <span>FAQ</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Main Content -->
-    <main id="main-content" role="main">
-        <!-- FAQ Hero Section -->
-        <section class="faq-hero section" aria-labelledby="faq-hero-title">
-            <div class="container">
-                <div class="faq-hero-content" data-aos="fade-up">
-                    <div class="breadcrumb">
-                        <nav aria-label="Breadcrumb">
-                            <ol class="breadcrumb-list">
-                                <li class="breadcrumb-item">
-                                    <a href="/" class="breadcrumb-link">
-                                        <i class="fas fa-home" aria-hidden="true"></i>
-                                        Home
-                                    </a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    <i class="fas fa-question-circle" aria-hidden="true"></i>
-                                    FAQ
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-                    
-                    <h1 id="faq-hero-title" class="faq-hero-title">
-                        Frequently Asked Questions
-                    </h1>
-                    <p class="faq-hero-subtitle">
-                        Get answers to common questions about my services, experience, and development process. 
-                        Can't find what you're looking for? <a href="/#contact" class="inline-link">Contact me directly</a>.
-                    </p>
-                    
-                    <div class="faq-hero-stats">
-                        <div class="faq-stat" data-aos="fade-up" data-aos-delay="100">
-                            <div class="faq-stat-icon">
-                                <i class="fas fa-code" aria-hidden="true"></i>
-                            </div>
-                            <div class="faq-stat-content">
-                                <span class="faq-stat-number">50+</span>
-                                <span class="faq-stat-label">Projects Completed</span>
-                            </div>
-                        </div>
-                        <div class="faq-stat" data-aos="fade-up" data-aos-delay="200">
-                            <div class="faq-stat-icon">
-                                <i class="fas fa-users" aria-hidden="true"></i>
-                            </div>
-                            <div class="faq-stat-content">
-                                <span class="faq-stat-number">30+</span>
-                                <span class="faq-stat-label">Happy Clients</span>
-                            </div>
-                        </div>
-                        <div class="faq-stat" data-aos="fade-up" data-aos-delay="300">
-                            <div class="faq-stat-icon">
-                                <i class="fas fa-clock" aria-hidden="true"></i>
-                            </div>
-                            <div class="faq-stat-content">
-                                <span class="faq-stat-number">5+</span>
-                                <span class="faq-stat-label">Years Experience</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Search Section -->
-        <section class="faq-search section">
-            <div class="container">
-                <div class="faq-search-container" data-aos="fade-up">
-                    <div class="search-box">
-                        <div class="search-input-container">
-                            <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                            <input type="search" 
-                                   class="search-input" 
-                                   id="faq-search"
-                                   placeholder="Search FAQ..."
-                                   aria-label="Search frequently asked questions"
-                                   autocomplete="off">
-                            <button type="button" 
-                                    class="search-clear" 
-                                    id="search-clear"
-                                    aria-label="Clear search"
-                                    style="display: none;">
-                                <i class="fas fa-times" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="search-suggestions" id="search-suggestions" role="listbox" aria-hidden="true"></div>
-                    </div>
-                    
-                    <div class="faq-filter-tags">
-                        <button class="filter-tag active" data-category="all" type="button">
-                            <i class="fas fa-list" aria-hidden="true"></i>
-                            All Questions
-                        </button>
-                        <button class="filter-tag" data-category="services" type="button">
-                            <i class="fas fa-briefcase" aria-hidden="true"></i>
-                            Services
-                        </button>
-                        <button class="filter-tag" data-category="technical" type="button">
-                            <i class="fas fa-code" aria-hidden="true"></i>
-                            Technical
-                        </button>
-                        <button class="filter-tag" data-category="process" type="button">
-                            <i class="fas fa-cogs" aria-hidden="true"></i>
-                            Process
-                        </button>
-                        <button class="filter-tag" data-category="pricing" type="button">
-                            <i class="fas fa-dollar-sign" aria-hidden="true"></i>
-                            Pricing
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Content Section -->
-        <section class="faq-content section" aria-labelledby="faq-content-title">
-            <div class="container">
-                <div class="faq-content-wrapper">
-                    <!-- FAQ Categories Navigation -->
-                    <aside class="faq-sidebar" data-aos="fade-right">
-                        <div class="faq-sidebar-content">
-                            <h3 class="faq-sidebar-title">Quick Navigation</h3>
-                            <nav class="faq-nav" aria-label="FAQ categories">
-                                <ul class="faq-nav-list">
-                                    <li class="faq-nav-item">
-                                        <a href="#general" class="faq-nav-link">
-                                            <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                            General Questions
-                                        </a>
-                                    </li>
-                                    <li class="faq-nav-item">
-                                        <a href="#services" class="faq-nav-link">
-                                            <i class="fas fa-briefcase" aria-hidden="true"></i>
-                                            Services & Expertise
-                                        </a>
-                                    </li>
-                                    <li class="faq-nav-item">
-                                        <a href="#technical" class="faq-nav-link">
-                                            <i class="fas fa-code" aria-hidden="true"></i>
-                                            Technical Questions
-                                        </a>
-                                    </li>
-                                    <li class="faq-nav-item">
-                                        <a href="#process" class="faq-nav-link">
-                                            <i class="fas fa-cogs" aria-hidden="true"></i>
-                                            Development Process
-                                        </a>
-                                    </li>
-                                    <li class="faq-nav-item">
-                                        <a href="#pricing" class="faq-nav-link">
-                                            <i class="fas fa-dollar-sign" aria-hidden="true"></i>
-                                            Pricing & Payment
-                                        </a>
-                                    </li>
-                                    <li class="faq-nav-item">
-                                        <a href="#support" class="faq-nav-link">
-                                            <i class="fas fa-life-ring" aria-hidden="true"></i>
-                                            Support & Maintenance
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            
-                            <div class="faq-sidebar-cta">
-                                <h4>Still have questions?</h4>
-                                <p>I'm here to help! Get in touch and I'll respond within 24 hours.</p>
-                                <a href="/#contact" class="btn btn-primary btn-sm">
-                                    <i class="fas fa-envelope" aria-hidden="true"></i>
-                                    Contact Me
-                                </a>
-                            </div>
-                        </div>
-                    </aside>
-
-                    <!-- FAQ Main Content -->
-                    <div class="faq-main" data-aos="fade-left">
-                        <!-- General Questions -->
-                        <div class="faq-category" id="general" data-category="general">
-                            <h2 class="faq-category-title">
-                                <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                General Questions
-                            </h2>
-                            
-                            <div class="faq-items">
-                                <div class="faq-item" data-aos="fade-up">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-1">
-                                        <span class="faq-question-text">Who are you and what do you do?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-1" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Hi! I'm Thanatsitt Santisamranwilai, a passionate Full-Stack Developer based in Bangkok, Thailand. I specialize in creating modern, scalable web applications using cutting-edge technologies like React, Node.js, TypeScript, and cloud platforms.</p>
-                                            <p>With over 5 years of experience in the industry, I've worked with startups and established companies to build everything from simple landing pages to complex enterprise applications. I'm committed to writing clean, maintainable code and creating exceptional user experiences.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-2">
-                                        <span class="faq-question-text">What makes you different from other developers?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-2" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Here's what sets me apart:</p>
-                                            <ul>
-                                                <li><strong>Full-Stack Expertise:</strong> I handle both frontend and backend development, ensuring seamless integration and optimal performance.</li>
-                                                <li><strong>Modern Technologies:</strong> I stay current with the latest frameworks and best practices in web development.</li>
-                                                <li><strong>User-Centric Approach:</strong> Every project starts with understanding your users and business goals.</li>
-                                                <li><strong>Performance Focus:</strong> I build applications that are fast, scalable, and accessible.</li>
-                                                <li><strong>Clear Communication:</strong> I believe in transparent communication throughout the development process.</li>
-                                                <li><strong>Continuous Learning:</strong> I'm always expanding my skills to deliver cutting-edge solutions.</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-3">
-                                        <span class="faq-question-text">Do you work with clients worldwide?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-3" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Absolutely! I work with clients from around the globe. I'm experienced in remote collaboration and use modern communication tools to ensure smooth project delivery regardless of time zones.</p>
-                                            <p>I'm flexible with meeting schedules and maintain regular communication through:</p>
-                                            <ul>
-                                                <li>Video calls (Zoom, Google Meet, Teams)</li>
-                                                <li>Project management tools (Slack, Trello, Asana)</li>
-                                                <li>Regular progress updates and demos</li>
-                                                <li>Shared documentation and version control</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Services & Expertise -->
-                        <div class="faq-category" id="services" data-category="services">
-                            <h2 class="faq-category-title">
-                                <i class="fas fa-briefcase" aria-hidden="true"></i>
-                                Services & Expertise
-                            </h2>
-                            
-                            <div class="faq-items">
-                                <div class="faq-item" data-aos="fade-up">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-4">
-                                        <span class="faq-question-text">What services do you offer?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-4" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I offer comprehensive web development services:</p>
-                                            <div class="service-grid">
-                                                <div class="service-item">
-                                                    <h4><i class="fas fa-laptop-code" aria-hidden="true"></i> Frontend Development</h4>
-                                                    <p>React, Vue.js, TypeScript, responsive design, PWAs</p>
-                                                </div>
-                                                <div class="service-item">
-                                                    <h4><i class="fas fa-server" aria-hidden="true"></i> Backend Development</h4>
-                                                    <p>Node.js, Python, APIs, databases, cloud integration</p>
-                                                </div>
-                                                <div class="service-item">
-                                                    <h4><i class="fas fa-mobile-alt" aria-hidden="true"></i> Mobile Development</h4>
-                                                    <p>React Native, cross-platform mobile apps</p>
-                                                </div>
-                                                <div class="service-item">
-                                                    <h4><i class="fas fa-cloud" aria-hidden="true"></i> Cloud & DevOps</h4>
-                                                    <p>AWS, deployment, CI/CD, monitoring</p>
-                                                </div>
-                                                <div class="service-item">
-                                                    <h4><i class="fas fa-search" aria-hidden="true"></i> SEO & Performance</h4>
-                                                    <p>Optimization, analytics, accessibility</p>
-                                                </div>
-                                                <div class="service-item">
-                                                    <h4><i class="fas fa-tools" aria-hidden="true"></i> Consulting</h4>
-                                                    <p>Architecture review, code audits, mentoring</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-5">
-                                        <span class="faq-question-text">What technologies do you specialize in?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-5" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I work with modern, industry-standard technologies:</p>
-                                            <div class="tech-categories">
-                                                <div class="tech-category">
-                                                    <h4>Frontend</h4>
-                                                    <div class="tech-tags">
-                                                        <span class="tech-tag">React</span>
-                                                        <span class="tech-tag">Vue.js</span>
-                                                        <span class="tech-tag">TypeScript</span>
-                                                        <span class="tech-tag">JavaScript ES6+</span>
-                                                        <span class="tech-tag">HTML5</span>
-                                                        <span class="tech-tag">CSS3/SCSS</span>
-                                                        <span class="tech-tag">Tailwind CSS</span>
-                                                    </div>
-                                                </div>
-                                                <div class="tech-category">
-                                                    <h4>Backend</h4>
-                                                    <div class="tech-tags">
-                                                        <span class="tech-tag">Node.js</span>
-                                                        <span class="tech-tag">Express.js</span>
-                                                        <span class="tech-tag">Python</span>
-                                                        <span class="tech-tag">Django</span>
-                                                        <span class="tech-tag">REST APIs</span>
-                                                        <span class="tech-tag">GraphQL</span>
-                                                    </div>
-                                                </div>
-                                                <div class="tech-category">
-                                                    <h4>Databases</h4>
-                                                    <div class="tech-tags">
-                                                        <span class="tech-tag">MongoDB</span>
-                                                        <span class="tech-tag">PostgreSQL</span>
-                                                        <span class="tech-tag">MySQL</span>
-                                                        <span class="tech-tag">Redis</span>
-                                                    </div>
-                                                </div>
-                                                <div class="tech-category">
-                                                    <h4>Cloud & Tools</h4>
-                                                    <div class="tech-tags">
-                                                        <span class="tech-tag">AWS</span>
-                                                        <span class="tech-tag">Docker</span>
-                                                        <span class="tech-tag">Git</span>
-                                                        <span class="tech-tag">CI/CD</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-6">
-                                        <span class="faq-question-text">Can you work on existing projects or only new ones?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-6" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I work on both new projects and existing codebases. For existing projects, I can help with:</p>
-                                            <ul>
-                                                <li><strong>Feature Development:</strong> Adding new functionality to your existing application</li>
-                                                <li><strong>Bug Fixes:</strong> Identifying and resolving issues in your codebase</li>
-                                                <li><strong>Performance Optimization:</strong> Improving speed and efficiency</li>
-                                                <li><strong>Code Refactoring:</strong> Modernizing and cleaning up legacy code</li>
-                                                <li><strong>Technology Migration:</strong> Upgrading to newer frameworks or technologies</li>
-                                                <li><strong>Maintenance:</strong> Ongoing support and updates</li>
-                                            </ul>
-                                            <p>Before starting work on an existing project, I conduct a thorough code review to understand the architecture and identify any potential issues or improvement opportunities.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Technical Questions -->
-                        <div class="faq-category" id="technical" data-category="technical">
-                            <h2 class="faq-category-title">
-                                <i class="fas fa-code" aria-hidden="true"></i>
-                                Technical Questions
-                            </h2>
-                            
-                            <div class="faq-items">
-                                <div class="faq-item" data-aos="fade-up">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-7">
-                                        <span class="faq-question-text">How do you ensure code quality and best practices?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-7" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Code quality is paramount in my development process. Here's how I ensure it:</p>
-                                            <ul>
-                                                <li><strong>Clean Code Principles:</strong> Following SOLID principles and clean architecture patterns</li>
-                                                <li><strong>Code Reviews:</strong> Thorough self-review and peer review when working in teams</li>
-                                                <li><strong>Automated Testing:</strong> Unit tests, integration tests, and end-to-end testing</li>
-                                                <li><strong>Linting & Formatting:</strong> ESLint, Prettier, and other code quality tools</li>
-                                                <li><strong>Documentation:</strong> Comprehensive code comments and project documentation</li>
-                                                <li><strong>Version Control:</strong> Meaningful commit messages and branching strategies</li>
-                                                <li><strong>Performance Monitoring:</strong> Regular performance audits and optimization</li>
-                                                <li><strong>Security Best Practices:</strong> Secure coding practices and vulnerability assessments</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-8">
-                                        <span class="faq-question-text">How do you handle responsive design and mobile optimization?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-8" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I take a mobile-first approach to ensure optimal user experience across all devices:</p>
-                                            <ul>
-                                                <li><strong>Mobile-First Design:</strong> Starting with mobile layouts and scaling up</li>
-                                                <li><strong>Flexible Grid Systems:</strong> Using CSS Grid and Flexbox for responsive layouts</li>
-                                                <li><strong>Breakpoint Strategy:</strong> Carefully planned breakpoints for different screen sizes</li>
-                                                <li><strong>Touch-Friendly Interfaces:</strong> Optimized for touch interactions and gestures</li>
-                                                <li><strong>Performance Optimization:</strong> Optimized images, lazy loading, and efficient code</li>
-                                                <li><strong>Cross-Browser Testing:</strong> Testing across multiple browsers and devices</li>
-                                                <li><strong>Accessibility:</strong> Ensuring usability for users with disabilities</li>
-                                            </ul>
-                                            <p>Every project includes thorough testing on various devices and screen sizes to ensure consistent functionality and appearance.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-9">
-                                        <span class="faq-question-text">What about SEO and website performance?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-9" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>SEO and performance are built into every project from the ground up:</p>
-                                            <div class="performance-areas">
-                                                <div class="performance-area">
-                                                    <h4><i class="fas fa-search" aria-hidden="true"></i> SEO Optimization</h4>
-                                                    <ul>
-                                                        <li>Semantic HTML structure</li>
-                                                        <li>Meta tags and Open Graph</li>
-                                                        <li>Schema markup</li>
-                                                        <li>XML sitemaps</li>
-                                                        <li>Internal linking strategy</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="performance-area">
-                                                    <h4><i class="fas fa-tachometer-alt" aria-hidden="true"></i> Performance</h4>
-                                                    <ul>
-                                                        <li>Code splitting and lazy loading</li>
-                                                        <li>Image optimization</li>
-                                                        <li>CDN implementation</li>
-                                                        <li>Caching strategies</li>
-                                                        <li>Minification and compression</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="performance-area">
-                                                    <h4><i class="fas fa-chart-line" aria-hidden="true"></i> Monitoring</h4>
-                                                    <ul>
-                                                        <li>Google Analytics integration</li>
-                                                        <li>Core Web Vitals tracking</li>
-                                                        <li>Performance monitoring</li>
-                                                        <li>Error tracking</li>
-                                                        <li>User behavior analysis</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Development Process -->
-                        <div class="faq-category" id="process" data-category="process">
-                            <h2 class="faq-category-title">
-                                <i class="fas fa-cogs" aria-hidden="true"></i>
-                                Development Process
-                            </h2>
-                            
-                            <div class="faq-items">
-                                <div class="faq-item" data-aos="fade-up">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-10">
-                                        <span class="faq-question-text">What's your typical development process?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-10" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I follow a structured, agile development process to ensure successful project delivery:</p>
-                                            <div class="process-steps">
-                                                <div class="process-step">
-                                                    <div class="step-number">1</div>
-                                                    <div class="step-content">
-                                                        <h4>Discovery & Planning</h4>
-                                                        <p>Understanding your goals, requirements, and target audience. Creating project timeline and technical specifications.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="process-step">
-                                                    <div class="step-number">2</div>
-                                                    <div class="step-content">
-                                                        <h4>Design & Architecture</h4>
-                                                        <p>Creating wireframes, mockups, and technical architecture. Defining user experience and system design.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="process-step">
-                                                    <div class="step-number">3</div>
-                                                    <div class="step-content">
-                                                        <h4>Development</h4>
-                                                        <p>Iterative development with regular check-ins. Building features incrementally with continuous testing.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="process-step">
-                                                    <div class="step-number">4</div>
-                                                    <div class="step-content">
-                                                        <h4>Testing & Review</h4>
-                                                        <p>Comprehensive testing, code review, and client feedback integration before deployment.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="process-step">
-                                                    <div class="step-number">5</div>
-                                                    <div class="step-content">
-                                                        <h4>Launch & Support</h4>
-                                                        <p>Deployment, monitoring, and ongoing support to ensure smooth operation and performance.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-11">
-                                        <span class="faq-question-text">How long does a typical project take?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-11" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Project timelines vary based on complexity and scope. Here are typical timeframes:</p>
-                                            <div class="timeline-estimates">
-                                                <div class="timeline-item">
-                                                    <h4><i class="fas fa-file-alt" aria-hidden="true"></i> Landing Page</h4>
-                                                    <span class="timeline-duration">1-2 weeks</span>
-                                                    <p>Simple, responsive landing page with basic functionality</p>
-                                                </div>
-                                                <div class="timeline-item">
-                                                    <h4><i class="fas fa-globe" aria-hidden="true"></i> Business Website</h4>
-                                                    <span class="timeline-duration">3-6 weeks</span>
-                                                    <p>Multi-page website with CMS, contact forms, and basic features</p>
-                                                </div>
-                                                <div class="timeline-item">
-                                                    <h4><i class="fas fa-shopping-cart" aria-hidden="true"></i> E-commerce Site</h4>
-                                                    <span class="timeline-duration">6-12 weeks</span>
-                                                    <p>Online store with payment processing, inventory, and user accounts</p>
-                                                </div>
-                                                <div class="timeline-item">
-                                                    <h4><i class="fas fa-cogs" aria-hidden="true"></i> Web Application</h4>
-                                                    <span class="timeline-duration">8-16 weeks</span>
-                                                    <p>Complex application with custom functionality and integrations</p>
-                                                </div>
-                                                <div class="timeline-item">
-                                                    <h4><i class="fas fa-building" aria-hidden="true"></i> Enterprise Solution</h4>
-                                                    <span class="timeline-duration">3-6 months</span>
-                                                    <p>Large-scale application with advanced features and integrations</p>
-                                                </div>
-                                            </div>
-                                            <p><strong>Note:</strong> These are estimates. I provide detailed timelines after understanding your specific requirements during the discovery phase.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-12">
-                                        <span class="faq-question-text">How do you handle project communication and updates?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-12" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Clear communication is essential for project success. Here's how I keep you informed:</p>
-                                            <ul>
-                                                <li><strong>Regular Updates:</strong> Weekly progress reports with completed tasks and next steps</li>
-                                                <li><strong>Live Demos:</strong> Regular demonstrations of completed features</li>
-                                                <li><strong>Project Dashboard:</strong> Access to project management tools showing real-time progress</li>
-                                                <li><strong>Quick Response:</strong> I respond to messages within 24 hours (usually much faster)</li>
-                                                <li><strong>Scheduled Check-ins:</strong> Regular video calls to discuss progress and address questions</li>
-                                                <li><strong>Version Control Access:</strong> You can see all code changes and commit history</li>
-                                                <li><strong>Documentation:</strong> Comprehensive project documentation and handover materials</li>
-                                            </ul>
-                                            <p>I believe in transparency and keeping clients involved throughout the development process.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pricing & Payment -->
-                        <div class="faq-category" id="pricing" data-category="pricing">
-                            <h2 class="faq-category-title">
-                                <i class="fas fa-dollar-sign" aria-hidden="true"></i>
-                                Pricing & Payment
-                            </h2>
-                            
-                            <div class="faq-items">
-                                <div class="faq-item" data-aos="fade-up">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-13">
-                                        <span class="faq-question-text">How do you structure your pricing?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-13" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I offer flexible pricing models to suit different project needs and budgets:</p>
-                                            <div class="pricing-models">
-                                                <div class="pricing-model">
-                                                    <h4><i class="fas fa-project-diagram" aria-hidden="true"></i> Fixed Project Price</h4>
-                                                    <p>Best for well-defined projects with clear scope and requirements. You get a fixed price upfront with no surprises.</p>
-                                                    <div class="pricing-benefits">
-                                                        <span class="benefit">✓ Predictable budget</span>
-                                                        <span class="benefit">✓ Clear deliverables</span>
-                                                        <span class="benefit">✓ Timeline certainty</span>
-                                                    </div>
-                                                </div>
-                                                <div class="pricing-model">
-                                                    <h4><i class="fas fa-clock" aria-hidden="true"></i> Hourly Rate</h4>
-                                                    <p>Ideal for ongoing work, maintenance, or projects with evolving requirements. Flexible and transparent billing.</p>
-                                                    <div class="pricing-benefits">
-                                                        <span class="benefit">✓ Maximum flexibility</span>
-                                                        <span class="benefit">✓ Pay only for work done</span>
-                                                        <span class="benefit">✓ Detailed time tracking</span>
-                                                    </div>
-                                                </div>
-                                                <div class="pricing-model">
-                                                    <h4><i class="fas fa-calendar-alt" aria-hidden="true"></i> Monthly Retainer</h4>
-                                                    <p>Perfect for ongoing support, maintenance, or long-term partnerships. Includes priority support and regular updates.</p>
-                                                    <div class="pricing-benefits">
-                                                        <span class="benefit">✓ Priority support</span>
-                                                        <span class="benefit">✓ Cost-effective</span>
-                                                        <span class="benefit">✓ Ongoing relationship</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p>I'll recommend the best pricing model based on your project requirements and goals. <a href="/#contact" class="inline-link">Contact me</a> for a personalized quote.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-14">
-                                        <span class="faq-question-text">What payment methods do you accept?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-14" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I accept various payment methods for your convenience:</p>
-                                            <div class="payment-methods">
-                                                <div class="payment-method">
-                                                    <i class="fas fa-university" aria-hidden="true"></i>
-                                                    <h4>Bank Transfer</h4>
-                                                    <p>Direct bank transfers (preferred for larger projects)</p>
-                                                </div>
-                                                <div class="payment-method">
-                                                    <i class="fab fa-paypal" aria-hidden="true"></i>
-                                                    <h4>PayPal</h4>
-                                                    <p>Secure online payments with buyer protection</p>
-                                                </div>
-                                                <div class="payment-method">
-                                                    <i class="fab fa-stripe" aria-hidden="true"></i>
-                                                    <h4>Stripe</h4>
-                                                    <p>Credit/debit card payments through secure Stripe gateway</p>
-                                                </div>
-                                                <div class="payment-method">
-                                                    <i class="fab fa-bitcoin" aria-hidden="true"></i>
-                                                    <h4>Cryptocurrency</h4>
-                                                    <p>Bitcoin, Ethereum, and other major cryptocurrencies</p>
-                                                </div>
-                                            </div>
-                                            <p>All payments are processed securely, and I provide detailed invoices for your records.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-15">
-                                        <span class="faq-question-text">What's your payment schedule?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-15" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Payment schedules depend on the project size and type:</p>
-                                            <div class="payment-schedules">
-                                                <div class="payment-schedule">
-                                                    <h4>Small Projects (Under $5,000)</h4>
-                                                    <ul>
-                                                        <li>50% upfront to start the project</li>
-                                                        <li>50% upon completion and delivery</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="payment-schedule">
-                                                    <h4>Medium Projects ($5,000 - $15,000)</h4>
-                                                    <ul>
-                                                        <li>30% upfront to start the project</li>
-                                                        <li>40% at 50% project completion</li>
-                                                        <li>30% upon final delivery</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="payment-schedule">
-                                                    <h4>Large Projects (Over $15,000)</h4>
-                                                    <ul>
-                                                        <li>25% upfront to start the project</li>
-                                                        <li>25% at 25% project completion</li>
-                                                        <li>25% at 75% project completion</li>
-                                                        <li>25% upon final delivery</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="payment-schedule">
-                                                    <h4>Hourly/Retainer Work</h4>
-                                                    <ul>
-                                                        <li>Invoiced weekly or monthly</li>
-                                                        <li>Payment due within 15 days</li>
-                                                        <li>Detailed time tracking provided</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Support & Maintenance -->
-                        <div class="faq-category" id="support" data-category="support">
-                            <h2 class="faq-category-title">
-                                <i class="fas fa-life-ring" aria-hidden="true"></i>
-                                Support & Maintenance
-                            </h2>
-                            
-                            <div class="faq-items">
-                                <div class="faq-item" data-aos="fade-up">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-16">
-                                        <span class="faq-question-text">Do you provide ongoing support after project completion?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-16" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Yes! I believe in long-term partnerships and provide comprehensive post-launch support:</p>
-                                            <div class="support-types">
-                                                <div class="support-type">
-                                                    <h4><i class="fas fa-shield-alt" aria-hidden="true"></i> Warranty Period</h4>
-                                                    <p>30-day free bug fixes and minor adjustments after project delivery</p>
-                                                </div>
-                                                <div class="support-type">
-                                                    <h4><i class="fas fa-tools" aria-hidden="true"></i> Maintenance Plans</h4>
-                                                    <p>Monthly maintenance packages including updates, backups, and security monitoring</p>
-                                                </div>
-                                                <div class="support-type">
-                                                    <h4><i class="fas fa-headset" aria-hidden="true"></i> Priority Support</h4>
-                                                    <p>Fast response times for urgent issues and technical questions</p>
-                                                </div>
-                                                <div class="support-type">
-                                                    <h4><i class="fas fa-rocket" aria-hidden="true"></i> Feature Updates</h4>
-                                                    <p>Ongoing development to add new features and improvements</p>
-                                                </div>
-                                            </div>
-                                            <p>Support can be provided on an hourly basis or through monthly retainer agreements.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-17">
-                                        <span class="faq-question-text">What if I need changes after the project is completed?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-17" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>I'm always available for post-project changes and updates:</p>
-                                            <ul>
-                                                <li><strong>Minor Bug Fixes:</strong> Covered under the 30-day warranty period</li>
-                                                <li><strong>Content Updates:</strong> Simple text and image changes can be handled quickly</li>
-                                                <li><strong>Feature Additions:</strong> New functionality can be added through additional development work</li>
-                                                <li><strong>Design Changes:</strong> Visual updates and improvements to enhance user experience</li>
-                                                <li><strong>Performance Optimization:</strong> Speed and efficiency improvements as your site grows</li>
-                                                <li><strong>Security Updates:</strong> Regular security patches and vulnerability fixes</li>
-                                            </ul>
-                                            <p>I provide estimates for any requested changes and work with you to prioritize updates based on your needs and budget.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
-                                    <button class="faq-question" 
-                                            type="button"
-                                            aria-expanded="false"
-                                            aria-controls="faq-18">
-                                        <span class="faq-question-text">Do you provide training on how to manage my website?</span>
-                                        <i class="fas fa-chevron-down faq-icon" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="faq-answer" id="faq-18" aria-hidden="true">
-                                        <div class="faq-answer-content">
-                                            <p>Absolutely! I believe in empowering my clients to manage their websites effectively:</p>
-                                            <div class="training-options">
-                                                <div class="training-option">
-                                                    <h4><i class="fas fa-book" aria-hidden="true"></i> Documentation</h4>
-                                                    <p>Comprehensive user manuals and guides tailored to your specific website</p>
-                                                </div>
-                                                <div class="training-option">
-                                                    <h4><i class="fas fa-video" aria-hidden="true"></i> Video Tutorials</h4>
-                                                    <p>Custom screen recordings showing how to perform common tasks</p>
-                                                </div>
-                                                <div class="training-option">
-                                                    <h4><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Live Training Sessions</h4>
-                                                    <p>One-on-one training sessions via video call to walk through your website's features</p>
-                                                </div>
-                                                <div class="training-option">
-                                                    <h4><i class="fas fa-question-circle" aria-hidden="true"></i> Ongoing Support</h4>
-                                                    <p>Available to answer questions and provide guidance as you learn</p>
-                                                </div>
-                                            </div>
-                                            <p>Training is included in all projects, ensuring you feel confident managing your website independently.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Still Have Questions CTA -->
-                        <div class="faq-cta" data-aos="fade-up">
-                            <div class="faq-cta-content">
-                                <h3>Still Have Questions?</h3>
-                                <p>I'm here to help! If you couldn't find the answer you're looking for, don't hesitate to reach out. I typically respond within a few hours.</p>
-                                <div class="faq-cta-actions">
-                                    <a href="/#contact" class="btn btn-primary">
-                                        <i class="fas fa-envelope" aria-hidden="true"></i>
-                                        Contact Me
-                                    </a>
-                                    <a href="tel:+1234567890" class="btn btn-secondary">
-                                        <i class="fas fa-phone" aria-hidden="true"></i>
-                                        Call Now
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="footer-content">
-                <!-- Footer Brand -->
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <a href="/" class="brand-link" aria-label="Thanatsitt - Home">
-                            <div class="brand-icon">
-                                <svg viewBox="0 0 40 40" class="brand-svg" aria-hidden="true">
-                                    <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
-                                    <path d="M15 15 L25 20 L15 25 Z" fill="currentColor"/>
-                                </svg>
-                            </div>
-                            <span class="brand-text">Thanatsitt</span>
-                        </a>
-                    </div>
-                    <p class="footer-description">
-                        Full-Stack Developer passionate about creating modern, accessible, and performant web applications.
-                    </p>
-                </div>
-
-                <!-- Footer Links -->
-                <div class="footer-links">
-                    <div class="footer-section">
-                        <h4 class="footer-title">Navigation</h4>
-                        <ul class="footer-list">
-                            <li><a href="/" class="footer-link">Home</a></li>
-                            <li><a href="/#about" class="footer-link">About</a></li>
-                            <li><a href="/#skills" class="footer-link">Skills</a></li>
-                            <li><a href="/#portfolio" class="footer-link">Portfolio</a></li>
-                            <li><a href="/#experience" class="footer-link">Experience</a></li>
-                            <li><a href="/#contact" class="footer-link">Contact</a></li>
-                            <li><a href="/faq" class="footer-link">FAQ</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-section">
-                        <h4 class="footer-title">Services</h4>
-                        <ul class="footer-list">
-                            <li><a href="#services" class="footer-link">Web Development</a></li>
-                            <li><a href="#services" class="footer-link">Mobile Apps</a></li>
-                            <li><a href="#services" class="footer-link">API Development</a></li>
-                            <li><a href="#services" class="footer-link">Consulting</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="footer-section">
-                        <h4 class="footer-title">Legal</h4>
-                        <ul class="footer-list">
-                            <li><a href="/privacy-policy" class="footer-link">Privacy Policy</a></li>
-                            <li><a href="/terms-of-service" class="footer-link">Terms of Service</a></li>
-                            <li><a href="/cookie-policy" class="footer-link">Cookie Policy</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Footer Social -->
-                <div class="footer-social">
-                    <h4 class="footer-title">Connect</h4>
-                    <div class="social-links">
-                        <a href="https://github.com/thanatsitt" 
-                           class="social-link" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           aria-label="GitHub Profile">
-                            <i class="fab fa-github" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://linkedin.com/in/thanatsitt" 
-                           class="social-link" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           aria-label="LinkedIn Profile">
-                            <i class="fab fa-linkedin" aria-hidden="true"></i>
-                        </a>
-                        <a href="https://twitter.com/thanatsitt" 
-                           class="social-link" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           aria-label="Twitter Profile">
-                            <i class="fab fa-twitter" aria-hidden="true"></i>
-                        </a>
-                        <a href="mailto:thanatsitt@example.com" 
-                           class="social-link"
-                           aria-label="Email Contact">
-                            <i class="fas fa-envelope" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer Bottom -->
-            <div class="footer-bottom">
-                <div class="footer-copyright">
-                    <p>&copy; <span id="current-year">2024</span> Thanatsitt Santisamranwilai. All rights reserved.</p>
-                </div>
-                <div class="footer-meta">
-                    <span>Made with <i class="fas fa-heart" aria-hidden="true"></i> using modern web technologies</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" 
-            id="back-to-top" 
-            type="button"
-            aria-label="Back to top"
-            title="Back to top">
-        <i class="fas fa-chevron-up" aria-hidden="true"></i>
-    </button>
-
-    <!-- AOS - Animate On Scroll -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <!-- Main Application Scripts -->
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/app.js"></script>
-
-    <!-- FAQ-specific JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize AOS
-            if (typeof AOS !== 'undefined') {
-                AOS.init({
-                    duration: 800,
-                    easing: 'ease-out-cubic',
-                    once: true,
-                    offset: 100
-                });
-            }
-
-            // FAQ Accordion functionality
-            const faqItems = document.querySelectorAll('.faq-item');
-            
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                const answer = item.querySelector('.faq-answer');
-                const icon = item.querySelector('.faq-icon');
-                
-                question.addEventListener('click', () => {
-                    const isExpanded = question.getAttribute('aria-expanded') === 'true';
-                    
-                    // Close all other FAQ items
-                    faqItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            const otherQuestion = otherItem.querySelector('.faq-question');
-                            const otherAnswer = otherItem.querySelector('.faq-answer');
-                            const otherIcon = otherItem.querySelector('.faq-icon');
-                            
-                            otherQuestion.setAttribute('aria-expanded', 'false');
-                            otherAnswer.setAttribute('aria-hidden', 'true');
-                            otherAnswer.style.maxHeight = '0';
-                            otherIcon.style.transform = 'rotate(0deg)';
-                            otherItem.classList.remove('active');
-                        }
-                    });
-                    
-                    // Toggle current item
-                    if (!isExpanded) {
-                        question.setAttribute('aria-expanded', 'true');
-                        answer.setAttribute('aria-hidden', 'false');
-                        answer.style.maxHeight = answer.scrollHeight + 'px';
-                        icon.style.transform = 'rotate(180deg)';
-                        item.classList.add('active');
-                    } else {
-                        question.setAttribute('aria-expanded', 'false');
-                        answer.setAttribute('aria-hidden', 'true');
-                        answer.style.maxHeight = '0';
-                        icon.style.transform = 'rotate(0deg)';
-                        item.classList.remove('active');
-                    }
-                });
-            });
-
-            // FAQ Search functionality
-            const searchInput = document.getElementById('faq-search');
-            const searchClear = document.getElementById('search-clear');
-            const filterTags = document.querySelectorAll('.filter-tag');
-            
-            let currentFilter = 'all';
-            
-            // Search functionality
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                
-                if (searchTerm.length > 0) {
-                    searchClear.style.display = 'block';
-                } else {
-                    searchClear.style.display = 'none';
-                }
-                
-                filterFAQs(searchTerm, currentFilter);
-            });
-            
-            // Clear search
-            searchClear.addEventListener('click', function() {
-                searchInput.value = '';
-                this.style.display = 'none';
-                filterFAQs('', currentFilter);
-            });
-            
-            // Filter tags
-            filterTags.forEach(tag => {
-                tag.addEventListener('click', function() {
-                    // Update active tag
-                    filterTags.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    currentFilter = this.getAttribute('data-category');
-                    const searchTerm = searchInput.value.toLowerCase();
-                    
-                    filterFAQs(searchTerm, currentFilter);
-                });
-            });
-            
-            function filterFAQs(searchTerm, category) {
-                const faqCategories = document.querySelectorAll('.faq-category');
-                
-                faqCategories.forEach(categoryEl => {
-                    const categoryName = categoryEl.getAttribute('data-category');
-                    const faqItems = categoryEl.querySelectorAll('.faq-item');
-                    let categoryHasVisibleItems = false;
-                    
-                    faqItems.forEach(item => {
-                        const questionText = item.querySelector('.faq-question-text').textContent.toLowerCase();
-                        const answerText = item.querySelector('.faq-answer-content').textContent.toLowerCase();
-                        
-                        const matchesSearch = searchTerm === '' || 
-                            questionText.includes(searchTerm) || 
-                            answerText.includes(searchTerm);
-                        
-                        const matchesCategory = category === 'all' || 
-                            categoryName === category ||
-                            (category === 'services' && ['general', 'services'].includes(categoryName)) ||
-                            (category === 'technical' && categoryName === 'technical') ||
-                            (category === 'process' && categoryName === 'process') ||
-                            (category === 'pricing' && categoryName === 'pricing');
-                        
-                        if (matchesSearch && matchesCategory) {
-                            item.style.display = 'block';
-                            categoryHasVisibleItems = true;
-                            
-                            // Highlight search terms
-                            if (searchTerm) {
-                                highlightSearchTerm(item, searchTerm);
-                            } else {
-                                removeHighlight(item);
-                            }
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                    
-                    // Show/hide category based on visible items
-                    if (categoryHasVisibleItems) {
-                        categoryEl.style.display = 'block';
-                    } else {
-                        categoryEl.style.display = 'none';
-                    }
-                });
-            }
-            
-            function highlightSearchTerm(item, term) {
-                const questionText = item.querySelector('.faq-question-text');
-                const originalText = questionText.textContent;
-                const highlightedText = originalText.replace(
-                    new RegExp(`(${term})`, 'gi'),
-                    '<mark>$1</mark>'
-                );
-                questionText.innerHTML = highlightedText;
-            }
-            
-            function removeHighlight(item) {
-                const questionText = item.querySelector('.faq-question-text');
-                questionText.innerHTML = questionText.textContent;
-            }
-
-            // Smooth scrolling for FAQ navigation
-            const faqNavLinks = document.querySelectorAll('.faq-nav-link');
-            
-            faqNavLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        const headerHeight = document.querySelector('.header').offsetHeight;
-                        const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                        
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Update current year
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-        });
     </script>
 </body>
 </html>
