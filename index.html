@@ -2522,12 +2522,14 @@
 .development-text h3 {
   margin: 0 0 5px 0;
   font-size: 18px;
+  color: white; /* Fixed: explicitly white for contrast */
 }
 
 .development-text p {
   margin: 0;
   font-size: 14px;
   opacity: 0.9;
+  color: white; /* Fixed: explicitly white for contrast */
 }
 
 .development-text a {
@@ -2538,6 +2540,7 @@
 
 .development-text a:hover {
   text-decoration: underline;
+  color: #ffed4e; /* Lighter gold on hover */
 }
 
 .development-close {
@@ -2554,6 +2557,7 @@
 
 .development-close:hover {
   background: rgba(255,255,255,0.3);
+  color: white; /* Ensure it stays white on hover */
 }
 
 /* Development Modal Styles */
@@ -2599,13 +2603,14 @@
   padding: 20px;
   border-radius: 20px 20px 0 0;
   display: flex;
-  justify-content: between;
+  justify-content: space-between; /* Fixed: was 'between' instead of 'space-between' */
   align-items: center;
 }
 
 .development-modal-header h2 {
   margin: 0;
   font-size: 24px;
+  color: white; /* Explicitly white */
 }
 
 .modal-close {
@@ -2625,11 +2630,13 @@
 
 .modal-close:hover {
   background: rgba(255,255,255,0.2);
+  color: white; /* Stay white on hover */
 }
 
 .development-modal-body {
   padding: 30px;
   text-align: center;
+  background: white; /* Ensure white background */
 }
 
 .development-icon-large {
@@ -2639,13 +2646,13 @@
 }
 
 .development-modal-body h3 {
-  color: #333;
+  color: #333; /* Dark text for white background */
   margin-bottom: 15px;
   font-size: 22px;
 }
 
 .development-modal-body p {
-  color: #666;
+  color: #666; /* Gray text for white background */
   line-height: 1.6;
   margin-bottom: 15px;
 }
@@ -2663,10 +2670,23 @@
   gap: 10px;
   margin-bottom: 10px;
   font-size: 14px;
+  color: #333; /* Dark text for light background */
 }
 
 .status-item:last-child {
   margin-bottom: 0;
+}
+
+.status-item i {
+  font-size: 16px;
+}
+
+.text-green-500 {
+  color: #10b981 !important;
+}
+
+.text-yellow-500 {
+  color: #f59e0b !important;
 }
 
 .contact-info {
@@ -2677,12 +2697,21 @@
   margin: 20px 0;
 }
 
+.contact-info p {
+  color: white !important; /* Override any inherited color */
+  margin-bottom: 10px;
+}
+
+.contact-info strong {
+  color: white;
+}
+
 .email-button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   background: rgba(255,255,255,0.2);
-  color: white;
+  color: white !important; /* Force white text */
   text-decoration: none;
   padding: 12px 20px;
   border-radius: 25px;
@@ -2694,6 +2723,7 @@
 .email-button:hover {
   background: rgba(255,255,255,0.3);
   transform: translateY(-2px);
+  color: white !important; /* Stay white on hover */
 }
 
 .development-note {
@@ -2760,20 +2790,23 @@
 .card-header h4 {
   margin: 0 0 5px 0;
   font-size: 16px;
+  color: white; /* Explicitly white */
 }
 
 .card-header small {
   opacity: 0.8;
   font-size: 12px;
+  color: white; /* Explicitly white */
 }
 
 .card-body {
   padding: 20px;
+  background: white; /* Ensure white background */
 }
 
 .card-body p {
   font-size: 14px;
-  color: #666;
+  color: #666; /* Dark text for white background */
   margin-bottom: 10px;
 }
 
@@ -2782,7 +2815,7 @@
   align-items: center;
   gap: 8px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  color: white !important; /* Force white text */
   text-decoration: none;
   padding: 12px 16px;
   border-radius: 8px;
@@ -2795,6 +2828,7 @@
 .contact-direct:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  color: white !important; /* Stay white on hover */
 }
 
 .response-time {
@@ -2806,12 +2840,21 @@
   margin-top: 10px;
 }
 
+.response-time i {
+  color: #667eea;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .development-content {
     flex-direction: column;
     text-align: center;
     gap: 10px;
+  }
+  
+  .development-text h3,
+  .development-text p {
+    color: white; /* Ensure white text on mobile */
   }
   
   .development-modal-content {
@@ -2840,7 +2883,7 @@
   <!-- 🎯 LOADING SCREEN -->
   <!-- ==================================================================================== -->
   <div id="loadingScreen" class="loading-screen">
-    <div class="loading-logo">Pegearts x THANATTSITT</div>
+    <div class="loading-logo">Pegearts.xTHANATTSITT</div>
     <div class="loading-spinner"></div>
     <div class="loading-text">Loading Experience...</div>
   </div>
