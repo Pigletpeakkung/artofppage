@@ -68,42 +68,97 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
 <link rel="shortcut icon" href="/favicon.ico">
-<!-- ==================================================================================== -->
-<!-- 🎯 VERCEL ANALYTICS & SPEED INSIGHTS - PROJECT: W5LYJZ4TPF -->
-<!-- ==================================================================================== -->
 
-<!-- Vercel Analytics with your specific project ID -->
+    <!-- ==================================================================================== -->
+<!-- 🎯 GOOGLE ANALYTICS - G-W5LYJZ4TPF -->
+<!-- ==================================================================================== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W5LYJZ4TPF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  // Initialize Google Analytics
+  gtag('config', 'G-W5LYJZ4TPF', {
+    page_title: 'Pegearts - AI Creative Designer & Voice Artist',
+    page_location: window.location.href,
+    content_group1: 'Portfolio',
+    content_group2: 'Homepage',
+    custom_map: {
+      'custom_dimension_1': 'user_type',
+      'custom_dimension_2': 'service_interest',
+      'custom_dimension_3': 'engagement_level'
+    },
+    // Enhanced ecommerce for lead tracking
+    enhanced_ecommerce: true,
+    // GDPR compliance
+    anonymize_ip: true,
+    allow_google_signals: true,
+    allow_ad_personalization_signals: false
+  });
+  
+  // Custom dimensions setup
+  gtag('config', 'G-W5LYJZ4TPF', {
+    custom_map: {
+      'custom_dimension_1': 'user_type',
+      'custom_dimension_2': 'service_interest', 
+      'custom_dimension_3': 'engagement_level',
+      'custom_dimension_4': 'lead_quality',
+      'custom_dimension_5': 'traffic_source'
+    }
+  });
+</script>
+
+<!-- ==================================================================================== -->
+<!-- 🎯 VERCEL ANALYTICS & SPEED INSIGHTS (Separate) -->
+<!-- ==================================================================================== -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
-
-<!-- Vercel Speed Insights -->
 <script defer src="/_vercel/speed-insights/script.js"></script>
 
-<!-- Project-specific Analytics Configuration -->
+<!-- ==================================================================================== -->
+<!-- 🎯 ENHANCED ANALYTICS INTEGRATION -->
+<!-- ==================================================================================== -->
 <script>
 (function() {
   'use strict';
   
-  // Project Configuration
-  const VERCEL_PROJECT_ID = 'W5LYJZ4TPF';
-  const DEBUG_MODE = false; // Set to true for debugging
+  // Configuration
+  const GOOGLE_ANALYTICS_ID = 'G-W5LYJZ4TPF';
+  const DEBUG_MODE = false;
   
-  // Enhanced tracking function
-  function trackVercelEvent(eventName, properties = {}) {
+  // Enhanced tracking function for both GA4 and Vercel
+  function trackEvent(eventName, parameters = {}) {
     const eventData = {
-      ...properties,
-      project_id: VERCEL_PROJECT_ID,
+      ...parameters,
       timestamp: new Date().toISOString(),
-      url: window.location.href,
-      referrer: document.referrer || 'direct',
+      page_url: window.location.href,
+      page_title: document.title,
       user_agent: navigator.userAgent,
       screen_resolution: `${screen.width}x${screen.height}`,
       viewport_size: `${window.innerWidth}x${window.innerHeight}`,
       language: navigator.language,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      connection_type: navigator.connection ? navigator.connection.effectiveType : 'unknown'
     };
+    
+    // Send to Google Analytics 4
+    if (typeof gtag === 'function') {
+      gtag('event', eventName, {
+        event_category: parameters.category || 'User Interaction',
+        event_label: parameters.label || eventName,
+        value: parameters.value || 1,
+        custom_parameters: eventData,
+        // Custom dimensions
+        custom_dimension_1: parameters.user_type || 'visitor',
+        custom_dimension_2: parameters.service_interest || 'general',
+        custom_dimension_3: parameters.engagement_level || 'low',
+        custom_dimension_4: parameters.lead_quality || 'unqualified',
+        custom_dimension_5: parameters.traffic_source || getTrafficSource()
+      });
+    }
     
     // Send to Vercel Analytics
     if (window.va) {
@@ -112,58 +167,87 @@
     
     // Debug logging
     if (DEBUG_MODE) {
-      console.log(`📊 [${VERCEL_PROJECT_ID}] Event:`, eventName, eventData);
-    }
-    
-    // Fallback to Google Analytics if available
-    if (typeof gtag === 'function') {
-      gtag('event', eventName, {
-        event_category: properties.category || 'User Interaction',
-        event_label: properties.label || eventName,
-        value: properties.value || 1,
-        custom_map: {
-          'vercel_project_id': VERCEL_PROJECT_ID
-        }
-      });
+      console.log(`📊 [GA4 + Vercel] Event:`, eventName, eventData);
     }
     
     return eventData;
   }
   
-  // Make tracking function globally available
-  window.trackVercelEvent = trackVercelEvent;
+  // Get traffic source
+  function getTrafficSource() {
+    const referrer = document.referrer;
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('utm_source')) return urlParams.get('utm_source');
+    if (referrer.includes('google.')) return 'google_organic';
+    if (referrer.includes('facebook.')) return 'facebook';
+    if (referrer.includes('twitter.')) return 'twitter';
+    if (referrer.includes('linkedin.')) return 'linkedin';
+    if (referrer) return 'referral';
+    return 'direct';
+  }
   
-  // Initialize when DOM is ready
+  // Lead scoring function
+  function calculateLeadScore(formData) {
+    let score = 0;
+    if (formData.get('company')) score += 25;
+    if (formData.get('phone')) score += 20;
+    if (formData.get('budget') && formData.get('budget') !== 'under-5k') score += 30;
+    if (formData.get('timeline') === 'asap') score += 15;
+    if (formData.get('message')?.length > 100) score += 10;
+    return score;
+  }
+  
+  // Get lead quality based on score
+  function getLeadQuality(score) {
+    if (score >= 70) return 'high_quality';
+    if (score >= 40) return 'medium_quality';
+    if (score >= 20) return 'low_quality';
+    return 'unqualified';
+  }
+  
+  // Make tracking function globally available
+  window.trackEvent = trackEvent;
+  window.calculateLeadScore = calculateLeadScore;
+  window.getLeadQuality = getLeadQuality;
+  
+  // Initialize tracking when DOM is ready
   document.addEventListener('DOMContentLoaded', function() {
     
     // Track initial page view with enhanced data
-    trackVercelEvent('page_view', {
+    trackEvent('page_view', {
       category: 'Navigation',
-      page_title: document.title,
+      label: 'Page Load',
       page_path: window.location.pathname,
       page_search: window.location.search,
       page_hash: window.location.hash,
-      is_mobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-      connection_type: navigator.connection ? navigator.connection.effectiveType : 'unknown'
+      user_type: 'new_visitor', // You can update this based on cookies/localStorage
+      service_interest: getServiceInterestFromURL(),
+      engagement_level: 'initial',
+      traffic_source: getTrafficSource()
     });
     
-    // Track performance metrics after page load
+    // Track performance after page load
     window.addEventListener('load', () => {
       setTimeout(() => {
         trackPerformanceMetrics();
         trackCoreWebVitals();
+        trackUserEngagement();
       }, 1000);
     });
-    
-    // Track user engagement
-    trackUserEngagement();
-    
-    // Track scroll behavior
-    trackScrollBehavior();
-    
-    // Track click patterns
-    trackClickPatterns();
   });
+  
+  // Get service interest from URL parameters or page content
+  function getServiceInterestFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const service = urlParams.get('service') || urlParams.get('utm_content');
+    
+    if (service) return service;
+    if (window.location.hash.includes('voice')) return 'voice_over';
+    if (window.location.hash.includes('design')) return 'ai_design';
+    if (window.location.hash.includes('development')) return 'web_development';
+    return 'general';
+  }
   
   // Performance tracking
   function trackPerformanceMetrics() {
@@ -173,50 +257,57 @@
     const paint = performance.getEntriesByType('paint');
     
     if (navigation) {
-      const metrics = {
+      trackEvent('performance_timing', {
         category: 'Performance',
+        label: 'Page Load Metrics',
+        value: Math.round(navigation.loadEventEnd - navigation.loadEventStart),
         dns_lookup: Math.round(navigation.domainLookupEnd - navigation.domainLookupStart),
         tcp_connect: Math.round(navigation.connectEnd - navigation.connectStart),
-        request_response: Math.round(navigation.responseEnd - navigation.requestStart),
-        dom_loading: Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart),
-        page_load: Math.round(navigation.loadEventEnd - navigation.loadEventStart),
+        server_response: Math.round(navigation.responseEnd - navigation.requestStart),
+        dom_processing: Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart),
         total_load_time: Math.round(navigation.loadEventEnd - navigation.navigationStart),
         first_paint: paint.find(entry => entry.name === 'first-paint')?.startTime || 0,
         first_contentful_paint: paint.find(entry => entry.name === 'first-contentful-paint')?.startTime || 0
-      };
-      
-      trackVercelEvent('performance_metrics', metrics);
+      });
     }
   }
   
   // Core Web Vitals tracking
   function trackCoreWebVitals() {
-    // Track Largest Contentful Paint (LCP)
+    // Largest Contentful Paint (LCP)
     new PerformanceObserver((list) => {
       const entries = list.getEntries();
       const lastEntry = entries[entries.length - 1];
-      trackVercelEvent('core_web_vitals_lcp', {
+      const lcpValue = Math.round(lastEntry.startTime);
+      
+      trackEvent('core_web_vitals', {
         category: 'Performance',
-        metric: 'LCP',
-        value: Math.round(lastEntry.startTime),
-        rating: lastEntry.startTime < 2500 ? 'good' : lastEntry.startTime < 4000 ? 'needs-improvement' : 'poor'
+        label: 'Largest Contentful Paint',
+        value: lcpValue,
+        metric_name: 'LCP',
+        metric_value: lcpValue,
+        rating: lcpValue < 2500 ? 'good' : lcpValue < 4000 ? 'needs_improvement' : 'poor'
       });
     }).observe({ entryTypes: ['largest-contentful-paint'] });
     
-    // Track First Input Delay (FID)
+    // First Input Delay (FID)
     new PerformanceObserver((list) => {
       const entries = list.getEntries();
       entries.forEach(entry => {
-        trackVercelEvent('core_web_vitals_fid', {
+        const fidValue = Math.round(entry.processingStart - entry.startTime);
+        
+        trackEvent('core_web_vitals', {
           category: 'Performance',
-          metric: 'FID',
-          value: Math.round(entry.processingStart - entry.startTime),
-          rating: entry.processingStart - entry.startTime < 100 ? 'good' : entry.processingStart - entry.startTime < 300 ? 'needs-improvement' : 'poor'
+          label: 'First Input Delay',
+          value: fidValue,
+          metric_name: 'FID',
+          metric_value: fidValue,
+          rating: fidValue < 100 ? 'good' : fidValue < 300 ? 'needs_improvement' : 'poor'
         });
       });
     }).observe({ entryTypes: ['first-input'] });
     
-    // Track Cumulative Layout Shift (CLS)
+    // Cumulative Layout Shift (CLS)
     let clsScore = 0;
     new PerformanceObserver((list) => {
       const entries = list.getEntries();
@@ -229,79 +320,27 @@
     
     // Report CLS on page unload
     window.addEventListener('beforeunload', () => {
-      trackVercelEvent('core_web_vitals_cls', {
+      const clsValue = Math.round(clsScore * 1000) / 1000;
+      trackEvent('core_web_vitals', {
         category: 'Performance',
-        metric: 'CLS',
-        value: Math.round(clsScore * 1000) / 1000,
-        rating: clsScore < 0.1 ? 'good' : clsScore < 0.25 ? 'needs-improvement' : 'poor'
+        label: 'Cumulative Layout Shift',
+        value: clsValue,
+        metric_name: 'CLS',
+        metric_value: clsValue,
+        rating: clsValue < 0.1 ? 'good' : clsValue < 0.25 ? 'needs_improvement' : 'poor'
       });
     });
   }
   
-  // User engagement tracking
+  // Enhanced user engagement tracking
   function trackUserEngagement() {
     let sessionStart = Date.now();
-    let isActive = true;
     let scrollDepth = 0;
     let maxScrollDepth = 0;
     let clickCount = 0;
+    let engagementEvents = [];
     
-    // Track visibility changes
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        if (isActive) {
-          const sessionTime = Date.now() - sessionStart;
-          trackVercelEvent('session_pause', {
-            category: 'Engagement',
-            session_duration: Math.round(sessionTime / 1000),
-            scroll_depth: maxScrollDepth,
-            click_count: clickCount
-          });
-          isActive = false;
-        }
-      } else {
-        sessionStart = Date.now();
-        isActive = true;
-        trackVercelEvent('session_resume', {
-          category: 'Engagement'
-        });
-      }
-    });
-    
-    // Track session end
-    window.addEventListener('beforeunload', () => {
-      if (isActive) {
-        const sessionTime = Date.now() - sessionStart;
-        const finalData = {
-          category: 'Engagement',
-          session_duration: Math.round(sessionTime / 1000),
-          final_scroll_depth: maxScrollDepth,
-          total_clicks: clickCount,
-          bounce: clickCount === 0 && maxScrollDepth < 25
-        };
-        
-        trackVercelEvent('session_end', finalData);
-        
-        // Use sendBeacon for reliable tracking on page unload
-        if (navigator.sendBeacon) {
-          const data = new URLSearchParams({
-            event: 'session_end',
-            project_id: VERCEL_PROJECT_ID,
-            data: JSON.stringify(finalData)
-          });
-          navigator.sendBeacon('/_vercel/insights/track', data);
-        }
-      }
-    });
-  }
-  
-  // Scroll behavior tracking
-  function trackScrollBehavior() {
-    let scrollDepth = 0;
-    let maxScrollDepth = 0;
-    let scrollStartTime = Date.now();
-    let hasTracked25 = false, hasTracked50 = false, hasTracked75 = false, hasTracked100 = false;
-    
+    // Track scroll depth
     function updateScrollDepth() {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
@@ -311,72 +350,93 @@
       maxScrollDepth = Math.max(maxScrollDepth, scrollDepth);
       
       // Track scroll milestones
-      if (scrollDepth >= 25 && !hasTracked25) {
-        hasTracked25 = true;
-        trackVercelEvent('scroll_depth_25', {
-          category: 'Engagement',
-          scroll_time: Math.round((Date.now() - scrollStartTime) / 1000)
-        });
-      }
-      if (scrollDepth >= 50 && !hasTracked50) {
-        hasTracked50 = true;
-        trackVercelEvent('scroll_depth_50', {
-          category: 'Engagement',
-          scroll_time: Math.round((Date.now() - scrollStartTime) / 1000)
-        });
-      }
-      if (scrollDepth >= 75 && !hasTracked75) {
-        hasTracked75 = true;
-        trackVercelEvent('scroll_depth_75', {
-          category: 'Engagement',
-          scroll_time: Math.round((Date.now() - scrollStartTime) / 1000)
-        });
-      }
-      if (scrollDepth >= 100 && !hasTracked100) {
-        hasTracked100 = true;
-        trackVercelEvent('scroll_depth_100', {
-          category: 'Engagement',
-          scroll_time: Math.round((Date.now() - scrollStartTime) / 1000)
-        });
-      }
+      [25, 50, 75, 100].forEach(milestone => {
+        if (scrollDepth >= milestone && !engagementEvents.includes(`scroll_${milestone}`)) {
+          engagementEvents.push(`scroll_${milestone}`);
+          trackEvent('scroll_depth', {
+            category: 'Engagement',
+            label: `${milestone}% Scrolled`,
+            value: milestone,
+            engagement_level: milestone >= 75 ? 'high' : milestone >= 50 ? 'medium' : 'low'
+          });
+        }
+      });
     }
     
     let scrollTimeout;
     window.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(updateScrollDepth, 100);
+      scrollTimeout = setTimeout(updateScrollDepth, 250);
     });
-  }
-  
-  // Click pattern tracking
-  function trackClickPatterns() {
-    let clickHeatmap = {};
     
+    // Track clicks
     document.addEventListener('click', (event) => {
+      clickCount++;
       const element = event.target;
       const tagName = element.tagName.toLowerCase();
       const className = element.className;
       const id = element.id;
       const text = element.textContent?.substring(0, 50) || '';
       
-      // Create element identifier
-      const elementId = id || `${tagName}.${className}` || tagName;
-      
-      trackVercelEvent('element_click', {
+      trackEvent('element_click', {
         category: 'Interaction',
+        label: `${tagName} clicked`,
         element_type: tagName,
-        element_id: elementId,
+        element_id: id || 'no_id',
+        element_class: className || 'no_class',
         element_text: text,
         click_x: event.clientX,
         click_y: event.clientY,
-        page_x: event.pageX,
-        page_y: event.pageY
+        engagement_level: clickCount > 5 ? 'high' : clickCount > 2 ? 'medium' : 'low'
+      });
+    });
+    
+    // Track session end
+    window.addEventListener('beforeunload', () => {
+      const sessionDuration = Math.round((Date.now() - sessionStart) / 1000);
+      const engagementLevel = getEngagementLevel(sessionDuration, maxScrollDepth, clickCount);
+      
+      trackEvent('session_end', {
+        category: 'Engagement',
+        label: 'Session Complete',
+        value: sessionDuration,
+        session_duration: sessionDuration,
+        max_scroll_depth: maxScrollDepth,
+        total_clicks: clickCount,
+        engagement_level: engagementLevel,
+        bounce: clickCount === 0 && maxScrollDepth < 25 ? 'yes' : 'no'
       });
       
-      // Update heatmap data
-      const heatmapKey = `${Math.floor(event.pageX / 50)},${Math.floor(event.pageY / 50)}`;
-      clickHeatmap[heatmapKey] = (clickHeatmap[heatmapKey] || 0) + 1;
+      // Send final event via sendBeacon for reliability
+      if (navigator.sendBeacon && typeof gtag === 'function') {
+        gtag('event', 'session_summary', {
+          event_category: 'Engagement',
+          event_label: 'Final Session Data',
+          value: sessionDuration,
+          transport_type: 'beacon',
+          custom_dimension_3: engagementLevel
+        });
+      }
     });
+    
+    function getEngagementLevel(duration, scroll, clicks) {
+      let score = 0;
+      if (duration > 180) score += 3; // 3+ minutes
+      else if (duration > 60) score += 2; // 1+ minute
+      else if (duration > 30) score += 1; // 30+ seconds
+      
+      if (scroll > 75) score += 3;
+      else if (scroll > 50) score += 2;
+      else if (scroll > 25) score += 1;
+      
+      if (clicks > 5) score += 3;
+      else if (clicks > 2) score += 2;
+      else if (clicks > 0) score += 1;
+      
+      if (score >= 7) return 'high';
+      if (score >= 4) return 'medium';
+      return 'low';
+    }
   }
   
 })();
@@ -4203,8 +4263,7 @@ ${formData.get('message')}
         }
       }
     }
-
-      // Enhanced voice demo tracking
+// Enhanced voice demo tracking with Google Analytics
 function playVoiceDemo() {
   if (voiceAudio) {
     const playPromise = voiceAudio.play();
@@ -4215,17 +4274,17 @@ function playVoiceDemo() {
         updateVoiceButton();
         animateWaveBars(true);
         
-        // Enhanced Vercel Analytics tracking
-        if (window.trackVercelEvent) {
-          window.trackVercelEvent('voice_demo_play', {
+        // Track with both GA4 and Vercel Analytics
+        if (window.trackEvent) {
+          window.trackEvent('voice_demo_play', {
             category: 'Voice Demo',
             label: 'Demo Started',
+            value: 1,
             audio_duration: voiceAudio.duration || 0,
-            audio_current_time: voiceAudio.currentTime,
-            user_device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
-            audio_format: voiceAudio.src.split('.').pop(),
-            volume_level: voiceAudio.volume,
-            autoplay_blocked: false
+            user_type: 'engaged_visitor',
+            service_interest: 'voice_over',
+            engagement_level: 'high',
+            lead_quality: 'medium_quality'
           });
         }
         
@@ -4234,14 +4293,16 @@ function playVoiceDemo() {
           voiceBtn.classList.add('playing');
         }
         
-        // Track when audio ends
+        // Track completion
         voiceAudio.addEventListener('ended', () => {
-          if (window.trackVercelEvent) {
-            window.trackVercelEvent('voice_demo_complete', {
+          if (window.trackEvent) {
+            window.trackEvent('voice_demo_complete', {
               category: 'Voice Demo',
               label: 'Demo Completed',
-              listen_duration: voiceAudio.duration || 0,
-              completion_rate: 100
+              value: Math.round(voiceAudio.duration || 0),
+              completion_rate: 100,
+              engagement_level: 'high',
+              lead_quality: 'high_quality'
             });
           }
         });
@@ -4249,14 +4310,13 @@ function playVoiceDemo() {
       }).catch(error => {
         console.log('Could not play voice demo:', error);
         
-        if (window.trackVercelEvent) {
-          window.trackVercelEvent('voice_demo_error', {
+        if (window.trackEvent) {
+          window.trackEvent('voice_demo_error', {
             category: 'Voice Demo',
             label: 'Playback Error',
             error_type: error.name,
             error_message: error.message,
-            autoplay_blocked: error.name === 'NotAllowedError',
-            browser: navigator.userAgent.split(' ').pop()
+            autoplay_blocked: error.name === 'NotAllowedError'
           });
         }
         
@@ -4266,7 +4326,7 @@ function playVoiceDemo() {
   }
 }
 
-// Enhanced form submission tracking
+// Enhanced form submission with lead tracking
 async function handleFormSubmit(e) {
   e.preventDefault();
   
@@ -4274,72 +4334,74 @@ async function handleFormSubmit(e) {
   const formData = new FormData(form);
   const submitTime = Date.now();
   
-  // Enhanced form tracking
-  if (window.trackVercelEvent) {
-    window.trackVercelEvent('contact_form_submit', {
+  // Calculate lead score and quality
+  const leadScore = window.calculateLeadScore ? window.calculateLeadScore(formData) : 50;
+  const leadQuality = window.getLeadQuality ? window.getLeadQuality(leadScore) : 'medium_quality';
+  
+  // Track form submission with enhanced lead data
+  if (window.trackEvent) {
+    window.trackEvent('generate_lead', { // GA4 recommended event
       category: 'Lead Generation',
       label: 'Contact Form Submitted',
+      value: getLeadValue(formData.get('budget')),
+      currency: 'USD',
       service_type: formData.get('service') || 'not_specified',
       budget_range: formData.get('budget') || 'not_specified',
       timeline: formData.get('timeline') || 'not_specified',
       has_phone: !!formData.get('phone'),
       has_company: !!formData.get('company'),
       message_length: formData.get('message')?.length || 0,
-      form_completion_time: submitTime - (window.formStartTime || submitTime),
-      lead_score: calculateLeadScore(formData)
+      lead_score: leadScore,
+      lead_quality: leadQuality,
+      user_type: 'lead',
+      service_interest: formData.get('service') || 'general',
+      engagement_level: 'high'
+    });
+    
+    // Also track as conversion
+    gtag('event', 'conversion', {
+      send_to: 'G-W5LYJZ4TPF',
+      value: getLeadValue(formData.get('budget')),
+      currency: 'USD',
+      transaction_id: `lead_${Date.now()}`
     });
   }
-  
-  // ... rest of form handling
   
   try {
     await simulateFormSubmission(formData);
     
-    if (window.trackVercelEvent) {
-      window.trackVercelEvent('contact_form_success', {
+    // Track successful submission
+    if (window.trackEvent) {
+      window.trackEvent('form_submit_success', {
         category: 'Conversion',
         label: 'Form Submitted Successfully',
+        value: getLeadValue(formData.get('budget')),
         service_type: formData.get('service'),
-        conversion_value: getConversionValue(formData.get('budget')),
-        is_qualified_lead: isQualifiedLead(formData)
+        lead_quality: leadQuality,
+        conversion: true
       });
     }
     
   } catch (error) {
-    if (window.trackVercelEvent) {
-      window.trackVercelEvent('contact_form_error', {
+    if (window.trackEvent) {
+      window.trackEvent('form_submit_error', {
         category: 'Error',
         label: 'Form Submission Failed',
-        error_type: 'submission_error',
         error_message: error.message
       });
     }
   }
 }
 
-// Helper functions for lead scoring
-function calculateLeadScore(formData) {
-  let score = 0;
-  if (formData.get('company')) score += 20;
-  if (formData.get('phone')) score += 15;
-  if (formData.get('budget') && formData.get('budget') !== 'under-5k') score += 25;
-  if (formData.get('timeline') === 'asap') score += 20;
-  if (formData.get('message')?.length > 100) score += 20;
-  return score;
-}
-
-function getConversionValue(budget) {
+// Helper function for lead value
+function getLeadValue(budget) {
   const values = {
     'under-5k': 2500,
     '5k-15k': 10000,
     '15k-50k': 32500,
     '50k-plus': 75000
   };
-  return values[budget] || 0;
-}
-
-function isQualifiedLead(formData) {
-  return !!(formData.get('company') && formData.get('budget') && formData.get('budget') !== 'under-5k');
+  return values[budget] || 5000;
 }
 
 // Enhanced navigation tracking
@@ -4349,14 +4411,15 @@ navLinks.forEach(link => {
     const targetId = link.getAttribute('href');
     const sectionName = targetId.replace('#', '');
     
-    if (window.trackVercelEvent) {
-      window.trackVercelEvent('section_navigation', {
+    if (window.trackEvent) {
+      window.trackEvent('navigate_to_section', {
         category: 'Navigation',
         label: `Navigate to ${sectionName}`,
         target_section: sectionName,
         navigation_method: window.innerWidth <= 768 ? 'mobile_menu' : 'desktop_nav',
-        source_section: getCurrentSection(),
-        scroll_position: window.scrollY
+        service_interest: sectionName === 'skills' ? 'voice_over' : 
+                        sectionName === 'projects' ? 'ai_design' : 'general',
+        engagement_level: 'medium'
       });
     }
     
@@ -4366,57 +4429,18 @@ navLinks.forEach(link => {
 
 // Enhanced project modal tracking
 function openProjectModal(projectId) {
-  if (window.trackVercelEvent) {
-    window.trackVercelEvent('project_detail_view', {
+  if (window.trackEvent) {
+    window.trackEvent('view_item', { // GA4 recommended event
       category: 'Portfolio',
-      label: 'Project Details Opened',
-      project_id: projectId,
-      project_category: getProjectCategory(projectId),
-      view_method: 'modal',
-      source_section: 'projects'
+      label: 'Project Details Viewed',
+      item_id: projectId,
+      item_name: getProjectName(projectId),
+      item_category: getProjectCategory(projectId),
+      engagement_level: 'high',
+      service_interest: getProjectCategory(projectId)
     });
   }
   
-  // ... rest of modal code
-}
-
-// Track form field interactions
-document.addEventListener('DOMContentLoaded', function() {
-  // Track when user starts filling the form
-  const formInputs = document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea');
-  let formStartTime = null;
-  
-  formInputs.forEach(input => {
-    input.addEventListener('focus', () => {
-      if (!formStartTime) {
-        formStartTime = Date.now();
-        window.formStartTime = formStartTime;
-        
-        if (window.trackVercelEvent) {
-          window.trackVercelEvent('contact_form_start', {
-            category: 'Lead Generation',
-            label: 'Form Interaction Started',
-            first_field: input.name
-          });
-        }
-      }
-    });
-    
-    input.addEventListener('blur', () => {
-      if (window.trackVercelEvent) {
-        window.trackVercelEvent('form_field_complete', {
-          category: 'Form Interaction',
-          field_name: input.name,
-          field_type: input.type,
-          has_value: !!input.value,
-          time_spent: formStartTime ? Date.now() - formStartTime : 0
-        });
-      }
-    });
-  });
-});
-
-    
     // ==================================================================================
     // 🎯 MODAL FUNCTIONALITY
     // ==================================================================================
@@ -4811,6 +4835,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     }
+
+    // ... rest of modal code
+}
     
     // ==================================================================================
     // 🎯 KEYBOARD NAVIGATION
