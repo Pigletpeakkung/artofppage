@@ -1,73 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ===============================================
-         📱 ESSENTIAL META & PERFORMANCE
-         =============================================== -->
+    <!-- ==================================================================================== -->
+    <!-- 🎯 BASIC META TAGS -->
+    <!-- ==================================================================================== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
-    <!-- Performance & Security -->
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="//unpkg.com">
-  
-  <!-- SEO Meta Tags -->
-  <title>Thanatsitt Santisamranwilai - AI Creative Designer & Voice Artist | Professional Portfolio</title>
-  <meta name="description" content="Professional AI Creative Designer & Voice Artist specializing in innovative digital solutions, voice-over services, and cutting-edge web development. Transform your ideas into reality.">
-  <meta name="keywords" content="AI Designer, Voice Artist, Web Developer, Digital Creative, Voice Over, Thanatsitt Santisamranwilai, Pegearts">
-  <meta name="author" content="Thanatsitt Santisamranwilai">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://pegearts.com">
-  
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="Thanatsitt Santisamranwilai - AI Creative Designer & Voice Artist">
-  <meta property="og:description" content="Professional AI Creative Designer & Voice Artist specializing in innovative digital solutions and voice-over services.">
-  <meta property="og:image" content="https://pegearts.com/assets/images/data/profile/1755844218313.jpg">
-  <meta property="og:url" content="https://pegearts.com">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Pegearts">
-  
-  
-    
+    <title>Pegearts - AI Creative Designer & Voice Artist | Professional Portfolio</title>
+    <meta name="description" content="Professional AI Creative Designer, Voice Artist, and Full-Stack Developer. 7+ years experience in creative technology, machine learning, and innovative design solutions.">
+    <meta name="keywords" content="AI Designer, Voice Artist, Web Developer, Creative Technology, Machine Learning, Blockchain, Portfolio, Thanatsitt Santisamranwilai">
+    <meta name="author" content="Thanatsitt Santisamranwilai">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- ==================================================================================== -->
+    <!-- 🎯 PWA MANIFEST & ICONS -->
+    <!-- ==================================================================================== -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8b5cf6">
+    <meta name="background-color" content="#0f0f23">
+
+    <!-- Standard Favicons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/web-app-manifest-192x192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/ms-icon-150x150.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/ms-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/ms-icon-150x150.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/ms-icon-150x150.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/ms-icon-70x70.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/ms-icon-70x70.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/ms-icon-70x70.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/ms-icon-70x70.png">
+
+    <!-- Apple Mobile Web App -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pegearts">
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- Windows Tiles -->
+    <meta name="msapplication-TileColor" content="#8b5cf6">
+    <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+    <meta name="msapplication-square70x70logo" content="/assets/icons/ms-icon-70x70.png">
+    <meta name="msapplication-square150x150logo" content="/assets/icons/ms-icon-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/assets/icons/ms-icon-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/assets/icons/ms-icon-310x310.png">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-navbutton-color" content="#8b5cf6">
+    <meta name="msapplication-starturl" content="/">
+    <meta name="msapplication-tooltip" content="Pegearts - AI Creative Designer & Voice Artist">
+
+    <!-- Mobile Web App -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Pegearts">
+
+    <!-- Android Chrome -->
+    <meta name="theme-color" content="#8b5cf6">
+    <meta name="color-scheme" content="dark light">
+
+    <!-- ==================================================================================== -->
+    <!-- 🎯 OPEN GRAPH / SOCIAL MEDIA -->
+    <!-- ==================================================================================== -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pegearts">
+    <meta property="og:title" content="Pegearts - AI Creative Designer & Voice Artist">
+    <meta property="og:description" content="Professional AI Creative Designer, Voice Artist, and Full-Stack Developer with 7+ years experience in creative technology and innovative solutions.">
+    <meta property="og:image" content="https://pegearts.vercel.app/assets/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://pegearts.vercel.app">
+    <meta property="og:locale" content="en_US">
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PegeArts - AI Innovation & Voice Artistry">
-    <meta name="twitter:description" content="Professional AI/ML developer and multilingual voice artist creating innovative digital experiences.">
-    <meta name="twitter:image" content="https://pegearts.com/assets/twitter-card-1200x600.jpg">
+    <meta name="twitter:site" content="@pegearts">
     <meta name="twitter:creator" content="@pegearts">
+    <meta name="twitter:title" content="Pegearts - AI Creative Designer & Voice Artist">
+    <meta name="twitter:description" content="Professional AI Creative Designer, Voice Artist, and Full-Stack Developer. Innovative creative technology solutions.">
+    <meta name="twitter:image" content="https://pegearts.vercel.app/assets/images/twitter-card.jpg">
+
+    <!-- 🎯 EXTERNAL RESOURCES -->
+    <!-- ==================================================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     
-    <!-- Additional Social -->
-    <meta property="article:author" content="Thanatsitt Santisamranwilai">
-    <meta name="theme-color" content="#8b5cf6">
-    <meta name="msapplication-TileColor" content="#8b5cf6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<!-- ==================================================================================== -->
-<!-- 🎯 PWA MANIFEST & MOBILE OPTIMIZATION -->
-<!-- ==================================================================================== -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#8b5cf6">
-<meta name="background-color" content="#0f0f23">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Pegearts">
-<meta name="application-name" content="Pegearts">
-<meta name="msapplication-TileColor" content="#8b5cf6">
-<meta name="msapplication-config" content="/browserconfig.xml">
-
-<!-- Apple Touch Icons -->
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/icon-152x152.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/icon-144x144.png">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-<link rel="shortcut icon" href="/favicon.ico">
+    <!-- ==================================================================================== -->
+    <!-- 🎯 PERFORMANCE & SECURITY -->
+    <!-- ==================================================================================== -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//unpkg.com">
+    <link rel="dns-prefetch" href="//raw.githubusercontent.com">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="origin-when-cross-origin">
 
     <!-- ==================================================================================== -->
 <!-- 🎯 GOOGLE ANALYTICS - G-W5LYJZ4TPF -->
