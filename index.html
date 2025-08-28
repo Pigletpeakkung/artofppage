@@ -2489,27 +2489,9 @@
 
 
   </style>
-
 </head>
 
 <body>
-
-<!-- Add this right after the opening <body> tag -->
-<div id="developmentNotice" class="development-notice">
-  <div class="development-content">
-    <div class="development-icon">
-      <i class="fas fa-tools"></i>
-    </div>
-    <div class="development-text">
-      <h3>🚧 Website Under Development</h3>
-      <p>Thank you for your interest in my work! Some features are still being fine-tuned.</p>
-      <p>Please contact me directly at: <a href="mailto:thanattsitt.info@yahoo.co.uk">thanattsitt.info@yahoo.co.uk</a></p>
-    </div>
-    <button onclick="closeDevelopmentNotice()" class="development-close">
-      <i class="fas fa-times"></i>
-    </button>
-  </div>
-</div>
 
     
   <!-- ==================================================================================== -->
@@ -5075,5 +5057,49 @@ function dismissUpdate(button) {
     }
   }
   </script>
+
+    <!-- Add this before closing </body> tag -->
+<div id="developmentModal" class="development-modal">
+  <div class="development-modal-content">
+    <div class="development-modal-header">
+      <h2>🎨 Welcome to Pegearts!</h2>
+      <button onclick="closeDevelopmentModal()" class="modal-close">×</button>
+    </div>
+    <div class="development-modal-body">
+      <div class="development-icon-large">
+        <i class="fas fa-code"></i>
+      </div>
+      <h3>Thank you for visiting!</h3>
+      <p>I'm currently putting the finishing touches on this portfolio. While you're here, feel free to explore my work!</p>
+      
+      <div class="development-status">
+        <div class="status-item">
+          <i class="fas fa-check text-green-500"></i>
+          <span>Portfolio showcase</span>
+        </div>
+        <div class="status-item">
+          <i class="fas fa-check text-green-500"></i>
+          <span>Voice demos</span>
+        </div>
+        <div class="status-item">
+          <i class="fas fa-wrench text-yellow-500"></i>
+          <span>Contact form (in progress)</span>
+        </div>
+      </div>
+      
+      <div class="contact-info">
+        <p><strong>Interested in working together?</strong></p>
+        <p>Please reach out directly:</p>
+        <a href="mailto:thanattsitt.info@yahoo.co.uk" class="email-button">
+          <i class="fas fa-envelope"></i>
+          thanattsitt.info@yahoo.co.uk
+        </a>
+      </div>
+      
+      <p class="development-note">Expected completion: <strong>Coming Soon</strong></p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
