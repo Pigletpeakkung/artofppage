@@ -98,6 +98,10 @@ const STATIC_RESOURCES = [
   // 📱 PWA Files
   '/manifest.json',
   '/sw.js',
+
+  '/assets/demo/voice',
+  '/assets/images/data',
+
   
   // 🎨 CSS Libraries
   'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css',
@@ -137,7 +141,7 @@ const STATIC_RESOURCES = [
   // 🗺️ Sitemap Files
   '/sitemap.xml',
   '/sitemap.html', 
-  '/audiositemap.xml',
+  '/audio-sitemap.xml',
   
   // ... rest of resources ...
 ];
