@@ -1,129 +1,142 @@
-<?xml version="1.0" encoding="utf-8"?>
-<browserconfig>
-    <msapplication>
-        <!-- Tile configuration for Windows Start Menu -->
-        <tile>
-            <!-- Small tile (70x70) -->
-            <square70x70logo src="assets/images/icons/mstile-70x70.png"/>
-            
-            <!-- Medium tile (150x150) -->
-            <square150x150logo src="assets/images/icons/mstile-150x150.png"/>
-            
-            <!-- Wide tile (310x150) -->
-            <wide310x150logo src="assets/images/icons/mstile-310x150.png"/>
-            
-            <!-- Large tile (310x310) -->
-            <square310x310logo src="assets/images/icons/mstile-310x310.png"/>
-            
-            <!-- Tile background color - using portfolio's primary color -->
-            <TileColor>#667eea</TileColor>
-        </tile>
-        
-        <!-- Polling configuration for live tiles -->
-        <polling-uri src="notifications/liveupdate.xml"/>
-        <frequency>30</frequency>
-        <cycle>1</cycle>
-        
-        <!-- Application name that appears in Windows -->
-        <applicationName>Thanatsitt Portfolio</applicationName>
-        
-        <!-- Tooltip text for pinned sites -->
-        <tooltip>Visit Thanatsitt's Portfolio - Full-Stack Developer | UI/UX Designer</tooltip>
-        
-        <!-- Start URL when launched from Windows tile -->
-        <startURL>https://thanatsitt.com</startURL>
-        
-        <!-- Window features for pinned site browser -->
-        <window>
-            <width>1024</width>
-            <height>768</height>
-        </window>
-        
-        <!-- Task definitions for right-click context menu -->
-        <task>
-            <n>Home</n>
-            <action-uri>https://thanatsitt.com</action-uri>
-            <icon-uri>assets/images/icons/home-icon.ico</icon-uri>
-            <window-type>tab</window-type>
-        </task>
-        
-        <task>
-            <n>Portfolio</n>
-            <action-uri>https://thanatsitt.com#portfolio</action-uri>
-            <icon-uri>assets/images/icons/portfolio-icon.ico</icon-uri>
-            <window-type>tab</window-type>
-        </task>
-        
-        <task>
-            <n>About</n>
-            <action-uri>https://thanatsitt.com#about</action-uri>
-            <icon-uri>assets/images/icons/about-icon.ico</icon-uri>
-            <window-type>tab</window-type>
-        </task>
-        
-        <task>
-            <n>Contact</n>
-            <action-uri>https://thanatsitt.com#contact</action-uri>
-            <icon-uri>assets/images/icons/contact-icon.ico</icon-uri>
-            <window-type>tab</window-type>
-        </task>
-        
-        <!-- Navigation button colors -->
-        <navbutton-color>#667eea</navbutton-color>
-        
-        <!-- Badge configuration for notifications -->
-        <badge>
-            <polling-uri src="notifications/badge.xml"/>
-            <frequency>720</frequency>
-        </badge>
-        
-        <!-- Live tile template configuration -->
-        <notification>
-            <polling-uri src="notifications/tile-update.xml"/>
-            <polling-uri2 src="notifications/tile-update2.xml"/>
-            <polling-uri3 src="notifications/tile-update3.xml"/>
-            <polling-uri4 src="notifications/tile-update4.xml"/>
-            <polling-uri5 src="notifications/tile-update5.xml"/>
-            <frequency>30</frequency>
-            <cycle>1</cycle>
-        </notification>
-    </msapplication>
-    
-    <!-- Additional browser configurations -->
-    <browser>
-        <!-- Internet Explorer configurations -->
-        <ie>
-            <!-- Enable modern document mode -->
-            <docmode>edge</docmode>
-            
-            <!-- Compatibility view settings -->
-            <compatview>false</compatview>
-            
-            <!-- Clear type settings for better font rendering -->
-            <cleartype>true</cleartype>
-            
-            <!-- Security settings -->
-            <security>
-                <!-- Allow mixed content for development -->
-                <mixed-content>false</mixed-content>
-                
-                <!-- Enable XSS protection -->
-                <xss-protection>true</xss-protection>
-                
-                <!-- Prevent content type sniffing -->
-                <nosniff>true</nosniff>
-            </security>
-        </ie>
-        
-        <!-- Microsoft Edge Legacy configurations -->
-        <edge>
-            <!-- Enable modern features -->
-            <features>
-                <webgl>true</webgl>
-                <css-grid>true</css-grid>
-                <flexbox>true</flexbox>
-                <es6>true</es6>
-            </features>
-        </edge>
-    </browser>
-</browserconfig>
+{
+  "name": "Pegearts - Creative Technology Solutions",
+  "short_name": "Pegearts",
+  "description": "Professional AI Creative Designer, Voice Artist, and Full-Stack Developer portfolio showcasing innovative projects and creative solutions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f23",
+  "theme_color": "#8b5cf6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "technology", "design"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Desktop view of Pegearts portfolio"
+    },
+    {
+      "src": "/assets/images/screenshot-mobile.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile view of Pegearts portfolio"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/assets/icons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/ms-icon-70x70.png",
+      "sizes": "70x70",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/ms-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/ms-icon-150x150.png",
+      "sizes": "150x150",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/ms-icon-310x310.png",
+      "sizes": "310x310",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Portfolio Projects",
+      "short_name": "Projects",
+      "description": "View my latest creative projects and case studies",
+      "url": "/#projects",
+      "icons": [
+        {
+          "src": "/assets/icons/ms-icon-150x150.png",
+          "sizes": "150x150",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Voice Demonstrations",
+      "short_name": "Voice Demo",
+      "description": "Listen to professional voice-over samples",
+      "url": "/#skills",
+      "icons": [
+        {
+          "src": "/assets/icons/ms-icon-150x150.png",
+          "sizes": "150x150",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Contact & Hire",
+      "short_name": "Contact",
+      "description": "Get in touch for project collaborations",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "/assets/icons/ms-icon-150x150.png",
+          "sizes": "150x150",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "About & Services",
+      "short_name": "About",
+      "description": "Learn about my expertise and services",
+      "url": "/#about",
+      "icons": [
+        {
+          "src": "/assets/icons/ms-icon-150x150.png",
+          "sizes": "150x150",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [
+    {
+      "platform": "web",
+      "url": "https://pegearts.vercel.app"
+    }
+  ],
+  "prefer_related_applications": false
+}
