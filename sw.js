@@ -123,6 +123,17 @@ const STATIC_RESOURCES = [
   '/faq.html',
   '/404.html',
   '/me.html',
+  '/manifest.json',
+  '/browserconfig.xml',
+  '/assets/icons/favicon-16x16.png',
+  '/assets/icons/favicon-32x32.png',
+  '/assets/icons/ms-icon-70x70.png',
+  '/assets/icons/ms-icon-144x144.png',
+  '/assets/icons/ms-icon-150x150.png',
+  '/assets/icons/ms-icon-310x150.png',
+  '/assets/icons/ms-icon-310x310.png',
+  '/assets/icons/web-app-manifest-192x192.png',
+  '/assets/icons/web-app-manifest-512x512.png',
   
   // 📱 PWA Files
   '/manifest.json',
@@ -159,7 +170,6 @@ const STATIC_RESOURCES = [
   
   // 📄 ALL Your Documents
   ...getDocumentUrls()
-];
 
 // Asset type mapping for better organization
 const ASSET_TYPES = {
