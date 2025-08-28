@@ -39,9 +39,8 @@
     <meta name="twitter:description" content="Professional AI/ML developer and multilingual voice artist creating innovative digital experiences.">
     <meta name="twitter:image" content="https://pegearts.com/assets/twitter-card-1200x600.jpg">
     <meta name="twitter:creator" content="@pegearts">
-    
 
-    ==================================================================================== -->
+    
     <!-- 🎯 PWA MANIFEST & ICONS -->
     <!-- ==================================================================================== -->
     <link rel="manifest" href="/manifest.json">
@@ -90,12 +89,379 @@
     <meta name="theme-color" content="#8b5cf6">
     <meta name="color-scheme" content="dark light">
 
+<!-- ==================================================================================== -->
+<!-- 🎯 GOOGLE ANALYTICS - G-W5LYJZ4TPF -->
+<!-- ==================================================================================== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W5LYJZ4TPF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  // Initialize Google Analytics
+  gtag('config', 'G-W5LYJZ4TPF', {
+    page_title: 'Pegearts - AI Creative Designer & Voice Artist',
+    page_location: window.location.href,
+    content_group1: 'Portfolio',
+    content_group2: 'Homepage',
+    custom_map: {
+      'custom_dimension_1': 'user_type',
+      'custom_dimension_2': 'service_interest',
+      'custom_dimension_3': 'engagement_level'
+    },
+    // Enhanced ecommerce for lead tracking
+    enhanced_ecommerce: true,
+    // GDPR compliance
+    anonymize_ip: true,
+    allow_google_signals: true,
+    allow_ad_personalization_signals: false
+  });
+  
+  // Custom dimensions setup
+  gtag('config', 'G-W5LYJZ4TPF', {
+    custom_map: {
+      'custom_dimension_1': 'user_type',
+      'custom_dimension_2': 'service_interest', 
+      'custom_dimension_3': 'engagement_level',
+      'custom_dimension_4': 'lead_quality',
+      'custom_dimension_5': 'traffic_source'
+    }
+  });
+</script>
 
 <!-- ==================================================================================== -->
-<!-- 🎯 VERCEL ANALYTICS & INSIGHTS (CORRECTED) -->
+<!-- 🎯 VERCEL ANALYTICS & SPEED INSIGHTS (Separate) -->
 <!-- ==================================================================================== -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
+
+<!-- ==================================================================================== -->
+<!-- 🎯 ENHANCED ANALYTICS INTEGRATION -->
+<!-- ==================================================================================== -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  const GOOGLE_ANALYTICS_ID = 'G-W5LYJZ4TPF';
+  const DEBUG_MODE = false;
+  
+  // Enhanced tracking function for both GA4 and Vercel
+  function trackEvent(eventName, parameters = {}) {
+    const eventData = {
+      ...parameters,
+      timestamp: new Date().toISOString(),
+      page_url: window.location.href,
+      page_title: document.title,
+      user_agent: navigator.userAgent,
+      screen_resolution: `${screen.width}x${screen.height}`,
+      viewport_size: `${window.innerWidth}x${window.innerHeight}`,
+      language: navigator.language,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      connection_type: navigator.connection ? navigator.connection.effectiveType : 'unknown'
+    };
+    
+    // Send to Google Analytics 4
+    if (typeof gtag === 'function') {
+      gtag('event', eventName, {
+        event_category: parameters.category || 'User Interaction',
+        event_label: parameters.label || eventName,
+        value: parameters.value || 1,
+        custom_parameters: eventData,
+        // Custom dimensions
+        custom_dimension_1: parameters.user_type || 'visitor',
+        custom_dimension_2: parameters.service_interest || 'general',
+        custom_dimension_3: parameters.engagement_level || 'low',
+        custom_dimension_4: parameters.lead_quality || 'unqualified',
+        custom_dimension_5: parameters.traffic_source || getTrafficSource()
+      });
+    }
+    
+    // Send to Vercel Analytics
+    if (window.va) {
+      window.va('track', eventName, eventData);
+    }
+    
+    // Debug logging
+    if (DEBUG_MODE) {
+      console.log(`📊 [GA4 + Vercel] Event:`, eventName, eventData);
+    }
+    
+    return eventData;
+  }
+  
+  // Get traffic source
+  function getTrafficSource() {
+    const referrer = document.referrer;
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('utm_source')) return urlParams.get('utm_source');
+    if (referrer.includes('google.')) return 'google_organic';
+    if (referrer.includes('facebook.')) return 'facebook';
+    if (referrer.includes('twitter.')) return 'twitter';
+    if (referrer.includes('linkedin.')) return 'linkedin';
+    if (referrer) return 'referral';
+    return 'direct';
+  }
+  
+  // Lead scoring function
+  function calculateLeadScore(formData) {
+    let score = 0;
+    if (formData.get('company')) score += 25;
+    if (formData.get('phone')) score += 20;
+    if (formData.get('budget') && formData.get('budget') !== 'under-5k') score += 30;
+    if (formData.get('timeline') === 'asap') score += 15;
+    if (formData.get('message')?.length > 100) score += 10;
+    return score;
+  }
+  
+  // Get lead quality based on score
+  function getLeadQuality(score) {
+    if (score >= 70) return 'high_quality';
+    if (score >= 40) return 'medium_quality';
+    if (score >= 20) return 'low_quality';
+    return 'unqualified';
+  }
+  
+  // Make tracking function globally available
+  window.trackEvent = trackEvent;
+  window.calculateLeadScore = calculateLeadScore;
+  window.getLeadQuality = getLeadQuality;
+  
+  // Initialize tracking when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    
+    // Track initial page view with enhanced data
+    trackEvent('page_view', {
+      category: 'Navigation',
+      label: 'Page Load',
+      page_path: window.location.pathname,
+      page_search: window.location.search,
+      page_hash: window.location.hash,
+      user_type: 'new_visitor', // You can update this based on cookies/localStorage
+      service_interest: getServiceInterestFromURL(),
+      engagement_level: 'initial',
+      traffic_source: getTrafficSource()
+    });
+    
+    // Track performance after page load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        trackPerformanceMetrics();
+        trackCoreWebVitals();
+        trackUserEngagement();
+      }, 1000);
+    });
+  });
+  
+  // Get service interest from URL parameters or page content
+  function getServiceInterestFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const service = urlParams.get('service') || urlParams.get('utm_content');
+    
+    if (service) return service;
+    if (window.location.hash.includes('voice')) return 'voice_over';
+    if (window.location.hash.includes('design')) return 'ai_design';
+    if (window.location.hash.includes('development')) return 'web_development';
+    return 'general';
+  }
+  
+  // Performance tracking
+  function trackPerformanceMetrics() {
+    if (!('performance' in window)) return;
+    
+    const navigation = performance.getEntriesByType('navigation')[0];
+    const paint = performance.getEntriesByType('paint');
+    
+    if (navigation) {
+      trackEvent('performance_timing', {
+        category: 'Performance',
+        label: 'Page Load Metrics',
+        value: Math.round(navigation.loadEventEnd - navigation.loadEventStart),
+        dns_lookup: Math.round(navigation.domainLookupEnd - navigation.domainLookupStart),
+        tcp_connect: Math.round(navigation.connectEnd - navigation.connectStart),
+        server_response: Math.round(navigation.responseEnd - navigation.requestStart),
+        dom_processing: Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart),
+        total_load_time: Math.round(navigation.loadEventEnd - navigation.navigationStart),
+        first_paint: paint.find(entry => entry.name === 'first-paint')?.startTime || 0,
+        first_contentful_paint: paint.find(entry => entry.name === 'first-contentful-paint')?.startTime || 0
+      });
+    }
+  }
+  
+  // Core Web Vitals tracking
+  function trackCoreWebVitals() {
+    // Largest Contentful Paint (LCP)
+    new PerformanceObserver((list) => {
+      const entries = list.getEntries();
+      const lastEntry = entries[entries.length - 1];
+      const lcpValue = Math.round(lastEntry.startTime);
+      
+      trackEvent('core_web_vitals', {
+        category: 'Performance',
+        label: 'Largest Contentful Paint',
+        value: lcpValue,
+        metric_name: 'LCP',
+        metric_value: lcpValue,
+        rating: lcpValue < 2500 ? 'good' : lcpValue < 4000 ? 'needs_improvement' : 'poor'
+      });
+    }).observe({ entryTypes: ['largest-contentful-paint'] });
+    
+    // First Input Delay (FID)
+    new PerformanceObserver((list) => {
+      const entries = list.getEntries();
+      entries.forEach(entry => {
+        const fidValue = Math.round(entry.processingStart - entry.startTime);
+        
+        trackEvent('core_web_vitals', {
+          category: 'Performance',
+          label: 'First Input Delay',
+          value: fidValue,
+          metric_name: 'FID',
+          metric_value: fidValue,
+          rating: fidValue < 100 ? 'good' : fidValue < 300 ? 'needs_improvement' : 'poor'
+        });
+      });
+    }).observe({ entryTypes: ['first-input'] });
+    
+    // Cumulative Layout Shift (CLS)
+    let clsScore = 0;
+    new PerformanceObserver((list) => {
+      const entries = list.getEntries();
+      entries.forEach(entry => {
+        if (!entry.hadRecentInput) {
+          clsScore += entry.value;
+        }
+      });
+    }).observe({ entryTypes: ['layout-shift'] });
+    
+    // Report CLS on page unload
+    window.addEventListener('beforeunload', () => {
+      const clsValue = Math.round(clsScore * 1000) / 1000;
+      trackEvent('core_web_vitals', {
+        category: 'Performance',
+        label: 'Cumulative Layout Shift',
+        value: clsValue,
+        metric_name: 'CLS',
+        metric_value: clsValue,
+        rating: clsValue < 0.1 ? 'good' : clsValue < 0.25 ? 'needs_improvement' : 'poor'
+      });
+    });
+  }
+  
+  // Enhanced user engagement tracking
+  function trackUserEngagement() {
+    let sessionStart = Date.now();
+    let scrollDepth = 0;
+    let maxScrollDepth = 0;
+    let clickCount = 0;
+    let engagementEvents = [];
+    
+    // Track scroll depth
+    function updateScrollDepth() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      
+      scrollDepth = Math.round(((scrollTop + windowHeight) / documentHeight) * 100);
+      maxScrollDepth = Math.max(maxScrollDepth, scrollDepth);
+      
+      // Track scroll milestones
+      [25, 50, 75, 100].forEach(milestone => {
+        if (scrollDepth >= milestone && !engagementEvents.includes(`scroll_${milestone}`)) {
+          engagementEvents.push(`scroll_${milestone}`);
+          trackEvent('scroll_depth', {
+            category: 'Engagement',
+            label: `${milestone}% Scrolled`,
+            value: milestone,
+            engagement_level: milestone >= 75 ? 'high' : milestone >= 50 ? 'medium' : 'low'
+          });
+        }
+      });
+    }
+    
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateScrollDepth, 250);
+    });
+    
+    // Track clicks
+    document.addEventListener('click', (event) => {
+      clickCount++;
+      const element = event.target;
+      const tagName = element.tagName.toLowerCase();
+      const className = element.className;
+      const id = element.id;
+      const text = element.textContent?.substring(0, 50) || '';
+      
+      trackEvent('element_click', {
+        category: 'Interaction',
+        label: `${tagName} clicked`,
+        element_type: tagName,
+        element_id: id || 'no_id',
+        element_class: className || 'no_class',
+        element_text: text,
+        click_x: event.clientX,
+        click_y: event.clientY,
+        engagement_level: clickCount > 5 ? 'high' : clickCount > 2 ? 'medium' : 'low'
+      });
+    });
+    
+    // Track session end
+    window.addEventListener('beforeunload', () => {
+      const sessionDuration = Math.round((Date.now() - sessionStart) / 1000);
+      const engagementLevel = getEngagementLevel(sessionDuration, maxScrollDepth, clickCount);
+      
+      trackEvent('session_end', {
+        category: 'Engagement',
+        label: 'Session Complete',
+        value: sessionDuration,
+        session_duration: sessionDuration,
+        max_scroll_depth: maxScrollDepth,
+        total_clicks: clickCount,
+        engagement_level: engagementLevel,
+        bounce: clickCount === 0 && maxScrollDepth < 25 ? 'yes' : 'no'
+      });
+      
+      // Send final event via sendBeacon for reliability
+      if (navigator.sendBeacon && typeof gtag === 'function') {
+        gtag('event', 'session_summary', {
+          event_category: 'Engagement',
+          event_label: 'Final Session Data',
+          value: sessionDuration,
+          transport_type: 'beacon',
+          custom_dimension_3: engagementLevel
+        });
+      }
+    });
+    
+    function getEngagementLevel(duration, scroll, clicks) {
+      let score = 0;
+      if (duration > 180) score += 3; // 3+ minutes
+      else if (duration > 60) score += 2; // 1+ minute
+      else if (duration > 30) score += 1; // 30+ seconds
+      
+      if (scroll > 75) score += 3;
+      else if (scroll > 50) score += 2;
+      else if (scroll > 25) score += 1;
+      
+      if (clicks > 5) score += 3;
+      else if (clicks > 2) score += 2;
+      else if (clicks > 0) score += 1;
+      
+      if (score >= 7) return 'high';
+      if (score >= 4) return 'medium';
+      return 'low';
+    }
+  }
+  
+})();
+</script>
+
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
@@ -105,7 +471,7 @@
       "name": "Thanatsitt Santisamranwilai",
       "alternateName": "PegeArts",
       "url": "https://pegearts.com",
-      "image": "https://pegearts.com/assets/profile-photo.jpg",
+      "image": "https://github.com/Pigletpeakkung/artofppage/blob/74ef50ce6221cc36848c31580fd8c1f8bea38fb6/assets/images/data/profile/1755844218313.jpg",
       "sameAs": [
         "https://github.com/Pigletpeakkung",
         "https://linkedin.com/in/thanatsitt-s",
@@ -133,97 +499,6 @@
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- ==================================================================================== -->
-<!-- 🎯 VERCEL ANALYTICS & INSIGHTS -->
-<!-- ==================================================================================== -->
-
-<!-- Vercel Analytics -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-
-<!-- Vercel Speed Insights -->
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
-
-<!-- Enhanced Vercel Analytics with Custom Events -->
-<script>
-  // Custom analytics events
-  function trackEvent(eventName, eventData = {}) {
-    if (typeof window.va === 'function') {
-      window.va('track', eventName, eventData);
-    }
-    
-    // Also send to Google Analytics if available
-    if (typeof gtag === 'function') {
-      gtag('event', eventName, {
-        event_category: eventData.category || 'User Interaction',
-        event_label: eventData.label || '',
-        value: eventData.value || 0,
-        custom_parameters: eventData
-      });
-    }
-  }
-  
-  // Track page performance
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      if ('performance' in window) {
-        const perfData = performance.getEntriesByType('navigation')[0];
-        const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
-        
-        trackEvent('page_performance', {
-          category: 'Performance',
-          label: 'Page Load Time',
-          value: Math.round(loadTime),
-          load_time: loadTime,
-          dom_content_loaded: perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart,
-          first_paint: performance.getEntriesByType('paint').find(entry => entry.name === 'first-paint')?.startTime || 0
-        });
-      }
-    }, 0);
-  });
-  
-  // Track user engagement
-  let engagementTimer = 0;
-  let isPageVisible = true;
-  
-  // Track time spent on page
-  setInterval(() => {
-    if (isPageVisible) {
-      engagementTimer += 1000;
-    }
-  }, 1000);
-  
-  // Track visibility changes
-  document.addEventListener('visibilitychange', () => {
-    isPageVisible = !document.hidden;
-    
-    if (!isPageVisible && engagementTimer > 5000) {
-      trackEvent('user_engagement', {
-        category: 'Engagement',
-        label: 'Time Spent',
-        value: Math.round(engagementTimer / 1000),
-        time_spent: engagementTimer
-      });
-    }
-  });
-  
-  // Track before page unload
-  window.addEventListener('beforeunload', () => {
-    if (engagementTimer > 5000) {
-      trackEvent('session_end', {
-        category: 'Engagement',
-        label: 'Session Duration',
-        value: Math.round(engagementTimer / 1000),
-        session_duration: engagementTimer
-      });
-    }
-  });
-</script>
 
   <style>
     /* ==================================================================================== */
