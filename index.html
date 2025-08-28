@@ -4302,90 +4302,7 @@ ${formData.get('message')}
         }
       }
     }
-// Enhanced voice demo tracking with Google Analytics
-function playVoiceDemo() {
-  if (voiceAudio) {
-    const playPromise = voiceAudio.play();
-    
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        isVoicePlaying = true;
-        updateVoiceButton();
-        animateWaveBars(true);
-        
-        // Track with both GA4 and Vercel Analytics
-        if (window.trackEvent) {
-          window.trackEvent('voice_demo_play', {
-            category: 'Voice Demo',
-            label: 'Demo Started',
-            value: 1,
-            audio_duration: voiceAudio.duration || 0,
-            user_type: 'engaged_visitor',
-            service_interest: 'voice_over',
-            engagement_level: 'high',
-            lead_quality: 'medium_quality'
-          });
-        }
-        
-        const voiceBtn = document.getElementById('voiceDemoButton');
-        if (voiceBtn) {
-          voiceBtn.classList.add('playing');
-        }
-        
-        // Track completion
-        voiceAudio.addEventListener('ended', () => {
-          if (window.trackEvent) {
-            window.trackEvent('voice_demo_complete', {
-              category: 'Voice Demo',
-              label: 'Demo Completed',
-              value: Math.round(voiceAudio.duration || 0),
-              completion_rate: 100,
-              engagement_level: 'high',
-              lead_quality: 'high_quality'
-            });
-          }
-        });
-        
-      }).catch(error => {
-        console.log('Could not play voice demo:', error);
-        
-        if (window.trackEvent) {
-          window.trackEvent('voice_demo_error', {
-            category: 'Voice Demo',
-            label: 'Playback Error',
-            error_type: error.name,
-            error_message: error.message,
-            autoplay_blocked: error.name === 'NotAllowedError'
-          });
-        }
-        
-        showVoiceError();
-      });
-    }
-  }
-}
 
-// Enhanced form submission with lead tracking
-async function handleFormSubmit(e) {
-  e.preventDefault();
-  
-  const form = e.target;
-  const formData = new FormData(form);
-  const submitTime = Date.now();
-  
-  // Calculate lead score and quality
-  const leadScore = window.calculateLeadScore ? window.calculateLeadScore(formData) : 50;
-  const leadQuality = window.getLeadQuality ? window.getLeadQuality(leadScore) : 'medium_quality';
-  
-  // Track form submission with enhanced lead data
-  if (window.trackEvent) {
-    window.trackEvent('generate_lead', { // GA4 recommended event
-      category: 'Lead Generation',
-      label: 'Contact Form Submitted',
-      value: getLeadValue(formData.get('budget')),
-      currency: 'USD',
-      service_type: formData.get('service') || 'not_specified',
-      budget_range: formData.get('budget') || 'not_specified',
       timeline: formData.get('timeline') || 'not_specified',
       has_phone: !!formData.get('phone'),
       has_company: !!formData.get('company'),
@@ -4461,24 +4378,6 @@ navLinks.forEach(link => {
         engagement_level: 'medium'
       });
     }
-    
-    // ... rest of navigation code
-  });
-});
-
-// Enhanced project modal tracking
-function openProjectModal(projectId) {
-  if (window.trackEvent) {
-    window.trackEvent('view_item', { // GA4 recommended event
-      category: 'Portfolio',
-      label: 'Project Details Viewed',
-      item_id: projectId,
-      item_name: getProjectName(projectId),
-      item_category: getProjectCategory(projectId),
-      engagement_level: 'high',
-      service_interest: getProjectCategory(projectId)
-    });
-  }
   
     // ==================================================================================
     // 🎯 MODAL FUNCTIONALITY
@@ -4875,9 +4774,6 @@ function openProjectModal(projectId) {
       }
     }
 
-    // ... rest of modal code
-}
-    
     // ==================================================================================
     // 🎯 KEYBOARD NAVIGATION
     // ==================================================================================
