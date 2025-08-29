@@ -133,6 +133,7 @@ const STATIC_RESOURCES = [
   '/assets/icons/ms-icon-310x310.png',
   '/assets/icons/web-app-manifest-192x192.png',
   '/assets/icons/web-app-manifest-512x512.png',
+  '/css/style.css',
   
   // 📱 PWA Files
   '/manifest.json',
