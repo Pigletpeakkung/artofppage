@@ -134,6 +134,8 @@ const STATIC_RESOURCES = [
   '/assets/icons/web-app-manifest-192x192.png',
   '/assets/icons/web-app-manifest-512x512.png',
   '/css/style.css',
+  '/voice-demos.html',
+  '/js/main.js',
   
   // 📱 PWA Files
   '/manifest.json',
