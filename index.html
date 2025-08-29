@@ -52,8 +52,7 @@
          🎯 PWA MANIFEST & ICONS
          =============================================== -->
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#8b5cf6">
-    <meta name="background-color" content="#0f0f23">
+        <meta name="background-color" content="#0f0f23">
 
     <!-- Standard Favicons -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
@@ -64,12 +63,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/web-app-manifest-192x192.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/ms-icon-150x150.png">
     <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/ms-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/ms-icon-150x150.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/ms-icon-150x150.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/ms-icon-70x70.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/ms-icon-70x70.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/ms-icon-70x70.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/ms-icon-70x70.png">
+       <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/ms-icon-70x70.png">
+  
 
     <!-- Apple Mobile Web App -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +89,6 @@
     <meta name="application-name" content="Pegearts">
 
     <!-- Android Chrome -->
-    <meta name="theme-color" content="#8b5cf6">
     <meta name="color-scheme" content="dark light">
 
 <!-- Hotjar Tracking Code for Site 6505913 (name missing) -->
@@ -1393,6 +1387,7 @@
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       padding: var(--spacing-xl);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
@@ -1457,6 +1452,7 @@
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       overflow: hidden;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
@@ -1518,6 +1514,7 @@
       color: white;
       text-decoration: none;
       transition: all 0.3s ease;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
     
@@ -1612,6 +1609,7 @@
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       padding: var(--spacing-2xl);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       text-align: center;
     }
@@ -1681,6 +1679,7 @@
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       padding: var(--spacing-2xl);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       height: fit-content;
     }
@@ -1763,6 +1762,7 @@
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-xl);
       padding: var(--spacing-2xl);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
     }
     
@@ -1983,6 +1983,7 @@
     
     .floating-voice-btn {
       background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: var(--radius-2xl);
@@ -2113,6 +2114,7 @@
       left: 0;
       right: 0;
       background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(20px);
       backdrop-filter: blur(20px);
       border-top: 1px solid var(--glass-border);
       padding: var(--spacing-lg);
@@ -2354,8 +2356,9 @@
     .cursor-pointer { cursor: pointer; }
     .cursor-not-allowed { cursor: not-allowed; }
     
-    .select-none { user-select: none; }
-    
+
+    .select-none {  -webkit-user-select: none; user-select: none; }
+
     .transition-all { transition: all 0.3s ease; }
     
     .hover-scale:hover { transform: scale(1.05); }
@@ -2600,6 +2603,7 @@
   left: 50%;
   transform: translateX(-50%);
   background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-xl);
