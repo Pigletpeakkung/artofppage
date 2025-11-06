@@ -1,64 +1,17 @@
 {
-  "name": "Pegearts - Creative Technology Solutions",
-  "short_name": "Pegearts",
-  "description": "Professional AI Creative Designer, Voice Artist, and Full-Stack Developer portfolio showcasing innovative projects and creative solutions",
+  "name": "Thanatsitt Santisamranwilai - PegeArts Portfolio",
+  "short_name": "PegeArts",
+  "description": "Professional AI Creative Designer & Voice Artist Portfolio",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f0f23",
+  "background_color": "#0a0a0f",
   "theme_color": "#8b5cf6",
   "orientation": "portrait-primary",
   "scope": "/",
-  "lang": "en-US",
+  "lang": "en",
   "dir": "ltr",
-  "categories": ["business", "productivity", "technology", "design"],
-  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
-  "screenshots": [
-    {
-      "src": "/assets/images/screenshot-desktop.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Desktop view of Pegearts portfolio"
-    },
-    {
-      "src": "/assets/images/screenshot-mobile.png",
-      "sizes": "640x1136",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "Mobile view of Pegearts portfolio"
-    }
-  ],
+  "categories": ["portfolio", "creative", "technology"],
   "icons": [
-    {
-      "src": "/assets/icons/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/favicon-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/ms-icon-70x70.png",
-      "sizes": "70x70",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/ms-icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/assets/icons/ms-icon-150x150.png",
-      "sizes": "150x150",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
     {
       "src": "/assets/icons/web-app-manifest-192x192.png",
       "sizes": "192x192",
@@ -66,77 +19,65 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/icons/ms-icon-310x310.png",
-      "sizes": "310x310",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
       "src": "/assets/icons/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "Desktop view of PegeArts Portfolio"
+    },
+    {
+      "src": "/assets/images/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "label": "Mobile view of PegeArts Portfolio"
     }
   ],
   "shortcuts": [
     {
-      "name": "Portfolio Projects",
-      "short_name": "Projects",
-      "description": "View my latest creative projects and case studies",
-      "url": "/#projects",
-      "icons": [
-        {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Voice Demonstrations",
-      "short_name": "Voice Demo",
-      "description": "Listen to professional voice-over samples",
-      "url": "/#skills",
-      "icons": [
-        {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
-        }
-      ]
-    },
-    {
-      "name": "Contact & Hire",
+      "name": "Contact Me",
       "short_name": "Contact",
-      "description": "Get in touch for project collaborations",
+      "description": "Get in touch for collaboration",
       "url": "/#contact",
       "icons": [
         {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
+          "src": "/assets/icons/contact-icon.png",
+          "sizes": "96x96"
         }
       ]
     },
     {
-      "name": "About & Services",
-      "short_name": "About",
-      "description": "Learn about my expertise and services",
-      "url": "/#about",
+      "name": "View Projects",
+      "short_name": "Projects",
+      "description": "Browse my portfolio",
+      "url": "/#projects",
       "icons": [
         {
-          "src": "/assets/icons/ms-icon-150x150.png",
-          "sizes": "150x150",
-          "type": "image/png"
+          "src": "/assets/icons/projects-icon.png",
+          "sizes": "96x96"
         }
       ]
     }
-  ],
-  "related_applications": [
-    {
-      "platform": "web",
-      "url": "https://pegearts.vercel.app"
-    }
-  ],
-  "prefer_related_applications": false
+  ]
 }
