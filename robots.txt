@@ -1,13 +1,13 @@
+# Allow all search engines to crawl everything
 User-agent: *
 Allow: /
 
-# Sitemaps
-Sitemap: https://pigletpeakkung.github.io/artofppage/sitemap.xml
-Sitemap: https://pigletpeakkung.github.io/artofppage/audio-sitemap.xml
+# Sitemap location
+Sitemap: https://pegearts.com/sitemap.xml
 
-# Audio assets
-Allow: /assets/demo/voice/
-Allow: /assets/projects/voice/
-Allow: /assets/images/
-Allow: /assets/icons/
-Allow: /assets/sitedata/
+# Optional: Block specific bots (if needed)
+# User-agent: BadBot
+# Disallow: /
+
+# Crawl-delay for rate limiting (optional)
+# Crawl-delay: 1
