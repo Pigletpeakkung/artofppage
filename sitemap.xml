@@ -1,40 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
-<!-- Homepage - Highest Priority -->
-<url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Homepage -->
+  <url>
     <loc>https://pegearts.com/</loc>
-    <lastmod>2024-12-19</lastmod>
+    <lastmod>2025-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-        <image:loc>https://pegearts.com/assets/images/data/profile/1755844218313.jpg</image:loc>
-        <image:caption>Thanatsitt Santisamranwilai - Professional Profile Photo</image:caption>
-        <image:title>Professional Portfolio Profile</image:title>
-    </image:image>
-</url>
-
-<!-- Main Index Page (alternative URL) -->
-<url>
-    <loc>https://pegearts.com/index.html</loc>
-    <lastmod>2024-12-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-</url>
-
-        <url>
-    <loc>https://pegearts.com/voice-demos.html</loc>
-    <lastmod>2024-12-19</lastmod>
+  </url>
+  
+  <!-- About Section -->
+  <url>
+    <loc>https://pegearts.com/#about</loc>
+    <lastmod>2025-01-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-</url>
-
-<!-- About Page ✅ EXISTS -->
-<url>
-    <loc>https://pegearts.com/about.html</loc>
-    <lastmod>2024-12-19</lastmod>
+  </url>
+  
+  <!-- Skills Section -->
+  <url>
+    <loc>https://pegearts.com/#skills</loc>
+    <lastmod>2025-01-24</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Experience Section -->
+  <url>
+    <loc>https://pegearts.com/#experience</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Projects Section -->
+  <url>
+    <loc>https://pegearts.com/#projects</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Testimonials Section -->
+  <url>
+    <loc>https://pegearts.com/#testimonials</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Contact Section -->
+  <url>
+    <loc>https://pegearts.com/#contact</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- CV/Resume (if public) -->
+  <url>
+    <loc>https://pegearts.com/assets/doc/Thanns_Main_CV.pdf</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
 </url>
 
